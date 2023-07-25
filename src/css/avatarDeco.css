@@ -12,11 +12,6 @@
     background-color: rgb(255, 255, 255);
 }
 
-.chooseBtnGroup button{
-    border: 0px solid skyblue;
-    background-color: rgba(0,0,0,0);
- }
-
 .chooseBtnGroup{
     border: 1px solid black;
     position: absolute;
@@ -25,16 +20,20 @@
     margin-left: 5%;
 }
 
-#btn_face{
+.btn_face{
     width: 36px;
-    height: 36px;
+    line-height: 36px;
     background-color: rgb(0, 0, 0);
     margin-bottom: 5px;
 }
 
-#btn_cloth{
+.btn_cloth img{
+    vertical-align: middle;
+}
+
+.btn_cloth{
     width: 36px;
-    height: 36px;
+    line-height: 36px;
     background-color: rgb(0, 0, 0);
 }
 
@@ -62,6 +61,11 @@
     */
 }
 
+.item_img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .faceBtnGroup{
     width: 100%;
     height: 30px;
@@ -78,6 +82,20 @@
     background: #BDFF6B;
     box-shadow: 2px 2px;
     */
+    text-align: center;
+    line-height: 30px;
+}
+
+.selectBtn{
+    float: left;
+    margin-left: 23px;
+    width : 50px;
+    height: 100%;
+    border: 1px solid #000;
+    
+    background: #BDFF6B;
+    box-shadow: 2px 2px;
+    
     text-align: center;
     line-height: 30px;
 }
