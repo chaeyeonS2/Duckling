@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import Footer from "../footer";
-import HeaderDeco from "../headerDeco";
-import "../css/avatarDeco.css";
+import Footer from "../../footer";
+import HeaderDeco from "../../headerDeco";
+import "../../css/avatarDeco.css";
 import React, { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas, Camera, useFrame, useLoader } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useGLTF } from '@react-three/drei';
- 
+import Item from "./item";
+
 const NewMapModel = (props) => {
     const { scene } = useGLTF(process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf');
     
@@ -52,16 +53,16 @@ const Square = () => {
 
   
 const AvatarDeco = () => {
-    var imgSrcList = [process.env.PUBLIC_URL + "/img/VectorsmileTrue.png",
-                    process.env.PUBLIC_URL + "/img/VectorsmileFalse.png",
-                    process.env.PUBLIC_URL + "/img/VectorclothTrue.png",
-                    process.env.PUBLIC_URL + "/img/VectorclothFalse.png"]
-    const [imgSrc, setImageSrc] = useState(imgSrcList[0]);
-    const [typeDecoState, setDecoTypeState] = useState();  //데코(얼굴, 옷) 카테고리
-    const [isClicked, setIsClicked] = useState(false);
+    //데코(얼굴, 옷) 카테고리 선택
+    const [typeDecoState, setDecoTypeState] = useState(false);  
+    const decoArray = ["face", "cloth"];
+
+    const handleDecoClick = (idx) => {
+        const newArr = Array(decoArray.length).fill(false);
+        newArr[idx] = true;
+        setDecoTypeState(newArr);
+    }
     
-    const [typeItemState, setItemTypeState] = useState("eye");  //아이템 카테고리
-    var itemArray = [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12]; //item 개수
     return (
         <div className="layoutDeco">
             <div><HeaderDeco/></div>
@@ -74,27 +75,13 @@ const AvatarDeco = () => {
                     </Canvas>
                 </Suspense>
                 
-                <div className="faceDeco">
-                    <div className="faceBtnGroup">
-                        <div className={typeItemState === "eye" ? "selectBtn" : "face_btn"} onClick={() => {setItemTypeState("eye")}}>눈</div>
-                        <div className={typeItemState === "mouth" ? "selectBtn" : "face_btn"} onClick={() => {setItemTypeState("mouth")}}>입</div>
-                    </div>
-                    <div>
-                        {
-                        itemArray.map(function(){
-                            return (<div className="item_box">
-                                <img className="item_img" src={process.env.PUBLIC_URL + "/img/jean.png"} img alt="my image"/>
-                            </div>)
-                        })
-                        };  
-                    </div>
-                    
-                </div>
+                {typeDecoState[0] ? <Item /> : ''}
+                {typeDecoState[1] ? <Item /> : ''}
                 
             </div>
             <div className="chooseBtnGroup">
-                <div className="btn_face" onClick={()=>{setImageSrc(imgSrcList[0])}}><img src={imgSrc} img alt="my image"/></div>
-                <div className="btn_cloth"onClick={()=>{setImageSrc(imgSrcList[3])}}><img src={imgSrc} img alt="my image"/></div>
+                <div className="btn_face" onClick={()=>{handleDecoClick(0)}}><img src={typeDecoState[0] ? process.env.PUBLIC_URL + "/img/VectorsmileTrue.png" : process.env.PUBLIC_URL + "/img/VectorsmileFalse.png"}/></div>
+                <div className="btn_cloth"onClick={()=>{handleDecoClick(1)}}><img src={typeDecoState[1] ? process.env.PUBLIC_URL + "/img/VectorclothTrue.png" : process.env.PUBLIC_URL + "/img/VectorclothFalse.png"}/></div>
             </div>
             
         </div>

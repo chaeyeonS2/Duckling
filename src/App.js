@@ -8,7 +8,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { useGLTF } from '@react-three/drei';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import Header from "./header";
-import AvatarDeco from './pages/avatarDeco';
+import AvatarDeco from './pages/avatar/avatarDeco';
 // function CubeShow() {S
 //   return (
 //     <>

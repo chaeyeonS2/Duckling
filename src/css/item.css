@@ -1,41 +1,3 @@
-.layoutDeco {
-    padding-top: 30px;
-    min-height: 90vh;
-    position: relative;
-    width: 100%;
-}
-
-.avatarDeco{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: rgb(255, 255, 255);
-}
-
-.chooseBtnGroup{
-    border: 1px solid black;
-    position: absolute;
-    padding: 5px;
-    bottom: 53%;
-    margin-left: 5%;
-}
-
-.btn_face{
-    width: 36px;
-    height: 36px;
-    background-color: rgb(0, 0, 0);
-    display: flex;
-    margin-bottom: 5px;
-}
-
-
-.btn_cloth{
-    width: 36px;
-    height: 36px;
-    display: flex;
-    background-color: rgb(0, 0, 0);
-}
-
 .faceDeco{
     width: 100%;
     height: 50%;
@@ -77,10 +39,6 @@
     height: 100%;
     border: 1px solid #000;
     background: #FFF;
-    /* when select the box
-    background: #BDFF6B;
-    box-shadow: 2px 2px;
-    */
     text-align: center;
     line-height: 30px;
 }
