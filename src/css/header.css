@@ -1,0 +1,28 @@
+.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #dde0ea;
+    text-align: center;
+}
+
+#headerBtnGroup button{
+    border: 0px solid skyblue;
+    background-color: rgba(0,0,0,0);
+    color: rgba(0,0,0,0);
+}
+
+#headerBtnGroup div{
+    display: inline-block;
+}
+
+.leftBtnGroup{
+    float: left;
+    margin-top: 10px;
+}
+
+.rightBtnGroup{
+    float: right;
+}
+
