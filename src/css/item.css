@@ -1,4 +1,4 @@
-.faceDeco{
+.Deco{
     width: 100%;
     height: 50%;
     bottom: 0px;
@@ -27,15 +27,17 @@
     max-height: 100%;
 }
 
-.faceBtnGroup{
+.typeItemBtnGroup{
     width: 100%;
     height: 30px;
     padding-bottom: 5px;
 }
-.face_btn{
+.nonSelectbtn{
     float: left;
-    margin-left: 23px;
-    width : 50px;
+    margin-left: 15px;
+    width : fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 100%;
     border: 1px solid #000;
     background: #FFF;
@@ -45,8 +47,10 @@
 
 .selectBtn{
     float: left;
-    margin-left: 23px;
-    width : 50px;
+    margin-left: 15px;
+    width : fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 100%;
     border: 1px solid #000;
     

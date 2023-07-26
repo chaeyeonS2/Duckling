@@ -17,24 +17,11 @@ const NewMapModel = (props) => {
         <pointLight intensity={1}/>
         <primitive 
             object={scene}
-            scale={1.5}
-            position={[0,-0.08,0]}
-        />
-    </mesh>
-     
-    );
-};
-
-const ItemModel = (props) => {
-    const { scene } = useGLTF(process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf');
-    
-    return (
-    <mesh>
-        <pointLight intensity={1}/>
-        <primitive 
-            object={scene}
-            scale={1.2}
-            position={[0,-0.1,0]}
+            scale={props.scale}
+            position={props.position}
+            //cloth일 경우
+            // scale={1.2}
+            // position={[0,-0.05,0]}
         />
     </mesh>
      
@@ -71,12 +58,19 @@ const AvatarDeco = () => {
                     <Canvas shadows camera={{rotation: [0, 0, 0], fov: 150, zoom: 100, near: 1, far: 10 } }>
                         <spotLight intensity={1} position={[0, 30, 120]} angle={0.2} penumbra={1} castShadow/>
                         <ambientLight intensity={0.4} />
-                        <NewMapModel />  
+                        {typeDecoState[0] ? <NewMapModel
+                                                scale= {1.5}
+                                                position={[0,-0.08,0]}
+                                            /> :
+                                            <NewMapModel
+                                                scale= {1.2}
+                                                position={[0,-0.05,0]}
+                        />}
                     </Canvas>
                 </Suspense>
                 
-                {typeDecoState[0] ? <Item /> : ''}
-                {typeDecoState[1] ? <Item /> : ''}
+                {typeDecoState[0] ? <Item type={"face"} /> : ''}
+                {typeDecoState[1] ? <Item type={"cloth"} /> : ''}
                 
             </div>
             <div className="chooseBtnGroup">
