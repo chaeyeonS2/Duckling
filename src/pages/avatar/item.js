@@ -1,6 +1,7 @@
 import "../../css/item.css";
-import React, { useState, Suspense, useRef, useEffect } from "react";
-  
+import React, { useState, useEffect } from "react";
+import Itembox from '../avatar/itembox';
+
 const Item = props => {
     const type = props.type;
     
@@ -18,12 +19,12 @@ const Item = props => {
                     <div className={typeItemState_face === "eye" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("eye")}}>눈</div>
                     <div className={typeItemState_face === "mouth" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("mouth")}}>입</div>
                 </div>
-                <div>
-                    {
+                <div> 
+                    { //아이템 썸네일 박스
                     itemArray.map(function(){
-                        return (<div className="item_box">
-                            <img className="item_img" src={process.env.PUBLIC_URL + "/img/jean.png"} img alt="my image"/>
-                        </div>)
+                        return (<Itembox 
+                                    type = {typeItemState_face}
+                                />)
                     })};  
                 </div>
             </div>
@@ -37,12 +38,12 @@ const Item = props => {
                     <div className={typeItemState_cloth === "하의" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("하의")}}>하의</div>
                     <div className={typeItemState_cloth === "한벌의상" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("한벌의상")}}>한벌 의상</div>
                 </div>
-                <div>
-                    {
+                <div> 
+                    { //아이템 썸네일 박스
                     itemArray.map(function(){
-                        return (<div className="item_box">
-                            <img className="item_img" src={process.env.PUBLIC_URL + "/img/jean.png"} img alt="my image"/>
-                        </div>)
+                        return (<Itembox 
+                                    type = {typeItemState_cloth}
+                                />)
                     })};  
                 </div>
             </div>

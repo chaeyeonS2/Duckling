@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Footer from "../../footer";
-import HeaderDeco from "../../headerDeco";
+import HeaderDeco from "../../headers/headerDeco";
 import "../../css/avatarDeco.css";
 import React, { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas, Camera, useFrame, useLoader } from "@react-three/fiber";
@@ -22,6 +22,29 @@ const NewMapModel = (props) => {
             //cloth일 경우
             // scale={1.2}
             // position={[0,-0.05,0]}
+        />
+    </mesh>
+     
+    );
+};
+
+const ItemModel = (props) => {
+    const { scene } = useGLTF(process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf');
+    //const { scene } = useGLTF(process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf');
+
+    return (
+    <mesh>
+        {/* <boxGeometry args={[0.05,0.05,0.05]}/>
+        <meshStandardMaterial color={"blue"} /> */}
+        <pointLight intensity={1}/>
+        <primitive 
+            object={scene}
+            // scale={props.scale}
+            // position={props.position}
+            //cloth일 경우
+            scale={0.0002}
+            position={[0,-0.005,0.01]}
+            
         />
     </mesh>
      
@@ -58,7 +81,8 @@ const AvatarDeco = () => {
                     <Canvas shadows camera={{rotation: [0, 0, 0], fov: 150, zoom: 100, near: 1, far: 10 } }>
                         <spotLight intensity={1} position={[0, 30, 120]} angle={0.2} penumbra={1} castShadow/>
                         <ambientLight intensity={0.4} />
-                        {typeDecoState[0] ? <NewMapModel
+                        <ParentAndChildModels />
+                        {/* {typeDecoState[0] ? <NewMapModel
                                                 scale= {1.5}
                                                 position={[0,-0.08,0]}
                                             /> :
@@ -66,6 +90,8 @@ const AvatarDeco = () => {
                                                 scale= {1.2}
                                                 position={[0,-0.05,0]}
                         />}
+                        
+                        <ItemModel/> */}
                     </Canvas>
                 </Suspense>
                 
@@ -81,5 +107,42 @@ const AvatarDeco = () => {
         </div>
     )
 }
+
+const ParentAndChildModels = () => {
+    const groupRef = useRef();
+  
+    // 부모와 자식 gltf 모델들을 로드하고 그룹에 추가하는 함수
+    const loadModels = () => {
+      const parentGltfPath = process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf';
+      const childGltfPath = process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf';
+  
+      const gltfLoader = new GLTFLoader();
+  
+      // 부모 gltf 모델을 로드하여 그룹에 추가
+      gltfLoader.load(parentGltfPath, (parentGltf) => {
+        const parentModel = parentGltf.scene;
+        parentModel.scale.set(1.2, 1.2, 1.2); // 부모 모델 크기 조정
+        parentModel.position.set(0,-0.05,0);
+        groupRef.current.add(parentModel);
+      });
+  
+      // 자식 gltf 모델을 로드하여 그룹에 추가
+      gltfLoader.load(childGltfPath, (childGltf) => {
+        const childModel = childGltf.scene;
+        childModel.scale.set(0.0002, 0.0002, 0.0002); // 자식 모델 크기 조정
+        childModel.position.set(0,-0.005,0.01); // 자식 모델 위치 설정
+        groupRef.current.add(childModel);
+      });
+    };
+  
+    // 부모와 자식 gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
+    useEffect(() => {
+      loadModels();
+    }, []);
+  
+    return (
+      <group ref={groupRef} position = {[0.01,0,0]}/>
+    );
+  };
 
 export default AvatarDeco

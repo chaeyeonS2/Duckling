@@ -1,6 +1,6 @@
 //import React from 'react';
 import Footer from "./footer";
-import Header from "./header";
+import Header from "./headers/header";
 import "./css/layout.css";
 import React, { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas, Camera, useFrame, useLoader } from "@react-three/fiber";

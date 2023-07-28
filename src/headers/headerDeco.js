@@ -1,4 +1,4 @@
-import './css/headerDeco.css';
+import '../css/headerDeco.css';
 import { Link } from "react-router-dom";
 
 
