@@ -2,9 +2,11 @@
     position: fixed;
     left: 0;
     top: 0;
+    height: 40px;
     width: 100%;
     background-color: #dde0ea;
     text-align: center;
+    z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
 }
 
 #headerBtnGroup button{

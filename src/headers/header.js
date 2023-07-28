@@ -13,7 +13,6 @@ const Header = () => {
         <Link to = "/avatarDeco"> avatarDeco </Link>
     }
     
-
     return (
         <header className="header">
             <div id="headerBtnGroup">
