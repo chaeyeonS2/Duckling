@@ -9,6 +9,7 @@ import { useGLTF } from '@react-three/drei';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import AvatarDeco from './pages/avatar/avatarDeco';
 import Post from "./pages/writing/post";
+import Home from "./pages/home";
 // function CubeShow() {S
 //   return (
 //     <>
@@ -80,7 +81,7 @@ function App() {
   });
   return (
     <BrowserRouter>
-    <Layout/>
+    <Post />
       <Routes>
         <Route path="/" component={Layout}/>
         <Route exact path="/avatarDeco" component={AvatarDeco}/>

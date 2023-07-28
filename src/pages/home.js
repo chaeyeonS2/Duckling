@@ -1,7 +1,7 @@
 //import React from 'react';
-import Footer from "./footer";
-import Header from "./headers/header";
-import "./css/layout.css";
+import Footer from "../footer";
+import Header from "../headers/header";
+import "../css/layout.css";
 import React, { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas, Camera, useFrame, useLoader } from "@react-three/fiber";
 import { Vector3 } from "three";
@@ -71,11 +71,11 @@ function Box(props) {
 
   
 
-const Layout = () => {
+const Home = () => {
     return (
-        <div id="layout">
+        <div className="layout">
             <Header/>
-            <div id="avatar">
+            <div className="content">
             <Suspense fallback={null}>
                     <Canvas shadows camera={{rotation: [0, 0, 0], fov: 150, zoom: 100, near: 1, far: 10 } }>
                         <spotLight intensity={1} position={[0, 30, 120]} angle={0.2} penumbra={1} castShadow/>
@@ -90,4 +90,4 @@ const Layout = () => {
     )
 }
 
-export default Layout
+export default Home

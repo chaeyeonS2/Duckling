@@ -1,16 +1,57 @@
-.post{
-    border-radius: 20px 20px 0 0; /* 상단 좌우 모서리에만 둥근 값을 설정 */
-    border-top: 3px solid black;
-    border-left : 1px solid black;
-    width: 100%;
-    height: 300px;
+
+.marignBox{
+    padding: 0.5vw;
+    width: 99vw;
+    text-align: center;
 }
 
-.layoutDeco {
-    padding-top: 30px;
-    margin: 0px;
-    min-height: 90vh;
-    position: relative;
-    width: 100%;
+.title{
+    height: 45px;
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 5px solid black;
+}
+
+.titleInput{
+    width: 90vw;
+    height: 40px;
+    background: transparent;
+    border: 0;
+    margin-top: 3px;
+}
+
+.writing{
+    height: 80vh;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.writingInput{
+    width: 90vw;
+    margin-top: 10px;
+    background: transparent;
+    border: 0;
+    height: 70vh;
+}
+
+.toolBar{
+    width: 100vw;
+    height: 50px;
     background-color: aqua;
+    position: fixed;
+    bottom: 88px;
+}
+
+.camera{
+    width: 50px;
+    height: 50px;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+
+.camera img{
+    width: 40px;
+    height: 40px;
 }
