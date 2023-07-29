@@ -100,9 +100,8 @@ const AvatarDeco = () => {
             </div>
             <div className="chooseBtnGroup">
                 <div className="btn_face" onClick={()=>{handleDecoClick(0)}}><img src={typeDecoState[0] ? process.env.PUBLIC_URL + "/img/VectorsmileTrue.png" : process.env.PUBLIC_URL + "/img/VectorsmileFalse.png"}/></div>
-                <div className="btn_cloth"onClick={()=>{handleDecoClick(1)}}><img src={typeDecoState[1] ? process.env.PUBLIC_URL + "/img/VectorclothTrue.png" : process.env.PUBLIC_URL + "/img/VectorclothFalse.png"}/></div>
-            </div>
-            
+                <div className="btn_cloth"onClick={()=>{handleDecoClick(1)}}><img src={typeDecoState[1] ? process.env.PUBLIC_URL + "/img/VectorclothTrue.png" : process.env.PUBLIC_URL + "/img/VectorclothFalse.png"}/></div>              
+            </div>            
         </div>
     )
 }
@@ -125,6 +124,7 @@ const ParentAndbottomModels = (props) => {
         groupRef.current.add(avatarModel);
       });
   
+    <putChildGltf/>
       // 자식 gltf 모델을 로드하여 그룹에 추가
       gltfLoader.load(bottomGltfPath, (childGltf) => {
         const bottomModel = childGltf.scene;
@@ -139,6 +139,18 @@ const ParentAndbottomModels = (props) => {
       loadModels();
     }, []);
   
+    // const putChildGltf = () => {
+    //     const gltfLoader = new GLTFLoader();
+    //     const topGltfPath = process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf';
+
+    //     // 자식 gltf 모델을 로드하여 그룹에 추가
+    //     gltfLoader.load(topGltfPath, (childGltf) => {
+    //     const topModel = childGltf.scene;
+    //     topModel.scale.set(0.0002, 0.0002, 0.0002); // 자식 모델 크기 조정
+    //     topModel.position.set(0,-0.005,0.01); // 자식 모델 위치 설정
+    //     groupRef.current.add(topModel);
+    //   });
+    // }
     return (
       <group ref={groupRef} 
         scale={props.scale}
