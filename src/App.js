@@ -81,7 +81,7 @@ function App() {
   });
   return (
     <BrowserRouter>
-    <Post />
+    <AvatarDeco />
       <Routes>
         <Route path="/" component={Layout}/>
         <Route exact path="/avatarDeco" component={AvatarDeco}/>

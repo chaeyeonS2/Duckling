@@ -81,17 +81,16 @@ const AvatarDeco = () => {
                     <Canvas shadows camera={{rotation: [0, 0, 0], fov: 150, zoom: 100, near: 1, far: 10 } }>
                         <spotLight intensity={1} position={[0, 30, 120]} angle={0.2} penumbra={1} castShadow/>
                         <ambientLight intensity={0.4} />
-                        <ParentAndChildModels />
-                        {/* {typeDecoState[0] ? <NewMapModel
-                                                scale= {1.5}
-                                                position={[0,-0.08,0]}
-                                            /> :
-                                            <NewMapModel
+                        {/* <ParentAndbottomModels /> */}
+                        {typeDecoState[0] ? <ParentAndbottomModels
                                                 scale= {1.2}
-                                                position={[0,-0.05,0]}
+                                                position={[0,-0.01,0]}
+                                            /> :
+                                            <ParentAndbottomModels
+                                                scale= {1}
+                                                position={[0,0.01,0]}
                         />}
                         
-                        <ItemModel/> */}
                     </Canvas>
                 </Suspense>
                 
@@ -108,30 +107,30 @@ const AvatarDeco = () => {
     )
 }
 
-const ParentAndChildModels = () => {
-    const groupRef = useRef();
+const ParentAndbottomModels = (props) => {
+    const groupRef = useRef(props);
   
     // 부모와 자식 gltf 모델들을 로드하고 그룹에 추가하는 함수
     const loadModels = () => {
-      const parentGltfPath = process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf';
-      const childGltfPath = process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf';
+      const AvatarGltfPath = process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf';
+      const bottomGltfPath = process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf';
   
       const gltfLoader = new GLTFLoader();
   
       // 부모 gltf 모델을 로드하여 그룹에 추가
-      gltfLoader.load(parentGltfPath, (parentGltf) => {
-        const parentModel = parentGltf.scene;
-        parentModel.scale.set(1.2, 1.2, 1.2); // 부모 모델 크기 조정
-        parentModel.position.set(0,-0.05,0);
-        groupRef.current.add(parentModel);
+      gltfLoader.load(AvatarGltfPath, (parentGltf) => {
+        const avatarModel = parentGltf.scene;
+        avatarModel.scale.set(1.2, 1.2, 1.2); // 부모 모델 크기 조정
+        avatarModel.position.set(0,-0.05,0);
+        groupRef.current.add(avatarModel);
       });
   
       // 자식 gltf 모델을 로드하여 그룹에 추가
-      gltfLoader.load(childGltfPath, (childGltf) => {
-        const childModel = childGltf.scene;
-        childModel.scale.set(0.0002, 0.0002, 0.0002); // 자식 모델 크기 조정
-        childModel.position.set(0,-0.005,0.01); // 자식 모델 위치 설정
-        groupRef.current.add(childModel);
+      gltfLoader.load(bottomGltfPath, (childGltf) => {
+        const bottomModel = childGltf.scene;
+        bottomModel.scale.set(0.0002, 0.0002, 0.0002); // 자식 모델 크기 조정
+        bottomModel.position.set(0,-0.005,0.01); // 자식 모델 위치 설정
+        groupRef.current.add(bottomModel);
       });
     };
   
@@ -141,7 +140,10 @@ const ParentAndChildModels = () => {
     }, []);
   
     return (
-      <group ref={groupRef} position = {[0.01,0,0]}/>
+      <group ref={groupRef} 
+        scale={props.scale}
+        position={props.position}
+      />
     );
   };
 

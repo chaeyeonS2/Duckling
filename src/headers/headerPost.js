@@ -8,13 +8,11 @@ const HeaderPost = () => {
         <header className="header">
             <div id="headerBtnGroup">
                 <div className='leftBtnGroup'>
-                    <button id="btn_close"><img src={process.env.PUBLIC_URL + "/img/close.png"} img alt="my image"/></button>
-                    
+                    <button className="btn_close"><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}/></button>
                 </div>
                 <div className='rightBtnGroup'>
-                    <button id="btn_share"><img src={process.env.PUBLIC_URL + "/img/share.png"} /></button>
-                    <button id="btn_goAvatar"><img src={process.env.PUBLIC_URL + "/img/cart.png"}/></button>
-                    
+                    <button className="btn_check">
+                        <img src={process.env.PUBLIC_URL + "/img/writing/check.png"} /></button>                    
                 </div>
                 
             </div>

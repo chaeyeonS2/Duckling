@@ -38,7 +38,8 @@
 .toolBar{
     width: 100vw;
     height: 50px;
-    background-color: aqua;
+    background-color: white;
+    border-top: 1px solid #DDD;
     position: fixed;
     bottom: 88px;
 }
