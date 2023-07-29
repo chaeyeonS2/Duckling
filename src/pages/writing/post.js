@@ -18,6 +18,32 @@ const Post = propos => {
         // (예시) 서버에 데이터를 전송하거나, 다른 필요한 동작을 수행할 수 있습니다.
     };
 
+    // 글의 줄 수에 따라 input 필드 높이 조절
+    const textarea = useRef(null);
+        const handleResizeHeight = () => {
+        textarea.current.style.height = 'auto'; //height 초기화
+        textarea.current.style.height = textarea.current.scrollHeight + 'px';
+    };
+
+    //camera -> 이미지 삽입
+    const [previewImage, setPreviewImage] = useState(null);
+
+    const inputFileRef = useRef(null);
+    const handleCameraBtnClick = () => {
+        inputFileRef.current.click();
+    }
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+    
+        reader.onload = (e) => {
+            const imageDataURL = e.target.result;
+            setPreviewImage(imageDataURL);
+        };
+    
+        reader.readAsDataURL(file);
+    };
+
     return (
         <div className="layout">
             {/* 고정 헤더 */}
@@ -35,27 +61,43 @@ const Post = propos => {
                                 onChange={(e) => setTitle(e.target.value)}
                             />
                         </div>
-                        <div className="writing">
+                        
+                        <article className="writing">
                             <textarea className="writingInput"
+                                rows={1}
+                                ref={textarea}
                                 name="content"                                
                                 value={content}
                                 placeholder="자유롭게 덕질 일상을 기록해요 ( ⸝•ᴗ•⸝)"
+                                onInput={handleResizeHeight}
                                 onChange={(e) => setContent(e.target.value)}
-                            />
-                        </div>
+                                />
+                            {previewImage && (
+                                <div>
+                                    <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
+                                </div>
+                            )}
+                        </article>
+                        
                     </form>
-                    <div>
-
-                    </div>
 
                 </div>
                 
             </div>
             <div className="toolBar">
-                <div className="camera"><img src={process.env.PUBLIC_URL + "/img/writing/camera.png"}/></div>
+                <div className="camera" onClick={handleCameraBtnClick}>
+                    <img src={process.env.PUBLIC_URL + "/img/writing/camera.png"}/>
+                </div>
+                <input
+                    ref={inputFileRef}
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={handleImageUpload}
+                />
             </div>
             {/* 고정 푸터 */}
-            <Footer/>           
+            <Footer/>
             
         </div>
     )
