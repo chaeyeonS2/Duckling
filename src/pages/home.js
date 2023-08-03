@@ -8,6 +8,8 @@ import { Vector3 } from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useGLTF } from '@react-three/drei';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
+import { BottomSheet } from 'react-spring-bottom-sheet';
+import "../css/customBottomSheet.css";
 
 
 // function Box(props) {
@@ -72,6 +74,9 @@ function Box(props) {
   
 
 const Home = () => {
+  const [show, setShow] = useState(false); // show 상태와 setShow 함수를 선언합니다.
+
+
     return (
         <div className="layout">
             <Header/>
@@ -85,6 +90,14 @@ const Home = () => {
                 </Suspense>
             
             </div>
+            <BottomSheet
+                    open={show} // 바닥 시트 열림 상태
+                    onDismiss={() => setShow(false)} // 닫기 버튼 클릭 시 호출되는 함수
+                >
+                    <div className="commentBox">
+                    댓글용 바닥 시트
+                    </div>
+            </BottomSheet>
             <Footer/>
         </div>
     )

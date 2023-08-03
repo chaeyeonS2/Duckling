@@ -12,7 +12,7 @@ const HeaderDeco = () => {
     return (
         <header className="header">
                 <div className='rightBtnGroup'>
-                <button id="btn_close"><img src={process.env.PUBLIC_URL + "/img/close.png"} img alt="my image"/></button>
+                <button id="btn_close"><img src={process.env.PUBLIC_URL + "/img/close.png"}/></button>
             </div>
         </header>
     )
