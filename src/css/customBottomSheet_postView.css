@@ -97,15 +97,13 @@
     box-shadow: 0 1px 0
       rgba(46, 59, 66, calc(var(--rsbs-content-opacity,1) * 0.125));
     z-index: 1;
-    padding-top: 15px;
-    padding-bottom: 12px;
 
     /* 커스텀할 내용 추가 */
     height: 50px;
-    border-radius: 20px 20px 0 0;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-top: 5px solid black;
+    border: 0px;
+    padding: 0px;
+    border-radius: 0px;
+    background-color: rgb(0, 0, 0, 1);
   }
   
   /* [data-rsbs-header]:before {
@@ -191,48 +189,19 @@
   }
 
 /* 헤더 커스텀 */
-.bottom_header{
-  width: 100%;
+.bottomBar{
+
 }
 
-.profileImg{
+.bottomBar div{
+  float: left; 
+  color: white;
+  padding: 5px;
+}
+
+.bottomBar .num{
   float: left;
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  background-color: #D9D9D9;
-}
-
-.userName{
-  float: left;
-  display: flex;
-  align-items: center;
-  width: auto;
-  height: 50px;
-  margin-left: 20px;
-  font-size: 22px;
-}
-
-.btnAddNew{
-  float: right;
-  width: 50px;
-  height: 50px;
-}
-
-.btnAddNew img{
-  width: 40px;
-  height: 40px;
-  margin: 5px;
+  padding-right: 10px;
 }
 
 /* 내용 커스텀 */
-.bottom_content{
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.postImg{
-  width: 33vw; /* 각 열의 너비 */
-  height: 33vw;
-  background-color: #f0f0f0;
-}

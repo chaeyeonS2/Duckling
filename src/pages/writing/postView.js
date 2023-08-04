@@ -35,7 +35,7 @@ const PostView = () => {
                 </div>
                 
             </div>
-            <div className="bottomBar">
+            {/* <div className="bottomBar">
                 <div className='candy'>
                     <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
                     <div className='num'>215</div>
@@ -44,13 +44,34 @@ const PostView = () => {
                     <div><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
                     <div className='num'>423</div>
                 </div>
-            </div>
+            </div> */}
             <BottomSheet
-                    open={show} // 바닥 시트 열림 상태
-                    onDismiss={() => setShow(false)} // 닫기 버튼 클릭 시 호출되는 함수
-                >
+                    open // 바닥 시트 열림 상태
+                    //onDismiss={() => setShow(false)} // 닫기 버튼 클릭 시 호출되는 함수
+                    snapPoints={({ maxHeight }) => [
+                        maxHeight/19, //최소
+                        maxHeight /2, //최대
+                      ]}
+                      header={
+                        <div className="bottomBar">
+                            <div className='candy'>
+                                <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
+                                <div className='num'>215</div>
+                            </div>
+                            <div className='comment' onClick={() => setShow(true)}>
+                                <div><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
+                                <div className='num'>423</div>
+                            </div>
+                        </div>
+                      }
+                    >
                     <div className="commentBox">
-                    댓글용 바닥 시트
+                        <div className='commentTop'>
+
+                        </div>
+                        <div className='commentContent'>
+
+                        </div>
                     </div>
             </BottomSheet>
             {/* 고정 푸터 */}

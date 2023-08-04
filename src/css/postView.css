@@ -30,7 +30,7 @@
     text-align: left;
 }
 
-.bottomBar{
+/* .bottomBar{
     width: 100vw;
     height: 50px;
     background-color: rgb(0, 0, 0, 1);
@@ -50,7 +50,7 @@
 .bottomBar .num{
     float: left;
     padding-right: 10px;
-}
+} */
 
 .commentBox{
     width: 100vw;
