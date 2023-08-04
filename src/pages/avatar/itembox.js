@@ -12,7 +12,7 @@ const Itembox = props => {
                 //console.log(itemtype);
                 return(
                     setContent(
-                        <img className="item_img" src={process.env.PUBLIC_URL + "/img/item/jean.png"} img alt="my image"/>
+                        <img className="item_img" src={process.env.PUBLIC_URL + "/img/item/jean.png"}/>
                     )
                 )
             }

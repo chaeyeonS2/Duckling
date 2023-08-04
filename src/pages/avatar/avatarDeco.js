@@ -50,17 +50,6 @@ const ItemModel = (props) => {
      
     );
 };
-
-const Square = () => {
-    return (
-      <mesh rotation-x={Math.PI * 0.25} rotation-y={Math.PI * 0.25}>
-        <boxGeometry args={[0.05,0.05,0.05]}/>
-        <meshStandardMaterial color={"blue"} />
-      </mesh>
-    )
-  }
-
-
   
 const AvatarDeco = () => {
     //데코(얼굴, 옷) 카테고리 선택

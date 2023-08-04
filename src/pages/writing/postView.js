@@ -5,7 +5,7 @@ import HeaderPostView from "../../headers/headerPostView";
 import React, { useState, useRef } from "react";
 import { BottomSheet } from 'react-spring-bottom-sheet';
 // import 'react-spring-bottom-sheet/dist/style.css'; // 스타일 파일을 불러옵니다.
-import "../../css/customBottomSheet.css";
+import "../../css/customBottomSheet_postView.css";
 
 const PostView = () => {
     const textarea = useRef(null);
