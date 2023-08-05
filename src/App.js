@@ -11,6 +11,7 @@ import AvatarDeco from './pages/avatar/avatarDeco';
 import Post from "./pages/writing/post";
 import Home from "./pages/home";
 import PostView from "./pages/writing/postView";
+import Login from "./pages/login";
 
 // function CubeShow() {S
 //   return (
@@ -83,7 +84,7 @@ function App() {
   });
   return (
     <BrowserRouter>
-    <PostView/>
+    <Login/>
       <Routes>
         <Route path="/" component={Layout}/>
         <Route exact path="/avatarDeco" component={AvatarDeco}/>
