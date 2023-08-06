@@ -1,0 +1,19 @@
+.background{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.60);
+    position: relative;  
+}
+
+.alertlayout{
+    width: 300px;
+    height: 180px;
+    background-color: black;
+    position: absolute;
+    top: 30%;
+}
+
+.alertlayout div{
+    text-align: center;
+    align-items: center;
+}

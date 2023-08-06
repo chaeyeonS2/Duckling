@@ -1,0 +1,10 @@
+.text3{
+    padding-top: 5px;
+
+    color: var(--white, #FFF);
+    font-family: Pretendard;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
