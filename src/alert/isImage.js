@@ -3,8 +3,7 @@ import "../css/alert/alertLayout.css";
 import "../css/alert/isImage.css";
 
 const IsImage = () => {
-    return(
-        <div className="background">
+    return (
             <div className="alertlayout">
             <div className="imageBox">
                 <img style={{width:"33px", height:"33px"}} src={process.env.PUBLIC_URL + "/img/home.png"}/>
@@ -17,7 +16,6 @@ const IsImage = () => {
             <div className="btnBox">
                 <button className="btn_ok">확인</button>
             </div>
-        </div>
         </div>
         
     )

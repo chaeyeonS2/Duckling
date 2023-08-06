@@ -1,7 +1,5 @@
-import { auth } from '../firebase/config'
-import { getAuth, signInWithPopup, updateProfile,TwitterAuthProvider } from 'firebase/auth';
-import { getFirestore } from "firebase/firestore";
-//import firebase from 'firebase/app';
+//import { auth } from '../firebase/config'
+import { getAuth, signInWithPopup,TwitterAuthProvider } from 'firebase/auth';
 
 const Login = () => {
 

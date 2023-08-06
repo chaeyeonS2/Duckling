@@ -3,6 +3,9 @@ import "../../css/layout.css";
 import Footer from "../../footer";
 import HeaderPost from "../../headers/headerPost";
 import React, { useState, Suspense, useRef, useEffect } from "react";
+import Modal from '../../alert/modal';
+import Uploading from "../../alert/uploading";
+import IsImage from "../../alert/isImage";
 
 const Post = propos => {
     // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
@@ -44,8 +47,25 @@ const Post = propos => {
         reader.readAsDataURL(file);
     };
 
+    //이미지 존재 여부 검사
+    const [isImage, checkIsImage] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(true);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+      };
+    
+      const closeModal = () => {
+        setIsModalOpen(false);
+      };
+
     return (
+        
+        
         <div className="layout">
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+                <IsImage/>
+            </Modal>    
             {/* 고정 헤더 */}
             <HeaderPost/>
             <div className="content">
@@ -97,9 +117,9 @@ const Post = propos => {
                 />
             </div>
             {/* 고정 푸터 */}
-            <Footer/>
-            
+            <Footer/>    
         </div>
+        
     )
 }
 export default Post

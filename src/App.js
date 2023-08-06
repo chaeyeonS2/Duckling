@@ -12,6 +12,10 @@ import Post from "./pages/writing/post";
 import Home from "./pages/home";
 import PostView from "./pages/writing/postView";
 import Login from "./pages/login";
+import IsImage from "./alert/isImage";
+import Uploading from "./alert/uploading";
+import Delete from "./alert/delete";
+import PostShare from "./alert/postShare";
 
 // function CubeShow() {S
 //   return (
@@ -84,10 +88,10 @@ function App() {
   });
   return (
     <BrowserRouter>
-    <Login/>
+      <Post/>
       <Routes>
         <Route path="/" component={Layout}/>
-        <Route exact path="/avatarDeco" component={AvatarDeco}/>
+      <Route exact path="/avatarDeco" component={AvatarDeco}/>
       </Routes>
   </BrowserRouter>
     
