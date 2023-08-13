@@ -1,18 +1,18 @@
-import '../css/header.css';
+import styles from "../css/header/header.module.css";
 import { Link } from "react-router-dom";
 
 
 const HeaderDeco = () => {
     //const history = useHistory();    
-    const goAvatarDeco = () => {
-        <Link to = "/avatarDeco"> avatarDeco </Link>
-    }
+    // const goAvatarDeco = () => {
+    //     <Link to = "/avatarDeco"> avatarDeco </Link>
+    // }
     
 
     return (
-        <header className="header">
-                <div className='rightBtnGroup'>
-                <button id="btn_close"><img src={process.env.PUBLIC_URL + "/img/close.png"}/></button>
+        <header className={styles.header}>
+                <div className={styles.rightBtnGroup}>
+                <button id={styles.btn_close}><img src={process.env.PUBLIC_URL + "/img/close.png"}/></button>
             </div>
         </header>
     )

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
-import { BottomSheet, expandOnContentDrag } from 'react-spring-bottom-sheet';
+import { BottomSheet } from 'react-spring-bottom-sheet';
 // import 'react-spring-bottom-sheet/dist/style.css'; // 스타일 파일을 불러옵니다.
 import "../../css/customBottomSheet_postView.css";
 
@@ -15,7 +15,7 @@ const CommentView = () => {
     const [comment, setComment] = useState('');
 
     const handleCommentChange = (event) => {
-      setComment(event.target.value); 
+      setComment(event.target.value);
     };
   
     const handleSubmit = (event) => {
@@ -24,83 +24,64 @@ const CommentView = () => {
       console.log('댓글 제출:', comment);
       setComment(''); // 댓글 입력란 초기화
     };
-      
-    // useLayoutEffect(() => { 
-    //     // BottomSheet가 항상 열려있는 상태에서 실행될 코드
-    //     const parentDiv = document.getElementById('parentDiv-post');
-    //     if (parentDiv) {
-    //       const childDivs = parentDiv.querySelectorAll('div');
-          
-    //       childDivs.forEach((childDiv) => {
-    //         childDiv.classList.add('postSheet');
-    //       });
-          
-    //       return () => {
-    //         childDivs.forEach((childDiv) => {
-    //           childDiv.classList.remove('postSheet');
-    //         });
-    //       };
-    //     } 
-    //   }, []);
+
+    
+
+    const modalRef = useRef(null);
+    const [portalCreated, setPortalCreated] = useState(false);
      
-    useEffect(() => {
-        
-        // setTimeout을 사용하여 portal이 생성된 후에 작업 실행
-        const timeoutId = setTimeout(() => {
-          const parentDiv = document.getElementById('parentDiv-post');
-          if (parentDiv) {
-            const childDivs = parentDiv.querySelectorAll('div');
-            
+    useLayoutEffect(() => {
+        // BottomSheet가 항상 열려있는 상태에서 실행될 코드
+        const parentDiv = document.getElementById('parentDiv-post');
+        if (parentDiv) {
+          const childDivs = parentDiv.querySelectorAll('div');
+          
+          childDivs.forEach((childDiv) => {
+            childDiv.classList.add('postSheet');
+          });
+          
+          return () => {
             childDivs.forEach((childDiv) => {
-              childDiv.classList.add('postSheet');
+              childDiv.classList.remove('postSheet');
             });
-            
-            return () => {
-              childDivs.forEach((childDiv) => {
-                childDiv.classList.remove('postSheet');
-              });
-            };
-          }
-        }, 1); // 일정 시간 후에 실행
-        
-        return () => {
-          clearTimeout(timeoutId); // 컴포넌트가 언마운트될 때 clearTimeout으로 타이머 해제
-        };
+          };
+        }
       }, []);
+    
+ 
 
     return(
         <BottomSheet className="postSheet" id="parentDiv-post"
-        open // 바닥 시트 열림 상태
-        draggable = {false}
-        snapPoints={({ maxHeight }) => [
-            maxHeight/19, //최소
-            maxHeight /2, //최대
-        ]}
-        blocking = {false}  //배경 블록 현상 해결
-        ref={sheetRef}
-        expandOnContentDrag={false} // 드래그로 크기 조절 비활성화
+            open // 바닥 시트 열림 상태
+            //onDismiss={() => setShow(false)} // 닫기 버튼 클릭 시 호출되는 함수
+            //snapPoints={({ maxHeight }) => {snapPoints}}
+            scrollLocking = {false}
+            snapPoints={({ maxHeight }) => [
+                maxHeight/19, //최소
+                maxHeight /2, //최대
+                ]}
+                ref={sheetRef}
+                header={
+                <div className="bottomBar">
+                    <div className='candy'>
+                        <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
+                        <div className='num'>215</div>
+                    </div>
+                    <div className='comment' onClick={() => 
+                        sheetRef.current.snapTo(({ snapPoints }) => Math.max(...snapPoints), {
+                            // Each property is optional, here showing their default values
+                            source: 'snap-to-top',
+                            velocity: 1,
+                            })}>
+                        <div><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
+                        <div className='num'>423</div>
+                    </div>
 
-        header={
-        <div className="bottomBar">
-            <div className='candy'>
-                <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
-                <div className='num'>215</div>
-            </div>
-            <div className='comment' onClick={() => 
-                sheetRef.current.snapTo(({ snapPoints }) => Math.max(...snapPoints), {
-                    // Each property is optional, here showing their default values
-                    source: 'snap-to-top',
-                    velocity: 1,
-                    })}>
-                <div><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
-                <div className='num'>423</div>
-            </div>
+                    <button onClick={() => sheetRef.current.snapTo(0, { source: 'snap-to-bottom' })}>close</button>
+                
 
-            <button onClick={() => sheetRef.current.snapTo(0, { source: 'snap-to-bottom' })}>close</button>
-        
-
-        </div>
-        }
+                </div>
+                }
             > 
             <div className="BottomSheet-content">
                <div className="comment-get-layout">
@@ -177,6 +158,7 @@ const CommentView = () => {
                             <img src={process.env.PUBLIC_URL + "/img/writing/comment-upload-true-btn.png"}/>
                             </button>
                         </form>
+
                 </div>
 
                 </div>

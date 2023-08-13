@@ -185,7 +185,7 @@
     }
   
      .homeSheet[data-rsbs-state='closed'],
-     .homeSheet[data-rsbs-state='closing'] {
+     .homeSheet[data-rsbs-state='closing'], .homeSheet[data-rsbs-state="open"] {
     /* Allows interactions on the rest of the page before the close transition is finished */
     pointer-events: none;
   }
@@ -194,6 +194,7 @@
 .bottom_header{
   width: 100%;
 }
+
 
 .homeSheet .profileImg{
   float: left;

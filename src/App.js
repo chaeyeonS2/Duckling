@@ -17,6 +17,7 @@ import Uploading from "./alert/uploading";
 import Delete from "./alert/delete";
 import PostShare from "./alert/postShare";
 import Look from "./pages/looking/look";
+import Tmp from "./pages/writing/tmp";
 
 // function CubeShow() {S
 //   return (

@@ -1,12 +1,15 @@
 import Footer from '../../footer';
 import "../../css/layout.css";
-import "../../css/postView.css"
+import styles from "../../css/postView.module.css"
 import HeaderPostView from "../../headers/headerPostView";
 import React, { useState, useRef } from "react";
 import CommentView from "./commetView";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { register } from 'swiper/element/bundle';
+import EmblaCarousel from './Carousel';
+import ReactDOM from 'react-dom/client'
 
 // const StyledSlider = styled(Slider)`
 //     .slick-dots
@@ -27,8 +30,8 @@ function ImageSlider({ images }) {
         <div >
           <Slider {...settings}>
             {images.map((image, index) => (
-              <div className="slider-container" key={index}>
-                <img className='postImg_big' src={image} alt={`Slide ${index}`} />
+              <div className={styles.slidercontainer} key={index}>
+                <img className={styles.postImg_big} src={image} alt={`Slide ${index}`} />
               </div>
             ))}
           </Slider>
@@ -39,7 +42,7 @@ function ImageSlider({ images }) {
 const PostView = () => {
     const images = [
          process.env.PUBLIC_URL + "/img/writing/example.jpeg",
-        // process.env.PUBLIC_URL + "/img/writing/cat2.png",
+         process.env.PUBLIC_URL + "/img/writing/cat2.png",
         //process.env.PUBLIC_URL + "/img/writing/cat2.png",
         // <img className='postImg' src={process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/>,
         // <img className='postImg' src={process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/>,
@@ -52,17 +55,19 @@ const PostView = () => {
         <div >
             {/* 고정 헤더 */}
             <HeaderPostView/>
-            <div className="content">
-            <div className="marignBox">    
-                    <form className="post" >
-                        <div className="title">
-                            <p className='text_title text'>받아온 제목</p>
+            <div className={styles.content}>
+            <div className={styles.marignBox}>    
+                    <form className={styles.post} >
+                        <div className={styles.title}>
+                            <p className={styles.text}>받아온 제목</p>
                         </div>
                         
-                        <div className="writing-getBox">
-                            <ImageSlider className='imgslider' images={images} /> 
-                            {/* <img className='postImg' src={process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/> */}
-                            <p className="text_content text">
+                        <div className={styles.writinggetBox}>
+                        
+                            <ImageSlider className={styles.imgslider} images={images} /> 
+                            {/* <img className='postImg' src=process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/> */}
+                            
+                            <p className={styles.text_content}>
                                 받아온 글
                             </p>    
                         </div>
@@ -72,7 +77,7 @@ const PostView = () => {
                 </div>
                 
             </div>
-            <CommentView/>
+            {/* <CommentView/> */}
 
             {/* 고정 푸터 */}
             <Footer/>
