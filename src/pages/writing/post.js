@@ -61,11 +61,10 @@ const Post = propos => {
 
     return (
         
-        
         <div className="layout">
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <IsImage/>
-            </Modal>    
+        {/* <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <IsImage/>
+        </Modal>     */}
             {/* 고정 헤더 */}
             <HeaderPost/>
             <div className="content">
@@ -92,11 +91,35 @@ const Post = propos => {
                                 onInput={handleResizeHeight}
                                 onChange={(e) => setContent(e.target.value)}
                                 />
-                            {previewImage && (
-                                <div>
-                                    <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
-                                </div>
-                            )}
+
+                            <div className="img-upload-box">
+                                {previewImage && (
+                                    <div className="img-upload-preview" >
+                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
+                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
+                                    </div>
+                                )}
+                                {previewImage && (
+                                    <div className="img-upload-preview" >
+                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
+                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
+                                    </div>
+                                )}
+                                {previewImage && (
+                                    <div className="img-upload-preview" >
+                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
+                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
+                                    </div>
+                                )}
+                                {previewImage && (
+                                    <div className="img-upload-preview" >
+                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
+                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
+                                    </div>
+                                )}
+                            </div>
+                            
+                            
                         </article>
                         
                     </form>
