@@ -3,8 +3,6 @@ import "../css/alert/alertLayout.css";
 import ModalContainer from './modalContainer';
 
 function Modal(props) {
-    if (!props.isOpen) return null;
-    
     return (
         <ModalContainer>
         <div className="modal-overlay">

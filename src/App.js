@@ -16,6 +16,7 @@ import IsImage from "./alert/isImage";
 import Uploading from "./alert/uploading";
 import Delete from "./alert/delete";
 import PostShare from "./alert/postShare";
+import Look from "./pages/looking/look";
 
 // function CubeShow() {S
 //   return (
@@ -87,8 +88,8 @@ function App() {
     setScreenSize();
   });
   return (
-    <BrowserRouter>
-      <Post/>
+  <BrowserRouter>
+      <Home/>
       <Routes>
         <Route path="/" component={Layout}/>
       <Route exact path="/avatarDeco" component={AvatarDeco}/>
