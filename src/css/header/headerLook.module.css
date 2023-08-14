@@ -1,0 +1,19 @@
+.header{
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: aqua;
+    display: flex;
+    width: 100vw;
+    height: 80px;
+    z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
+}
+
+.header div{
+    background-color: beige;
+    width: 50%;
+    height: 100%;
+    border-bottom: 3px solid #B5B5B5;
+
+}
+

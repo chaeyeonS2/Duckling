@@ -1,7 +1,12 @@
 import styles from "../css/header/headerComment.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HeaderComment = () => {
+    const navigate = useNavigate();
+
+    const backClick = () => {
+        navigate(-1);   //뒤로가기
+    }
     
     return (
         <header className={styles.header}>
@@ -16,9 +21,8 @@ const HeaderComment = () => {
                 </div>
             </div>
             <div className={styles.rightBtnGroup}>
-                <button className={styles.btn_close}><img src={process.env.PUBLIC_URL + "/img/writing/comment_close.png"} img alt="my image"/></button>
+                <button className={styles.btn_close} onClick={backClick}><img src={process.env.PUBLIC_URL + "/img/writing/comment_close.png"} img alt="my image"/></button>
             </div>
-    
         </header>
     )
 }

@@ -22,12 +22,14 @@
 .writinggetBox{
     height: 80vh;
     border: 1px solid black;
+    overflow: auto;
 }
 
 .text_content{
     text-align: left;
-    margin: 10px;
-    padding-left: 20px;
+    margin: 20px;
+    margin-top: 30px;
+    margin-bottom: 100px;
 }
 
 .slidercontainer{
@@ -43,3 +45,43 @@
     object-fit: contain; /* 이미지의 원래 비율 유지 */
 }
 
+.bottomBar {
+    display: flex;
+
+    bottom: 88px;
+    left: 0px;
+	position: fixed;
+    width: 100vw;
+    /* background-color: #dde0ea; */
+    text-align: center;
+    z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
+    height: 50px;
+    background-color: rgb(0, 0, 0, 1);
+}
+
+.headerBtnGroup div{
+    display: inline-block;
+}
+
+.leftBtnGroup div{
+    float: left;
+    color: white;
+    padding: 5px;
+}
+
+
+/* 헤더 커스텀 */
+.bottomBar{
+
+}
+/* 
+.header div{
+  float: left;
+  color: white;
+  padding: 5px;
+} */
+
+.bottomBar .num{
+  float: left;
+  padding-right: 10px;
+}
