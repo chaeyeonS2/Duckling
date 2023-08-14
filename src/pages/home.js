@@ -6,6 +6,7 @@ import React, { useLayoutEffect, useState, Suspense, Component ,useRef, useEffec
 import { Canvas, Camera, useFrame, useLoader } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { TextureLoader } from 'three';
 import { useGLTF } from '@react-three/drei';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import { BottomSheet } from 'react-spring-bottom-sheet';
@@ -17,7 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 
 const eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_eye/NewJeans_HANI_eye.gltf';
-const mouthGltfPaht = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_mouth/NewJeans_DANIEL_mouth.gltf';
+const mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_mouth/NewJeans_DANIEL_mouth.gltf';
+//const cheekGltfPath = process.env.PUBLIC_URL + 'gltf/avatar/avatar_cheek.gltf';
 //const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/가자.gltf';
 const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/hyein_top.gltf';
 const bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/herin_skirt.gltf';
@@ -45,11 +47,12 @@ const GltfGroupModels = (props) => {
   const groupRef = useRef(props);
   // 부모와 자식 gltf 모델들을 로드하고 그룹에 추가하는 함수
   const loadModels = () => {
-    const AvatarGltfPath = process.env.PUBLIC_URL  +'/gltf/avatar/basic_avatar_[no_face].gltf';
+    const AvatarGltfPath = process.env.PUBLIC_URL + 'gltf/avatar/cheek_avatarglb0726.gltf';
     const KeyringGltfPath = process.env.PUBLIC_URL  +'/gltf/avatar/keyring.glb';
     const StageGltfPath = process.env.PUBLIC_URL  +'/gltf/avatar/stage.glb';
     
     const gltfLoader = new GLTFLoader();
+    //const texture = new TextureLoader().load('/gltf/avatar/wood.jpg');
 
                  // 파일 path, scale, position(x, y, z) 순서  
     putDecoGltf(topGltfPath, 1.1, 0,-0.04,0);
@@ -60,11 +63,22 @@ const GltfGroupModels = (props) => {
     putDecoGltf(accessoryGltfPath, 0.05, 0,-0.03,0.005);
     putDecoGltf(bagGltfPath, 0.029, 0.02,-0.098,0.004);
 
+    //putDecoGltf(cheekGltfPath, 1.1, 0,-0.04,0);
+
     //avatar gltf 모델을 로드하여 그룹에 추가
     gltfLoader.load(AvatarGltfPath, (parentGltf) => {
       const avatarModel = parentGltf.scene;
       avatarModel.scale.set(1.1, 1.1, 1.1); // 부모 모델 크기 조정
       avatarModel.position.set(0,-0.04,0);
+
+      // //텍스쳐 적용
+      // avatarModel.traverse((child) => {
+      //   if (child.isMesh) {
+      //     child.material = child.material.clone();
+      //     child.material.map = texture;
+      //   }
+      // });
+
       groupRef.current.add(avatarModel); 
     });  
     //keyring gltf 모델을 로드하여 그룹에 추가
@@ -85,7 +99,7 @@ const GltfGroupModels = (props) => {
       groupRef.current.add(model);
     });
     // mouth gltf 모델을 로드하여 그룹에 추가
-    gltfLoader.load(mouthGltfPaht, (childGltf) => {
+    gltfLoader.load(mouthGltfPath, (childGltf) => {
       const model = childGltf.scene;
       model.scale.set(1.1, 1.1, 1.1); // 자식 모델 크기 조정
       model.position.set(0,-0.04,0); // 자식 모델 위치 설정
@@ -149,12 +163,14 @@ useEffect(() => {
             <Canvas shadows camera={{rotation: [0, 0, 0], fov: 150, zoom: 100, near: 1, far: 10 } }>
                         <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} penumbra={1} castShadow/>
                         <ambientLight intensity={0.5} />
-                        <GltfGroupModels/>
+                        
+                          <GltfGroupModels/>
+                        
                         {/* 마우스 컨트롤 */}
                         <OrbitControls />
                     </Canvas>
                 </Suspense>
-            
+                        
             </div>
             <BottomSheet className="homeSheet" id="parentDiv-home" 
               open
