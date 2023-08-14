@@ -185,7 +185,7 @@
     }
   
      .homeSheet[data-rsbs-state='closed'],
-     .homeSheet[data-rsbs-state='closing'], .homeSheet[data-rsbs-state="open"] {
+     .homeSheet[data-rsbs-state='closing'] {
     /* Allows interactions on the rest of the page before the close transition is finished */
     pointer-events: none;
   }

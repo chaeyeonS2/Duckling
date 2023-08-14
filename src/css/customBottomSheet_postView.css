@@ -185,7 +185,7 @@
     }
   
   .postSheet[data-rsbs-state='closed'],
-  .postSheet[data-rsbs-state='closing'] {
+  .postSheet[data-rsbs-state='closing'],.postSheet[data-rsbs-state='snapping'] {
     /* Allows interactions on the rest of the page before the close transition is finished */
     pointer-events: none;
   }

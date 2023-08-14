@@ -23,12 +23,13 @@ function ImageSlider({ images }) {
       dots: true,
       infinite: false,  //양쪽 끝에서 멈추기
       speed: 500,
+      arrows: false,
       slidesToShow: 1,
       slidesToScroll: 1,
     };
     return (
         <div >
-          <Slider {...settings}>
+          <Slider {...settings} className={styles.imgslider}>
             {images.map((image, index) => (
               <div className={styles.slidercontainer} key={index}>
                 <img className={styles.postImg_big} src={image} alt={`Slide ${index}`} />
@@ -41,9 +42,8 @@ function ImageSlider({ images }) {
 
 const PostView = () => {
     const images = [
-         process.env.PUBLIC_URL + "/img/writing/example.jpeg",
-         process.env.PUBLIC_URL + "/img/writing/cat2.png",
-        //process.env.PUBLIC_URL + "/img/writing/cat2.png",
+        process.env.PUBLIC_URL + "/img/writing/example.jpeg",
+        process.env.PUBLIC_URL + "/img/writing/cat2.png",
         // <img className='postImg' src={process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/>,
         // <img className='postImg' src={process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/>,
         // // ... 추가 이미지 경로들
@@ -64,7 +64,7 @@ const PostView = () => {
                         
                         <div className={styles.writinggetBox}>
                         
-                            <ImageSlider className={styles.imgslider} images={images} /> 
+                            <ImageSlider images={images} /> 
                             {/* <img className='postImg' src=process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/> */}
                             
                             <p className={styles.text_content}>
@@ -77,7 +77,7 @@ const PostView = () => {
                 </div>
                 
             </div>
-            {/* <CommentView/> */}
+            <CommentView/>
 
             {/* 고정 푸터 */}
             <Footer/>

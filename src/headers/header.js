@@ -1,5 +1,5 @@
 import styles from "../css/header/header.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // const shareToTwitter = () => {
 //     const sharedLink =
@@ -8,9 +8,10 @@ import { Link } from "react-router-dom";
 //   };
 
 const Header = () => {
-    //const history = useHistory();    
-    const goAvatarDeco = () => {
-        <Link to = "/avatarDeco"> avatarDeco </Link>
+    const navigate = useNavigate();
+
+    const decoClick = () => {
+        navigate("/deco");
     }
     
     return (
@@ -22,8 +23,8 @@ const Header = () => {
                 </div> */}
                 <div className={styles.rightBtnGroup}>
                     <button className={styles.btn_share}><img src={process.env.PUBLIC_URL + "/img/share.png"} /></button>
-                    <button className={styles.btn_goAvatar} onClick={goAvatarDeco}><img src={process.env.PUBLIC_URL + "/img/home/deco.png"}/></button>
-                    <button className={styles.btn_goAvatar} onClick={goAvatarDeco}><img src={process.env.PUBLIC_URL + "/img/home/settings.png"}/></button>
+                    <button className={styles.btn_goAvatar} onClick={decoClick}><img src={process.env.PUBLIC_URL + "/img/home/deco.png"}/></button>
+                    <button className={styles.btn_goAvatar} ><img src={process.env.PUBLIC_URL + "/img/home/settings.png"}/></button>
                     
                 </div>
                 

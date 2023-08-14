@@ -36,7 +36,7 @@ const Itembox = props => {
     // useEffect를 사용하여 컴포넌트가 로드되자마자 myFunction을 실행합니다.
     useEffect(() => {
         handleItemContent();
-    });
+    }, [itemtype]);
     
     return (
         <div className="item_box">

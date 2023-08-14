@@ -13,12 +13,13 @@ import "../css/customBottomSheet.css";
 //import 'react-spring-bottom-sheet/dist/style.css'; // 스타일 파일을 불러옵니다.
 //import { css } from '@emotion/react';
 import { OrbitControls } from '@react-three/drei';
+import { useNavigate } from "react-router-dom";
 
 
 const eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_eye/NewJeans_HANI_eye.gltf';
 const mouthGltfPaht = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_mouth/NewJeans_DANIEL_mouth.gltf';
 //const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/가자.gltf';
-const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/hyein_top_0813 (1).gltf';
+const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/hyein_top.gltf';
 const bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/herin_skirt.gltf';
 const dressGltfPath = process.env.PUBLIC_URL + ''; 
 const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
@@ -54,7 +55,7 @@ const GltfGroupModels = (props) => {
     putDecoGltf(topGltfPath, 1.1, 0,-0.04,0);
     //putDecoGltf(topGltfPath, 0.00018, 0, 0.0218, 0.0025);
     
-    //putDecoGltf(bottomGltfPath, 0.00018, 0, 0.003, 0.0025);
+    putDecoGltf(bottomGltfPath, 1.1, 0,-0.04,0);
     putDecoGltf(shoesGltfPath, 0.025, -0.004 , -0.048, -0.018);
     putDecoGltf(accessoryGltfPath, 0.05, 0,-0.03,0.005);
     putDecoGltf(bagGltfPath, 0.029, 0.02,-0.098,0.004);
@@ -107,8 +108,12 @@ const GltfGroupModels = (props) => {
 };
  
 const Home = () => {
+  const navigate = useNavigate();
+
+    const newpostClick = () => {
+        navigate("/newPost");
+    }
   //bottom sheet css 적용을 위한 코드
-  
 useEffect(() => {
   // setTimeout을 사용하여 portal이 생성된 후에 작업 실행
   const timeoutId = setTimeout(() => {
@@ -169,7 +174,7 @@ useEffect(() => {
                     팜하니
                   </div>
                   
-                  <div className="btnAddNew homeSheet">
+                  <div className="btnAddNew homeSheet" onClick={newpostClick}>
                     <img src={process.env.PUBLIC_URL + "/img/writing/add.png"}/>
                   </div>
                 </div>
