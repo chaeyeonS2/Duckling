@@ -38,6 +38,8 @@ function App() {
   <Routes>
     {/* HOME */}
     <Route path="/" element={<Home />} />
+    {/* Login */}
+    <Route path="/login" element={<Login />} />
     {/* <POST VIEW /> */}
     <Route path="/postview" element={<PostView />} />
     {/* <아바타 꾸미기/> */}

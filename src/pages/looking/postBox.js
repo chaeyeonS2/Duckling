@@ -28,10 +28,10 @@ const PostBox = () => {
             </div>
             </div>
             <div className='one-post-info2'>
-                <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
-                <div>215</div>
-                <div><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
-                <div >423</div>
+                <div><img src={process.env.PUBLIC_URL + "/img/looking/cookie.png"}/></div>
+                <text>215</text>
+                <div><img src={process.env.PUBLIC_URL + "/img/looking/comment.png"}/></div>
+                <text >423</text>
                 
             </div>
 

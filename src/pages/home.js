@@ -27,7 +27,7 @@ const dressGltfPath = process.env.PUBLIC_URL + '';
 const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
 //const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Pumps_Hill_Black.glb';
 const bagGltfPath = process.env.PUBLIC_URL + '/gltf/bag/KR_sh_bag_w.glb';
-const accessoryGltfPath = process.env.PUBLIC_URL + '/gltf/accessory/butterfly_pin_set.glb'; 
+const accessoryGltfPath = process.env.PUBLIC_URL + '/gltf/accessory/Airpods_black_H.glb'; 
 
 const GltfGroupModels = (props) => {
 
@@ -60,7 +60,8 @@ const GltfGroupModels = (props) => {
     
     putDecoGltf(bottomGltfPath, 1.1, 0,-0.04,0);
     putDecoGltf(shoesGltfPath, 0.025, -0.004 , -0.048, -0.018);
-    putDecoGltf(accessoryGltfPath, 0.05, 0,-0.03,0.005);
+    //putDecoGltf(accessoryGltfPath, 0.05, 0,-0.03,0.005);
+    putDecoGltf(accessoryGltfPath, 1.1, 0,-0.04,0);
     putDecoGltf(bagGltfPath, 0.029, 0.02,-0.098,0.004);
 
     //putDecoGltf(cheekGltfPath, 1.1, 0,-0.04,0);

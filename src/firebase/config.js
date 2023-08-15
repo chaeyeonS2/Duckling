@@ -15,7 +15,7 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_APP_ID,
 	databaseURL: process.env.REACT_APP_DATABASE
 };
-
+ 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);  //앱 초기화
 const auth = getAuth();  //인증 초기화

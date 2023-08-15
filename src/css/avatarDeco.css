@@ -100,7 +100,10 @@
 }
 
 .saveAvatar{
-    background-color: #BDFF6B;
-    width: 300px;
-    height: 100px;
+    width: auto;
+    height: auto;
+    position: absolute;
+    padding: 15px;
+    bottom: 44%;
+    right: 0;
 }

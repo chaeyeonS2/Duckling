@@ -11,7 +11,7 @@
 
 .item_box{
     display:inline-block;
-    margin: 3%;
+    margin-right: 3%;
     width: 25%;
     height: 25vw;
     border: 1px solid black;
@@ -20,7 +20,9 @@
     border: 2px solid #BDFF6B;
     box-shadow: 3px 3px;
     */
+
 }
+
 
 .item_img{
     max-width: 100%;

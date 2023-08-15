@@ -7,11 +7,12 @@ import HeaderLook from "../../headers/headerLook";
 
 
 const Look = () => {
+
     const layoutStyle = {
         position: 'absolute',
-        paddingTop: '80px',
+        paddingTop: '70px',
         /* width: 100%; */
-        height: '85vh',
+        height: '80vh',
         paddingBottom: '88px',
         overflow: 'auto',
     }
