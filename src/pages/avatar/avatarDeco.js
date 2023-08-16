@@ -206,7 +206,7 @@ const GltfGroupModels = (props) => {
 
 const AvatarDeco = () => {
     //데코(얼굴, 옷) 카테고리 선택
-    const [typeDecoState, setDecoTypeState] = useState(false);  
+    const [typeDecoState, setDecoTypeState] = useState([true, false]);  
     const decoArray = ["face", "cloth"];
 
     const handleDecoClick = (idx) => {
@@ -314,59 +314,6 @@ const AvatarDeco = () => {
         </div>
     )
 }
-
-// const ParentAndbottomModels = (props) => {
-//     const groupRef = useRef(props);
-  
-//     // 부모와 자식 gltf 모델들을 로드하고 그룹에 추가하는 함수
-//     const loadModels = () => {
-//       const AvatarGltfPath = process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf';
-//       const bottomGltfPath = process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf';
-  
-//       const gltfLoader = new GLTFLoader();
-  
-//       // 부모 gltf 모델을 로드하여 그룹에 추가
-//       gltfLoader.load(AvatarGltfPath, (parentGltf) => {
-//         const avatarModel = parentGltf.scene;
-//         avatarModel.scale.set(1.2, 1.2, 1.2); // 부모 모델 크기 조정
-//         avatarModel.position.set(0,-0.05,0);
-//         groupRef.current.add(avatarModel);
-//       });
-  
-//     <putChildGltf/>
-//       // 자식 gltf 모델을 로드하여 그룹에 추가
-//       gltfLoader.load(bottomGltfPath, (childGltf) => {
-//         const bottomModel = childGltf.scene;
-//         bottomModel.scale.set(0.0002, 0.0002, 0.0002); // 자식 모델 크기 조정
-//         bottomModel.position.set(0,-0.005,0.01); // 자식 모델 위치 설정
-//         groupRef.current.add(bottomModel);
-//       });
-//     };
-  
-//     // 부모와 자식 gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
-//     useEffect(() => {
-//       loadModels();
-//     }, []);
-  
-//     // const putChildGltf = () => {
-//     //     const gltfLoader = new GLTFLoader();
-//     //     const topGltfPath = process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf';
-
-//     //     // 자식 gltf 모델을 로드하여 그룹에 추가
-//     //     gltfLoader.load(topGltfPath, (childGltf) => {
-//     //     const topModel = childGltf.scene;
-//     //     topModel.scale.set(0.0002, 0.0002, 0.0002); // 자식 모델 크기 조정
-//     //     topModel.position.set(0,-0.005,0.01); // 자식 모델 위치 설정
-//     //     groupRef.current.add(topModel);
-//     //   });
-//     // }
-//     return (
-//       <group ref={groupRef} 
-//         scale={props.scale}
-//         position={props.position}
-//       />
-//     );
-//   };
 
 var gltfArray = [
   process.env.PUBLIC_URL + "/gltf/bottom/hani_pants.gltf",

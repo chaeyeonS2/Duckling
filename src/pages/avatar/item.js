@@ -21,7 +21,7 @@ const Item = props => {
 
 
     const [typeItemState_face, setItemTypeState_face] = useState("eye");  //face 카테고리
-    const [typeItemState_cloth, setItemTypeState_cloth] = useState("상의");  //cloth 카테고리
+    const [typeItemState_cloth, setItemTypeState_cloth] = useState("top");  //cloth 카테고리
     var itemArray = [0, 1, 2, 3, 5, 6, 7]; //item 임의 개수
     const [itembox, setItembox] = useState(typeItemState_cloth);
 
@@ -38,12 +38,16 @@ const Item = props => {
 ];
 
 
+    const [selectDeco, setSelectDeco] = useState(false);
+    const handleClick = (idx) => {
+        const newArr = Array(imgArray.length).fill(false);
+        newArr[idx] = true;
 
+        setSelectDeco(newArr);
+    }
     
     const [content, setContent] = useState(type);
     const handleChangeContent = () => {
-        
-
         // 상태 변수를 변경하여 내용을 바꿉니다.
         if (type === 'face') {
           setContent(
@@ -53,14 +57,14 @@ const Item = props => {
                     <div className={typeItemState_face === "mouth" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("mouth")}}>입</div>
                 </div>
                 <div className="itemBoxDiv"> 
-                {/* {itembox} */}
-                
                     { //아이템 썸네일 박스
-                    itemArray.map((n)=>{
+                    imgArray.map((imgSrc, index)=>{
                         return (<Itembox 
                                     type = {typeItemState_face}
-                                    imgSrc = {imgArray[n]}
-                                    index = {n}
+                                    imgSrc = {imgSrc}
+                                    index = {index}
+                                    handleClick = {handleClick}
+                                    selectDeco = {selectDeco}
                                 />)
                     })} 
                 </div>
@@ -71,18 +75,20 @@ const Item = props => {
           setContent(
             <div className="clothDeco Deco">
                 <div className="clothBtnGroup typeItemBtnGroup">
-                    <div className={typeItemState_cloth === "상의" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("상의")}}>상의</div>
-                    <div className={typeItemState_cloth === "하의" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("하의")}}>하의</div>
-                    <div className={typeItemState_cloth === "신발" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("신발")}}>신발</div>
-                    <div className={typeItemState_cloth === "기타" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("기타")}}>기타</div>
+                    <div className={typeItemState_cloth === "top" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("top")}}>상의</div>
+                    <div className={typeItemState_cloth === "bottom" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("bottom")}}>하의</div>
+                    <div className={typeItemState_cloth === "shoes" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("shoes")}}>신발</div>
+                    <div className={typeItemState_cloth === "etc" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("etc")}}>기타</div>
                 </div>
                 <div className="itemBoxDiv"> 
                 { //아이템 썸네일 박스
-                    itemArray.map((n)=>{
+                    imgArray.map((imgSrc, index)=>{
                         return (<Itembox 
                                     type = {typeItemState_cloth}
-                                    imgSrc = {imgArray[n]}
-                                    index = {n}
+                                    imgSrc = {imgSrc}
+                                    index = {index}
+                                    handleClick = {handleClick}
+                                    selectDeco = {selectDeco}
                                 />)
                     })}
                 </div>
@@ -99,7 +105,7 @@ const Item = props => {
         
         
         
-    },[type, typeItemState_face, typeItemState_cloth]);
+    },[type, typeItemState_face, typeItemState_cloth, selectDeco]);
 
     // useEffect(()=>{
 

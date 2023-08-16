@@ -6,8 +6,8 @@ const Itembox = props => {
     var itemtype = props.type;
     var imgSrc = props.imgSrc;
     var index = props.index;
+    var selectDeco = props.selectDeco;
 
-    var gltfPath = process.env.PUBLIC_URL + '/gltf/bottom/minji_pants.gltf';
     
     var itemTypeArray = ['eye', 'mouth', 'top', 'bottom', 'shoes', 'etc'];
     
@@ -70,9 +70,27 @@ const Itembox = props => {
     useEffect(() => {
         handleItemContent();
     }, [itemtype]);
-    
+
+    useEffect(()=>{
+        if(selectDeco[index]){    //해당 버튼이 클릭됐으면
+            setBtnState(true);
+        }
+        else{
+            setBtnState(false);
+        }
+    }, [selectDeco]);
+    const [btnState, setBtnState] = useState(false);
+    //     const handleClick = (idx) => {
+            
+    //     const newArr = Array(100).fill(false);
+    //     newArr[idx] = true;
+        
+    //     setSelectDeco(newArr);
+        
+    //     console.log(selectDeco);
+    // }
     return (
-        <div className="item_box">
+        <div className={btnState ? "item_box_click" : "item_box"} onClick={() => props.handleClick(index)}>
             {content}
         </div>
     )
