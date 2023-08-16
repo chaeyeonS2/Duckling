@@ -46,7 +46,7 @@ const Login = () => {
                 src = {process.env.PUBLIC_URL + '/img/login/logo.png'} />
                 <div style={{position:"absolute"}} id='twitter-sign-in-btn' onClick={twitterLogin}>
                 <img style={
-                    {width: "90vw",height: "10%", marginTop:"70vh", objectFit:"contain" }
+                    {width: "300px",height: "", marginTop:"70vh", objectFit:"contain" }
                 }
                     src = {process.env.PUBLIC_URL + '/img/login/twitter.png'} />
                     
