@@ -5,9 +5,9 @@ import "../css/alert/uploading.css";
 const Uploading = () => {
     const barCount = 10;
     return(
-        <div className="layout upload">
+        <div className="alertlayout upload">
             <div className="loadingBar">
-                
+                <img src={process.env.PUBLIC_URL + "/img/writing/upload_loading.gif"}/>
             </div>
             <div className="textBox_upload">
                 게시글이 올라가고 있어요-!

@@ -2,10 +2,11 @@ import React, { useState, useRef } from "react";
 import "../css/alert/alertLayout.css";
 import "../css/alert/postShare.css";
 
-const PostShare = () => {
+const PostShare = ({onClose}) => {
+
+
     return(
-        <div className="background">
-            <div className="layout">
+            <div className="alertlayout">
             <div className="imageBox">
                 <img style={{width:"33px", height:"33px"}} src={process.env.PUBLIC_URL + "/img/home.png"}/>
             </div>
@@ -15,9 +16,8 @@ const PostShare = () => {
                 <p className="text3">원하는 곳에 붙여넣기 해주세요!</p>
             </div>
             <div className="btnBox">
-                <button className="btn_ok">확인</button>
+                <button className="btn_ok" onClick={onClose}>확인</button>
             </div>
-        </div>
         </div>
         
     )

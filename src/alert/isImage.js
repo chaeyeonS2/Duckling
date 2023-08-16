@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "../css/alert/alertLayout.css";
 import "../css/alert/isImage.css";
 
-const IsImage = () => {
+const IsImage = ({onClose}) => {
     return (
             <div className="alertlayout">
             <div className="imageBox">
@@ -14,7 +14,7 @@ const IsImage = () => {
                 <p className="text2 textcontent">덕질 일상을 다채롭게 기록해보아요</p>
             </div>
             <div className="btnBox">
-                <button className="btn_ok">확인</button>
+                <button className="btn_ok" onClick={onClose}>확인</button>
             </div>
         </div>
         

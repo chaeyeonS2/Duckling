@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import "../css/alert/alertLayout.css";
 import ModalContainer from './modalContainer';
+import ReactDOM from 'react-dom';
 
-function Modal(props) {
-    return (
-        <ModalContainer>
-        <div className="modal-overlay">
-        <div className="modal">
-            <div className="modal-content">
-            {props.children}
-            </div>
+const Modal = ({ isOpen, children }) => {
+    if (!isOpen) return null;
+  
+    return ReactDOM.createPortal(
+      <div className="modal-overlay ">
+        <div className="modal ">
+          {children}
+          {/* <button onClick={onClose}>Close</button> */}
         </div>
-        </div>
-        </ModalContainer>
-
+      </div>,
+      document.getElementById('modal-root')
     );
-}
+  };
 
 export default Modal;
