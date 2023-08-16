@@ -19,6 +19,7 @@ import PostShare from "./alert/postShare";
 import Look from "./pages/looking/look";
 import CommentPage from "./pages/writing/commentPage";
 import CommentView from "./pages/writing/commetView";
+import Start from "./pages/start";
 
 function App() {
   function setScreenSize() {
@@ -36,8 +37,10 @@ function App() {
   
   <BrowserRouter>
   <Routes>
+    {/* start loading */}
+    <Route path="/" element={<Start />} />
     {/* HOME */}
-    <Route path="/" element={<Home />} />
+    <Route path="/home" element={<Home />} />
     {/* Login */}
     <Route path="/login" element={<Login />} />
     {/* <POST VIEW /> */}
@@ -67,7 +70,7 @@ function App() {
 
     // </BrowserRouter>
     
-
+        
 
     
     

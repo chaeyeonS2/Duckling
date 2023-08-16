@@ -8,17 +8,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { register } from 'swiper/element/bundle';
-import EmblaCarousel from './Carousel';
-import ReactDOM from 'react-dom/client'
+
 import { useNavigate } from 'react-router-dom';
+import Delete from "../../alert/delete";
+import PostShare from "../../alert/postShare";
+import Modal from '../../alert/modal';
 
-
-// const StyledSlider = styled(Slider)`
-//     .slick-dots
-//     {
-//         bottom: 10px;
-//     }
-// }`;
 
 function ImageSlider({ images }) {
     const settings = {
@@ -47,6 +42,7 @@ const PostView = () => {
   const commentClick = () =>{
     navigate("/comment");
   }
+
     const images = [
         process.env.PUBLIC_URL + "/img/writing/example.jpeg",
         process.env.PUBLIC_URL + "/img/writing/cat2.png",
@@ -57,10 +53,39 @@ const PostView = () => {
 
     const textarea = useRef(null);
 
+        //modal
+        const [modalIsOpen, setModalIsOpen] = useState(false);
+        const [modalContent, setModalContent] = useState(null);
+      
+        const openModal = (content) => {
+          setModalContent(content);
+          setModalIsOpen(true);
+        };
+      
+        const closeModal = () => {
+          setModalContent(null);
+          setModalIsOpen(false);
+        };
+
+    const deleteClick=()=>{
+      openModal(<Delete onClose={closeModal}/>);
+    }
+
+    const shareClick=()=>{
+      openModal(<PostShare onClose={closeModal}/>);
+    }
+
     return (
         <div >
             {/* 고정 헤더 */}
-            <HeaderPostView/>
+            <HeaderPostView
+              deleteClick={deleteClick}
+              shareClick={shareClick}
+            />
+            {/* 모달 */}
+            <Modal isOpen={modalIsOpen} >
+                {modalContent}
+            </Modal>
             <div className={styles.content}>
             <div className={styles.marignBox}>    
                     <form className={styles.post} >
@@ -138,8 +163,8 @@ Do you? (But I'm super shy, I'm super shy)
           </div>
             {/* <CommentView/> */}
 
-            {/* 고정 푸터 */}
-            <Footer/>
+            {/* 고정 푸터 user 값에 따라 수정해야함*/}
+            <Footer btn = {0}/>
         </div>
     )
 }

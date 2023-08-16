@@ -12,6 +12,7 @@
     transform: translate3d(0, 0px, 0);
     transform: translate3d(0, var(--rsbs-overlay-translate-y,0px), 0);
     will-change: height;
+
   }
   
  .homeSheet[data-rsbs-overlay]:focus {
@@ -43,6 +44,7 @@
     position: fixed;
     right: 0;
     /* 이 부분 수정해서 바텀 높이 올림 */
+    /* 임시방편으로 100으로 하는데 원래 88임;;; */
     bottom: 88px;
     left: 0;
     -webkit-user-select: none;

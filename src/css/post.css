@@ -61,13 +61,20 @@
     
     margin-top: 10px;
     display: flex;
+
+    display:grid; 
+    grid-gap: 4px; 
+    grid-template-columns: repeat(3, minmax(auto, 1fr));
+    align-items: center; 
+    justify-content: space-around;
 }
 
 .img-upload-preview{
-    width: 33%;
-    height: 30vw;
+    /* width: 33%;
+    height: 30vw; */
     position: relative;
-    margin-right: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 .img-upload-preview div{

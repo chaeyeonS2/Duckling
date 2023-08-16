@@ -17,7 +17,6 @@ const Item = props => {
         props.getData(isClick);
       }
 
-    var itemTypeArray = ['eye', 'mouth', '상의', '하의', '한벌의상'];
 
 
 
@@ -74,7 +73,8 @@ const Item = props => {
                 <div className="clothBtnGroup typeItemBtnGroup">
                     <div className={typeItemState_cloth === "상의" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("상의")}}>상의</div>
                     <div className={typeItemState_cloth === "하의" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("하의")}}>하의</div>
-                    <div className={typeItemState_cloth === "한벌의상" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("한벌의상")}}>한벌 의상</div>
+                    <div className={typeItemState_cloth === "신발" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("신발")}}>신발</div>
+                    <div className={typeItemState_cloth === "기타" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("기타")}}>기타</div>
                 </div>
                 <div className="itemBoxDiv"> 
                 { //아이템 썸네일 박스

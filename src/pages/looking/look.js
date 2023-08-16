@@ -27,7 +27,7 @@ const Look = () => {
                 <PostBox/>
             </div>
             {/* 고정 푸터 */}
-            <Footer/>
+            <Footer btn = {0}/>
         </div>
     )
 }

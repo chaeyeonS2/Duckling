@@ -5,7 +5,7 @@ const HeaderDeco = () => {
     const navigate = useNavigate();
 
     const closeClick = () => {
-        navigate("/");
+        navigate("/home");
     }
 
     return (

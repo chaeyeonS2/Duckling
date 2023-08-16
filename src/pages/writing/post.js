@@ -7,6 +7,8 @@ import Modal from '../../alert/modal';
 import Uploading from "../../alert/uploading";
 import IsImage from "../../alert/isImage";
 
+
+
 const Post = propos => {
     // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
     const [title, setTitle] = useState('');
@@ -29,44 +31,89 @@ const Post = propos => {
     };
 
     //camera -> 이미지 삽입
-    const [previewImage, setPreviewImage] = useState(null);
+    const [previewImages, setPreviewImages] = useState([]); //이미지 주소들 저장하는 배열
+
+const handleImageUpload = (event) => {
+    const files = event.target.files;
+
+    const processImages = async () => {
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const imageDataURL = await readFileAsDataURL(file);
+            setPreviewImages(prevImages => [...prevImages, imageDataURL]);
+        }
+        };
+
+        processImages();
+    };
+
+    const readFileAsDataURL = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                resolve(event.target.result);
+            };
+            reader.onerror = (event) => {
+                reject(event.error);
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+    const handleRemoveImage = (index) => {
+        const newPreviewImages = [...previewImages];
+        newPreviewImages.splice(index, 1);
+        setPreviewImages(newPreviewImages);
+    };
 
     const inputFileRef = useRef(null);
     const handleCameraBtnClick = () => {
         inputFileRef.current.click();
     }
-    const handleImageUpload = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-    
-        reader.onload = (e) => {
-            const imageDataURL = e.target.result;
-            setPreviewImage(imageDataURL);
-        };
-    
-        reader.readAsDataURL(file);
+
+    //modal
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalContent, setModalContent] = useState(null);
+  
+    const openModal = (content) => {
+      setModalContent(content);
+      setModalIsOpen(true);
     };
-
-    //이미지 존재 여부 검사
-    const [isImage, checkIsImage] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(true);
-
-    const openModal = () => {
-        setIsModalOpen(true);
+  
+    const closeModal = () => {
+      setModalContent(null);
+      setModalIsOpen(false);
+    };
+  
+    const uploadClick = () => {
+        if(previewImages.length === 0){
+            //올라간 이미지가 없으면 업로드 불가 모달 띄우기
+            openModal(<IsImage onClose={closeModal}/>);
+            console.log("uploadClick");
+        }
+        //올라간 이미지가 있으면 업로드 시작
+        else{
+            openModal(<Uploading />)
+            console.log("imgae ok")
+        }
       };
     
-      const closeModal = () => {
-        setIsModalOpen(false);
-      };
+      //지금은 그냥 뒤로가기, 나중에 '정말 취소하시겠어요?' 모달 추가 시 사용 예정
+    //   const closeClick = () => {
+    //     openModal(<Delete />)
+    //   };
 
     return (
         
         <div className="layout">
-        {/* <Modal isOpen={isModalOpen} onClose={closeModal}>
-            <IsImage/>
-        </Modal>     */}
             {/* 고정 헤더 */}
-            <HeaderPost/>
+            <HeaderPost
+                uploadClick = {uploadClick}
+                //closeClick = {closeClick}
+            />
+            {/* 모달 */}
+            <Modal isOpen={modalIsOpen} >
+                {modalContent}
+            </Modal>
             <div className="content">
                 {/* margin을 위한 div */}
                 <div className="marignBox">    
@@ -80,7 +127,6 @@ const Post = propos => {
                                 onChange={(e) => setTitle(e.target.value)}
                             />
                         </div>
-                        
                         <article className="writing">
                             <textarea className="writingInput"
                                 rows={1}
@@ -93,35 +139,16 @@ const Post = propos => {
                                 />
 
                             <div className="img-upload-box">
-                                {previewImage && (
-                                    <div className="img-upload-preview" >
-                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
-                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
-                                    </div>
-                                )}
-                                {previewImage && (
-                                    <div className="img-upload-preview" >
-                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
-                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
-                                    </div>
-                                )}
-                                {previewImage && (
-                                    <div className="img-upload-preview" >
-                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
-                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
-                                    </div>
-                                )}
-                                {previewImage && (
-                                    <div className="img-upload-preview" >
-                                        <div><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
-                                        <img src={previewImage} alt="미리보기" style={{ maxWidth: '300px' }} />
-                                    </div>
-                                )}
+                            {previewImages.map((image, index) => (
+                                <div className="img-upload-preview" key={index} style={{ width: '28vw' }}>
+                                    <div className="removeIMG" onClick={()=>handleRemoveImage(index)}><img src={process.env.PUBLIC_URL + "/img/writing/close.png"}></img></div>
+                                    <img src={image} alt={`미리보기 ${index}`} />
+                                </div>
+                            ))}
                             </div>
                             
                             
                         </article>
-                        
                     </form>
 
                 </div>
@@ -136,11 +163,11 @@ const Post = propos => {
                     type="file"
                     accept="image/*"
                     style={{ display: 'none' }}
-                    onChange={handleImageUpload}
+                    multiple onChange={handleImageUpload}
                 />
             </div>
             {/* 고정 푸터 */}
-            <Footer/>    
+            <Footer btn = {1}/>    
         </div>
         
     )

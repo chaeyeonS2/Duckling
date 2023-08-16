@@ -9,7 +9,7 @@ const Itembox = props => {
 
     var gltfPath = process.env.PUBLIC_URL + '/gltf/bottom/minji_pants.gltf';
     
-    var itemTypeArray = ['eye', 'mouth', '상의', '하의', '한벌의상'];
+    var itemTypeArray = ['eye', 'mouth', 'top', 'bottom', 'shoes', 'etc'];
     
     const [isitemClick, setClick] = useState(false);
     // var getDataOn = () =>{

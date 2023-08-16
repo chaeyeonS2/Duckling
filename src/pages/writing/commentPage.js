@@ -15,6 +15,9 @@ const CommentPage = () => {
   
     const handleSubmit = (event) => {
       event.preventDefault();
+      if (comment === '') {
+        return;
+      }
       // 여기에 댓글을 서버에 보내는 로직을 추가할 수 있습니다.
       console.log('댓글 제출:', comment);
       setComment(''); // 댓글 입력란 초기화
@@ -68,8 +71,8 @@ const CommentPage = () => {
                     </div>
 
                 </div>
-            {/* 고정 푸터 */}
-            <Footer/>
+            {/* 고정 푸터 btn 전달값 유저에 따라 수정해야함*/}
+            <Footer btn = {1}/>
         </div>
     )
 }

@@ -62,7 +62,7 @@ const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb'
 const bagGltfPath = process.env.PUBLIC_URL + '/gltf/bag/KR_sh_bag_w.glb';
 const accessoryGltfPath = process.env.PUBLIC_URL + '/gltf/accessory/butterfly_pin_set.glb'; 
 
-var itemTypeArray = ['eye', 'mouth', '상의', '하의', '한벌의상'];
+var itemTypeArray = ['eye', 'mouth', 'top', 'bottom', 'shoes', 'etc'];
 
 var addGltfPath = '';
 var type = '';
@@ -90,6 +90,7 @@ const GltfGroupModels = (props) => {
     };
   }, []);
   
+  
   //deco 추가하는 함수
   const putDecoGltf = (gltfPath, setScale, positionX, positionY, positionZ, type) => {
     const gltfLoader = new GLTFLoader();
@@ -101,12 +102,11 @@ const GltfGroupModels = (props) => {
     
     itemTypeArray.map((n)=>{
       if(type === n){
-        //기존에 있던 top 타입의 모델 지우기
+        //기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
         removeDecoGltf(type)
       }
     })
     
-
     groupRef.current.add(model);
     }); 
   } 
@@ -128,7 +128,7 @@ const GltfGroupModels = (props) => {
   const groupRef = useRef(props);
   // gltf 모델들을 로드하고 그룹에 추가하는 함수
   const loadModels = () => {
-    const AvatarGltfPath = process.env.PUBLIC_URL  +'/gltf/avatar/basic_avatar_[no_face].gltf';
+    const AvatarGltfPath = process.env.PUBLIC_URL + 'gltf/avatar/cheek_avatarglb.gltf';
     const KeyringGltfPath = process.env.PUBLIC_URL  +'/gltf/avatar/keyring.glb';
     const StageGltfPath = process.env.PUBLIC_URL  +'/gltf/avatar/stage.glb';
     
