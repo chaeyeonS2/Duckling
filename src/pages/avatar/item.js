@@ -1,7 +1,7 @@
 import "../../css/item.css";
 import React, { useState, useEffect } from "react";
 import Itembox from '../avatar/itembox';
-
+import dataArrays from './ItemArray';
 const Item = props => {
 
     const type = props.type;
@@ -26,21 +26,21 @@ const Item = props => {
     const [itembox, setItembox] = useState(typeItemState_cloth);
 
     
-    var imgArray = [ 
-    process.env.PUBLIC_URL + "/png/hani_pants.png",
-    process.env.PUBLIC_URL + "/png/hani_top.png", 
-    process.env.PUBLIC_URL + "/png/herin_skirt.png", 
-    process.env.PUBLIC_URL + "/png/herin_top.png", 
-    process.env.PUBLIC_URL + "/png/hyein_pants.png", 
-    process.env.PUBLIC_URL + "/png/hyein_top.png", 
-    process.env.PUBLIC_URL + "/png/minji_pants.png", 
-    process.env.PUBLIC_URL + "/png/minji_top.png"
-];
+//     var imgArray = [ 
+//     process.env.PUBLIC_URL + "/png/hani_pants.png",
+//     process.env.PUBLIC_URL + "/png/hani_top.png", 
+//     process.env.PUBLIC_URL + "/png/herin_skirt.png", 
+//     process.env.PUBLIC_URL + "/png/herin_top.png", 
+//     process.env.PUBLIC_URL + "/png/hyein_pants.png", 
+//     process.env.PUBLIC_URL + "/png/hyein_top.png", 
+//     process.env.PUBLIC_URL + "/png/minji_pants.png", 
+//     process.env.PUBLIC_URL + "/png/minji_top.png"
+// ];
 
 
     const [selectDeco, setSelectDeco] = useState(false);
     const handleClick = (idx) => {
-        const newArr = Array(imgArray.length).fill(false);
+        const newArr = Array(dataArrays[typeItemState_face].length).fill(false);
         newArr[idx] = true;
 
         setSelectDeco(newArr);
@@ -58,7 +58,7 @@ const Item = props => {
                 </div>
                 <div className="itemBoxDiv"> 
                     { //아이템 썸네일 박스
-                    imgArray.map((imgSrc, index)=>{
+                    dataArrays[typeItemState_face].map((imgSrc, index)=>{
                         return (<Itembox 
                                     type = {typeItemState_face}
                                     imgSrc = {imgSrc}
@@ -82,7 +82,7 @@ const Item = props => {
                 </div>
                 <div className="itemBoxDiv"> 
                 { //아이템 썸네일 박스
-                    imgArray.map((imgSrc, index)=>{
+                    dataArrays[typeItemState_cloth].map((imgSrc, index)=>{
                         return (<Itembox 
                                     type = {typeItemState_cloth}
                                     imgSrc = {imgSrc}

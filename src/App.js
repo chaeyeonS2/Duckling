@@ -20,6 +20,7 @@ import Look from "./pages/looking/look";
 import CommentPage from "./pages/writing/commentPage";
 import CommentView from "./pages/writing/commetView";
 import Start from "./pages/start";
+import Tmp from "./pages/tmp";
 
 function App() {
   function setScreenSize() {
@@ -53,6 +54,8 @@ function App() {
     <Route path="/look" element={<Look />} />
     {/* <댓글창/> */}
     <Route path="/comment" element={<CommentPage/>} />
+{/* <test/> */}
+<Route path="/test" element={<Tmp/>} />
 
 
   </Routes>

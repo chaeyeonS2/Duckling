@@ -3,7 +3,11 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import Footer from '../../footer';
 import HeaderComment from "../../headers/headerComment";
 import styles from "../../css/writing/commentPage.module.css";
+import axios from 'axios';
 
+const userID = localStorage.getItem("id");
+const photoURL = localStorage.getItem("profileImg");
+const userName = localStorage.getItem("userName");
 
 const CommentPage = () => {
     
@@ -19,37 +23,95 @@ const CommentPage = () => {
         return;
       }
       // 여기에 댓글을 서버에 보내는 로직을 추가할 수 있습니다.
+      const handleUpload = async () => {
+        try {
+          const response = await axios.post(
+            "https://us-central1-netural-app.cloudfunctions.net/api/comments",
+            {
+              "text" : comment,
+              "rootID" : "haha", 
+              "writerID" : "팜하니" 
+            }
+          );
+          console.log("Document uploaded:", response.data);
+          if(response.data){
+            window.location.reload();
+          }
+        } catch (error) {
+          console.error("Error uploading document:", error);
+        }
+      };
+      handleUpload();
       console.log('댓글 제출:', comment);
+      setUpdate(comment);
       setComment(''); // 댓글 입력란 초기화
+      getComment();
+      
     };
+
+    const [data, setData] = useState(null);
+    const [update, setUpdate] = useState(null);
+    
+    //댓글 받아오기
+    const getComment = async () => {
+        try {
+        const response = await axios.get("https://us-central1-netural-app.cloudfunctions.net/api/comments/root/haha");
+        //etData(response.data);
+        console.log("success");
+
+        setData(response.data.slice().sort((a, b) => a.time - b.time));
+
+        } catch(e) {
+        console.error(e);
+        }
+    }
+    //유저 정보 받아오기
+
+
+    useEffect(() => {
+
+        getComment();
+      }, []);
+
+
+  
+    
+
 
     return (
         <div className="layout">
             {/* 고정 헤더 */}
             <HeaderComment/>
             <div className={styles.content}>
+            {data && 
             <div className="BottomSheet-content">
-               <div className="comment-get-layout">
+               <div className="comment-get-layout" style={{height:"80%"}}>
                     {/* 댓글 */}
-                    <div className="commentBox">
-                        <div className='commentTop'>
-                            <div className="profileImg">
-                                {/* 서버에서 받아온 이미지 넣기 */}
-                            </div> 
-                            <div className="userName">
-                                팜하니
+                    {data.map((comment) => (
+                        <div className="commentBox">
+                            <div className='commentTop'>
+                                <div className={styles.profileImg} style={{backgroundImage:`url(${photoURL})`}}>
+                                </div> 
+                                <div className="userName">
+                                    {comment.writerID}
+                                </div>
+                            </div>
+                            <div className='commentContent'>
+                                {comment.text}
                             </div>
                         </div>
-                        <div className='commentContent'>
-                        너무 재미있어요. super shy~~~너무 재미있어요. super shy~~~너무 재미있어요. super shy~~~너무
+                    ))}
+                    
 
-                        </div>
-                    </div>
+                    
+                    
                     {/* 댓글 끝 */}
                     
             
                 </div> 
+                
             </div>
+            }
             </div>
 
 
@@ -78,3 +140,13 @@ const CommentPage = () => {
 }
 
 export default CommentPage
+
+// //전달되는 포스트 정보
+// {
+//     "commentID": "commentID",
+//     "text": "text",
+//     "rootID": "rootID",
+//     "writerID": "writerID",
+//     "time": "time",
+//     "date": "date"
+// }

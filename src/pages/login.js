@@ -17,9 +17,14 @@ const twitterLogin = () => {
     // 로그인 성공 시, Firebase 사용자 객체에서 필요한 정보를 가져옴
     const user = result.user;
     const userID = user.uid;
+    const userName = user.displayName;
     const photoURL = user.photoURL;  //tiwtter 프로필 사진 가져옴
-    console.log('Firebase userID:', userID);
+    console.log('Firebase userID:', userName);
 
+    //local storage에 저장
+    localStorage.setItem("id", userID);
+    localStorage.setItem("profileImg", photoURL);
+    localStorage.setItem("userName", userName);
     })
     .catch((error) => {
     console.error('Twitter 로그인 에러:', error);

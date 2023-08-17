@@ -2,7 +2,7 @@
 import Footer from "../footer"; 
 import Header from "../headers/header";
 import "../css/layout.css"; 
-import React, { useLayoutEffect, useState, Suspense, Component ,useRef, useEffect } from "react";
+import React, { useLayoutEffect, useState, Suspense, Component ,useRef, useEffect, useContext } from "react";
 import { Canvas, Camera, useFrame, useLoader } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -16,21 +16,20 @@ import "../css/customBottomSheet.css";
 import { OrbitControls } from '@react-three/drei';
 import Mypost from "./home/myPost";
 import { MeshBasicMaterial, PlaneGeometry } from 'three';
+import { AppContext } from "./avatar/avatarDeco";
 
 
-const eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_eye/NewJeans_HANI_eye.gltf';
-const mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_mouth/NewJeans_DANIEL_mouth.gltf';
-//const cheekGltfPath = process.env.PUBLIC_URL + 'gltf/avatar/avatar_cheek.gltf';
-//const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/가자.gltf';
-const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/hyein_top.gltf';
-const bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/herin_skirt.gltf';
-const dressGltfPath = process.env.PUBLIC_URL + ''; 
+const eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_DANIEL_eye.gltf';
+const mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_DANIEL_mouth.gltf';
+const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/daniel_top.gltf';
+const bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/daniel_skirt.gltf';
+//const dressGltfPath = process.env.PUBLIC_URL + ''; 
 const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
-//const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Pumps_Hill_Black.glb';
-const bagGltfPath = process.env.PUBLIC_URL + '/gltf/bag/KR_sh_bag_w.glb';
-const accessoryGltfPath = process.env.PUBLIC_URL + '/gltf/accessory/Airpods_black_H.glb'; 
+const bagGltfPath = '';
+const accessoryGltfPath = ''; 
 
 const GltfGroupModels = (props) => {
+
 
   const putDecoGltf = (gltfPath, setScale, positionX, positionY, positionZ) => {
     const gltfLoader = new GLTFLoader();
@@ -57,15 +56,11 @@ const GltfGroupModels = (props) => {
 
                  // 파일 path, scale, position(x, y, z) 순서  
     putDecoGltf(topGltfPath, 1.1, 0,-0.04,0);
-    //putDecoGltf(topGltfPath, 0.00018, 0, 0.0218, 0.0025);
-    
     putDecoGltf(bottomGltfPath, 1.1, 0,-0.04,0);
-    putDecoGltf(shoesGltfPath, 0.025, -0.004 , -0.048, -0.018);
-    //putDecoGltf(accessoryGltfPath, 0.05, 0,-0.03,0.005);
+    putDecoGltf(shoesGltfPath, 1.1, 0,-0.04,0);
     putDecoGltf(accessoryGltfPath, 1.1, 0,-0.04,0);
-    putDecoGltf(bagGltfPath, 0.029, 0.02,-0.098,0.004);
+    putDecoGltf(bagGltfPath, 1.1, 0,-0.04,0);
 
-    //putDecoGltf(cheekGltfPath, 1.1, 0,-0.04,0);
 
     //avatar gltf 모델을 로드하여 그룹에 추가
     gltfLoader.load(AvatarGltfPath, (parentGltf) => {

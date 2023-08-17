@@ -6,10 +6,39 @@ import React, { useState, Suspense, useRef, useEffect } from "react";
 import Modal from '../../alert/modal';
 import Uploading from "../../alert/uploading";
 import IsImage from "../../alert/isImage";
-
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Post = propos => {
+    const navigate = useNavigate();
+
+    const goPost = () => {
+        //props.closeModal();
+        navigate("/postView");
+    }
+
+    const handleUpload = async () => {
+        console.log(previewImages);
+      try {
+        openModal(<Uploading />);
+        const response = await axios.post(
+          "https://us-central1-netural-app.cloudfunctions.net/api/posts",
+          {
+            "title": title,
+            "body": content,
+            "postImg": previewImages,
+            "writerID": "cherry"
+          }
+        );
+        closeModal(<Uploading />);
+        goPost();
+        console.log("Document uploaded:", response.data);
+      } catch (error) {
+        console.error("Error uploading document:", error);
+        closeModal(<Uploading />);
+      }
+    };
+      
     // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -31,16 +60,42 @@ const Post = propos => {
     };
 
     //camera -> 이미지 삽입
-    const [previewImages, setPreviewImages] = useState([]); //이미지 주소들 저장하는 배열
+    const [dataURL, setDataURL] = useState('');
 
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [previewImages, setPreviewImages] = useState([]); //이미지 주소들 저장하는 배열
+    // const handleImageUpload = (event) => {
+    //     const files = event.target.files;
+
+
+    //     const processImages = async () => {
+    //       for (let i = 0; i < files.length; i++) {
+    //         const file = files[i];
+    //         const reader = new FileReader();
+    //   reader.onload = (e) => {
+    //     const imageDataURL = e.target.result;
+    //     setSelectedImage(imageDataURL);
+    //     setDataURL(imageDataURL);
+    //   };
+    //   const imageDataURL = reader.readAsDataURL(file);
+    //   setPreviewImages(prevImages => [...prevImages, imageDataURL]);
+    //         console.log(reader.readAsDataURL(file));
+    //       }
+    //     };
+      
+    //     processImages();
+    //   };
+      
 const handleImageUpload = (event) => {
     const files = event.target.files;
 
     const processImages = async () => {
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            const imageDataURL = await readFileAsDataURL(file);
+            let imageDataURL = await readFileAsDataURL(file);
             setPreviewImages(prevImages => [...prevImages, imageDataURL]);
+            
+            console.log(file);
         }
         };
 
@@ -84,6 +139,8 @@ const handleImageUpload = (event) => {
       setModalIsOpen(false);
     };
   
+    const formRef = useRef(null);
+
     const uploadClick = () => {
         if(previewImages.length === 0){
             //올라간 이미지가 없으면 업로드 불가 모달 띄우기
@@ -92,7 +149,12 @@ const handleImageUpload = (event) => {
         }
         //올라간 이미지가 있으면 업로드 시작
         else{
-            openModal(<Uploading />)
+            //폼 제출
+            const emptyEvent = new Event('submit');
+            handleSubmit(emptyEvent);
+            //서버에 업로드
+            handleUpload();
+            
             console.log("imgae ok")
         }
       };

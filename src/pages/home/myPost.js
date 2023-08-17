@@ -44,15 +44,16 @@ useEffect(() => {
   
   var postArray = [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12]; //item 임의 개수
     //썸네일
-      var imgArray = [ 
-    process.env.PUBLIC_URL + "/png/hani_pants.png",
-    process.env.PUBLIC_URL + "/png/hani_top.png", 
-    process.env.PUBLIC_URL + "/png/herin_skirt.png", 
-    process.env.PUBLIC_URL + "/png/herin_top.png", 
-    process.env.PUBLIC_URL + "/png/hyein_pants.png", 
-    process.env.PUBLIC_URL + "/png/hyein_top.png", 
-    process.env.PUBLIC_URL + "/png/minji_pants.png", 
-    process.env.PUBLIC_URL + "/png/minji_top.png"
+    var imgArray = [ 
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost3.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_1.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_2.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_3.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_4.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_5.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_6.png",
+      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_7.png",
 ];
 return(
     <BottomSheet className="homeSheet" id="parentDiv-home" 
@@ -66,7 +67,8 @@ return(
     blocking = {false}  //배경 블록 현상 해결
     header ={
       <div className="bottom_header homeSheet">
-        <div className="profileImg homeSheet">
+        <div className="profileImg homeSheet" style={{backgroundImage:"url(/img/home/profile_img.jpg)"}}>
+          <img />
           {/* 서버에서 받아온 이미지 넣기 */}
         </div>
         <div className="userName homeSheet">
@@ -82,9 +84,9 @@ return(
     <div className="bottom_content homeSheet">
         
         { //아이템 썸네일 박스
-          postArray.map((num)=>(
+          imgArray.map((imgSrc, index)=>(
             <div className="postImg">
-              <img className="item_img" src= { imgArray[num] } />
+              <img className="item_img" src= { imgSrc } />
             </div>
 
         )

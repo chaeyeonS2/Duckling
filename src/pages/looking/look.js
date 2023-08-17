@@ -7,6 +7,8 @@ import HeaderLook from "../../headers/headerLook";
 
 
 const Look = () => {
+    //뭘 해야하지......... 받아올 포스트 개수만큼?
+    //일단 10개 해서 또 10개 요청하는 식으로?
 
     const layoutStyle = {
         position: 'absolute',
