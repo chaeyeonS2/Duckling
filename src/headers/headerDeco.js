@@ -5,7 +5,7 @@ const HeaderDeco = () => {
     const navigate = useNavigate();
 
     const closeClick = () => {
-        navigate("/home");
+        window.location.href = "/home"; // "/home"으로 새로고침
     }
 
     return (

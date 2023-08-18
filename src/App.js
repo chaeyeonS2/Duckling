@@ -22,6 +22,7 @@ import CommentView from "./pages/writing/commetView";
 import Start from "./pages/start";
 import Tmp from "./pages/tmp";
 import XrealLogin from "./pages/xrealLogin";
+import Camera from "./pages/camera";
 
 function App() {
   function setScreenSize() {
@@ -59,7 +60,8 @@ function App() {
 <Route path="/test" element={<Tmp/>} />
 {/* xmc용 로그인 */}
 <Route path="/xmc" element={<XrealLogin />}/>
-
+{/* ar camera */}
+<Route path="/camera" element={<Camera />}/>
 
   </Routes>
 </BrowserRouter> 

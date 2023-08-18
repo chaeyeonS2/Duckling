@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 //전달되는 포스트 정보
-// {
+// {\
 //     "postID": "postID",
 //     "title": "title",
 //     "body": "body"
