@@ -13,7 +13,7 @@ import Delete from "../../alert/delete";
 import PostShare from "../../alert/postShare";
 import Modal from '../../alert/modal';
 import axios from 'axios';
-
+import * as CommentPage from "./commentPage";
 var writerID = '';
 var postID = "";
 
@@ -49,10 +49,14 @@ const PostView = () => {
 
   const navigate = useNavigate();
   const commentClick = () =>{
+    CommentPage.getCommentInfo(postID, commentNum);
     navigate("/comment");
+    
+
   }
 
     var images = [];
+    var commentNum = -1;
     const textarea = useRef(null);
 
         //modal
@@ -88,6 +92,7 @@ const PostView = () => {
           .then(response =>{
               setData(response.data);
               images = response.data.postImg;
+              commentNum = response.data.commentCount;
               //console.log(images);
               //like = response.data.likes;
               
@@ -141,19 +146,20 @@ const PostView = () => {
                   
               </div>
             }
-            
+            {postData && 
             <div className={styles.bottomBar}>
             <div className={styles.leftBtnGroup}>
                 <div className={styles.candy}>
                     <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
-                    <div className={styles.num}>0</div>
+                    <div className={styles.num}>{postData.likes}</div>
                 </div>
                 <div className={styles.comment} onClick={commentClick}>
                     <div ><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
-                    <div className={styles.num}></div>
+                    <div className={styles.num}>{postData.commentCount}</div>
                 </div>
             </div>
           </div>
+            }
             {/* <CommentView/> */}
 
             {/* 고정 푸터 user 값에 따라 수정해야함*/}

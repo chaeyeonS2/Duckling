@@ -62,7 +62,7 @@ const PostBox = (props) => {
                 <div><img src={process.env.PUBLIC_URL + "/img/looking/cookie.png"}/></div>
                 <text>{data.likes}</text>
                 <div><img src={process.env.PUBLIC_URL + "/img/looking/comment.png"}/></div>
-                <text ></text>
+                <text >{data.commentCount}</text>
                 
             </div>
 

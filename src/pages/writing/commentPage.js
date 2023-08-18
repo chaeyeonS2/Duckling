@@ -5,13 +5,22 @@ import HeaderComment from "../../headers/headerComment";
 import styles from "../../css/writing/commentPage.module.css";
 import axios from 'axios';
 
+
 const userID = localStorage.getItem("id");
+var getUid  = "";
 const photoURL = localStorage.getItem("profileImg");
 const userName = localStorage.getItem("userName");
+var pid = '';
+var commentCount = -1;
+export function getCommentInfo(postid, commentNum){
+  pid = postid;
+  commentCount = commentNum;
+}
 
 const CommentPage = () => {
     
     const [comment, setComment] = useState('');
+    const [upload, setUpload] = useState('');
 
     const handleCommentChange = (event) => {
       setComment(event.target.value); 
@@ -29,13 +38,15 @@ const CommentPage = () => {
             "https://us-central1-netural-app.cloudfunctions.net/api/comments",
             {
               "text" : comment,
-              "rootID" : "haha", 
+              "userID" : userID,
+              "rootID" : pid, 
               "writerID" : userName
             }
           );
           console.log("Document uploaded:", response.data);
           if(response.data){
-            window.location.reload();
+            //window.location.reload();
+            setUpload("aa");
           }
         } catch (error) {
           console.error("Error uploading document:", error);
@@ -48,6 +59,22 @@ const CommentPage = () => {
       getComment();
       
     };
+    const [profileImg, setProfileImg] = useState(''); // 상태 추가
+    const getUserProfileImg = async () => {
+        try {
+        const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/users/${getUid}`);
+        setProfileImg(response.data.profileImg); // 상태 업데이트
+
+        } catch(e) {
+        console.error(e);
+        }
+    }
+    //유저 정보 받아오기
+
+
+    useEffect(() => {
+        getUserProfileImg();
+      }, [getUid]);
 
     const [data, setData] = useState(null);
     const [update, setUpdate] = useState(null);
@@ -55,9 +82,10 @@ const CommentPage = () => {
     //댓글 받아오기
     const getComment = async () => {
         try {
-        const response = await axios.get("https://us-central1-netural-app.cloudfunctions.net/api/comments/root/haha");
+        const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/comments/root/${pid}`);
         //etData(response.data);
         console.log("success");
+        getUid = response.data.userID;
 
         setData(response.data.slice().sort((a, b) => a.time - b.time));
 
@@ -71,7 +99,7 @@ const CommentPage = () => {
     useEffect(() => {
 
         getComment();
-      }, []);
+      }, [upload]);
 
 
   
@@ -81,7 +109,9 @@ const CommentPage = () => {
     return (
         <div className="layout">
             {/* 고정 헤더 */}
-            <HeaderComment/>
+            <HeaderComment
+              commentNum = {commentCount}
+            />
             <div className={styles.content}>
             {data && 
             <div className="BottomSheet-content">
@@ -90,7 +120,7 @@ const CommentPage = () => {
                     {data.map((comment) => (
                         <div className="commentBox">
                             <div className='commentTop'>
-                                <div className={styles.profileImg} style={{backgroundImage:`url(${photoURL})`}}>
+                                <div className={styles.profileImg} style={{backgroundImage:`url(${profileImg})`}}>
                                 </div> 
                                 <div className="userName">
                                     {comment.writerID}

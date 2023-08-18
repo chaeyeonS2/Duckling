@@ -1,7 +1,7 @@
 import styles from "../css/header/headerComment.module.css";
 import { useNavigate } from "react-router-dom";
 
-const HeaderComment = () => {
+const HeaderComment = props => {
     const navigate = useNavigate();
 
     const backClick = () => {
@@ -12,12 +12,12 @@ const HeaderComment = () => {
         <header className={styles.header}>
             <div className={styles.leftBtnGroup}>
                 <div className={styles.candy}>
-                    <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
-                    <div className={styles.num}>215</div>
+                    {/* <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div> */}
+                    <div className={styles.num}></div>
                 </div>
                 <div className={styles.comment}>
-                    <div><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
-                    <div className={styles.num}>423</div>
+                    {/* <div><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div> */}
+                    <div className={styles.num}></div>
                 </div>
             </div>
             <div className={styles.rightBtnGroup}>
