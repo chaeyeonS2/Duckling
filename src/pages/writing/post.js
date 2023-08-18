@@ -36,8 +36,9 @@ const Post = propos => {
             "title": title,
             "body": content,
             "postImg": previewImages,
-            "writerID": userName
-          }
+            "writerID": userName,
+            "userID" : userID
+            }
         );
         closeModal(<Uploading />);    
         console.log("Document uploaded:", response.data.postID, response.data.writerID);

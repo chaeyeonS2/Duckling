@@ -120,7 +120,6 @@ const GltfGroupModels = (props) => {
         const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`);
         setUserInfo(response.data);
         setDefaultAsset(response.data.userAvatar);
-        console.log("성공");
       } catch (error) {
         console.error(error);
       }
@@ -134,7 +133,7 @@ const GltfGroupModels = (props) => {
   useEffect(() => {
     loadModels();
     if (userInfo.length) {
-      console.log(userInfo);
+      console.log("테스트",userInfo);
       
     }
   }, [userInfo]);

@@ -9,7 +9,7 @@ var photoURL = '';
 var userName = '';
 //const userName = "hublemon"; 
 const MyPost = () => {
-  const [postImgArray, setPostArray] = useState([]);
+  const [postInfoArray, setPostArray] = useState([""]);
 
     const navigate = useNavigate();
 
@@ -28,9 +28,13 @@ const MyPost = () => {
         const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/${userName}`);
         
         console.log(userName);
-        setPostArray( response.data.map(item => item.postImg[0]));
-        console.log(postImgArray);
-
+        if(response.data !== null){
+          const newPostInfoArray = response.data.map(item => ({
+            postImg: item.postImg[0],
+            postId: item.postID,
+          }));
+          setPostArray(newPostInfoArray);        
+        }
         
       } catch (error) {
         console.error(error);
@@ -67,6 +71,7 @@ const MyPost = () => {
     clearTimeout(timeoutId); // 컴포넌트가 언마운트될 때 clearTimeout으로 타이머 해제
     
   };
+  getPostInfo(); // 컴포넌트가 마운트될 때 getPost 함수 호출
 
 
 
@@ -74,39 +79,10 @@ const MyPost = () => {
 }, []);
 
 
-// getPost();
+const handlePostClick = (userName, postID) => {
+  navigate(`/postview/${userName}/${postID}`);
+};
 
-// useEffect(() => {
-
-
-// getPost();
-// }
-// ,[]);
-//   // getPost 함수 정의
-//   const getPost = async () => {
-//     try {
-//       const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/${userName}`);
-//       console.log(response.data);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-  
-
-  var postArray = [0, 1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12]; //item 임의 개수
-    //썸네일
-    var imgArray = [ 
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost3.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_1.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_2.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_3.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_4.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_5.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_6.png",
-      process.env.PUBLIC_URL + "/img/home/myPost/mypost1_7.png",
-];
 return(
     <BottomSheet className="homeSheet" id="parentDiv-home" 
     open
@@ -135,10 +111,10 @@ return(
     <div className="bottom_content homeSheet">
         
         { //아이템 썸네일 박스
-          postImgArray.map((imgSrc, index)=>(
-            <div className="postImg">
+          postInfoArray.map((info, index)=>(
+            <div className="postImg" onClick={() => handlePostClick(userName, info.postId)}>
               {/* TO-DO 클릭하면 해당 포스트로 이동하는 코드 작성 */}
-              <img className="item_img" src= { imgSrc } />
+              <img className="item_img" src= { info.postImg } />
             </div>
 
         )

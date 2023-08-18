@@ -10,7 +10,7 @@ const Login = () => {
 
     const handleUpload = async (userID, photoURL, userName) => {
         try{
-        const response = await axios.patch(
+        const response = await axios.post(
           "https://us-central1-netural-app.cloudfunctions.net/api/users",
           {
             "uid" : userID,

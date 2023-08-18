@@ -30,7 +30,7 @@ const CommentPage = () => {
             {
               "text" : comment,
               "rootID" : "haha", 
-              "writerID" : "팜하니" 
+              "writerID" : userName
             }
           );
           console.log("Document uploaded:", response.data);

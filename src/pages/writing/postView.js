@@ -8,7 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Delete from "../../alert/delete";
 import PostShare from "../../alert/postShare";
 import Modal from '../../alert/modal';
@@ -45,20 +45,14 @@ function ImageSlider({ images }) {
     }
 
 const PostView = () => {
+  const { writerID, postID } = useParams(); // URL 매개변수 가져오기
+
   const navigate = useNavigate();
   const commentClick = () =>{
     navigate("/comment");
   }
 
     var images = [];
-    // = [
-    //     process.env.PUBLIC_URL + "/img/writing/example.jpeg",
-    //     process.env.PUBLIC_URL + "/img/writing/cat2.png",
-    //     // <img className='postImg' src={process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/>,
-    //     // <img className='postImg' src={process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/>,
-    //     // // ... 추가 이미지 경로들
-    //   ];
-
     const textarea = useRef(null);
 
         //modal

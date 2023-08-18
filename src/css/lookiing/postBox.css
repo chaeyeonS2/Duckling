@@ -14,8 +14,7 @@
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    background-color: #a91212;
-    
+    background-size: cover;
   }
   
 .one-post-box .userName{
