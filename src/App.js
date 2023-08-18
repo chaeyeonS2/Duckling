@@ -21,6 +21,7 @@ import CommentPage from "./pages/writing/commentPage";
 import CommentView from "./pages/writing/commetView";
 import Start from "./pages/start";
 import Tmp from "./pages/tmp";
+import XrealLogin from "./pages/xrealLogin";
 
 function App() {
   function setScreenSize() {
@@ -56,6 +57,8 @@ function App() {
     <Route path="/comment" element={<CommentPage/>} />
 {/* <test/> */}
 <Route path="/test" element={<Tmp/>} />
+{/* xmc용 로그인 */}
+<Route path="/xmc" element={<XrealLogin />}/>
 
 
   </Routes>

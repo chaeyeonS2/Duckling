@@ -1,7 +1,7 @@
 import { auth } from '../firebase/config'
 import { getAuth, signInWithPopup,TwitterAuthProvider } from 'firebase/auth';
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link  } from "react-router-dom";
 import axios from 'axios';
 
 const Login = () => {
@@ -97,9 +97,18 @@ const Login = () => {
                     src = {process.env.PUBLIC_URL + '/img/login/twitter.png'} />
                     
                 </div>
-            
+                <Link to="/xmc"
+                            style={
+                                {
+                                    position: "absolute",
+                                    bottom: "100px", // 조정하여 링크 위치를 조절할 수 있습니다.
+                                    textDecoration: "none"
+                                }
+                            }
+                            >XMC용 로그인 페이지로 이동</Link>
             </div>
         </div>
+
         
     )
 }
