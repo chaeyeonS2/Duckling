@@ -45,7 +45,7 @@ function App() {
     {/* Login */}
     <Route path="/login" element={<Login />} />
     {/* <POST VIEW /> */}
-    <Route path="/postview" element={<PostView />} />
+    <Route path="/postview/:writerID/:postID" element={<PostView />} />
     {/* <아바타 꾸미기/> */}
     <Route path="/deco" element={<AvatarDeco />} />
     {/* <새글쓰기/> */}

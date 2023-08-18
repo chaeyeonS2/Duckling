@@ -1,3 +1,34 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+
+export const ItemArray = props => {
+    const [data, setData] = useState(null);
+    const [dataType, setDataType] = useState([]); //area, kind
+    
+    useEffect(() => {
+
+    const getItemInfo = async () => {
+        
+    await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/${props.area}/${props.kind}`)
+    .then(response =>{
+        setData(response.data);
+        console.log(data[0].assetID);
+        
+    })
+      
+      .catch(e => {
+        console.error(e);
+      })
+            
+        }
+        getItemInfo();
+        }, [props.area, props.kind]);
+    return(
+        <></>
+    )
+}
+
 const dataArrays = {
     top: [ 
         process.env.PUBLIC_URL + "/png/top/daniel_top.png",

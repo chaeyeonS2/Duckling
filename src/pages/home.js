@@ -17,12 +17,17 @@ import { OrbitControls } from '@react-three/drei';
 import Mypost from "./home/myPost";
 import { MeshBasicMaterial, PlaneGeometry } from 'three';
 import { AppContext } from "./avatar/avatarDeco";
+import axios from 'axios';
+
+
+
 
 
 const eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_DANIEL_eye.gltf';
 const mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_DANIEL_mouth.gltf';
 const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/daniel_top.gltf';
-const bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/daniel_skirt.gltf';
+const bottomGltfPath = "https://firebasestorage.googleapis.com/v0/b/netural-app.appspot.com/o/bottoms_gltf%2Fhb_hani_pants.gltf?alt=media&token=413ebc73-1132-4f6f-8fbf-b9fc58e94dec";
+//const bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/daniel_skirt.gltf';
 //const dressGltfPath = process.env.PUBLIC_URL + ''; 
 const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
 const bagGltfPath = '';
@@ -105,10 +110,39 @@ const GltfGroupModels = (props) => {
 
   };
 
+  const [defaultAsset, setDefaultAsset] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
   // gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
   useEffect(() => {
-    loadModels();
+    const uid = localStorage.getItem("id");
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`);
+        setUserInfo(response.data);
+        setDefaultAsset(response.data.userAvatar);
+        console.log("성공");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    getUserInfo();
+
+
+    
   }, []);
+  useEffect(() => {
+    loadModels();
+    if (userInfo.length) {
+      console.log(userInfo);
+      
+    }
+  }, [userInfo]);
+
+  //   useEffect(() => {
+  //     loadModels();
+  // }, );
+
 
   return (
     <group ref={groupRef}
@@ -136,7 +170,7 @@ const Home = () => {
                           <GltfGroupModels/>
                         
                         {/* 마우스 컨트롤 */}
-                        <OrbitControls />
+                        {/* <OrbitControls /> */}
                     </Canvas>
                 </Suspense>
                         

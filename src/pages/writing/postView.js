@@ -7,13 +7,20 @@ import CommentView from "./commetView";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { register } from 'swiper/element/bundle';
 
 import { useNavigate } from 'react-router-dom';
 import Delete from "../../alert/delete";
 import PostShare from "../../alert/postShare";
 import Modal from '../../alert/modal';
 import axios from 'axios';
+
+var writerID = '';
+var postID = "";
+
+export function getInfo(writerid, postid){
+  writerID = postid;
+  postID = writerid;
+}
 
 function ImageSlider({ images }) {
     const settings = {
@@ -79,23 +86,31 @@ const PostView = () => {
     const [likeData, setLikeData] = useState(null);
 
     const like = -1;
-    const writerID = 'cherry';
-    const postID = '10213243-5465-4687-98a9-bacbdcedfe0f';
-
 
     useEffect(() => {
       const getPost = async () => {
-        try {
-          const response = await axios.get("https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/cherry/10213243-5465-4687-98a9-bacbdcedfe0f");
-          setData(response.data);
-          images = postData.postImg;
-          like = postData.likes;
-        } catch(e) {
-          console.error(e);
-        }
-      }
+        
+          await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/${writerID}/${postID}`)
+          .then(response =>{
+              setData(response.data);
+              images = response.data.postImg;
+              //console.log(images);
+              //like = response.data.likes;
+              
+          })
+            
+            .catch(e => {
+              console.error(e);
+            })
+          
+          
+    }
+
+    if (postID && writerID) {
       getPost();
-    }, []);
+    }
+  }, [postID, writerID]);
+
 
     return (
         <div >
@@ -137,11 +152,11 @@ const PostView = () => {
             <div className={styles.leftBtnGroup}>
                 <div className={styles.candy}>
                     <div><img src={process.env.PUBLIC_URL + "/img/writing/cookie.png"}/></div>
-                    <div className={styles.num}>{like}</div>
+                    <div className={styles.num}>0</div>
                 </div>
                 <div className={styles.comment} onClick={commentClick}>
                     <div ><img src={process.env.PUBLIC_URL + "/img/writing/comment.png"}/></div>
-                    <div className={styles.num}>423</div>
+                    <div className={styles.num}></div>
                 </div>
             </div>
           </div>

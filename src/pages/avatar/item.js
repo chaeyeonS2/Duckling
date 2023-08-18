@@ -2,6 +2,10 @@ import "../../css/item.css";
 import React, { useState, useEffect } from "react";
 import Itembox from '../avatar/itembox';
 import dataArrays from './ItemArray';
+import ItemArray from './ItemArray';
+import axios from 'axios';
+
+
 const Item = props => {
 
     const type = props.type;
@@ -17,10 +21,9 @@ const Item = props => {
         props.getData(isClick);
       }
 
+    const [assetArray, setAssetArray] = useState([]);
 
-
-
-    const [typeItemState_face, setItemTypeState_face] = useState("eye");  //face 카테고리
+    const [typeItemState_face, setItemTypeState_face] = useState("eyes");  //face 카테고리
     const [typeItemState_cloth, setItemTypeState_cloth] = useState("top");  //cloth 카테고리
     var itemArray = [0, 1, 2, 3, 5, 6, 7]; //item 임의 개수
     const [itembox, setItembox] = useState(typeItemState_cloth);
@@ -39,8 +42,8 @@ const Item = props => {
 
 
     const [selectDeco, setSelectDeco] = useState(false);
-    const handleClick = (idx) => {
-        const newArr = Array(dataArrays[typeItemState_face].length).fill(false);
+    const handleClick = (idx, _type) => {
+        const newArr = Array(assetArray.length).fill(false);
         newArr[idx] = true;
 
         setSelectDeco(newArr);
@@ -53,11 +56,22 @@ const Item = props => {
           setContent(
             <div className="faceDeco Deco">
                 <div className="faceBtnGroup typeItemBtnGroup">
-                    <div className={typeItemState_face === "eye" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("eye")}}>눈</div>
+                    <div className={typeItemState_face === "eyes" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("eyes")}}>눈</div>
                     <div className={typeItemState_face === "mouth" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("mouth")}}>입</div>
                 </div>
                 <div className="itemBoxDiv"> 
-                    { //아이템 썸네일 박스
+                { assetArray &&//아이템 썸네일 박스
+                    assetArray.map((item, index)=>{
+                        return (<Itembox 
+                                    type = {typeItemState_face}
+                                    imgSrc = {item.assetImg}
+                                    index = {item.assetID}
+                                    handleClick = {handleClick}
+                                    selectDeco = {selectDeco}
+                                    gltfPath = {item.assetGltf}
+                                />)
+                    })} 
+                    {/* { //아이템 썸네일 박스
                     dataArrays[typeItemState_face].map((imgSrc, index)=>{
                         return (<Itembox 
                                     type = {typeItemState_face}
@@ -66,7 +80,7 @@ const Item = props => {
                                     handleClick = {handleClick}
                                     selectDeco = {selectDeco}
                                 />)
-                    })} 
+                    })}  */}
                 </div>
             </div>
         );
@@ -78,34 +92,79 @@ const Item = props => {
                     <div className={typeItemState_cloth === "top" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("top")}}>상의</div>
                     <div className={typeItemState_cloth === "bottom" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("bottom")}}>하의</div>
                     <div className={typeItemState_cloth === "shoes" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("shoes")}}>신발</div>
-                    <div className={typeItemState_cloth === "etc" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("etc")}}>기타</div>
+                    <div className={typeItemState_cloth === "accessory" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_cloth("accessory")}}>기타</div>
                 </div>
                 <div className="itemBoxDiv"> 
-                { //아이템 썸네일 박스
-                    dataArrays[typeItemState_cloth].map((imgSrc, index)=>{
+                { assetArray &&//아이템 썸네일 박스
+                    assetArray.map((item, index)=>{
                         return (<Itembox 
                                     type = {typeItemState_cloth}
-                                    imgSrc = {imgSrc}
-                                    index = {index}
+                                    imgSrc = {item.assetImg}
+                                    index = {item.assetID}
                                     handleClick = {handleClick}
                                     selectDeco = {selectDeco}
+                                    gltfPath = {item.assetGltf}
                                 />)
-                    })}
+                    })} 
                 </div>
             </div>
           );
         }
     };
 
-    // useEffect를 사용하여 컴포넌트가 로드되자마자 myFunction을 실행합니다.
+
     useEffect(() => {
+        const getAvataInfo = async () => {
+          try {
+            if(type === "face"){
+                const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/face/${typeItemState_face}`);
+                setAssetArray(response.data);
+
+                // const eyeArrayData = response.data;
+
+            }
+            else{       //type === "cloth"
+                const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/body/${typeItemState_cloth}`);
+                //response -> top, bottom, shoes, accessory에 관한 내용들
+                setAssetArray(response.data);
+            }
+            // const eyeArrayData = response.data.map(item => item.assetImg);
+            // setEyeArray(eyeArrayData);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+      
+        getAvataInfo();
+      
+      }, [type, typeItemState_face, typeItemState_cloth, selectDeco]); // 의존성 배열
+      
+      // eyeArray 변경을 감시하고 변경될 때 handleChangeContent() 호출
+      useEffect(() => {
+        if (assetArray.length > 0) {
+          console.log(assetArray);
+          handleChangeContent();
+        }
+      }, [assetArray]);
+    // useEffect(() => {
+    //     const getAvataInfo = async () => {
+    //         await axios
+    //         .get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/face/eyes`)
+    //         .then(response => {
+    //             await setEyeArray(response.data.map(item => item.assetImg));
+    //             console.log(eyeArray);
+                
+    //         })
+    //         .catch(e => {
+    //             console.error(e);
+    //         })
+    //     }
+    //     getAvataInfo();
+    //     setTimeout(() => {
+    //         handleChangeContent();
+    //     }, 1); // 일정 시간 후에 실행
         
-        handleChangeContent();
-        
-        
-        
-        
-    },[type, typeItemState_face, typeItemState_cloth, selectDeco]);
+    // },[type, typeItemState_face, typeItemState_cloth, selectDeco]);
 
     // useEffect(()=>{
 

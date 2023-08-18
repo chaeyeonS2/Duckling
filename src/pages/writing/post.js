@@ -8,18 +8,27 @@ import Uploading from "../../alert/uploading";
 import IsImage from "../../alert/isImage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import * as PostView from "./postView";
+
+const userID = localStorage.getItem("id");
+const photoURL = localStorage.getItem("profileImg");
+const userName = localStorage.getItem("userName");
 
 const Post = propos => {
     const navigate = useNavigate();
 
-    const goPost = () => {
+    const goPost = (writerid, postid) => {
         //props.closeModal();
+        PostView.getInfo(writerid, postid);
         navigate("/postView");
     }
 
     const handleUpload = async () => {
         console.log(previewImages);
-      try {
+        try{
+
+        
+       
         openModal(<Uploading />);
         const response = await axios.post(
           "https://us-central1-netural-app.cloudfunctions.net/api/posts",
@@ -27,17 +36,25 @@ const Post = propos => {
             "title": title,
             "body": content,
             "postImg": previewImages,
-            "writerID": "cherry"
+            "writerID": userName
           }
         );
-        closeModal(<Uploading />);
-        goPost();
-        console.log("Document uploaded:", response.data);
-      } catch (error) {
+        closeModal(<Uploading />);    
+        console.log("Document uploaded:", response.data.postID, response.data.writerID);
+
+        PostView.getInfo(response.data.postID, response.data.writerID);
+
+                navigate(`/postView/${response.data.writerID}/${response.data.postID}`);
+
+    }
+        catch (error) {
         console.error("Error uploading document:", error);
         closeModal(<Uploading />);
       }
-    };
+        //goPost(response.data.postID, response.data.writerID);
+        
+        //navigate("/postView");
+}
       
     // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
     const [title, setTitle] = useState('');

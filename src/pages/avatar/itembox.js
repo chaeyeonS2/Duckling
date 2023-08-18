@@ -7,6 +7,7 @@ const Itembox = props => {
     var imgSrc = props.imgSrc;
     var index = props.index;
     var selectDeco = props.selectDeco;
+    
 
     
     var itemTypeArray = ['eye', 'mouth', 'top', 'bottom', 'shoes', 'etc'];
@@ -21,7 +22,7 @@ const Itembox = props => {
         //서버로 요청하는 코드 추가
         //AvatarDeco.js로 보내는 코드
         //setClick(true);
-        AvatarDeco.isClick(index, itemtype);
+        AvatarDeco.isClick(index, itemtype, props.gltfPath);
         // isClick = true;
         // props.getData(isClick);
         // console.log('thisisitembox');
@@ -90,7 +91,7 @@ const Itembox = props => {
     //     console.log(selectDeco);
     // }
     return (
-        <div className={btnState ? "item_box_click" : "item_box"} onClick={() => props.handleClick(index)}>
+        <div className={btnState ? "item_box_click" : "item_box"} onClick={() => props.handleClick(index, itemtype)}>
             {content}
         </div>
     )

@@ -12,52 +12,8 @@ import { OrbitControls } from '@react-three/drei';
 import html2canvas from 'html2canvas';
 import dataArrays from './ItemArray';
 import axios from 'axios';
-// const NewMapModel = (props) => {
-//     const { scene } = useGLTF(process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf');
-    
-//     return (
-//     <mesh>
-//         <pointLight intensity={1}/>
-//         <primitive 
-//             object={scene}
-//             scale={props.scale}
-//             position={props.position}
-//             //cloth일 경우
-//             // scale={1.2}
-//             // position={[0,-0.05,0]}
-//         />
-//     </mesh>
-     
-//     );
-// };
 
-// const ItemModel = (props) => {
-//     const { scene } = useGLTF(process.env.PUBLIC_URL  +'/gltf/bottom/HYERIN_HB.gltf');
-//     //const { scene } = useGLTF(process.env.PUBLIC_URL  +'/img/hani_avatar_netural.gltf');
-
-//     return (
-//     <mesh>
-//         {/* <boxGeometry args={[0.05,0.05,0.05]}/>
-//         <meshStandardMaterial color={"blue"} /> */}
-//         <pointLight intensity={1}/>
-//         <primitive 
-//             object={scene}
-//             // scale={props.scale}
-//             // position={props.position}
-//             //cloth일 경우
-//             scale={0.0002}
-//             position={[0,-0.005,0.01]}
-            
-//         />
-//     </mesh>
-     
-//     );
-// };
-  
-
-
-
-
+var uid = '';
 var eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_DANIEL_eye.gltf';
 var mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_DANIEL_mouth.gltf';
 var topGltfPath = process.env.PUBLIC_URL + '/gltf/top/daniel_top.gltf';
@@ -67,47 +23,55 @@ var shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
 var bagGltfPath = '';
 var accessoryGltfPath = ''; 
 
-var itemTypeArray = ['eye', 'mouth', 'top', 'bottom', 'shoes', 'etc'];
+//var DefaultArray = [eyeId, mouthId, topId, bottomId, shoesId, accessoryId];
+
+var itemTypeArray = ['eyes', 'mouth', 'top', 'bottom', 'shoes', 'accessory'];
 var gltfTypeArray = ['gltfEye', 'gltfMouth', 'gltfTop', 'gltfBottom', 'gltfShoes', 'gltfEtc'];
 //var gltfPathArray = [eyeGltfPath, mouthGltfPath, topGltfPath, bottomGltfPath, shoesGltfPath, accessoryGltfPath];
 var gltfPathArray = [eyeGltfPath, mouthGltfPath, topGltfPath, bottomGltfPath, shoesGltfPath, accessoryGltfPath];
 var addGltfPath = '';
 var type = '';
-var num = null;
-export function isClick(index, itemtype){ //의상 index 받아오기
+var assetid = null;
+
+export function isClick(index, itemtype, gltfPath){ //의상 index 받아오기
   type = itemtype;
-  num = index;
-  addGltfPath = dataArrays[matchItemtoGltf()][index];
+  assetid = index;
+  addGltfPath = gltfPath;
+  //addGltfPath = dataArrays[matchItemtoGltf()][index];
   const event = new CustomEvent('globalFunctionCalled');
   window.dispatchEvent(event);
 }
 
-const matchItemtoGltf = () => {
-  const index = itemTypeArray.indexOf(type);
-  console.log(gltfTypeArray[index]);
-  return gltfTypeArray[index];
-}
+// const matchItemtoGltf = () => {
+//   const index = itemTypeArray.indexOf(type);
+//   console.log(gltfTypeArray[index]);
+//   return gltfTypeArray[index];
+// }
 
 
 const AvatarDeco = () => {
 
-  const [data, setData] = useState(null);
+const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const getPost = async () => {
-      try {
-        const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/${typeDecoState}/${type}`);
-        setData(response.data);
-        console.log(data[0].assetID);
-      } catch(e) {
-        console.error(e);
-      }
+const [userInfo, setUserInfo] = useState([]);
+// gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
+useEffect(() => {
+  uid = localStorage.getItem("id");
+  const getUserInfo = async () => {
+    try {
+      const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`);
+      setUserInfo(response.data.userAvatar);
+      console.log(userInfo);
+
+    } catch (error) {
+      console.error(error);
     }
-    getPost();
-  }, []);
+  };
 
+  getUserInfo();
+   
+}, []);
 
-var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
 
 
   const GltfGroupModels = (props) => {
@@ -116,7 +80,7 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
         console.log(type);
         // 원하는 작업 수행
         //removeDecoGltf();
-        putDecoGltf(addGltfPath, 1.1, 0,-0.04,0, type);
+        putDecoGltf(addGltfPath, 1.1, 0,-0.04,0, type, assetid);
         console.log(addGltfPath);
       }
   
@@ -140,15 +104,28 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
       itemTypeArray.map((n)=>{
         if(type === n){
           //기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
-          removeDecoGltf(type)
-          const newArray = gltfPathArray;
-          newArray[itemTypeArray.indexOf(n)] = gltfPath;
-          setgltfPathArray(newArray);
+          removeDecoGltf(type);
+
+
+          // const newArray = gltfPathArray;
+          // newArray[itemTypeArray.indexOf(n)] = gltfPath;
+          // setgltfPathArray(newArray);
+          
+          
+          const updatedUserInfo = [...userInfo];
+
+          // Update the specific element at index n with the new assetid
+          updatedUserInfo[n] = assetid;
+        
+          // Update the state with the new array
+          setUserInfo(updatedUserInfo);
           
         }
       })
       
       groupRef.current.add(model);
+      //type에 맞는 id에 추가
+      
                 
       }); 
     } 
@@ -161,7 +138,7 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
       );
     
       if (childToRemove) {
-        console.log(childToRemove);
+        //console.log(childToRemove);
         groupRef.current.remove(childToRemove);
       }
         // 모델이 로드되어 있으면 제거
@@ -169,7 +146,7 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
         //setModelLoaded(false);
     
     }
-  
+    var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
     const groupRef = useRef(props);
     // gltf 모델들을 로드하고 그룹에 추가하는 함수
     const loadModels = () => {
@@ -186,6 +163,12 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
       putDecoGltf(gltfPathdefault[3], 1.1, 0,-0.04,0, "bottom");
       putDecoGltf(gltfPathdefault[4], 1.1, 0,-0.04,0, "shoes");
       putDecoGltf(gltfPathdefault[5], 1.1, 0,-0.04,0, "etc");
+      // putDecoGltf(userInfo.eyes, 1.1, 0,-0.04,0, "eyes");
+      // putDecoGltf(userInfo.mouth, 1.1, 0,-0.04,0, "mouth");
+      // putDecoGltf(userInfo.top, 1.1, 0,-0.04,0, "top");
+      // putDecoGltf(userInfo.bottom, 1.1, 0,-0.04,0, "bottom");
+      // putDecoGltf(userInfo.shoes, 1.1, 0,-0.04,0, "shoes");
+      // putDecoGltf(userInfo.accessory, 1.1, 0,-0.04,0, "accessory");
                
       //avatar gltf 모델을 로드하여 그룹에 추가
       gltfLoader.load(AvatarGltfPath, (parentGltf) => {
@@ -220,6 +203,15 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
       // });
   
     };
+    //현재 착장 저장
+    const saveAvatar = () =>{
+      const currentAsset = groupRef.current.children.find(
+        (child) => child.userData.type === "eyes"
+      );
+      if(currentAsset != null){
+        //eyeID = currentAsset.
+      }
+    }
   
     // gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
     // useEffect(() => {
@@ -232,7 +224,7 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
       //   console.log("success");
       // }
       
-    },[addGltfPath])
+    },[addGltfPath, userInfo])
   
     // useEffect(()=>{
     //   console.log("success");
@@ -325,6 +317,24 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
   //   }
   // };
 
+  const handleAvatarUpload = async () => {
+    try{
+    const response = await axios.patch(
+      `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`,
+      {
+        "userAvatar" :{
+          "top" : "bottom_01",
+          "bottom" : "bottom_01"
+        }
+      }
+    );
+    console.log("avatar upload success");
+}
+    catch (error) {
+    console.error("Error uploading document:", error);
+  }
+}
+
 
 
     return (
@@ -334,7 +344,7 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
             <Suspense fallback={null}>
             <Canvas style={{ background: 'transparent' }} ref={canvasRef} 
             shadows camera={{rotation: [0, 0, 0], fov: 150, zoom: 100, near: 1, far: 10 } }>
-                        <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} penumbra={1} castShadow/>
+                        <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} peassetidbra={1} castShadow/>
                         <ambientLight intensity={0.5} />
                         {/* <ParentAndbottomModels /> */}
                         <GltfGroupModels />
@@ -348,7 +358,7 @@ var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
                                                 // eyePath = {process.env.PUBLIC_URL + "/gltf/eye/NewJeans_HANI_eye.gltf"}
                                                 // mouthGltfPath = {process.env.PUBLIC_URL + "/gltf/mouth/NewJeans_HANI_mouth.gltf"}
                         />} */}
-                        <OrbitControls />
+                        {/* <OrbitControls /> */}
                     </Canvas>
                 </Suspense>
                 
