@@ -19,10 +19,8 @@ import { MeshBasicMaterial, PlaneGeometry } from 'three';
 import { AppContext } from "./avatar/avatarDeco";
 import axios from 'axios';
 
-
-
-
-
+const myAssetArray = JSON.parse(localStorage.getItem("gltf"));
+const myAssetIdArray = JSON.parse(localStorage.getItem("assetID"));
 const eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_DANIEL_eye.gltf';
 const mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_DANIEL_mouth.gltf';
 const topGltfPath = process.env.PUBLIC_URL + '/gltf/top/daniel_top.gltf';
@@ -32,24 +30,29 @@ const bottomGltfPath = "https://firebasestorage.googleapis.com/v0/b/netural-app.
 const shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
 const bagGltfPath = '';
 const accessoryGltfPath = ''; 
+const tmp = ["", "", "", "", "",""];
+localStorage.setItem("gltf", JSON.stringify(tmp));
 
 const GltfGroupModels = (props) => {
 
+  let isFirstLoad = true; // 최초 로드 여부를 확인하는 변수
 
   const putDecoGltf = (gltfPath, setScale, positionX, positionY, positionZ) => {
-    const gltfLoader = new GLTFLoader();
-        gltfLoader.load(gltfPath, (childGltf) => {
+    if (gltfPath) { // gltfPath가 null이나 undefined가 아닌 경우에만 실행
+      const gltfLoader = new GLTFLoader();
+      gltfLoader.load(gltfPath, (childGltf) => {
         const model = childGltf.scene;
-        //model.scale.set(0.00018, 0.00018, 0.00018); // 자식 모델 크기 조정
-        model.scale.set(setScale, setScale, setScale); // 자식 모델 크기 조정
-        //model.position.set(0,0,0.01); // 자식 모델 위치 설정
-        model.position.set(positionX, positionY, positionZ); // 자식 모델 위치 설정
-      
+        model.scale.set(setScale, setScale, setScale);
+        model.position.set(positionX, positionY, positionZ);
         groupRef.current.add(model);
-      }); 
-    } 
+      });
+    } else {
+      console.log('Invalid gltfPath:', gltfPath);
+    }
+  };
 
   const groupRef = useRef(props);
+
   // 부모와 자식 gltf 모델들을 로드하고 그룹에 추가하는 함수
   const loadModels = () => {
     const AvatarGltfPath = process.env.PUBLIC_URL + 'gltf/avatar/cheek_avatarglb.gltf';
@@ -60,12 +63,17 @@ const GltfGroupModels = (props) => {
     //const texture = new TextureLoader().load('/gltf/avatar/wood.jpg');
 
                  // 파일 path, scale, position(x, y, z) 순서  
-    putDecoGltf(topGltfPath, 1.1, 0,-0.04,0);
-    putDecoGltf(bottomGltfPath, 1.1, 0,-0.04,0);
-    putDecoGltf(shoesGltfPath, 1.1, 0,-0.04,0);
-    putDecoGltf(accessoryGltfPath, 1.1, 0,-0.04,0);
-    putDecoGltf(bagGltfPath, 1.1, 0,-0.04,0);
-
+    // putDecoGltf(topGltfPath, 1.1, 0,-0.04,0);
+    // putDecoGltf(bottomGltfPath, 1.1, 0,-0.04,0);
+    // putDecoGltf(shoesGltfPath, 1.1, 0,-0.04,0);
+    // putDecoGltf(accessoryGltfPath, 1.1, 0,-0.04,0);
+    // putDecoGltf(bagGltfPath, 1.1, 0,-0.04,0);
+    putDecoGltf(myAssetArray[0], 1.1, 0,-0.04,0, "eyes");
+    putDecoGltf(myAssetArray[1], 1.1, 0,-0.04,0, "mouth");
+    putDecoGltf(myAssetArray[2], 1.1, 0,-0.04,0, "top");
+    putDecoGltf(myAssetArray[3], 1.1, 0,-0.04,0, "bottom");
+    putDecoGltf(myAssetArray[4], 1.1, 0,-0.04,0, "shoes");
+    putDecoGltf(myAssetArray[5], 1.1, 0,-0.04,0, "accessory");
 
     //avatar gltf 모델을 로드하여 그룹에 추가
     gltfLoader.load(AvatarGltfPath, (parentGltf) => {
@@ -90,27 +98,34 @@ const GltfGroupModels = (props) => {
       model.position.set(0,0.155,0.01);
       groupRef.current.add(model);
     }); 
+    gltfLoader.load(process.env.PUBLIC_URL  +'/gltf/avatar/nose.gltf', (parentGltf) => {
+      const model = parentGltf.scene;
+      model.scale.set(1.1, 1.1, 1.1); // 부모 모델 크기 조정
+      model.position.set(0,-0.04,0);
+      groupRef.current.add(model);
+    }); 
     //stage gltf 모델을 로드하여 그룹에 추가
     putDecoGltf(StageGltfPath, 0.04, 0, -0.055, 0.0025);
 
-    // eye gltf 모델을 로드하여 그룹에 추가
-    gltfLoader.load(eyeGltfPath, (childGltf) => {
-      const model = childGltf.scene;
-      model.scale.set(1.1, 1.1, 1.1); // 자식 모델 크기 조정
-      model.position.set(0,-0.04,0); // 자식 모델 위치 설정
-      groupRef.current.add(model);
-    });
-    // mouth gltf 모델을 로드하여 그룹에 추가
-    gltfLoader.load(mouthGltfPath, (childGltf) => {
-      const model = childGltf.scene;
-      model.scale.set(1.1, 1.1, 1.1); // 자식 모델 크기 조정
-      model.position.set(0,-0.04,0); // 자식 모델 위치 설정
-      groupRef.current.add(model);
-    });
+    // // eye gltf 모델을 로드하여 그룹에 추가
+    // gltfLoader.load(eyeGltfPath, (childGltf) => {
+    //   const model = childGltf.scene;
+    //   model.scale.set(1.1, 1.1, 1.1); // 자식 모델 크기 조정
+    //   model.position.set(0,-0.04,0); // 자식 모델 위치 설정
+    //   groupRef.current.add(model);
+    // });
+    // // mouth gltf 모델을 로드하여 그룹에 추가
+    // gltfLoader.load(mouthGltfPath, (childGltf) => {
+    //   const model = childGltf.scene;
+    //   model.scale.set(1.1, 1.1, 1.1); // 자식 모델 크기 조정
+    //   model.position.set(0,-0.04,0); // 자식 모델 위치 설정
+    //   groupRef.current.add(model);
+    // });
 
   };
 
   const [defaultAsset, setDefaultAsset] = useState([]);
+  const [defaultgltf, setDefaultGltf] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
   // gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
   useEffect(() => {
@@ -124,23 +139,129 @@ const GltfGroupModels = (props) => {
         console.error(error);
       }
     };
-  
     getUserInfo();
 
 
-    
+
   }, []);
+  const array = [defaultAsset.eyes, defaultAsset.mouth, defaultAsset.top, defaultAsset.bottom, defaultAsset.shoes, defaultAsset.accessory];
+
+  useEffect(()=>{
+    localStorage.setItem("assetID", JSON.stringify(array));
+
+    const data = localStorage.getItem("assetID");
+    console.log("내 아바타 에셋들", data); // [1, 2, 3, 4, 5]
+
+    const getAssetInfo = async () => {
+      var assetGltfTmp = [0,0,0,0,0];
+      const areas = ["face", "body"];
+      const kinds = {
+        face: ["eyes", "mouth"],
+        body: ["top", "bottom", "shoes", "accessory"]
+      };
+      const assetGltfArray = ["", "", "", "", ""]; // 초기값은 null로 설정 또는 원하는 기본 값으로 설정 가능
+
+      try {
+        for (const area of areas) {
+          for (const kind of kinds[area]) {
+            const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/${area}/${kind}`);
+            
+            const desiredAssetID = getDesiredAssetID(kind);
+            const desiredItem = response.data.find(item => item.assetID === array[desiredAssetID]);
+    
+            if (desiredItem) {
+              assetGltfArray[desiredAssetID] = desiredItem.assetGltf;
+            }
+          }
+        }
+    
+        console.log('Asset gltf array:', assetGltfArray);
+
+        setDefaultGltf(assetGltfArray);
+        // 이곳에서 assetGltfArray를 활용하는 로직을 추가할 수 있습니다.
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    // kind에 따른 assetID 매핑
+    const getDesiredAssetID = (kind) => {
+      if (kind === "eyes") return 0;
+      if (kind === "mouth") return 1;
+      if (kind === "top") return 2;
+      if (kind === "bottom") return 3;
+      if (kind === "shoes") return 4;
+      if (kind === "accessory") return 5;
+      // if (kind === "eyes") return array[0];
+      // if (kind === "mouth") return array[1];
+      // if (kind === "bottom") return array[2];
+      // if (kind === "shoes") return array[3];
+      // if (kind === "accessory") return array[4];
+      return -1; // 기본 값 설정
+      // try {
+      //   for (const area of areas) {
+      //     for (const kind of kinds[area]) {
+      //       const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/${area}/${kind}`);
+      //       //const assetGltfArray = response.data.assetGltf;
+      //       var assetGltfArray = [];
+
+      //       response.data.forEach(item => {
+      //         assetGltfArray.push(item.assetGltf);
+      //       });
+      //       console.log(`Asset for ${area}/${kind}:`, assetGltfArray);
+      //       // 이곳에 assetGltf를 활용하는 로직을 추가할 수 있습니다.
+      //       // assetID로 해당 아이템 찾기
+      //       var desiredAssetID = -1;
+      //       if(kind === "eyes"){
+      //         desiredAssetID = 0;
+      //       }
+      //       else if(kind === "mouth"){
+      //         desiredAssetID = 1;
+      //       }
+      //       else if(kind === "bottom"){
+      //         desiredAssetID = 2;
+      //       }
+      //       else if(kind === "shoes"){
+      //         desiredAssetID = 3;
+      //       }
+      //       else if(kind === "accessory"){
+      //         desiredAssetID = 4;
+      //       }
+      //     const desiredItem = assetGltfArray.find(item => item.assetID === array[desiredAssetID]);
+      //     assetGltfTmp[desiredAssetID] = desiredItem.assetGltf;
+
+      //     }
+      //   }
+      //   setDefaultGltf(assetGltfTmp);
+
+      // } catch (error) {
+      //   console.error(error);
+      // }
+    };
+    getAssetInfo();
+  },[defaultAsset]);
+
+  useEffect(()=>{
+    localStorage.setItem("gltf", JSON.stringify(defaultgltf));
+
+    const data = localStorage.getItem("gltf");
+    console.log("내 아바타 주소들", data); // [1, 2, 3, 4, 5]
+    
+
+            setTimeout(() => {
+              loadModels();
+        }, 6000); // 일정 시간 후에 실행
+  }, [defaultgltf]);
+
   useEffect(() => {
-    loadModels();
+    //loadModels();
     if (userInfo.length) {
       console.log("테스트",userInfo);
       
     }
   }, [userInfo]);
 
-  //   useEffect(() => {
-  //     loadModels();
-  // }, );
+
 
 
   return (

@@ -13,25 +13,34 @@ import html2canvas from 'html2canvas';
 import dataArrays from './ItemArray';
 import axios from 'axios';
 
-var uid = '';
-var eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_DANIEL_eye.gltf';
-var mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_DANIEL_mouth.gltf';
-var topGltfPath = process.env.PUBLIC_URL + '/gltf/top/daniel_top.gltf';
-var bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/daniel_skirt.gltf';
-//const dressGltfPath = process.env.PUBLIC_URL + ''; 
-var shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
-var bagGltfPath = '';
-var accessoryGltfPath = ''; 
-
-//var DefaultArray = [eyeId, mouthId, topId, bottomId, shoesId, accessoryId];
+const uid = localStorage.getItem("id");
+const myAssetArray = JSON.parse(localStorage.getItem("gltf"));
+const myAssetIdArray = JSON.parse(localStorage.getItem("assetID"));
+// var eyeGltfPath = myAssetArray[0];
+// var mouthGltfPath = myAssetArray[1];
+// var topGltfPath = myAssetArray[2];
+// var bottomGltfPath = myAssetArray[3];
+// //const dressGltfPath = process.env.PUBLIC_URL + ''; 
+// var shoesGltfPath = myAssetArray[4];
+// var bagGltfPath = '';
+// var accessoryGltfPath = myAssetArray[5];
+// var eyeGltfPath = process.env.PUBLIC_URL  +'/gltf/eye/NewJeans_DANIEL_eye.gltf';
+// var mouthGltfPath = process.env.PUBLIC_URL + '/gltf/mouth/NewJeans_DANIEL_mouth.gltf';
+// var topGltfPath = process.env.PUBLIC_URL + '/gltf/top/daniel_top.gltf';
+// var bottomGltfPath = process.env.PUBLIC_URL + '/gltf/bottom/daniel_skirt.gltf';
+// //const dressGltfPath = process.env.PUBLIC_URL + ''; 
+// var shoesGltfPath = process.env.PUBLIC_URL + '/gltf/shoes/Sneakers_Yellow.glb';
+// var bagGltfPath = '';
+// var accessoryGltfPath = ''; 
 
 var itemTypeArray = ['eyes', 'mouth', 'top', 'bottom', 'shoes', 'accessory'];
 var gltfTypeArray = ['gltfEye', 'gltfMouth', 'gltfTop', 'gltfBottom', 'gltfShoes', 'gltfEtc'];
 //var gltfPathArray = [eyeGltfPath, mouthGltfPath, topGltfPath, bottomGltfPath, shoesGltfPath, accessoryGltfPath];
-var gltfPathArray = [eyeGltfPath, mouthGltfPath, topGltfPath, bottomGltfPath, shoesGltfPath, accessoryGltfPath];
+//var gltfPathArray = [eyeGltfPath, mouthGltfPath, topGltfPath, bottomGltfPath, shoesGltfPath, accessoryGltfPath];
 var addGltfPath = '';
 var type = '';
-var assetid = null;
+var assetid = "";
+
 
 export function isClick(index, itemtype, gltfPath){ //의상 index 받아오기
   type = itemtype;
@@ -51,27 +60,10 @@ export function isClick(index, itemtype, gltfPath){ //의상 index 받아오기
 
 const AvatarDeco = () => {
 
-const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
 
-const [userInfo, setUserInfo] = useState([]);
-// gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
-useEffect(() => {
-  uid = localStorage.getItem("id");
-  const getUserInfo = async () => {
-    try {
-      const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`);
-      setUserInfo(response.data.userAvatar);
-      console.log(userInfo);
-
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  getUserInfo();
-   
-}, []);
-
+var [gltfPathdefault, setgltfPathArray] = useState(myAssetArray);
+var [assetIddefault, setAssetIdArray] = useState(myAssetIdArray);
 
 
   const GltfGroupModels = (props) => {
@@ -93,42 +85,37 @@ useEffect(() => {
     
     
     //deco 추가하는 함수
-    const putDecoGltf = (gltfPath, setScale, positionX, positionY, positionZ, type) => {
-      const gltfLoader = new GLTFLoader();
-      gltfLoader.load(gltfPath, (childGltf) => {
-      const model = childGltf.scene;
-      model.scale.set(setScale, setScale, setScale); // 모델 크기 조정
-      model.position.set(positionX, positionY, positionZ); // 모델 위치 설정
-      model.userData.type = type; // 원하는 타입 값을 설정합니다.
-      
-      itemTypeArray.map((n)=>{
-        if(type === n){
-          //기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
-          removeDecoGltf(type);
-
-
-          // const newArray = gltfPathArray;
-          // newArray[itemTypeArray.indexOf(n)] = gltfPath;
-          // setgltfPathArray(newArray);
-          
-          
-          const updatedUserInfo = [...userInfo];
-
-          // Update the specific element at index n with the new assetid
-          updatedUserInfo[n] = assetid;
-        
-          // Update the state with the new array
-          setUserInfo(updatedUserInfo);
-          
-        }
-      })
-      
-      groupRef.current.add(model);
-      //type에 맞는 id에 추가
-      
-                
-      }); 
-    } 
+    const putDecoGltf = (gltfPath, setScale, positionX, positionY, positionZ, type, aid) => {
+      if (gltfPath) { // gltfPath가 null이나 undefined가 아닌 경우에만 실행
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load(gltfPath, (childGltf) => {
+          const model = childGltf.scene;
+          model.scale.set(setScale, setScale, setScale);
+          model.position.set(positionX, positionY, positionZ);
+          model.userData.type = type;
+    
+          itemTypeArray.forEach((n) => {
+            if (type === n) {
+              // 기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
+              removeDecoGltf(type);
+    
+              const newArray = myAssetArray;
+              newArray[itemTypeArray.indexOf(n)] = gltfPath;
+              setgltfPathArray(newArray);
+    
+              const newArray2 = myAssetIdArray;
+              newArray2[itemTypeArray.indexOf(n)] = aid;
+              setAssetIdArray(newArray2);
+            }
+          });
+    
+          groupRef.current.add(model);
+        });
+      } else {
+        console.log('Invalid gltfPath:', gltfPath);
+      }
+    };
+    
 
     
     //deco 초기화하는 함수
@@ -146,7 +133,7 @@ useEffect(() => {
         //setModelLoaded(false);
     
     }
-    var [gltfPathdefault, setgltfPathArray] = useState(gltfPathArray);
+  
     const groupRef = useRef(props);
     // gltf 모델들을 로드하고 그룹에 추가하는 함수
     const loadModels = () => {
@@ -157,18 +144,12 @@ useEffect(() => {
       const gltfLoader = new GLTFLoader();
   
                    // 파일 path, scale, position(x, y, z) 순서  
-      putDecoGltf(gltfPathdefault[0], 1.1, 0,-0.04,0, "eye");
-      putDecoGltf(gltfPathdefault[1], 1.1, 0,-0.04,0, "mouth");
-      putDecoGltf(gltfPathdefault[2], 1.1, 0,-0.04,0, "top");
-      putDecoGltf(gltfPathdefault[3], 1.1, 0,-0.04,0, "bottom");
-      putDecoGltf(gltfPathdefault[4], 1.1, 0,-0.04,0, "shoes");
-      putDecoGltf(gltfPathdefault[5], 1.1, 0,-0.04,0, "etc");
-      // putDecoGltf(userInfo.eyes, 1.1, 0,-0.04,0, "eyes");
-      // putDecoGltf(userInfo.mouth, 1.1, 0,-0.04,0, "mouth");
-      // putDecoGltf(userInfo.top, 1.1, 0,-0.04,0, "top");
-      // putDecoGltf(userInfo.bottom, 1.1, 0,-0.04,0, "bottom");
-      // putDecoGltf(userInfo.shoes, 1.1, 0,-0.04,0, "shoes");
-      // putDecoGltf(userInfo.accessory, 1.1, 0,-0.04,0, "accessory");
+      putDecoGltf(myAssetArray[0], 1.1, 0,-0.04,0, "eyes", myAssetIdArray[0]);
+      putDecoGltf(myAssetArray[1], 1.1, 0,-0.04,0, "mouth", myAssetIdArray[1]);
+      putDecoGltf(myAssetArray[2], 1.1, 0,-0.04,0, "top", myAssetIdArray[2]);
+      putDecoGltf(myAssetArray[3], 1.1, 0,-0.04,0, "bottom", myAssetIdArray[3]);
+      putDecoGltf(myAssetArray[4], 1.1, 0,-0.04,0, "shoes", myAssetIdArray[4]);
+      putDecoGltf(myAssetArray[5], 1.1, 0,-0.04,0, "accessory", myAssetIdArray[5]);
                
       //avatar gltf 모델을 로드하여 그룹에 추가
       gltfLoader.load(AvatarGltfPath, (parentGltf) => {
@@ -184,34 +165,16 @@ useEffect(() => {
         model.position.set(0,0.155,0.01);
         groupRef.current.add(model);
       }); 
+      gltfLoader.load(process.env.PUBLIC_URL  +'/gltf/avatar/nose.gltf', (parentGltf) => {
+        const model = parentGltf.scene;
+        model.scale.set(1.1, 1.1, 1.1); // 부모 모델 크기 조정
+        model.position.set(0,-0.04,0);
+        groupRef.current.add(model);
+      }); 
       //stage gltf 모델을 로드하여 그룹에 추가
       putDecoGltf(StageGltfPath, 0.04, 0, -0.055, 0.0025);
   
-      // // eye gltf 모델을 로드하여 그룹에 추가
-      // gltfLoader.load(eyeGltfPath, (childGltf) => {
-      //   const model = childGltf.scene;
-      //   model.scale.set(1.1, 1.1, 1.1); // 자식 모델 크기 조정
-      //   model.position.set(0,-0.04,0); // 자식 모델 위치 설정
-      //   groupRef.current.add(model);
-      // });
-      // // mouth gltf 모델을 로드하여 그룹에 추가
-      // gltfLoader.load(mouthGltfPath, (childGltf) => {
-      //   const model = childGltf.scene;
-      //   model.scale.set(1.1, 1.1, 1.1); // 자식 모델 크기 조정
-      //   model.position.set(0,-0.04,0); // 자식 모델 위치 설정
-      //   groupRef.current.add(model);
-      // });
-  
     };
-    //현재 착장 저장
-    const saveAvatar = () =>{
-      const currentAsset = groupRef.current.children.find(
-        (child) => child.userData.type === "eyes"
-      );
-      if(currentAsset != null){
-        //eyeID = currentAsset.
-      }
-    }
   
     // gltf 모델들을 로드하기 위해 컴포넌트가 마운트될 때 한 번만 실행합니다.
     // useEffect(() => {
@@ -224,7 +187,7 @@ useEffect(() => {
       //   console.log("success");
       // }
       
-    },[addGltfPath, userInfo])
+    },[addGltfPath])
   
     // useEffect(()=>{
     //   console.log("success");
@@ -319,23 +282,29 @@ useEffect(() => {
 
   const handleAvatarUpload = async () => {
     try{
+      console.log("gltf:", gltfPathdefault);
+      console.log("asset:",assetIddefault);
+      localStorage.setItem("assetID", JSON.stringify(assetIddefault));
+      localStorage.setItem("gltf", JSON.stringify(gltfPathdefault));
     const response = await axios.patch(
       `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`,
       {
         "userAvatar" :{
-          "top" : "bottom_01",
-          "bottom" : "bottom_01"
+          "eyes": assetIddefault[0],
+          "mouth": assetIddefault[1],
+          "top": assetIddefault[2],
+          "bottom": assetIddefault[3],
+          "accessory": assetIddefault[4],
+          "shoes": assetIddefault[5]
         }
       }
     );
-    console.log("avatar upload success");
+    console.log("asset upload success");
 }
     catch (error) {
     console.error("Error uploading document:", error);
   }
 }
-
-
 
     return (
         <div className="layoutDeco">
@@ -366,7 +335,7 @@ useEffect(() => {
                 {/* {typeDecoState[1] ? <Item type={"cloth"} /> : ''} */}
                 
             </div>
-            <div className="saveAvatar" onClick={handleCapture}>
+            <div className="saveAvatar" onClick={()=> handleAvatarUpload()}>
                 <img src={process.env.PUBLIC_URL + "/img/deco/save.png"} />
             </div>
 
