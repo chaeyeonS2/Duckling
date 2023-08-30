@@ -4,6 +4,7 @@ import Footer from '../../footer';
 import HeaderComment from "../../headers/headerComment";
 import styles from "../../css/writing/commentPage.module.css";
 import axios from 'axios';
+import "../../css/customBottomSheet_postView.css";
 
 
 const userID = localStorage.getItem("id");
@@ -99,8 +100,8 @@ const CommentPage = () => {
     useEffect(() => {
 
         getComment();
-      }, [upload]);
-
+      }, [upload]); 
+    // [리뷰] 블라블라블라.....
 
   
     

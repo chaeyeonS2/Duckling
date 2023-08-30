@@ -113,7 +113,6 @@ return(
         { //아이템 썸네일 박스
           postInfoArray.map((info, index)=>(
             <div className="postImg" onClick={() => handlePostClick(userName, info.postId)}>
-              {/* TO-DO 클릭하면 해당 포스트로 이동하는 코드 작성 */}
               <img className="item_img" src= { info.postImg } />
             </div>
 

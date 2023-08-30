@@ -93,7 +93,6 @@ const PostView = () => {
               setData(response.data);
               images = response.data.postImg;
               commentNum = response.data.commentCount;
-              //console.log(images);
               //like = response.data.likes;
               
           })
@@ -133,7 +132,6 @@ const PostView = () => {
                           <div className={styles.writinggetBox}>
                           
                               <ImageSlider images={postData.postImg} /> 
-                              {/* <img className='postImg' src=process.env.PUBLIC_URL + "/img/writing/example.jpeg"}/> */}
                               
                               <p className={styles.text_content}>
                                 {postData.body}
@@ -160,7 +158,6 @@ const PostView = () => {
             </div>
           </div>
             }
-            {/* <CommentView/> */}
 
             {/* 고정 푸터 user 값에 따라 수정해야함*/}
             <Footer btn = {0}/>
