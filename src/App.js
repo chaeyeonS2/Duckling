@@ -9,7 +9,7 @@ import { useGLTF } from '@react-three/drei';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import AvatarDeco from './pages/avatar/avatarDeco';
 import Post from "./pages/writing/post";
-import Home from "./pages/home";
+import Home from "./pages/home/home";
 import PostView from "./pages/writing/postView";
 import Login from "./pages/login";
 import IsImage from "./alert/isImage";

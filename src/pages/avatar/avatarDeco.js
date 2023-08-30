@@ -328,6 +328,17 @@ var [assetIddefault, setAssetIdArray] = useState(myAssetIdArray);
                                                 // mouthGltfPath = {process.env.PUBLIC_URL + "/gltf/mouth/NewJeans_HANI_mouth.gltf"}
                         />} */}
                         {/* <OrbitControls /> */}
+                        <OrbitControls
+                enableZoom={false}   // 확대/축소 비활성화
+                enableRotate={true}  // 회전 활성화
+                enablePan={false}    // 이동 비활성화
+                enableDamping       // 부드러운 움직임 효과 활성화
+                dampingFactor={0.1} // 부드러운 움직임 강도 설정
+                enableKeys={false}  // 키보드 단축키 비활성화
+                touchZoomSpeed={0}  // 모바일 확대/축소 비활성화
+                touchRotateSpeed={1} // 모바일 회전 활성화
+      />
+      {/* 이하 Three.js 관련 요소들을 추가할 수 있습니다 */}
                     </Canvas>
                 </Suspense>
                 

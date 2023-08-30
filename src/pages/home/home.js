@@ -1,7 +1,7 @@
 //import React from 'react';
-import Footer from "../footer"; 
-import Header from "../headers/header";
-import "../css/layout.css"; 
+import Footer from "../../footer"; 
+import Header from "../../headers/header";
+import "../../css/layout.css"; 
 import React, { useLayoutEffect, useState, Suspense, Component ,useRef, useEffect, useContext } from "react";
 import { Canvas, Camera, useFrame, useLoader } from "@react-three/fiber";
 import { Vector3 } from "three";
@@ -10,13 +10,13 @@ import { TextureLoader } from 'three';
 import { useGLTF } from '@react-three/drei';
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import { BottomSheet } from 'react-spring-bottom-sheet';
-import "../css/customBottomSheet.css";
+import "../../css/customBottomSheet.css";
 //import 'react-spring-bottom-sheet/dist/style.css'; // 스타일 파일을 불러옵니다.
 //import { css } from '@emotion/react';
 import { OrbitControls } from '@react-three/drei';
-import Mypost from "./home/myPost";
+import Mypost from "./myPost";
 import { MeshBasicMaterial, PlaneGeometry } from 'three';
-import { AppContext } from "./avatar/avatarDeco";
+import { AppContext } from "../avatar/avatarDeco";
 import axios from 'axios';
 
 const myAssetArray = JSON.parse(localStorage.getItem("gltf"));
@@ -291,6 +291,17 @@ const Home = () => {
                         
                         {/* 마우스 컨트롤 */}
                         {/* <OrbitControls /> */}
+                        <OrbitControls
+          enableZoom={false}   // 확대/축소 비활성화
+          enableRotate={true}  // 회전 활성화
+          enablePan={false}    // 이동 비활성화
+          enableDamping       // 부드러운 움직임 효과 활성화
+          dampingFactor={0.1} // 부드러운 움직임 강도 설정
+          enableKeys={false}  // 키보드 단축키 비활성화
+          touchZoomSpeed={0}  // 모바일 확대/축소 비활성화
+          touchRotateSpeed={1} // 모바일 회전 활성화
+      />
+      {/* 이하 Three.js 관련 요소들을 추가할 수 있습니다 */}
                     </Canvas>
                 </Suspense>
                         
