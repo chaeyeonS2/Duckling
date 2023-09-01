@@ -8,13 +8,11 @@ const useFetch = (url, defaultValue, map = (data) => data) => {
       const data = await axios
         .get(url)
         .then((res) => res.data)
-        .catch(() => state);
+        .catch(() => undefined);
 
-      if (data !== null) {
-        setState(map(data));
-      }
+      if (data) setState(map(data));
     })();
-  }, [state, url, map]);
+  }, [url, map]);
 
   return state;
 };
