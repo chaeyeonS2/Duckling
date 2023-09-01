@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import useFetch from "@/hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import { BottomSheet } from "react-spring-bottom-sheet";
@@ -7,8 +6,8 @@ import useLocalStorageState from "use-local-storage-state";
 import "@/css/customBottomSheet.css";
 
 export default function MyPost() {
-  const [photoURL] = useLocalStorageState("profileImg", { defaultValue: "" });
-  const [userName] = useLocalStorageState("userName", { defaultValue: "" });
+  const [photoURL] = useLocalStorageState("profileImg");
+  const [userName] = useLocalStorageState("userName");
   const postInfoArray = useFetch(
     `https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/${userName}`,
     []
@@ -22,13 +21,6 @@ export default function MyPost() {
     navigate(`/postview/${userName}/${postID}`);
   };
 
-  useEffect(() => {
-    const childDivs = document.querySelectorAll("#parentDiv-home div");
-    childDivs.forEach((childDiv) => {
-      childDiv.classList.add("homeSheet");
-    });
-  }, []); // 이 코드들이 정말 의미있는지 검토해보세요.
-
   return (
     <BottomSheet
       className="homeSheet"
@@ -38,13 +30,13 @@ export default function MyPost() {
       skipInitialTransition
       snapPoints={({ maxHeight }) => [80, maxHeight / 2]}
       header={
-        <div className="bottom_header homeSheet">
+        <div className="bottom_header">
           <div
-            className="profileImg homeSheet"
+            className="profileImg"
             style={{ backgroundImage: `url(${photoURL})` }}
           />
-          <div className="userName homeSheet">{userName}</div>
-          <div className="btnAddNew homeSheet" onClick={handleNewPostClick}>
+          <div className="userName">{userName}</div>
+          <div className="btnAddNew" onClick={handleNewPostClick}>
             <img
               src={process.env.PUBLIC_URL + "/img/writing/add.png"}
               alt="+"
@@ -53,11 +45,11 @@ export default function MyPost() {
         </div>
       }
     >
-      <div className="bottom_content homeSheet">
+      <div className="bottom_content">
         {postInfoArray.map((info) => (
           <div
             key={info.postId}
-            className="postImg homeSheet"
+            className="postImg"
             onClick={() => handlePostClick(info.postId)}
           >
             <img className="item_img" src={info.postImg[0]} alt="postImg" />
