@@ -148,43 +148,23 @@ div[data-rsbs-footer] {
   z-index: 1;
   padding-bottom: calc(16px + env(safe-area-inset-bottom));
 }
-
-div[data-rsbs-is-dismissable="true"] div[data-rsbs-header] > *,
-div[data-rsbs-is-dismissable="true"] div[data-rsbs-scroll] > *,
-div[data-rsbs-is-dismissable="true"] div[data-rsbs-footer] > *,
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="opening"]
-  div[data-rsbs-header]
-  > *,
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="closing"]
-  div[data-rsbs-header]
-  > *,
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="opening"]
-  div[data-rsbs-scroll]
-  > *,
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="closing"]
-  div[data-rsbs-scroll]
-  > *,
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="opening"]
-  div[data-rsbs-footer]
-  > *,
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="closing"]
-  div[data-rsbs-footer]
+:where(
+    div[data-rsbs-is-dismissable="true"],
+    :where(
+        div[data-rsbs-is-dismissable="false"]
+          :where(div[data-rsbs-state="opening"], div[data-rsbs-state="closing"])
+      )
+  )
+  :where(div[data-rsbs-header], div[data-rsbs-scroll], div[data-rsbs-footer])
   > * {
   opacity: var(--rsbs-content-opacity, 1);
 }
 
-div[data-rsbs-is-dismissable="true"] div[data-rsbs-backdrop],
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="opening"]
-  div[data-rsbs-backdrop],
-div[data-rsbs-is-dismissable="false"]
-  div[data-rsbs-state="closing"]
+:where(
+    div[data-rsbs-is-dismissable="true"],
+    div[data-rsbs-is-dismissable="false"]
+      :where(div[data-rsbs-state="opening"], div[data-rsbs-state="closing"])
+  )
   div[data-rsbs-backdrop] {
   opacity: var(--rsbs-backdrop-opacity, 1);
 }

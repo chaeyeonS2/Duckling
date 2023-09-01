@@ -10,7 +10,7 @@ export default function MyPost() {
   const [userName] = useLocalStorageState("userName");
   const postInfoArray = useFetch(
     `https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/${userName}`,
-    []
+    [""]
   );
 
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function MyPost() {
             className="postImg"
             onClick={() => handlePostClick(info.postId)}
           >
-            <img className="item_img" src={info.postImg[0]} alt="postImg" />
+            <img className="item_img" src={info.postImg} alt="postImg" />
           </div>
         ))}
       </div>
