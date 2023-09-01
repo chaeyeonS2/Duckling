@@ -1,78 +1,74 @@
-.content{
-    padding-top: 45px;
+.content {
+  padding-top: 45px;
 }
 
-.marignBox{
-    padding: 0.5vw;
-    width: 99vw;
+.marignBox {
+  padding: 0.5vw;
+  width: 99vw;
 }
 
-.title{
-    height: 45px;
-    padding: 10px;
-    border-radius: 20px 20px 0 0;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-top: 5px solid black;
-    display: flex;
-    align-items: center;
+.title {
+  height: 45px;
+  padding: 10px;
+  border-radius: 20px 20px 0 0;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 5px solid black;
+  display: flex;
+  align-items: center;
 }
 
-
-.writinggetBox{
-    height: 80vh;
-    border: 1px solid black;
-    overflow: auto;
+.writinggetBox {
+  height: 80vh;
+  border: 1px solid black;
+  overflow: auto;
 }
 
-.text_content{
-    text-align: left;
-    margin: 20px;
-    margin-top: 30px;
-    margin-bottom: 100px;
+.text_content {
+  text-align: left;
+  margin: 20px;
+  margin-top: 30px;
+  margin-bottom: 100px;
 }
 
-.slidercontainer{
-    width: 90%;
-    height: 80vw;
+.slidercontainer {
+  width: 90%;
+  height: 80vw;
 }
 
-
-.postImg_big{
-    width: 100%;
-    height: 100%;
-    background-color: white; /* 넘치는 부분을 하얀색으로 채우기 */
-    object-fit: contain; /* 이미지의 원래 비율 유지 */
+.postImg_big {
+  width: 100%;
+  height: 100%;
+  background-color: white; /* 넘치는 부분을 하얀색으로 채우기 */
+  object-fit: contain; /* 이미지의 원래 비율 유지 */
 }
 
 .bottomBar {
-    display: flex;
+  display: flex;
 
-    bottom: 88px;
-    left: 0px;
-	position: fixed;
-    width: 100vw;
-    /* background-color: #dde0ea; */
-    text-align: center;
-    z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
-    height: 50px;
-    background-color: rgb(0, 0, 0, 1);
+  bottom: 88px;
+  left: 0px;
+  position: fixed;
+  width: 100vw;
+  /* background-color: #dde0ea; */
+  text-align: center;
+  z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
+  height: 50px;
+  background-color: rgb(0, 0, 0, 1);
 }
 
-.headerBtnGroup div{
-    display: inline-block;
+.headerBtnGroup div {
+  display: inline-block;
 }
 
-.leftBtnGroup div{
-    float: left;
-    color: white;
-    padding: 5px;
+.leftBtnGroup div {
+  float: left;
+  color: white;
+  padding: 5px;
 }
-
 
 /* 헤더 커스텀 */
-.bottomBar{
-
+.bottomBar {
 }
 /* 
 .header div{
@@ -81,7 +77,7 @@
   padding: 5px;
 } */
 
-.bottomBar .num{
+.bottomBar .num {
   float: left;
   padding-right: 10px;
 }

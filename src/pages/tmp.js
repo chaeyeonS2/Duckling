@@ -1,35 +1,39 @@
-import React, {Fragment, useState} from 'react';
-import axios from 'axios';
+import React, { Fragment, useState } from "react";
+import axios from "axios";
 
 const Tmp = () => {
-    const [data, setData] = useState(null);
-    const onClick = ()=>{
-        axios.get('https://us-central1-netural-app.cloudfunctions.net/api/assets/top_1').then(reponse => {
+  const [data, setData] = useState(null);
+  const onClick = () => {
+    axios
+      .get(
+        "https://us-central1-netural-app.cloudfunctions.net/api/assets/top_1",
+      )
+      .then((reponse) => {
         setData(reponse.data);
       });
-    }
-    // const item = data.assetImg._path.segments[3];
-    return(
-        <div>
-        <div>
-          <h3>Axios 테스트해보기</h3>
-          <button onClick={onClick}>불러오기</button>
-        </div>
-        {data && 
-          <div>
-            <br />
-            Gltf : {data.assetGltf} <br/>  
-            Image: {data.assetImg} <br/> 
-            Kind : {data.kind} <br /> 
-          </div>
-        }
-        {/* {data.assetImg} */}
-        {data && data.assetImg && <img src={data.assetImg} />}
+  };
+  // const item = data.assetImg._path.segments[3];
+  return (
+    <div>
+      <div>
+        <h3>Axios 테스트해보기</h3>
+        <button onClick={onClick}>불러오기</button>
       </div>
-    );
-}
+      {data && (
+        <div>
+          <br />
+          Gltf : {data.assetGltf} <br />
+          Image: {data.assetImg} <br />
+          Kind : {data.kind} <br />
+        </div>
+      )}
+      {/* {data.assetImg} */}
+      {data && data.assetImg && <img src={data.assetImg} />}
+    </div>
+  );
+};
 
-export default Tmp
+export default Tmp;
 
 // {
 //     "kind": "top",

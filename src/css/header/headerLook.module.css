@@ -1,44 +1,44 @@
-.header{
-    position: fixed;
-    left: 0;
-    top: 0;
-    background-color: white;
-    display: flex;
-    width: 100vw;
-    height: 70px;
-    z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: white;
+  display: flex;
+  width: 100vw;
+  height: 70px;
+  z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
 }
 
-.tab{
-    background-color: white;
-    width: 50%;
-    height: 100%;
-    border-bottom: 5px solid #B5B5B5;
-    display: flex;
-    align-items: center;
-    padding-left: 15%;
+.tab {
+  background-color: white;
+  width: 50%;
+  height: 100%;
+  border-bottom: 5px solid #b5b5b5;
+  display: flex;
+  align-items: center;
+  padding-left: 15%;
 }
 
-.tab text{
-    color: #B5B5B5;
-    font-family: Pretendard;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%; /* 20px */
-    margin-left: 5px;
+.tab text {
+  color: #b5b5b5;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 20px */
+  margin-left: 5px;
 }
 
-.focused text{
-    color: #000;
-    font-family: Pretendard;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%; /* 20px */
-    margin-left: 5px;
+.focused text {
+  color: #000;
+  font-family: Pretendard;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%; /* 20px */
+  margin-left: 5px;
 }
 
-.focused{
-    border-bottom: 5px solid black;
+.focused {
+  border-bottom: 5px solid black;
 }

@@ -1,22 +1,22 @@
-.upload{
-    width: 300px;
-    height: 150px;
-    background-color: black;
+.upload {
+  width: 300px;
+  height: 150px;
+  background-color: black;
 }
 
-.loadingBar{
-    width: 250px;
-    height: 30px;
-    margin-left: 23px;
-    margin-top: 40px;
+.loadingBar {
+  width: 250px;
+  height: 30px;
+  margin-left: 23px;
+  margin-top: 40px;
 }
 
-.textBox_upload{
-    margin-top: 15px;
-    color: var(--white, #FFF);
-    font-family: Pretendard;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+.textBox_upload {
+  margin-top: 15px;
+  color: var(--white, #fff);
+  font-family: Pretendard;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
