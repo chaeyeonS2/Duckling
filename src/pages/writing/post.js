@@ -14,8 +14,6 @@ const Post = () => {
   const navigate = useNavigate();
 
   const handleUpload = async () => {
-    console.log(previewImages);
-
     const userID = localStorage.getItem("id");
     const userName = localStorage.getItem("userName");
     try {
@@ -31,11 +29,6 @@ const Post = () => {
         }
       );
       closeModal(<Uploading />);
-      console.log(
-        "Document uploaded:",
-        response.data.postID,
-        response.data.writerID
-      );
 
       navigate(`/postView/${response.data.writerID}/${response.data.postID}`);
     } catch (error) {
@@ -65,8 +58,6 @@ const Post = () => {
         const file = files[i];
         let imageDataURL = await readFileAsDataURL(file);
         setPreviewImages((prevImages) => [...prevImages, imageDataURL]);
-
-        console.log(file);
       }
     };
 
@@ -114,15 +105,12 @@ const Post = () => {
     if (previewImages.length === 0) {
       //올라간 이미지가 없으면 업로드 불가 모달 띄우기
       openModal(<IsImage onClose={closeModal} />);
-      console.log("uploadClick");
     }
     //올라간 이미지가 있으면 업로드 시작
     else {
       //폼 제출
       //서버에 업로드
       handleUpload();
-
-      console.log("imgae ok");
     }
   };
 
