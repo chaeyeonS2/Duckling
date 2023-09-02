@@ -52,15 +52,6 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // 글쓰기 폼 제출 핸들러
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // TODO: 입력된 정보를 어떻게 처리할지 구현합니다.
-    console.log("제목:", title);
-    console.log("내용:", content);
-    // (예시) 서버에 데이터를 전송하거나, 다른 필요한 동작을 수행할 수 있습니다.
-  };
-
   // 글의 줄 수에 따라 input 필드 높이 조절
   const textarea = useRef(null);
   const handleResizeHeight = () => {
@@ -132,8 +123,6 @@ const Post = () => {
     //올라간 이미지가 있으면 업로드 시작
     else {
       //폼 제출
-      const emptyEvent = new Event("submit");
-      handleSubmit(emptyEvent);
       //서버에 업로드
       handleUpload();
 
@@ -158,7 +147,7 @@ const Post = () => {
       <div className="content">
         {/* margin을 위한 div */}
         <div className="marignBox">
-          <form className="post" onSubmit={handleSubmit}>
+          <form className="post" onSubmit={uploadClick}>
             <div className="title">
               <input
                 className="titleInput"
