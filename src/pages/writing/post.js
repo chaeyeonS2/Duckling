@@ -1,17 +1,18 @@
-import "../../css/post.css";
-import "../../css/layout.css";
-import Footer from "../../footer";
-import HeaderPost from "../../headers/headerPost";
 import React, { useState, useRef } from "react";
-import Modal from "../../alert/modal";
-import Uploading from "../../alert/uploading";
-import IsImage from "../../alert/isImage";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HeaderPost from "@/headers/headerPost";
+import Uploading from "@/alert/uploading";
+import IsImage from "@/alert/isImage";
+import Modal from "@/alert/modal";
+import Footer from "@/footer";
+import axios from "axios";
+
 import * as PostView from "./postView";
 
 const userID = localStorage.getItem("id");
 const userName = localStorage.getItem("userName");
+import "@/css/post.css";
+import "@/css/layout.css";
 
 const Post = () => {
   const navigate = useNavigate();
