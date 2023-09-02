@@ -180,7 +180,7 @@ div[data-rsbs-state="closing"] {
   width: 100%;
 }
 
-div .profileImg {
+.profileImg {
   float: left;
   width: 50px;
   height: 50px;
@@ -189,7 +189,7 @@ div .profileImg {
   background-size: cover;
 }
 
-div .userName {
+.userName {
   float: left;
   display: flex;
   align-items: center;
