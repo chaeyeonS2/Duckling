@@ -2,7 +2,7 @@ import "../../css/post.css";
 import "../../css/layout.css";
 import Footer from "../../footer";
 import HeaderPost from "../../headers/headerPost";
-import React, { useState, Suspense, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "../../alert/modal";
 import Uploading from "../../alert/uploading";
 import IsImage from "../../alert/isImage";
@@ -13,14 +13,8 @@ import * as PostView from "./postView";
 const userID = localStorage.getItem("id");
 const userName = localStorage.getItem("userName");
 
-const Post = (propos) => {
+const Post = () => {
   const navigate = useNavigate();
-
-  const goPost = (writerid, postid) => {
-    //props.closeModal();
-    PostView.getInfo(writerid, postid);
-    navigate("/postView");
-  };
 
   const handleUpload = async () => {
     console.log(previewImages);
@@ -34,13 +28,13 @@ const Post = (propos) => {
           postImg: previewImages,
           writerID: userName,
           userID: userID,
-        },
+        }
       );
       closeModal(<Uploading />);
       console.log(
         "Document uploaded:",
         response.data.postID,
-        response.data.writerID,
+        response.data.writerID
       );
 
       PostView.getInfo(response.data.postID, response.data.writerID);
@@ -126,8 +120,6 @@ const Post = (propos) => {
     setModalContent(null);
     setModalIsOpen(false);
   };
-
-  const formRef = useRef(null);
 
   const uploadClick = () => {
     if (previewImages.length === 0) {
