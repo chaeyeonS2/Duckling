@@ -16,25 +16,18 @@ const Post = () => {
   const handleUpload = async () => {
     const userID = localStorage.getItem("id");
     const userName = localStorage.getItem("userName");
-    try {
-      openModal(<Uploading />);
-      const response = await axios.post(
-        "https://us-central1-netural-app.cloudfunctions.net/api/posts",
-        {
-          title: title,
-          body: content,
-          postImg: previewImages,
-          writerID: userName,
-          userID: userID,
-        }
-      );
-      closeModal(<Uploading />);
-
-      navigate(`/postView/${response.data.writerID}/${response.data.postID}`);
-    } catch (error) {
-      console.error("Error uploading document:", error);
-      closeModal(<Uploading />);
-    }
+    openModal(<Uploading />);
+    await axios
+      .post("https://us-central1-netural-app.cloudfunctions.net/api/posts", {
+        title: title,
+        body: content,
+        postImg: previewImages,
+        writerID: userName,
+        userID: userID,
+      })
+      .finally(() => closeModal(<Uploading />))
+      .then(({ data }) => navigate(`/postView/${data.writerID}/${data.postID}`))
+      .catch((error) => console.error("Error uploading document:", error));
   };
 
   // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
