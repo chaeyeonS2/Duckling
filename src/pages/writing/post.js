@@ -9,8 +9,6 @@ import axios from "axios";
 
 import * as PostView from "./postView";
 
-const userID = localStorage.getItem("id");
-const userName = localStorage.getItem("userName");
 import "@/css/post.css";
 import "@/css/layout.css";
 
@@ -19,6 +17,9 @@ const Post = () => {
 
   const handleUpload = async () => {
     console.log(previewImages);
+
+    const userID = localStorage.getItem("id");
+    const userName = localStorage.getItem("userName");
     try {
       openModal(<Uploading />);
       const response = await axios.post(
