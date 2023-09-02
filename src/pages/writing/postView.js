@@ -12,13 +12,6 @@ import PostShare from "../../alert/postShare";
 import Modal from "../../alert/modal";
 import axios from "axios";
 import * as CommentPage from "./commentPage";
-var writerID = "";
-var postID = "";
-
-export function getInfo(writerid, postid) {
-  writerID = postid;
-  postID = writerid;
-}
 
 function ImageSlider({ images }) {
   const settings = {

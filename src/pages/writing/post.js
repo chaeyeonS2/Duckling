@@ -7,8 +7,6 @@ import Modal from "@/alert/modal";
 import Footer from "@/footer";
 import axios from "axios";
 
-import * as PostView from "./postView";
-
 import "@/css/post.css";
 import "@/css/layout.css";
 
@@ -38,8 +36,6 @@ const Post = () => {
         response.data.postID,
         response.data.writerID
       );
-
-      PostView.getInfo(response.data.postID, response.data.writerID);
 
       navigate(`/postView/${response.data.writerID}/${response.data.postID}`);
     } catch (error) {
