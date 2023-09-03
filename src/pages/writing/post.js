@@ -13,23 +13,6 @@ import "@/css/layout.css";
 const Post = () => {
   const navigate = useNavigate();
 
-  const handleUpload = async () => {
-    const userID = localStorage.getItem("id");
-    const userName = localStorage.getItem("userName");
-    openModal(<Uploading />);
-    await axios
-      .post("https://us-central1-netural-app.cloudfunctions.net/api/posts", {
-        title: title,
-        body: content,
-        postImg: previewImages,
-        writerID: userName,
-        userID: userID,
-      })
-      .finally(() => closeModal(<Uploading />))
-      .then(({ data }) => navigate(`/postView/${data.writerID}/${data.postID}`))
-      .catch((error) => console.error("Error uploading document:", error));
-  };
-
   // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -95,16 +78,28 @@ const Post = () => {
   };
 
   const uploadClick = () => {
+    //올라간 이미지가 없으면 업로드 불가 모달 띄우기
     if (previewImages.length === 0) {
-      //올라간 이미지가 없으면 업로드 불가 모달 띄우기
       openModal(<IsImage onClose={closeModal} />);
+      return;
     }
-    //올라간 이미지가 있으면 업로드 시작
-    else {
-      //폼 제출
-      //서버에 업로드
-      handleUpload();
-    }
+
+    //TODO: title과 content도 유효한지 검사하기
+
+    const userID = localStorage.getItem("id");
+    const userName = localStorage.getItem("userName");
+    openModal(<Uploading />);
+    axios
+      .post("https://us-central1-netural-app.cloudfunctions.net/api/posts", {
+        title: title,
+        body: content,
+        postImg: previewImages,
+        writerID: userName,
+        userID: userID,
+      })
+      .finally(() => closeModal(<Uploading />))
+      .then(({ data }) => navigate(`/postView/${data.writerID}/${data.postID}`))
+      .catch((error) => console.error("Error uploading document:", error));
   };
 
   //지금은 그냥 뒤로가기, 나중에 '정말 취소하시겠어요?' 모달 추가 시 사용 예정
@@ -124,7 +119,7 @@ const Post = () => {
       <div className="content">
         {/* margin을 위한 div */}
         <div className="marignBox">
-          <form className="post" onSubmit={uploadClick}>
+          <form className="post">
             <div className="title">
               <input
                 className="titleInput"
