@@ -58,11 +58,6 @@ const Post = () => {
     setPreviewImages(newPreviewImages);
   };
 
-  const inputFileRef = useRef(null);
-  const handleCameraBtnClick = () => {
-    inputFileRef.current.click();
-  };
-
   //modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -166,17 +161,16 @@ const Post = () => {
         </div>
       </div>
       <div className="toolBar">
-        <div className="camera" onClick={handleCameraBtnClick}>
+        <label className="camera" for>
           <img src={process.env.PUBLIC_URL + "/img/writing/camera.png"} />
-        </div>
-        <input
-          ref={inputFileRef}
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          multiple
-          onChange={handleImageUpload}
-        />
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            multiple
+            onChange={handleImageUpload}
+          />
+        </label>
       </div>
       {/* 고정 푸터 */}
       <Footer btn={1} />
