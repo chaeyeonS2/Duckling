@@ -1,41 +1,27 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
+import ReactDOM from "react-dom";
+import React from "react";
 
-const Camera = () => {
-    const navigate = useNavigate();
+import { ARCanvas, ARMarker } from "@artcom/react-three-arjs";
 
-    const homeClick = () => {
-        navigate("/home");
-    }
-    const imageUrl = process.env.PUBLIC_URL + 'img/cameraPage.jpg';
-
-    const containerStyle = {
-        position: 'relative', // 상대적 위치 설정
-        width: '100vw',
-        height: '100vh',
-        backgroundImage: `url(${imageUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-    };
-
-    const closeButtonStyle = {
-        position: 'absolute', // 절대적 위치 설정
-        top: '20px', // 원하는 위치로 조정
-        right: '20px', // 원하는 위치로 조정
-        fontSize: '20px',
-        cursor: 'pointer',
-        color: 'white',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: '5px 10px',
-        borderRadius: '5px',
-    };
-
-    return (
-        <div style={containerStyle}>
-            <button style={closeButtonStyle} onClick={homeClick}>x</button>
-            {/* 내용이 필요하다면 여기에 추가 */}
-        </div>
-    );
+function Camera() {
+  return ReactDOM.render(
+    <ARCanvas
+      camera={{ position: [0, 0, 0] }}
+      onCreated={({ gl }) => {
+        gl.setSize(window.innerWidth, window.innerHeight);
+      }}
+    >
+      <ambientLight />
+      <pointLight position={[10, 10, 0]} />
+      <ARMarker type={"pattern"} patternUrl={"data/hiro.patt"}>
+        <mesh>
+          <boxBufferGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial color={"green"} />
+        </mesh>
+      </ARMarker>
+    </ARCanvas>,
+    document.getElementById("root")
+  );
 }
 
 export default Camera;

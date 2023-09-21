@@ -1,45 +1,16 @@
 import "../../css/item.css";
 import React, { useState, useEffect } from "react";
 import Itembox from '../avatar/itembox';
-import dataArrays from './ItemArray';
-import ItemArray from './ItemArray';
 import axios from 'axios';
 
 
 const Item = props => {
 
     const type = props.type;
-    var [isClick, setClick] = useState(false);
-
-    var getData = (getClick) =>{
-        //isClick = getGltfPath;
-        setClick(getClick);
-      }
-
-    var getDataOn = (isClick) =>{
-        //isClick = getGltfPath;
-        props.getData(isClick);
-      }
-
     const [assetArray, setAssetArray] = useState([]);
 
     const [typeItemState_face, setItemTypeState_face] = useState("eyes");  //face 카테고리
     const [typeItemState_cloth, setItemTypeState_cloth] = useState("top");  //cloth 카테고리
-    var itemArray = [0, 1, 2, 3, 5, 6, 7]; //item 임의 개수
-    const [itembox, setItembox] = useState(typeItemState_cloth);
-
-    
-//     var imgArray = [ 
-//     process.env.PUBLIC_URL + "/png/hani_pants.png",
-//     process.env.PUBLIC_URL + "/png/hani_top.png", 
-//     process.env.PUBLIC_URL + "/png/herin_skirt.png", 
-//     process.env.PUBLIC_URL + "/png/herin_top.png", 
-//     process.env.PUBLIC_URL + "/png/hyein_pants.png", 
-//     process.env.PUBLIC_URL + "/png/hyein_top.png", 
-//     process.env.PUBLIC_URL + "/png/minji_pants.png", 
-//     process.env.PUBLIC_URL + "/png/minji_top.png"
-// ];
-
 
     const [selectDeco, setSelectDeco] = useState(false);
     const handleClick = (idx, _type) => {
@@ -71,16 +42,6 @@ const Item = props => {
                                     gltfPath = {item.assetGltf}
                                 />)
                     })} 
-                    {/* { //아이템 썸네일 박스
-                    dataArrays[typeItemState_face].map((imgSrc, index)=>{
-                        return (<Itembox 
-                                    type = {typeItemState_face}
-                                    imgSrc = {imgSrc}
-                                    index = {index}
-                                    handleClick = {handleClick}
-                                    selectDeco = {selectDeco}
-                                />)
-                    })}  */}
                 </div>
             </div>
         );
@@ -119,17 +80,11 @@ const Item = props => {
             if(type === "face"){
                 const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/face/${typeItemState_face}`);
                 setAssetArray(response.data);
-
-                // const eyeArrayData = response.data;
-
             }
             else{       //type === "cloth"
                 const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/body/${typeItemState_cloth}`);
-                //response -> top, bottom, shoes, accessory에 관한 내용들
                 setAssetArray(response.data);
             }
-            // const eyeArrayData = response.data.map(item => item.assetImg);
-            // setEyeArray(eyeArrayData);
           } catch (error) {
             console.error(error);
           }
@@ -146,30 +101,6 @@ const Item = props => {
           handleChangeContent();
         }
       }, [assetArray]);
-    // useEffect(() => {
-    //     const getAvataInfo = async () => {
-    //         await axios
-    //         .get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/face/eyes`)
-    //         .then(response => {
-    //             await setEyeArray(response.data.map(item => item.assetImg));
-    //             console.log(eyeArray);
-                
-    //         })
-    //         .catch(e => {
-    //             console.error(e);
-    //         })
-    //     }
-    //     getAvataInfo();
-    //     setTimeout(() => {
-    //         handleChangeContent();
-    //     }, 1); // 일정 시간 후에 실행
-        
-    // },[type, typeItemState_face, typeItemState_cloth, selectDeco]);
-
-    // useEffect(()=>{
-
-    //     handleItemContent();
-    // },[ typeItemState_face, typeItemState_cloth]);
     return (
         <div>{content}</div>
     )
