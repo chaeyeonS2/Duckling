@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //import React from 'react';
 import Footer from "../../footer";
 import Header from "../../headers/header";
@@ -288,6 +289,17 @@ const GltfGroupModels = (props) => {
     <group ref={groupRef} position={[0, -0.01, 0]} rotation={[0.08, 0, 0]} />
   );
 };
+=======
+import Footer from "../../footer";
+import Header from "../../headers/header";
+import "../../css/layout.css";
+import React, {Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import "../../css/customBottomSheet.css";
+import { OrbitControls } from "@react-three/drei";
+import Mypost from "./myPost";
+import GetGltfModels from "./GetGltfModels";
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
 
 const Home = () => {
   return (
@@ -322,10 +334,15 @@ const Home = () => {
             />
             <ambientLight intensity={0.5} />
 
+<<<<<<< HEAD
             <GltfGroupModels />
 
             {/* 마우스 컨트롤 */}
             {/* <OrbitControls /> */}
+=======
+            <GetGltfModels page={"home"} />
+
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
             <OrbitControls
               enableZoom={false} // 확대/축소 비활성화
               enableRotate={true} // 회전 활성화
@@ -336,7 +353,10 @@ const Home = () => {
               touchZoomSpeed={0} // 모바일 확대/축소 비활성화
               touchRotateSpeed={1} // 모바일 회전 활성화
             />
+<<<<<<< HEAD
             {/* 이하 Three.js 관련 요소들을 추가할 수 있습니다 */}
+=======
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
           </Canvas>
         </Suspense>
       </div>

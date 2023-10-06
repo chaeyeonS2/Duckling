@@ -1,3 +1,5 @@
+/* #parentDiv-home .postSheet[data-rsbs-overlay]  이게 아니라 */
+/* .postSheet[data-rsbs-overlay]  이리 함 */
 .postSheet[data-rsbs-overlay] {
   border-top-left-radius: 16px;
   border-top-left-radius: var(--rsbs-overlay-rounded, 16px);
@@ -19,8 +21,12 @@
 }
 
 .postSheet[data-rsbs-is-blocking="false"] .postSheet[data-rsbs-overlay] {
+<<<<<<< HEAD
   box-shadow:
     0 -5px 60px 0 rgba(38, 89, 115, 0.11),
+=======
+  box-shadow: 0 -5px 60px 0 rgba(38, 89, 115, 0.11),
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
     0 -1px 0 rgba(38, 89, 115, 0.05);
 }
 
@@ -165,11 +171,17 @@
 }
 
 .postSheet[data-rsbs-footer] {
+<<<<<<< HEAD
   box-shadow:
     0 -1px 0 rgba(46, 59, 66, calc(1 * 0.125)),
     0 2px 0 #fff;
   box-shadow:
     0 -1px 0 rgba(46, 59, 66, calc(var(--rsbs-content-opacity, 1) * 0.125)),
+=======
+  box-shadow: 0 -1px 0 rgba(46, 59, 66, calc(1 * 0.125)), 0 2px 0 #fff;
+  box-shadow: 0 -1px 0 rgba(46, 59, 66, calc(var(--rsbs-content-opacity, 1) *
+            0.125)),
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
     0 2px 0 var(--rsbs-bg, #fff);
   overflow: hidden;
   z-index: 1;

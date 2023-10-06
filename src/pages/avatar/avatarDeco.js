@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
-import Footer from "../../footer";
 import HeaderDeco from "../../headers/headerDeco";
 import "../../css/avatarDeco.css";
+<<<<<<< HEAD
 import React, {
   useState,
   Suspense,
@@ -50,6 +49,16 @@ var gltfTypeArray = [
 ];
 //var gltfPathArray = [eyeGltfPath, mouthGltfPath, topGltfPath, bottomGltfPath, shoesGltfPath, accessoryGltfPath];
 //var gltfPathArray = [eyeGltfPath, mouthGltfPath, topGltfPath, bottomGltfPath, shoesGltfPath, accessoryGltfPath];
+=======
+import React, { useState, Suspense, useRef, useEffect } from "react";
+import { Canvas } from "@react-three/fiber";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import Item from "./item";
+import axios from "axios";
+import { OrbitControls } from "@react-three/drei";
+
+const itemTypeArray = ["eyes", "mouth", "top", "bottom", "shoes", "accessory"];
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
 var addGltfPath = "";
 var type = "";
 var assetid = "";
@@ -59,11 +68,15 @@ export function isClick(index, itemtype, gltfPath) {
   type = itemtype;
   assetid = index;
   addGltfPath = gltfPath;
+<<<<<<< HEAD
   //addGltfPath = dataArrays[matchItemtoGltf()][index];
+=======
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
   const event = new CustomEvent("globalFunctionCalled");
   window.dispatchEvent(event);
 }
 
+<<<<<<< HEAD
 // const matchItemtoGltf = () => {
 //   const index = itemTypeArray.indexOf(type);
 //   console.log(gltfTypeArray[index]);
@@ -75,15 +88,40 @@ const AvatarDeco = () => {
 
   var [gltfPathdefault, setgltfPathArray] = useState(myAssetArray);
   var [assetIddefault, setAssetIdArray] = useState(myAssetIdArray);
+=======
+const AvatarDeco = () => {
+  var [defaultgltf, setgltfPathArray] = useState([]);
+
+  useEffect(() => {
+    const uid = localStorage.getItem("id");
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get(
+          `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`
+        );
+        await setgltfPathArray(response.data.userAvatar);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getUserInfo();
+  }, []);
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
 
   const GltfGroupModels = (props) => {
+    const groupRef = useRef();
+
     useEffect(() => {
       function handleGlobalFunctionCall() {
+<<<<<<< HEAD
         console.log(type);
         // 원하는 작업 수행
         //removeDecoGltf();
         putDecoGltf(addGltfPath, 1.1, 0, -0.04, 0, type, assetid);
         console.log(addGltfPath);
+=======
+        putDecoGltf(addGltfPath, 1.1, 0, -0.04, 0, type, assetid);
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
       }
 
       window.addEventListener("globalFunctionCalled", handleGlobalFunctionCall);
@@ -91,7 +129,11 @@ const AvatarDeco = () => {
       return () => {
         window.removeEventListener(
           "globalFunctionCalled",
+<<<<<<< HEAD
           handleGlobalFunctionCall,
+=======
+          handleGlobalFunctionCall
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
         );
       };
     }, []);
@@ -103,8 +145,12 @@ const AvatarDeco = () => {
       positionX,
       positionY,
       positionZ,
+<<<<<<< HEAD
       type,
       aid,
+=======
+      type
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
     ) => {
       if (gltfPath) {
         // gltfPath가 null이나 undefined가 아닌 경우에만 실행
@@ -120,6 +166,7 @@ const AvatarDeco = () => {
               // 기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
               removeDecoGltf(type);
 
+<<<<<<< HEAD
               const newArray = myAssetArray;
               newArray[itemTypeArray.indexOf(n)] = gltfPath;
               setgltfPathArray(newArray);
@@ -131,6 +178,16 @@ const AvatarDeco = () => {
           });
 
           groupRef.current.add(model);
+=======
+              const newArray = defaultgltf;
+              newArray[n] = gltfPath;
+              setgltfPathArray(newArray);
+            }
+          });
+          if (groupRef.current) {
+            groupRef.current.add(model);
+          }
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
         });
       } else {
         console.log("Invalid gltfPath:", gltfPath);
@@ -139,6 +196,7 @@ const AvatarDeco = () => {
 
     //deco 초기화하는 함수
     const removeDecoGltf = (type) => {
+<<<<<<< HEAD
       const childToRemove = groupRef.current.children.find(
         (child) => child.userData.type === type,
       );
@@ -246,15 +304,77 @@ const AvatarDeco = () => {
     //   console.log("success");
     //   putDecoGltf(addGltfPath, 1.1, 0,-0.04,0);
     // },[addGltfPath]);
+=======
+      if (groupRef.current) {
+        const childToRemove = groupRef.current.children.find(
+          (child) => child.userData.type === type
+        );
+
+        if (childToRemove) {
+          groupRef.current.remove(childToRemove);
+        }
+      }
+    };
+
+    // gltf 모델들을 로드하고 그룹에 추가하는 함수
+    const loadModels = () => {
+      // 파일 path, scale, position(x, y, z) 순서
+      putDecoGltf(defaultgltf["eyes"], 1.1, 0, -0.04, 0, "eyes");
+      putDecoGltf(defaultgltf["mouth"], 1.1, 0, -0.04, 0, "mouth");
+      putDecoGltf(defaultgltf["top"], 1.1, 0, -0.04, 0, "top");
+      putDecoGltf(defaultgltf["bottom"], 1.1, 0, -0.04, 0, "bottom");
+      putDecoGltf(defaultgltf["shoes"], 1.1, 0, -0.04, 0, "shoes");
+      putDecoGltf(defaultgltf["accessory"], 1.1, 0, -0.04, 0, "accessory");
+
+      putDecoGltf(
+        process.env.PUBLIC_URL + "/gltf/avatar/cheek_avatarglb.gltf",
+        1.1,
+        0,
+        -0.04,
+        0,
+        "etc"
+      );
+      putDecoGltf(
+        process.env.PUBLIC_URL + "/gltf/avatar/keyring.glb",
+        0.02,
+        0,
+        0.155,
+        0.01,
+        "etc"
+      );
+      putDecoGltf(
+        process.env.PUBLIC_URL + "/gltf/avatar/nose.gltf",
+        1.1,
+        0,
+        -0.04,
+        0,
+        "etc"
+      );
+      putDecoGltf(
+        process.env.PUBLIC_URL + "/gltf/avatar/stage.glb",
+        0.04,
+        0,
+        -0.055,
+        0.0025,
+        "etc"
+      );
+    };
+    useEffect(() => {
+      loadModels();
+    }, [defaultgltf, loadModels]);
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
 
     return (
       <group
         ref={groupRef}
         scale={typeDecoState[0] ? 1.3 : 0.8}
         position={typeDecoState[0] ? [0, -0.02, 0] : [0, 0.045, 0]}
+<<<<<<< HEAD
         //scale={props.scale}
         //position={props.position}
         //position={[0, -0.01, 0]}
+=======
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
         rotation={[0.08, 0, 0]}
       />
     );
@@ -263,6 +383,7 @@ const AvatarDeco = () => {
   //데코(얼굴, 옷) 카테고리 선택
   const [typeDecoState, setDecoTypeState] = useState([true, false]);
   const decoArray = ["face", "cloth"];
+<<<<<<< HEAD
 
   const handleDecoClick = (idx) => {
     const newArr = Array(decoArray.length).fill(false);
@@ -353,6 +474,32 @@ const AvatarDeco = () => {
         },
       );
       console.log("asset upload success");
+=======
+
+  const handleDecoClick = (idx) => {
+    const newArr = Array(decoArray.length).fill(false);
+    newArr[idx] = true;
+    setDecoTypeState(newArr);
+  };
+
+  const handleAvatarUpload = async () => {
+    try {
+      const uid = localStorage.getItem("id");
+
+      await axios.patch(
+        `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`,
+        {
+          userAvatar: {
+            eyes: defaultgltf["eyes"],
+            mouth: defaultgltf["mouth"],
+            top: defaultgltf["top"],
+            bottom: defaultgltf["bottom"],
+            accessory: defaultgltf["accessory"],
+            shoes: defaultgltf["shoes"],
+          },
+        }
+      );
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
     } catch (error) {
       console.error("Error uploading document:", error);
     }
@@ -374,7 +521,10 @@ const AvatarDeco = () => {
         <Suspense fallback={null}>
           <Canvas
             style={{ background: "transparent" }}
+<<<<<<< HEAD
             ref={canvasRef}
+=======
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
             shadows
             camera={{
               rotation: [0, 0, 0],
@@ -392,6 +542,7 @@ const AvatarDeco = () => {
               castShadow
             />
             <ambientLight intensity={0.5} />
+<<<<<<< HEAD
             {/* <ParentAndbottomModels /> */}
             <GltfGroupModels />
             {/* {typeDecoState[0] ? <GltfGroupModels
@@ -405,6 +556,9 @@ const AvatarDeco = () => {
                                                 // mouthGltfPath = {process.env.PUBLIC_URL + "/gltf/mouth/NewJeans_HANI_mouth.gltf"}
                         />} */}
             {/* <OrbitControls /> */}
+=======
+            <GltfGroupModels />
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
             <OrbitControls
               enableZoom={false} // 확대/축소 비활성화
               enableRotate={true} // 회전 활성화
@@ -415,6 +569,7 @@ const AvatarDeco = () => {
               touchZoomSpeed={0} // 모바일 확대/축소 비활성화
               touchRotateSpeed={1} // 모바일 회전 활성화
             />
+<<<<<<< HEAD
             {/* 이하 Three.js 관련 요소들을 추가할 수 있습니다 */}
           </Canvas>
         </Suspense>
@@ -428,6 +583,15 @@ const AvatarDeco = () => {
       </div>
       <div className="saveAvatar" onClick={() => handleAvatarUpload()}>
         <img src={process.env.PUBLIC_URL + "/img/deco/save.png"} />
+=======
+          </Canvas>
+        </Suspense>
+
+        {typeDecoState[0] ? <Item type={"face"} /> : <Item type={"cloth"} />}
+      </div>
+      <div className="saveAvatar" onClick={() => handleAvatarUpload()}>
+        <img src={process.env.PUBLIC_URL + "/img/deco/save.png"} alt="" />
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
       </div>
 
       <div className="chooseBtnGroup">
@@ -443,6 +607,10 @@ const AvatarDeco = () => {
                 ? process.env.PUBLIC_URL + "/img/VectorsmileTrue.png"
                 : process.env.PUBLIC_URL + "/img/VectorsmileFalse.png"
             }
+<<<<<<< HEAD
+=======
+            alt=""
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
           />
         </div>
         <div
@@ -457,6 +625,10 @@ const AvatarDeco = () => {
                 ? process.env.PUBLIC_URL + "/img/VectorclothTrue.png"
                 : process.env.PUBLIC_URL + "/img/VectorclothFalse.png"
             }
+<<<<<<< HEAD
+=======
+            alt=""
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
           />
         </div>
       </div>
@@ -464,6 +636,7 @@ const AvatarDeco = () => {
   );
 };
 
+<<<<<<< HEAD
 var gltfArray = [
   process.env.PUBLIC_URL + "/gltf/bottom/hani_pants.gltf",
   process.env.PUBLIC_URL + "/gltf/top/hani_top.gltf",
@@ -475,4 +648,6 @@ var gltfArray = [
   process.env.PUBLIC_URL + "/gltf/top/minji_top.gltf",
 ];
 
+=======
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
 export default AvatarDeco;
