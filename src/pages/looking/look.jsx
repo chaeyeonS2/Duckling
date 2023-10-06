@@ -27,7 +27,7 @@ const Look = () => {
   const getPost = async () => {
     try {
       const response = await axios.get(
-        "https://us-central1-netural-app.cloudfunctions.net/api/posts",
+        "https://us-central1-netural-app.cloudfunctions.net/api/posts"
       );
       setData(response.data);
     } catch (error) {
@@ -63,7 +63,10 @@ const Look = () => {
         {/* 페이지 내용 */}
         {postData &&
           postData.map((post, index) => (
-            <div onClick={() => handlePostClick(post.writerID, post.postID)}>
+            <div
+              key={index}
+              onClick={() => handlePostClick(post.writerID, post.postID)}
+            >
               <PostBox key={index} post={post} />
             </div>
           ))}
