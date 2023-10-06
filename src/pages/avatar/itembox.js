@@ -1,5 +1,5 @@
 import "../../css/item.css";
-import React, { useState, Suspense, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import * as AvatarDeco from "./avatarDeco";
 
 const Itembox = (props) => {
@@ -8,6 +8,7 @@ const Itembox = (props) => {
   var index = props.index;
   var selectDeco = props.selectDeco;
 
+<<<<<<< HEAD
   var itemTypeArray = ["eye", "mouth", "top", "bottom", "shoes", "etc"];
 
   const [isitemClick, setClick] = useState(false);
@@ -67,6 +68,28 @@ const Itembox = (props) => {
     handleItemContent();
   }, [itemtype]);
 
+=======
+  const putGltf = () => {
+    //AvatarDeco.js로 보내는 코드
+    AvatarDeco.isClick(index, itemtype, props.gltfPath);
+  };
+  const [content, setContent] = useState(itemtype);
+  const handleItemContent = () => {
+    //서버 연동하면 사용
+    setContent(
+      <img
+        className="item_img"
+        src={imgSrc}
+        onClick={() => putGltf()}
+        alt=""
+      ></img>
+    );
+  };
+  useEffect(() => {
+    handleItemContent();
+  }, [itemtype]);
+
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
   useEffect(() => {
     if (selectDeco[index]) {
       //해당 버튼이 클릭됐으면
@@ -76,6 +99,7 @@ const Itembox = (props) => {
     }
   }, [selectDeco]);
   const [btnState, setBtnState] = useState(false);
+<<<<<<< HEAD
   //     const handleClick = (idx) => {
 
   //     const newArr = Array(100).fill(false);
@@ -85,6 +109,8 @@ const Itembox = (props) => {
 
   //     console.log(selectDeco);
   // }
+=======
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
   return (
     <div
       className={btnState ? "item_box_click" : "item_box"}

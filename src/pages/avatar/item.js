@@ -1,9 +1,14 @@
 import "../../css/item.css";
 import React, { useState, useEffect } from "react";
+<<<<<<< HEAD
 import Itembox from "../avatar/itembox";
 import dataArrays from "./ItemArray";
 import ItemArray from "./ItemArray";
 import axios from "axios";
+=======
+import Itembox from '../avatar/itembox';
+import axios from 'axios';
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
 
 const Item = (props) => {
   const type = props.type;
@@ -14,6 +19,7 @@ const Item = (props) => {
     setClick(getClick);
   };
 
+<<<<<<< HEAD
   var getDataOn = (isClick) => {
     //isClick = getGltfPath;
     props.getData(isClick);
@@ -114,6 +120,45 @@ const Item = (props) => {
               }}
             >
               상의
+=======
+    const type = props.type;
+    const [assetArray, setAssetArray] = useState([]);
+
+    const [typeItemState_face, setItemTypeState_face] = useState("eyes");  //face 카테고리
+    const [typeItemState_cloth, setItemTypeState_cloth] = useState("top");  //cloth 카테고리
+
+    const [selectDeco, setSelectDeco] = useState(false);
+    const handleClick = (idx, _type) => {
+        const newArr = Array(assetArray.length).fill(false);
+        newArr[idx] = true;
+
+        setSelectDeco(newArr);
+    }
+    
+    const [content, setContent] = useState(type);
+    const handleChangeContent = () => {
+        // 상태 변수를 변경하여 내용을 바꿉니다.
+        if (type === 'face') {
+          setContent(
+            <div className="faceDeco Deco">
+                <div className="faceBtnGroup typeItemBtnGroup">
+                    <div className={typeItemState_face === "eyes" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("eyes")}}>눈</div>
+                    <div className={typeItemState_face === "mouth" ? "selectBtn" : "nonSelectbtn"} onClick={() => {setItemTypeState_face("mouth")}}>입</div>
+                </div>
+                <div className="itemBoxDiv"> 
+                { assetArray &&//아이템 썸네일 박스
+                    assetArray.map((item, index)=>{
+                        return (<Itembox 
+                                    type = {typeItemState_face}
+                                    imgSrc = {item.assetImg}
+                                    index = {item.assetID}
+                                    handleClick = {handleClick}
+                                    selectDeco = {selectDeco}
+                                    gltfPath = {item.assetGltf}
+                                />)
+                    })} 
+                </div>
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda
             </div>
             <div
               className={
@@ -196,6 +241,7 @@ const Item = (props) => {
     getAvataInfo();
   }, [type, typeItemState_face, typeItemState_cloth, selectDeco]); // 의존성 배열
 
+<<<<<<< HEAD
   // eyeArray 변경을 감시하고 변경될 때 handleChangeContent() 호출
   useEffect(() => {
     if (assetArray.length > 0) {
@@ -230,3 +276,37 @@ const Item = (props) => {
   return <div>{content}</div>;
 };
 export default Item;
+=======
+    useEffect(() => {
+        const getAvataInfo = async () => {
+          try {
+            if(type === "face"){
+                const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/face/${typeItemState_face}`);
+                setAssetArray(response.data);
+            }
+            else{       //type === "cloth"
+                const response = await axios.get(`https://us-central1-netural-app.cloudfunctions.net/api/assets/body/${typeItemState_cloth}`);
+                setAssetArray(response.data);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        };
+      
+        getAvataInfo();
+      
+      }, [type, typeItemState_face, typeItemState_cloth, selectDeco]); // 의존성 배열
+      
+      // eyeArray 변경을 감시하고 변경될 때 handleChangeContent() 호출
+      useEffect(() => {
+        if (assetArray.length > 0) {
+          console.log(assetArray);
+          handleChangeContent();
+        }
+      }, [assetArray]);
+    return (
+        <div>{content}</div>
+    )
+}
+export default Item
+>>>>>>> 5798e01a669e721d3130f323b449a522954baeda

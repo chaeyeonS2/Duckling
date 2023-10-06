@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ar-js-org/ar.js": "^3.4.5",
+    "@artcom/react-three-arjs": "^0.5.5",
     "@emotion/react": "^11.11.1",
     "@react-three/drei": "^9.78.1",
-    "@react-three/fiber": "^8.13.4",
+    "@react-three/fiber": "^8.14.1",
     "axios": "^1.4.0",
     "file-saver": "^2.0.5",
     "firebase": "^10.1.0",
@@ -18,7 +20,8 @@
     "react-scripts": "^5.0.1",
     "react-slick": "^0.29.0",
     "react-spring-bottom-sheet": "^3.4.1",
-    "use-local-storage-state": "^19.0.4"
+    "use-local-storage-state": "^19.0.4",
+    "react-three-fiber": "^6.0.13"
   },
   "scripts": {
     "start": "react-app-rewired start",
