@@ -3,26 +3,26 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Vector3 } from "three";
 import "./css/style.css";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import Layout from "./layout";
+import Layout from "./Layout";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useGLTF } from "@react-three/drei";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
-import AvatarDeco from "./pages/avatar/avatarDeco";
+import AvatarDeco from "./pages/avatar/AvatarDeco";
 import Post from "./pages/writing/post";
-import Home from "./pages/home/home";
+import Home from "./pages/home/Home";
 import PostView from "./pages/writing/postView";
-import Login from "./pages/login";
-import IsImage from "./alert/isImage";
-import Uploading from "./alert/uploading";
-import Delete from "./alert/delete";
-import PostShare from "./alert/postShare";
-import Look from "./pages/looking/look";
+import Login from "./pages/Login";
+import IsImage from "./alert/IsImage";
+import Uploading from "./alert/Uploading";
+import Delete from "./alert/Delete";
+import PostShare from "./alert/PostShare";
+import Look from "./pages/looking/Look";
 import CommentPage from "./pages/writing/commentPage";
 // import CommentView from "./pages/writing/commetView";
-import Start from "./pages/start";
-import Tmp from "./pages/tmp";
-import XrealLogin from "./pages/xrealLogin";
-// import Camera from "./pages/camera";
+import Start from "./pages/Start";
+import Tmp from "./pages/Tmp";
+import XrealLogin from "./pages/XrealLogin";
+import Camera from "./pages/Camera";
 
 function App() {
   function setScreenSize() {
@@ -61,7 +61,7 @@ function App() {
         {/* xmc용 로그인 */}
         <Route path="/xmc" element={<XrealLogin />} />
         {/* ar camera */}
-        {/* <Route path="/camera" element={<Camera />} />*/}
+        <Route path="/camera" element={<Camera />} />
       </Routes>
     </BrowserRouter>
 

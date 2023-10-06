@@ -1,6 +1,6 @@
 import "../../css/item.css";
 import React, { useState, useEffect } from "react";
-import * as AvatarDeco from "./avatarDeco";
+import * as AvatarDeco from "./AvatarDeco";
 
 const Itembox = (props) => {
   var itemtype = props.type;

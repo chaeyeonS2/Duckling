@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../css/alert/alertLayout.css";
-import ModalContainer from "./modalContainer";
+import ModalContainer from "./ModalContainer";
 import ReactDOM from "react-dom";
 
 const Modal = ({ isOpen, children }) => {
@@ -13,7 +13,7 @@ const Modal = ({ isOpen, children }) => {
         {/* <button onClick={onClose}>Close</button> */}
       </div>
     </div>,
-    document.getElementById("modal-root"),
+    document.getElementById("modal-root")
   );
 };
 

@@ -1,15 +1,15 @@
-import Footer from "../../footer";
+import Footer from "../../Footer";
 import "../../css/layout.css";
 import styles from "../../css/postView.module.css";
-import HeaderPostView from "../../headers/headerPostView";
+import HeaderPostView from "../../headers/HeaderPostView";
 import React, { useState, useRef, useEffect } from "react";
 // import CommentView from "./commetView";
 import Slider from "react-slick";
 
 import { useNavigate, useParams } from "react-router-dom";
-import Delete from "../../alert/delete";
-import PostShare from "../../alert/postShare";
-import Modal from "../../alert/modal";
+import Delete from "../../alert/Delete";
+import PostShare from "../../alert/PostShare";
+import Modal from "../../alert/Modal";
 import axios from "axios";
 import * as CommentPage from "./commentPage";
 

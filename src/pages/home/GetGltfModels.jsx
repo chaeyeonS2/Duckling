@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import LoadModelToHome from "./LoadModelToHome";
+import loadModelToHome from "./loadModelToHome";
 
 const GetGltfModels = (page) => {
   const groupRef = useRef();
@@ -22,8 +22,8 @@ const GetGltfModels = (page) => {
 
   useEffect(() => {
     page === "home"
-      ? LoadModelToHome(groupRef, defaultgltf)
-      : LoadModelToHome(groupRef, defaultgltf); //GLTF 모델 불러오기
+      ? loadModelToHome(groupRef, defaultgltf)
+      : loadModelToHome(groupRef, defaultgltf); //GLTF 모델 불러오기
   }, [defaultgltf]);
 
   return (

@@ -7,6 +7,7 @@ import axios from "axios";
 var photoURL = "";
 var userName = "";
 const MyPost = () => {
+  return <></>;
   // const [postInfoArray, setPostArray] = useState([""]);
   // const navigate = useNavigate();
   // const newpostClick = () => {

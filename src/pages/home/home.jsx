@@ -1,11 +1,11 @@
-import Footer from "../../footer";
-import Header from "../../headers/header";
+import Footer from "../../Footer";
+import Header from "../../headers/Header";
 import "../../css/layout.css";
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import "../../css/customBottomSheet.css";
 import { OrbitControls } from "@react-three/drei";
-import Mypost from "./myPost";
+import Mypost from "./MyPost";
 import GetGltfModels from "./GetGltfModels";
 
 const Home = () => {

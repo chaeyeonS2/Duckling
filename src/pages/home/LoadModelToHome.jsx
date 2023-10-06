@@ -1,8 +1,7 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import PutDecoGltfToHome from "./putDecoGltfToHome";
 
 // 부모와 자식 gltf 모델들을 로드하고 그룹에 추가하는 함수
-const LoadModelToHome = (groupRef, defaultgltf) => {
+const loadModelToHome = (groupRef, defaultgltf) => {
   const gltfLoader = new GLTFLoader();
   //avatar gltf 모델 추가
   gltfLoader.load("gltf/avatar/basic_avatar_[no_face].gltf", (parentGltf) => {
@@ -20,14 +19,14 @@ const LoadModelToHome = (groupRef, defaultgltf) => {
   });
 
   //나머지 deco 모델 추가
-  PutDecoGltfToHome(defaultgltf["eyes"], 1.1, 0, -0.04, 0, groupRef);
-  PutDecoGltfToHome(defaultgltf["mouth"], 1.1, 0, -0.04, 0, groupRef);
-  PutDecoGltfToHome(defaultgltf["top"], 1.1, 0, -0.04, 0, groupRef);
-  PutDecoGltfToHome(defaultgltf["bottom"], 1.1, 0, -0.04, 0, groupRef);
-  PutDecoGltfToHome(defaultgltf["shoes"], 1.1, 0, -0.04, 0, groupRef);
-  PutDecoGltfToHome(defaultgltf["accessory"], 1.1, 0, -0.04, 0, groupRef);
-  PutDecoGltfToHome("/gltf/avatar/keyring.glb", 0.02, 0, 0.155, 0.01, groupRef);
-  PutDecoGltfToHome(
+  putDecoGltfToHome(defaultgltf["eyes"], 1.1, 0, -0.04, 0, groupRef);
+  putDecoGltfToHome(defaultgltf["mouth"], 1.1, 0, -0.04, 0, groupRef);
+  putDecoGltfToHome(defaultgltf["top"], 1.1, 0, -0.04, 0, groupRef);
+  putDecoGltfToHome(defaultgltf["bottom"], 1.1, 0, -0.04, 0, groupRef);
+  putDecoGltfToHome(defaultgltf["shoes"], 1.1, 0, -0.04, 0, groupRef);
+  putDecoGltfToHome(defaultgltf["accessory"], 1.1, 0, -0.04, 0, groupRef);
+  putDecoGltfToHome("/gltf/avatar/keyring.glb", 0.02, 0, 0.155, 0.01, groupRef);
+  putDecoGltfToHome(
     "/gltf/avatar/stage.glb",
     0.04,
     0,
@@ -37,4 +36,26 @@ const LoadModelToHome = (groupRef, defaultgltf) => {
   );
 };
 
-export default LoadModelToHome;
+function putDecoGltfToHome(
+  gltfPath,
+  setScale,
+  positionX,
+  positionY,
+  positionZ,
+  groupRef
+) {
+  if (!gltfPath) return;
+
+  // gltfPath가 null이나 undefined가 아닌 경우에만 실행
+  const gltfLoader = new GLTFLoader();
+  gltfLoader.load(gltfPath, (childGltf) => {
+    const model = childGltf.scene;
+    model.scale.set(setScale, setScale, setScale);
+    model.position.set(positionX, positionY, positionZ);
+    groupRef.current.add(model);
+
+    console.log(gltfPath);
+  });
+}
+
+export default loadModelToHome;

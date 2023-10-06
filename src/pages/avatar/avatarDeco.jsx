@@ -1,9 +1,9 @@
-import HeaderDeco from "../../headers/headerDeco";
+import HeaderDeco from "../../headers/HeaderDeco";
 import "../../css/avatarDeco.css";
 import React, { useState, Suspense, useRef, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import Item from "./item";
+import Item from "./Item";
 import axios from "axios";
 import { OrbitControls } from "@react-three/drei";
 

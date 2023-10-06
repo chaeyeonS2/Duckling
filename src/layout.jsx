@@ -1,5 +1,5 @@
-import Header from "./headers/header";
-import Footer from "./footer";
+import Header from "./headers/Header";
+import Footer from "./Footer";
 import "./css/layout.css";
 import React, { useState, useRef } from "react";
 

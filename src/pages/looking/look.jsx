@@ -1,9 +1,9 @@
 // import Header from './headers/header';
-import Footer from "../../footer";
+import Footer from "../../Footer";
 import "../../css/layout.css";
 import React, { useState, useRef, useEffect } from "react";
-import PostBox from "./postBox";
-import HeaderLook from "../../headers/headerLook";
+import PostBox from "./PostBox";
+import HeaderLook from "../../headers/HeaderLook";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

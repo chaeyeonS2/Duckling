@@ -1,6 +1,6 @@
 import "../../css/item.css";
 import React, { useState, useEffect } from "react";
-import Itembox from "./itembox";
+import Itembox from "./Itembox";
 import axios from "axios";
 
 const Item = (props) => {

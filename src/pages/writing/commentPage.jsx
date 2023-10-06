@@ -1,7 +1,7 @@
 import "../../css/layout.css";
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
-import Footer from "../../footer";
-import HeaderComment from "../../headers/headerComment";
+import Footer from "../../Footer";
+import HeaderComment from "../../headers/HeaderComment";
 import styles from "../../css/writing/commentPage.module.css";
 import axios from "axios";
 import "../../css/customBottomSheet_postView.css";
@@ -40,7 +40,7 @@ const CommentPage = () => {
             userID: userID,
             rootID: pid,
             writerID: userName,
-          },
+          }
         );
         console.log("Document uploaded:", response.data);
         if (response.data) {
@@ -61,7 +61,7 @@ const CommentPage = () => {
   const getUserProfileImg = async () => {
     try {
       const response = await axios.get(
-        `https://us-central1-netural-app.cloudfunctions.net/api/users/${getUid}`,
+        `https://us-central1-netural-app.cloudfunctions.net/api/users/${getUid}`
       );
       setProfileImg(response.data.profileImg); // 상태 업데이트
     } catch (e) {
@@ -81,7 +81,7 @@ const CommentPage = () => {
   const getComment = async () => {
     try {
       const response = await axios.get(
-        `https://us-central1-netural-app.cloudfunctions.net/api/comments/root/${pid}`,
+        `https://us-central1-netural-app.cloudfunctions.net/api/comments/root/${pid}`
       );
       //etData(response.data);
       console.log("success");
