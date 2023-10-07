@@ -6,7 +6,7 @@ import axios from "axios";
 export interface ItemProps {
   type: string;
 }
-const Item = ({ type }: ItemProps) => {
+export default function Item({ type }: ItemProps) {
   const [assetArray, setAssetArray] = useState<Asset[]>([]);
 
   const [typeItemState_face, setItemTypeState_face] = useState("eyes"); //face 카테고리
@@ -166,5 +166,4 @@ const Item = ({ type }: ItemProps) => {
     }
   }, [assetArray]);
   return <div>{content}</div>;
-};
-export default Item;
+}

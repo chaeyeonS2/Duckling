@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Start = () => {
+export default function Start() {
   const navigate = useNavigate();
   //4초 뒤 화면 전환
   useEffect(() => {
@@ -37,5 +37,4 @@ const Start = () => {
       </div>
     </div>
   );
-};
-export default Start;
+}

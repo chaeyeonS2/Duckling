@@ -2,7 +2,7 @@ import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
-const Login = () => {
+export default function Login() {
   const navigate = useNavigate(); // useNavigate 훅을 컴포넌트 내부에서 사용
 
   const handleUpload = async (
@@ -118,5 +118,4 @@ const Login = () => {
       </div>
     </div>
   );
-};
-export default Login;
+}

@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const userID = localStorage.getItem("id");
 const userName = localStorage.getItem("userName");
 
-const Post = () => {
+export default function Post() {
   const navigate = useNavigate();
 
   const handleUpload = async () => {
@@ -221,5 +221,4 @@ const Post = () => {
       <Footer btn={1} />
     </div>
   );
-};
-export default Post;
+}

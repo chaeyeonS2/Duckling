@@ -1,7 +1,11 @@
 import "./css/footer.css";
 import { useNavigate } from "react-router-dom";
 
-const Footer = ({ btn: active }: { btn?: number }) => {
+export interface FooterProps {
+  btn?: number;
+}
+export default function Footer({ btn: active }: FooterProps) {
+  // TODO: just use a tag
   const navigate = useNavigate();
   const homeClick = () => {
     navigate("/home");
@@ -18,6 +22,7 @@ const Footer = ({ btn: active }: { btn?: number }) => {
   var avatarImg = "/img/person.png";
   var cameraImg = "/img/camera.png";
 
+  // TODO: tab ui같은데 index를 내부적으로 제어하도록 만들기
   const btnActive = () => {
     if (active === 0) {
       homeImg = "/img/home_click.png"; //LookingActive
@@ -46,6 +51,4 @@ const Footer = ({ btn: active }: { btn?: number }) => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

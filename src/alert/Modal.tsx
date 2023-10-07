@@ -4,7 +4,10 @@ import ReactDOM from "react-dom";
 export interface ModalProps {
   isOpen: boolean;
 }
-const Modal = ({ isOpen, children }: React.PropsWithChildren<ModalProps>) => {
+export default function Modal({
+  isOpen,
+  children,
+}: React.PropsWithChildren<ModalProps>) {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
@@ -16,6 +19,4 @@ const Modal = ({ isOpen, children }: React.PropsWithChildren<ModalProps>) => {
     </div>,
     document.getElementById("modal")!
   );
-};
-
-export default Modal;
+}

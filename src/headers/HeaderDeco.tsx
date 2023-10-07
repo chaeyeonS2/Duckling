@@ -1,6 +1,6 @@
 import styles from "../css/header/header.module.css";
 
-const HeaderDeco = () => {
+export default function HeaderDeco() {
   const closeClick = () => {
     window.location.href = "/home"; // "/home"으로 새로고침
   };
@@ -14,6 +14,4 @@ const HeaderDeco = () => {
       </div>
     </header>
   );
-};
-
-export default HeaderDeco;
+}

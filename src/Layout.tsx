@@ -2,7 +2,7 @@ import Header from "./headers/Header";
 import Footer from "./Footer";
 import "./css/layout.css";
 
-const Layout = () => {
+export default function Layout() {
   return (
     <div className="layout">
       {/* 고정 헤더 */}
@@ -12,6 +12,4 @@ const Layout = () => {
       <Footer />
     </div>
   );
-};
-
-export default Layout;
+}

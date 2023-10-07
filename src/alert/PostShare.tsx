@@ -4,7 +4,7 @@ import "../css/alert/postShare.css";
 export interface PostShareProps {
   onClose: () => void;
 }
-const PostShare = ({ onClose }: PostShareProps) => {
+export default function PostShare({ onClose }: PostShareProps) {
   return (
     <div className="alertlayout">
       <div className="imageBox">
@@ -21,6 +21,4 @@ const PostShare = ({ onClose }: PostShareProps) => {
       </div>
     </div>
   );
-};
-
-export default PostShare;
+}

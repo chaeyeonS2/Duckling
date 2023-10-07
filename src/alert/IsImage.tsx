@@ -4,7 +4,7 @@ import "../css/alert/isImage.css";
 export interface IsImageProps {
   onClose: () => void;
 }
-const IsImage = ({ onClose }: IsImageProps) => {
+export default function IsImage({ onClose }: IsImageProps) {
   return (
     <div className="alertlayout">
       <div className="imageBox">
@@ -21,6 +21,4 @@ const IsImage = ({ onClose }: IsImageProps) => {
       </div>
     </div>
   );
-};
-
-export default IsImage;
+}

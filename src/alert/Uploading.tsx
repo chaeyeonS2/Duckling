@@ -1,7 +1,7 @@
 import "../css/alert/alertLayout.css";
 import "../css/alert/uploading.css";
 
-const Uploading = () => {
+export default function Uploading() {
   return (
     <div className="alertlayout upload">
       <div className="loadingBar">
@@ -10,6 +10,4 @@ const Uploading = () => {
       <div className="textBox_upload">게시글이 올라가고 있어요-!</div>
     </div>
   );
-};
-
-export default Uploading;
+}

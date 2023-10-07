@@ -3,7 +3,6 @@ import "../../css/layout.css";
 import styles from "../../css/postView.module.css";
 import HeaderPostView from "../../headers/HeaderPostView";
 import { useState, useEffect } from "react";
-import Slider from "react-slick";
 
 import { useNavigate, useParams } from "react-router-dom";
 import Delete from "../../alert/Delete";
@@ -11,36 +10,7 @@ import PostShare from "../../alert/PostShare";
 import Modal from "../../alert/Modal";
 import axios from "axios";
 import * as CommentPage from "./CommentPage";
-
-export interface ImageSliderProps {
-  images: string[];
-}
-
-function ImageSlider({ images }: ImageSliderProps) {
-  const settings = {
-    dots: true,
-    infinite: false, //양쪽 끝에서 멈추기
-    speed: 500,
-    arrows: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-  return (
-    <div>
-      <Slider {...settings} className={styles.imgslider}>
-        {images.map((image, index) => (
-          <div className={styles.slidercontainer} key={index}>
-            <img
-              className={styles.postImg_big}
-              src={image}
-              alt={`Slide ${index}`}
-            />
-          </div>
-        ))}
-      </Slider>
-    </div>
-  );
-}
+import ImageSlider from "./ImageSlider";
 
 interface PostData {
   title: string;
@@ -49,7 +19,7 @@ interface PostData {
   commentCount: string;
   postImg: string[];
 }
-const PostView = () => {
+export default function PostView() {
   const { writerID, postID } = useParams(); // URL 매개변수 가져오기
 
   const navigate = useNavigate();
@@ -148,6 +118,4 @@ const PostView = () => {
       <Footer btn={0} />
     </div>
   );
-};
-
-export default PostView;
+}

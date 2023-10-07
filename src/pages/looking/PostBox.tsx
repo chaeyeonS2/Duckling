@@ -5,7 +5,7 @@ import axios from "axios";
 export interface PostBoxProps {
   post: Post;
 }
-function PostBox({ post: data }: PostBoxProps) {
+export default function PostBox({ post: data }: PostBoxProps) {
   const uid = data.userID;
   const [profileImg, setProfileImg] = useState(""); // 상태 추가
   const getUserProfileImg = async () => {
@@ -62,4 +62,3 @@ function PostBox({ post: data }: PostBoxProps) {
     </div>
   );
 }
-export default PostBox;

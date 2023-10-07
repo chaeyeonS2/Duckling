@@ -1,6 +1,6 @@
 import "../../css/item.css";
 import { useState, useEffect } from "react";
-import * as AvatarDeco from "./AvatarDeco";
+import * as GltfGroupModels from "./GltfGroupModels";
 
 export interface ItemboxProps {
   type: string;
@@ -10,17 +10,17 @@ export interface ItemboxProps {
   gltfPath: string;
   handleClick: (index: number) => void;
 }
-const Itembox = ({
+export default function Itembox({
   type,
   imgSrc,
   index,
   selectDeco,
   gltfPath,
   handleClick,
-}: ItemboxProps) => {
+}: ItemboxProps) {
   const putGltf = () => {
     //AvatarDeco.js로 보내는 코드
-    AvatarDeco.isClick(type, gltfPath);
+    GltfGroupModels.isClick(type, gltfPath);
   };
   const [content, setContent] = useState<JSX.Element>();
   const handleItemContent = () => {
@@ -55,5 +55,4 @@ const Itembox = ({
       {content}
     </div>
   );
-};
-export default Itembox;
+}

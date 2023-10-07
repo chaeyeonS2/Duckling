@@ -23,16 +23,7 @@ interface CommentData {
   date: string;
 }
 
-interface CommentData {
-  commentID: string;
-  text: string;
-  rootID: string;
-  writerID: string;
-  time: string;
-  date: string;
-}
-
-const CommentPage = () => {
+export default function CommentPage() {
   const [comment, setComment] = useState("");
   const [upload, setUpload] = useState("");
 
@@ -168,9 +159,7 @@ const CommentPage = () => {
       <Footer btn={1} />
     </div>
   );
-};
-
-export default CommentPage;
+}
 
 // //전달되는 포스트 정보
 // {

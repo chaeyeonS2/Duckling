@@ -13,7 +13,7 @@ import XrealLogin from "./pages/XrealLogin";
 import Camera from "./pages/Camera";
 import "./css/style.css";
 
-function App() {
+export default function App() {
   function setScreenSize() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -51,5 +51,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;

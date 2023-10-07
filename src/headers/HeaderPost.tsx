@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export interface HeaderPostProps {
   uploadClick: () => void;
 }
-const HeaderPost = ({ uploadClick }: HeaderPostProps) => {
+export default function HeaderPost({ uploadClick }: HeaderPostProps) {
   const navigate = useNavigate();
 
   const checkClick = () => {
@@ -31,6 +31,4 @@ const HeaderPost = ({ uploadClick }: HeaderPostProps) => {
       </div>
     </header>
   );
-};
-
-export default HeaderPost;
+}

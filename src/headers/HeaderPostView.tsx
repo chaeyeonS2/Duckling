@@ -5,7 +5,10 @@ export interface HeaderPostViewProps {
   deleteClick: () => void;
   shareClick: () => void;
 }
-const HeaderPostView = ({ deleteClick, shareClick }: HeaderPostViewProps) => {
+export default function HeaderPostView({
+  deleteClick,
+  shareClick,
+}: HeaderPostViewProps) {
   const handleCopy = () => {
     const currentURL = window.location.href;
 
@@ -47,6 +50,4 @@ const HeaderPostView = ({ deleteClick, shareClick }: HeaderPostViewProps) => {
       </div>
     </header>
   );
-};
-
-export default HeaderPostView;
+}

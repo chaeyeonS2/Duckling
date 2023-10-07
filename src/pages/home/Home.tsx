@@ -7,8 +7,7 @@ import "../../css/customBottomSheet.css";
 import { OrbitControls } from "@react-three/drei";
 import Mypost from "./MyPost";
 import GetGltfModels from "./GetGltfModels";
-
-const Home = () => {
+export default function Home() {
   return (
     <div className="layoutA">
       <Header />
@@ -58,6 +57,4 @@ const Home = () => {
       <Footer btn={1} />
     </div>
   );
-};
-
-export default Home;
+}

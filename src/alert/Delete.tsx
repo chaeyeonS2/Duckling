@@ -4,7 +4,7 @@ import "../css/alert/delete.css";
 export interface DeleteProps {
   onClose: () => void;
 }
-const Delete = ({ onClose }: DeleteProps) => {
+export default function Delete({ onClose }: DeleteProps) {
   return (
     <div className="alertlayout">
       <div className="textBox_delete">
@@ -19,6 +19,4 @@ const Delete = ({ onClose }: DeleteProps) => {
       </div>
     </div>
   );
-};
-
-export default Delete;
+}

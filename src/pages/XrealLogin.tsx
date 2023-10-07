@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const XrealLogin = () => {
+export default function XrealLogin() {
   const navigate = useNavigate(); // useNavigate 훅을 컴포넌트 내부에서 사용
 
   const [userName, setEmail] = useState("");
@@ -61,5 +61,4 @@ const XrealLogin = () => {
       <button onClick={handleLogin}>Login</button>
     </div>
   );
-};
-export default XrealLogin;
+}

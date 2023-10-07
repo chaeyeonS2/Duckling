@@ -1,7 +1,7 @@
 import styles from "../css/header/headerComment.module.css";
 import { useNavigate } from "react-router-dom";
 
-const HeaderComment = () => {
+export default function HeaderComment() {
   const navigate = useNavigate();
 
   const backClick = () => {
@@ -27,6 +27,4 @@ const HeaderComment = () => {
       </div>
     </header>
   );
-};
-
-export default HeaderComment;
+}

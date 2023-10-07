@@ -3,7 +3,7 @@ import { BottomSheet } from "react-spring-bottom-sheet";
 // import 'react-spring-bottom-sheet/dist/style.css'; // 스타일 파일을 불러옵니다.
 import "../../css/customBottomSheet.css";
 
-const Tmp = () => {
+export default function Tmp() {
   useEffect(() => {
     // setTimeout을 사용하여 portal이 생성된 후에 작업 실행
     const timeoutId = setTimeout(() => {
@@ -55,6 +55,4 @@ const Tmp = () => {
       <div className="bottom_content homeSheet"></div>
     </BottomSheet>
   );
-};
-
-export default Tmp;
+}

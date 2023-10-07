@@ -8,7 +8,7 @@ interface AssetData {
   kind: string;
 }
 
-const Tmp = () => {
+export default function Tmp() {
   // TODO: make api hook
   const [data, setData] = useState<AssetData>();
   const onClick = () => {
@@ -38,9 +38,7 @@ const Tmp = () => {
       {data && data.assetImg && <img src={data.assetImg} />}
     </div>
   );
-};
-
-export default Tmp;
+}
 
 // {
 //     "kind": "top",

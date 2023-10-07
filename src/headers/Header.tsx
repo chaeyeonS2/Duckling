@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 //     openWidnow(`https://twitter.com/intent/tweet?${sharedLink}`);
 //   };
 
-const Header = () => {
+export default function Header() {
   const navigate = useNavigate();
 
   const decoClick = () => {
@@ -35,6 +35,4 @@ const Header = () => {
       </div>
     </header>
   );
-};
-
-export default Header;
+}

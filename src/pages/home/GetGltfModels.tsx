@@ -2,10 +2,10 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import loadModelToHome from "./loadModelToHome";
 
-interface GetGltfModelsProps {
+export interface GetGltfModelsProps {
   page: string;
 }
-const GetGltfModels = ({ page }: GetGltfModelsProps) => {
+export default function GetGltfModels({ page }: GetGltfModelsProps) {
   const groupRef = useRef<THREE.Group>(null);
   const [defaultgltf, setDefaultGltf] = useState<User["userAvatar"]>();
   useEffect(() => {
@@ -34,6 +34,4 @@ const GetGltfModels = ({ page }: GetGltfModelsProps) => {
   return (
     <group ref={groupRef} position={[0, -0.01, 0]} rotation={[0.08, 0, 0]} />
   );
-};
-
-export default GetGltfModels;
+}

@@ -8,7 +8,7 @@
 
 // var photoURL = "";
 // var userName = "";
-const MyPost = () => {
+export default function MyPost() {
   return <></>;
   // const [postInfoArray, setPostArray] = useState([""]);
   // const navigate = useNavigate();
@@ -75,6 +75,4 @@ const MyPost = () => {
   //     </div>
   //   </BottomSheet>
   // );
-};
-
-export default MyPost;
+}

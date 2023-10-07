@@ -6,7 +6,7 @@ import HeaderLook from "../../headers/HeaderLook";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Look = () => {
+export default function Look() {
   const [postData, setData] = useState<Post[]>();
   const navigate = useNavigate();
 
@@ -61,6 +61,4 @@ const Look = () => {
       <Footer btn={0} />
     </div>
   );
-};
-
-export default Look;
+}

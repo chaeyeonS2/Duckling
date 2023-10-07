@@ -2,7 +2,7 @@
 // import { useState } from "react";
 // import ReactDOM from "react-dom";
 
-function Camera() {
+export default function Camera() {
   return <></>;
   //   function Box() {
   //     const [selected, setSelected] = useState(false);
@@ -37,5 +37,3 @@ function Camera() {
   //     </ARCanvas>
   //   );
 }
-
-export default Camera;

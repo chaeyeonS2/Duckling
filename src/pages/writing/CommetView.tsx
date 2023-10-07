@@ -5,7 +5,7 @@
 
 //지금은 안 쓰는 페이지!!
 
-// const CommentView = () => {
+// export default function CommentView() {
 //     const [isCommentOpen, setIsCommentOpen] = useState(false);
 //     const [show, setShow] = useState(false); // show 상태와 setShow 함수를 선언합니다.
 
@@ -169,5 +169,3 @@
 
 //     )
 // }
-
-// export default CommentView
