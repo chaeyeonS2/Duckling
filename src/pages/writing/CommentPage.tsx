@@ -10,10 +10,17 @@ const userID = localStorage.getItem("id");
 var getUid = "";
 const userName = localStorage.getItem("userName");
 var pid = "";
-var commentCount = -1;
-export function getCommentInfo(postid: string, commentNum: number) {
+export function getCommentInfo(postid: string) {
   pid = postid;
-  commentCount = commentNum;
+}
+
+interface CommentData {
+  commentID: string;
+  text: string;
+  rootID: string;
+  writerID: string;
+  time: string;
+  date: string;
 }
 
 interface CommentData {

@@ -55,12 +55,9 @@ const PostView = () => {
   const navigate = useNavigate();
   const commentClick = () => {
     // TODO: refactor, postID가 존재하지 않을 때 어떻게 해야 하는가
-    CommentPage.getCommentInfo(String(postID), commentNum);
+    CommentPage.getCommentInfo(String(postID));
     navigate("/comment");
   };
-
-  let images = [];
-  let commentNum = -1;
 
   //modal
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -93,9 +90,6 @@ const PostView = () => {
         )
         .then((response) => {
           setData(response.data);
-          images = response.data.postImg;
-          commentNum = response.data.commentCount;
-          //like = response.data.likes;
         })
 
         .catch((e) => {

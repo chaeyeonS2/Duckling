@@ -1,9 +1,6 @@
 import styles from "../css/header/header.module.css";
-import { useNavigate } from "react-router-dom";
 
 const HeaderDeco = () => {
-  const navigate = useNavigate();
-
   const closeClick = () => {
     window.location.href = "/home"; // "/home"으로 새로고침
   };
