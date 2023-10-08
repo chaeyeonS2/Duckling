@@ -1,0 +1,30 @@
+.page-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.logo-image {
+  width: 80vw;
+  height: 10%;
+  margin-top: 35vh;
+  object-fit: contain;
+}
+
+.twitter-image {
+  width: 300px;
+  margin-top: 70vh;
+  object-fit: contain;
+}
+
+#twitter-sign-in-btn {
+  position: absolute;
+}
+
+.xmc-link {
+  position: absolute;
+  bottom: 100px;
+  text-decoration: none;
+}

@@ -2,6 +2,8 @@ import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
+import styles from "./Login.module.css";
+
 export default function Login() {
   const navigate = useNavigate();
 
@@ -56,46 +58,14 @@ export default function Login() {
       });
   };
 
-  // TODO: page style 따로 css module로 분리하기
   return (
     <div>
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <img
-          style={{
-            width: "80vw",
-            height: "10%",
-            marginTop: "35vh",
-            objectFit: "contain",
-          }}
-          src={"/img/login/logo.png"}
-        />
-        <div style={{ position: "absolute" }} id="twitter-sign-in-btn" onClick={twitterLogin}>
-          <img
-            style={{
-              width: "300px",
-              height: "",
-              marginTop: "70vh",
-              objectFit: "contain",
-            }}
-            src={"/img/login/twitter.png"}
-          />
+      <div className={styles.pageContainer}>
+        <img className={styles.logoImage} src={"/img/login/logo.png"} />
+        <div id="twitter-sign-in-btn" onClick={twitterLogin}>
+          <img className={styles.twitterImage} src={"/img/login/twitter.png"} />
         </div>
-        <Link
-          to="/xmc"
-          style={{
-            position: "absolute",
-            bottom: "100px", // 조정하여 링크 위치를 조절할 수 있습니다.
-            textDecoration: "none",
-          }}
-        >
+        <Link className={styles.xmcLink} to="/xmc">
           XMC용 로그인 페이지로 이동
         </Link>
       </div>
