@@ -1,112 +1,73 @@
 import "../../css/layout.css";
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import Footer from "../../Footer";
 import HeaderComment from "../../headers/HeaderComment";
 import styles from "../../css/writing/commentPage.module.css";
 import axios from "axios";
 import "../../css/customBottomSheet_postView.css";
+import { useLocation } from "react-router-dom";
 
+// TODO: useLocalStorage 사용하기, 비동기화의 위험성 다분함
 const userID = localStorage.getItem("id");
-var getUid = "";
 const userName = localStorage.getItem("userName");
-var pid = "";
-export function getCommentInfo(postid: string) {
-  pid = postid;
-}
-
-interface CommentData {
-  commentID: string;
-  text: string;
-  rootID: string;
-  writerID: string;
-  time: string;
-  date: string;
-}
 
 export default function CommentPage() {
+  const location = useLocation();
+  const postID: string = location.state.postID;
+
+  // userID: profileImg
+  const [profileImg, setProfileImg] = useState<Record<string, string>>();
+  const [data, setData] = useState<APICommentsReponse>();
   const [comment, setComment] = useState("");
-  const [upload, setUpload] = useState("");
 
   const handleCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (comment === "") {
       return;
     }
+
     // 여기에 댓글을 서버에 보내는 로직을 추가할 수 있습니다.
-    const handleUpload = async () => {
-      try {
-        const response = await axios.post(
-          "https://us-central1-netural-app.cloudfunctions.net/api/comments",
-          {
-            text: comment,
-            userID: userID,
-            rootID: pid,
-            writerID: userName,
-          }
-        );
-        console.log("Document uploaded:", response.data);
-        if (response.data) {
-          //window.location.reload();
-          setUpload("aa");
-        }
-      } catch (error) {
-        console.error("Error uploading document:", error);
-      }
-    };
-    handleUpload();
+    await axios
+      .post("/api/comments", {
+        text: comment,
+        userID: userID,
+        rootID: postID,
+        writerID: userName,
+      })
+      .then((response) => console.log("Document uploaded:", response.data))
+      .catch((error) => console.error("Error uploading document:", error));
+
     console.log("댓글 제출:", comment);
     setComment(""); // 댓글 입력란 초기화
-    getComment();
+
+    const { data: comments } = await axios.get<APICommentsReponse>(
+      `/api/comments/root/${postID}`
+    );
+    comments.sort((a, b) => a.time - b.time);
+
+    Promise.all(
+      comments.map((comment) =>
+        axios
+          .get<APIUserResponse>(`/api/users/${comment.writerID}`)
+          .then(({ data }) =>
+            setProfileImg((prev) => ({
+              ...prev,
+              [comment.writerID]: data.profileImg,
+            }))
+          )
+      )
+    );
+
+    setData(comments);
   };
-  const [profileImg, setProfileImg] = useState(""); // 상태 추가
-  const getUserProfileImg = async () => {
-    try {
-      const response = await axios.get(
-        `https://us-central1-netural-app.cloudfunctions.net/api/users/${getUid}`
-      );
-      setProfileImg(response.data.profileImg); // 상태 업데이트
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  //유저 정보 받아오기
-
-  useEffect(() => {
-    getUserProfileImg();
-  }, [getUid]);
-
-  const [data, setData] = useState<CommentData[]>();
-
-  //댓글 받아오기
-  const getComment = async () => {
-    try {
-      // TODO: 알 수 없는 api 사용 로직 해결
-      const response = await axios.get(
-        `https://us-central1-netural-app.cloudfunctions.net/api/comments/root/${pid}`
-      );
-      const commentData: CommentData = response.data;
-      console.log("success");
-      // @ts-ignore
-      getUid = commentData.userID;
-      // @ts-ignore
-      setData(commentData.slice().sort((a, b) => a.time - b.time));
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  //유저 정보 받아오기
-
-  useEffect(() => {
-    getComment();
-  }, [upload]);
-  // [리뷰] 블라블라블라.....
 
   return (
     <div className="layout">
+      {/* // TODO: layout 컴포넌트 재사용하기 */}
       {/* 고정 헤더 */}
       <HeaderComment />
       <div className={styles.content}>
@@ -135,7 +96,10 @@ export default function CommentPage() {
 
       <div className={styles.writeComment}>
         <div>
-          <form onSubmit={handleSubmit} className={styles.commentInput}>
+          <form
+            onSubmit={(e) => handleSubmit(e).catch(console.log)}
+            className={styles.commentInput}
+          >
             <textarea
               rows={3}
               placeholder="댓글을 입력하세요..."
@@ -145,12 +109,7 @@ export default function CommentPage() {
             <br />
 
             <button className="Btn_comment" type="submit">
-              <img
-                src={
-                  process.env.PUBLIC_URL +
-                  "/img/writing/comment-upload-true-btn.png"
-                }
-              />
+              <img src={"/img/writing/comment-upload-true-btn.png"} />
             </button>
           </form>
         </div>
@@ -160,13 +119,3 @@ export default function CommentPage() {
     </div>
   );
 }
-
-// //전달되는 포스트 정보
-// {
-//     "commentID": "commentID",
-//     "text": "text",
-//     "rootID": "rootID",
-//     "writerID": "writerID",
-//     "time": "time",
-//     "date": "date"
-// }

@@ -8,7 +8,6 @@ import Login from "./pages/Login";
 import Look from "./pages/looking/Look";
 import CommentPage from "./pages/writing/CommentPage";
 import Start from "./pages/Start";
-import Tmp from "./pages/Tmp";
 import XrealLogin from "./pages/XrealLogin";
 import Camera from "./pages/Camera";
 import "./css/style.css";
@@ -41,8 +40,6 @@ export default function App() {
         <Route path="/look" element={<Look />} />
         {/* <댓글창/> */}
         <Route path="/comment" element={<CommentPage />} />
-        {/* <test/> */}
-        <Route path="/test" element={<Tmp />} />
         {/* xmc용 로그인 */}
         <Route path="/xmc" element={<XrealLogin />} />
         {/* ar camera */}

@@ -1,28 +1,13 @@
-import { useState, useEffect } from "react";
 import "../../css/lookiing/postBox.css";
-import axios from "axios";
+import useSWRImmutable from "swr/immutable";
 
 export interface PostBoxProps {
   post: Post;
 }
 export default function PostBox({ post: data }: PostBoxProps) {
-  const uid = data.userID;
-  const [profileImg, setProfileImg] = useState(""); // 상태 추가
-  const getUserProfileImg = async () => {
-    try {
-      const response = await axios.get(
-        `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`
-      );
-      setProfileImg(response.data.profileImg); // 상태 업데이트
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  //유저 정보 받아오기
-
-  useEffect(() => {
-    getUserProfileImg();
-  }, [uid]);
+  const { data: userData } = useSWRImmutable<APIUserResponse>([
+    `/api/users/${data.userID}`,
+  ]);
 
   return (
     <div className="one-post-box">
@@ -30,7 +15,7 @@ export default function PostBox({ post: data }: PostBoxProps) {
         <div className="one-post-profile">
           <div
             className="profileImg"
-            style={{ backgroundImage: `url(${profileImg})` }}
+            style={{ backgroundImage: `url(${userData?.profileImg})` }}
           ></div>
           <div className="userName">{data.writerID}</div>
           <div className="date">{data.date}</div>

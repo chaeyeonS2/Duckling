@@ -2,15 +2,6 @@ import "../../css/avatarDeco.css";
 import { useRef, useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-const itemTypeArray: Array<keyof User["userAvatar"]> = [
-  "eyes",
-  "mouth",
-  "top",
-  "bottom",
-  "shoes",
-  "accessory",
-];
-
 // TODO: refactor
 var addGltfPath = "";
 var type = "";
@@ -58,49 +49,37 @@ export default function GltfGroupModels({
     positionZ: number,
     type: string
   ) => {
-    if (gltfPath) {
-      // gltfPath가 null이나 undefined가 아닌 경우에만 실행
-      const gltfLoader = new GLTFLoader();
-      gltfLoader.load(gltfPath, (childGltf) => {
-        const model = childGltf.scene;
-        model.scale.set(setScale, setScale, setScale);
-        model.position.set(positionX, positionY, positionZ);
-        model.userData.type = type;
-
-        itemTypeArray.forEach((n) => {
-          if (type === n) {
-            // 기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
-            removeDecoGltf(type);
-
-            const newGltf = defaultgltf;
-            newGltf[n] = gltfPath;
-            setDefaultGltf(newGltf);
-          }
-        });
-        if (groupRef.current) {
-          groupRef.current.add(model);
-        }
-      });
-    } else {
+    if (!gltfPath) {
+      // TODO: null이나 undefined일 가능성은 어디로부터 기인되는가?
       console.log("Invalid gltfPath:", gltfPath);
+      return;
     }
-  };
 
-  //deco 초기화하는 함수
-  const removeDecoGltf = (type: string) => {
-    if (!groupRef.current) return;
+    // gltfPath가 null이나 undefined가 아닌 경우에만 실행
+    const gltfLoader = new GLTFLoader();
+    gltfLoader.load(gltfPath, (childGltf) => {
+      if (!groupRef.current) return;
 
-    const childToRemove = groupRef.current.children.find(
-      (child) => child.userData.type === type
-    );
+      const model = childGltf.scene;
+      model.scale.set(setScale, setScale, setScale);
+      model.position.set(positionX, positionY, positionZ);
+      model.userData.type = type;
 
-    if (childToRemove) {
-      groupRef.current.remove(childToRemove);
-    }
+      // 기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
+      const childToRemove = groupRef.current.children.find(
+        (child) => child.userData.type === type
+      );
+      if (childToRemove) {
+        groupRef.current.remove(childToRemove);
+      }
+
+      setDefaultGltf({ [type]: gltfPath, ...defaultgltf });
+      groupRef.current.add(model);
+    });
   };
 
   // gltf 모델들을 로드하고 그룹에 추가하는 함수
-  const loadModels = () => {
+  useEffect(() => {
     // 파일 path, scale, position(x, y, z) 순서
     putDecoGltf(defaultgltf["eyes"], 1.1, 0, -0.04, 0, "eyes");
     putDecoGltf(defaultgltf["mouth"], 1.1, 0, -0.04, 0, "mouth");
@@ -113,10 +92,7 @@ export default function GltfGroupModels({
     putDecoGltf("/gltf/avatar/keyring.glb", 0.02, 0, 0.155, 0.01, "etc");
     putDecoGltf("/gltf/avatar/nose.gltf", 1.1, 0, -0.04, 0, "etc");
     putDecoGltf("/gltf/avatar/stage.glb", 0.04, 0, -0.055, 0.0025, "etc");
-  };
-  useEffect(() => {
-    loadModels();
-  }, [defaultgltf, loadModels]);
+  }, [defaultgltf]);
 
   return (
     <group

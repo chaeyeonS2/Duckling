@@ -40,7 +40,7 @@ export default function Home() {
             />
             <ambientLight intensity={0.5} />
 
-            <GetGltfModels page={"home"} />
+            <GetGltfModels />
 
             <OrbitControls
               enableZoom={false} // 확대/축소 비활성화

@@ -1,35 +1,18 @@
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import loadModelToHome from "./loadModelToHome";
+import useSWRImmutable from "swr/immutable";
 
-export interface GetGltfModelsProps {
-  page: string;
-}
-export default function GetGltfModels({ page }: GetGltfModelsProps) {
+export default function GetGltfModels() {
   const groupRef = useRef<THREE.Group>(null);
-  const [defaultgltf, setDefaultGltf] = useState<User["userAvatar"]>();
-  useEffect(() => {
-    const uid = localStorage.getItem("id");
-    const getUserInfo = async () => {
-      try {
-        const response = await axios.get(
-          `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`
-        );
-        await setDefaultGltf(response.data.userAvatar);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getUserInfo();
-  }, []);
+  // TODO: useLocalStorage 적용
+  const { data: user } = useSWRImmutable<APIUserResponse>([
+    `/api/users/${localStorage.getItem("id")}`,
+  ]);
 
   useEffect(() => {
-    if (!defaultgltf) return;
-
-    page === "home"
-      ? loadModelToHome(groupRef, defaultgltf)
-      : loadModelToHome(groupRef, defaultgltf); //GLTF 모델 불러오기
-  }, [defaultgltf]);
+    if (!user) return;
+    loadModelToHome(groupRef, user.userAvatar); //GLTF 모델 불러오기
+  }, [user]);
 
   return (
     <group ref={groupRef} position={[0, -0.01, 0]} rotation={[0.08, 0, 0]} />

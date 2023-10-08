@@ -22,7 +22,7 @@ export default function MyPost() {
   //   const getPostInfo = async () => {
   //     try {
   //       const response = await axios.get(
-  //         `https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/${userName}`
+  //         `/api/posts/writer/${userName}`
   //       );
   //       if (response.data !== null) {
   //         const newPostInfoArray = response.data.map((item) => ({

@@ -1,29 +1,17 @@
 import HeaderDeco from "../../headers/HeaderDeco";
 import "../../css/avatarDeco.css";
-import { useState, Suspense, useEffect } from "react";
+import { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import Item from "./Item";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { OrbitControls } from "@react-three/drei";
 import GltfGroupModels from "./GltfGroupModels";
+import useSWR from "swr";
 
 export default function AvatarDeco() {
-  var [defaultgltf, setDefaultGltf] = useState<User["userAvatar"]>();
-
-  useEffect(() => {
-    const uid = localStorage.getItem("id");
-    const getUserInfo = async () => {
-      try {
-        const response = await axios.get(
-          `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`
-        );
-        setDefaultGltf(response.data.userAvatar);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getUserInfo();
-  }, []);
+  const { data: user, mutate } = useSWR<APIUserResponse>([
+    `/api/users/${localStorage.getItem("id")}`,
+  ]);
 
   //데코(얼굴, 옷) 카테고리 선택
   const [typeDecoState, setDecoTypeState] = useState<[boolean, boolean]>([
@@ -37,27 +25,19 @@ export default function AvatarDeco() {
   };
 
   const handleAvatarUpload = async () => {
-    if (!defaultgltf) return;
+    if (!user) return;
 
-    try {
-      const uid = localStorage.getItem("id");
+    const uid = localStorage.getItem("id");
 
-      await axios.patch(
-        `https://us-central1-netural-app.cloudfunctions.net/api/users/${uid}`,
-        {
-          userAvatar: {
-            eyes: defaultgltf["eyes"],
-            mouth: defaultgltf["mouth"],
-            top: defaultgltf["top"],
-            bottom: defaultgltf["bottom"],
-            accessory: defaultgltf["accessory"],
-            shoes: defaultgltf["shoes"],
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Error uploading document:", error);
-    }
+    await axios
+      .patch<
+        unknown,
+        AxiosResponse<unknown, APIUsersPatchRequest>,
+        APIUsersPatchRequest
+      >(`/api/users/${uid}`, {
+        userAvatar: user.userAvatar,
+      })
+      .catch((error) => console.error("Error uploading document:", error));
   };
 
   return (
@@ -92,10 +72,14 @@ export default function AvatarDeco() {
               castShadow
             />
             <ambientLight intensity={0.5} />
-            {defaultgltf && (
+            {user && (
               <GltfGroupModels
-                defaultgltf={defaultgltf}
-                setDefaultGltf={setDefaultGltf}
+                defaultgltf={user.userAvatar}
+                setDefaultGltf={(newGltf) =>
+                  mutate((prev) =>
+                    !prev ? prev : { ...prev, userAvatar: newGltf }
+                  )
+                }
                 typeDecoState={typeDecoState}
               />
             )}

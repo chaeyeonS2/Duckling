@@ -9,7 +9,6 @@ import Delete from "../../alert/Delete";
 import PostShare from "../../alert/PostShare";
 import Modal from "../../alert/Modal";
 import axios from "axios";
-import * as CommentPage from "./CommentPage";
 import ImageSlider from "./ImageSlider";
 
 interface PostData {
@@ -24,9 +23,7 @@ export default function PostView() {
 
   const navigate = useNavigate();
   const commentClick = () => {
-    // TODO: refactor, postID가 존재하지 않을 때 어떻게 해야 하는가
-    CommentPage.getCommentInfo(String(postID));
-    navigate("/comment");
+    navigate("/comment", { state: { postID } });
   };
 
   //modal
@@ -55,9 +52,7 @@ export default function PostView() {
   useEffect(() => {
     const getPost = async () => {
       await axios
-        .get(
-          `https://us-central1-netural-app.cloudfunctions.net/api/posts/writer/${writerID}/${postID}`
-        )
+        .get(`/api/posts/writer/${writerID}/${postID}`)
         .then((response) => {
           setData(response.data);
         })

@@ -1,5 +1,5 @@
 import "../../css/item.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Itembox from "./Itembox";
 import axios from "axios";
 
@@ -7,54 +7,55 @@ export interface ItemProps {
   type: string;
 }
 export default function Item({ type }: ItemProps) {
-  const [assetArray, setAssetArray] = useState<Asset[]>([]);
-
-  const [typeItemState_face, setItemTypeState_face] = useState("eyes"); //face 카테고리
-  const [typeItemState_cloth, setItemTypeState_cloth] = useState("top"); //cloth 카테고리
+  const [kind, setKind] = useState("top");
+  const [assets, setAssets] = useState<APIAssetsResponse>([]);
+  const fetchTo = async (kind: string) => {
+    const { data } = await axios.get<APIAssetsResponse>(
+      `/api/assets/${type == "face" ? "face" : "body"}/${kind}`
+    );
+    setKind(kind);
+    setAssets(data);
+  };
 
   const [selectDeco, setSelectDeco] = useState<boolean[]>([false]);
   const handleClick = (idx: number) => {
-    const newArr = Array(assetArray.length).fill(false);
+    const newArr = Array(assets.length).fill(false);
     newArr[idx] = true;
 
     setSelectDeco(newArr);
   };
 
-  const [content, setContent] = useState<JSX.Element>();
-  const handleChangeContent = () => {
-    // 상태 변수를 변경하여 내용을 바꿉니다.
-    if (type === "face") {
-      setContent(
+  if (!assets) return null;
+
+  return (
+    <div>
+      {type === "face" ? (
         <div className="faceDeco Deco">
           <div className="faceBtnGroup typeItemBtnGroup">
             <div
-              className={
-                typeItemState_face === "eyes" ? "selectBtn" : "nonSelectbtn"
-              }
+              className={kind === "eyes" ? "selectBtn" : "nonSelectbtn"}
               onClick={() => {
-                setItemTypeState_face("eyes");
+                fetchTo("eyes");
               }}
             >
               눈
             </div>
             <div
-              className={
-                typeItemState_face === "mouth" ? "selectBtn" : "nonSelectbtn"
-              }
+              className={kind === "mouth" ? "selectBtn" : "nonSelectbtn"}
               onClick={() => {
-                setItemTypeState_face("mouth");
+                fetchTo("mouth");
               }}
             >
               입
             </div>
           </div>
           <div className="itemBoxDiv">
-            {assetArray && //아이템 썸네일 박스
-              assetArray.map((item, index) => {
+            {assets && //아이템 썸네일 박스
+              assets.map((item, index) => {
                 return (
                   <Itembox
                     key={index}
-                    type={typeItemState_face}
+                    type={kind}
                     imgSrc={item.assetImg}
                     index={item.assetID}
                     handleClick={handleClick}
@@ -65,62 +66,49 @@ export default function Item({ type }: ItemProps) {
               })}
           </div>
         </div>
-      );
-    } else {
-      //if 'cloth'
-      setContent(
+      ) : (
         <div className="clothDeco Deco">
           <div className="clothBtnGroup typeItemBtnGroup">
             <div
-              className={
-                typeItemState_cloth === "top" ? "selectBtn" : "nonSelectbtn"
-              }
+              className={kind === "top" ? "selectBtn" : "nonSelectbtn"}
               onClick={() => {
-                setItemTypeState_cloth("top");
+                fetchTo("top");
               }}
             >
               상의
             </div>
             <div
-              className={
-                typeItemState_cloth === "bottom" ? "selectBtn" : "nonSelectbtn"
-              }
+              className={kind === "bottom" ? "selectBtn" : "nonSelectbtn"}
               onClick={() => {
-                setItemTypeState_cloth("bottom");
+                setKind("bottom");
               }}
             >
               하의
             </div>
             <div
-              className={
-                typeItemState_cloth === "shoes" ? "selectBtn" : "nonSelectbtn"
-              }
+              className={kind === "shoes" ? "selectBtn" : "nonSelectbtn"}
               onClick={() => {
-                setItemTypeState_cloth("shoes");
+                setKind("shoes");
               }}
             >
               신발
             </div>
             <div
-              className={
-                typeItemState_cloth === "accessory"
-                  ? "selectBtn"
-                  : "nonSelectbtn"
-              }
+              className={kind === "accessory" ? "selectBtn" : "nonSelectbtn"}
               onClick={() => {
-                setItemTypeState_cloth("accessory");
+                setKind("accessory");
               }}
             >
               기타
             </div>
           </div>
           <div className="itemBoxDiv">
-            {assetArray && //아이템 썸네일 박스
-              assetArray.map((item, index) => {
+            {assets && //아이템 썸네일 박스
+              assets.map((item, index) => {
                 return (
                   <Itembox
                     key={index}
-                    type={typeItemState_cloth}
+                    type={kind}
                     imgSrc={item.assetImg}
                     index={item.assetID}
                     handleClick={handleClick}
@@ -131,39 +119,7 @@ export default function Item({ type }: ItemProps) {
               })}
           </div>
         </div>
-      );
-    }
-  };
-
-  useEffect(() => {
-    const getAvataInfo = async () => {
-      try {
-        if (type === "face") {
-          const response = await axios.get(
-            `https://us-central1-netural-app.cloudfunctions.net/api/assets/face/${typeItemState_face}`
-          );
-          setAssetArray(response.data);
-        } else {
-          //type === "cloth"
-          const response = await axios.get(
-            `https://us-central1-netural-app.cloudfunctions.net/api/assets/body/${typeItemState_cloth}`
-          );
-          setAssetArray(response.data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getAvataInfo();
-  }, [type, typeItemState_face, typeItemState_cloth, selectDeco]); // 의존성 배열
-
-  // eyeArray 변경을 감시하고 변경될 때 handleChangeContent() 호출
-  useEffect(() => {
-    if (assetArray.length > 0) {
-      console.log(assetArray);
-      handleChangeContent();
-    }
-  }, [assetArray]);
-  return <div>{content}</div>;
+      )}
+    </div>
+  );
 }

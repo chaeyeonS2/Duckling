@@ -2,15 +2,14 @@ interface Post {
   postID: string;
   title: string;
   body: string;
-  postImg: string;
+  postImg: string[];
   writerID: string;
   userID: string;
-  time: string;
+  time: number;
   date: string;
   likes: number;
   commentCount: number;
 }
-
 interface User {
   userID: string;
   profileImg: string;

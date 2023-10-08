@@ -6,7 +6,7 @@ import { useState, useRef } from "react";
 import Modal from "../../alert/Modal";
 import Uploading from "../../alert/Uploading";
 import IsImage from "../../alert/IsImage";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 
 const userID = localStorage.getItem("id");
@@ -17,28 +17,31 @@ export default function Post() {
 
   const handleUpload = async () => {
     console.log(previewImages);
+
+    // TODO: photoURL과 userName이 null일 때 어떻게 해야 하는가
+    if (!userName) throw new Error("userName does not exist!");
+    if (!userID) throw new Error("userID does not exist!");
+
     try {
       openModal(<Uploading />);
-      const response = await axios.post(
-        "https://us-central1-netural-app.cloudfunctions.net/api/posts",
-        {
-          title: title,
-          body: content,
-          postImg: previewImages,
-          writerID: userName,
-          userID: userID,
-        }
-      );
-      closeModal();
-      console.log(
-        "Document uploaded:",
-        response.data.postID,
-        response.data.writerID
-      );
+      const { data } = (await axios.post<
+        unknown,
+        AxiosResponse<unknown, APIPostsPostRequest>,
+        APIPostsPostRequest
+      >("/api/posts", {
+        title: title,
+        body: content,
+        postImg: previewImages,
+        writerID: userName,
+        userID: userID,
+      })) as any;
+      // TODO: 예기치 못한 응답 객체 사용
+      console.log("Document uploaded:", data.postID, data.writerID);
 
-      navigate(`/postView/${response.data.writerID}/${response.data.postID}`);
+      navigate(`/postView/${data.writerID}/${data.postID}`);
     } catch (error) {
       console.error("Error uploading document:", error);
+    } finally {
       closeModal();
     }
   };

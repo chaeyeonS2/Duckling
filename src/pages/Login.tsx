@@ -1,33 +1,25 @@
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export default function Login() {
-  const navigate = useNavigate(); // useNavigate 훅을 컴포넌트 내부에서 사용
+  const navigate = useNavigate();
 
   const handleUpload = async (
     userID: string,
-    photoURL: string | null,
-    userName: string | null
+    photoURL: string,
+    userName: string
   ) => {
     try {
-      await axios.post(
-        "https://us-central1-netural-app.cloudfunctions.net/api/users",
-        {
-          uid: userID,
-          // "userID" : "userID",
-          profileImg: photoURL, // TODO: photoURL과 userName이 null로 넘어가도 괜찮은가?
-          userName: userName,
-          userAvatar: {
-            eyes: "",
-            mouth: "",
-            top: "",
-            bottom: "",
-            accessory: "",
-            shoes: "",
-          },
-        }
-      );
+      await axios.post<
+        unknown,
+        AxiosResponse<unknown, APIPostsPostRequest>,
+        APIUsersPostRequest
+      >("/api/users", {
+        uid: userID,
+        profileImg: photoURL,
+        userName: userName,
+      });
       console.log("login upload success");
     } catch (error) {
       console.error("Error uploading document:", error);
@@ -51,8 +43,11 @@ export default function Login() {
         const photoURL = user.photoURL; //tiwtter 프로필 사진 가져옴
         console.log("Firebase userID:", userName);
 
-        // local storage에 저장
         // TODO: photoURL과 userName이 null일 때 어떻게 해야 하는가
+        if (!userName) throw new Error("userName does not exist!");
+        if (!photoURL) throw new Error("photoURL does not exist!");
+
+        // local storage에 저장
         localStorage.setItem("id", userID);
         localStorage.setItem("profileImg", String(photoURL));
         localStorage.setItem("userName", String(userName));
