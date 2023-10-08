@@ -1,7 +1,7 @@
 import React from "react";
 import { SWRConfig } from "swr/_internal";
 import axios from "axios";
-import "./firebase/config";
+import "../firebase/config";
 
 export default function SWRWrapper({ children }: React.PropsWithChildren) {
   return (

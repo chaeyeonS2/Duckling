@@ -1,5 +1,5 @@
-import Footer from "../../Footer";
-import Header from "../../headers/Header";
+import Footer from "../../components/layout/Footer";
+import Header from "../../components/layout/headers/Header";
 import "../../css/layout.css";
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";

@@ -1,7 +1,7 @@
-import Footer from "../../Footer";
+import Footer from "../../components/layout/Footer";
 import "../../css/layout.css";
 import PostBox from "./PostBox";
-import HeaderLook from "../../headers/HeaderLook";
+import HeaderLook from "../../components/layout/headers/HeaderLook";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 

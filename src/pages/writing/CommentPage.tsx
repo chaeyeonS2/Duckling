@@ -1,7 +1,7 @@
 import "../../css/layout.css";
 import { useState, ChangeEvent, FormEvent } from "react";
-import Footer from "../../Footer";
-import HeaderComment from "../../headers/HeaderComment";
+import Footer from "../../components/layout/Footer";
+import HeaderComment from "../../components/layout/headers/HeaderComment";
 import styles from "../../css/writing/commentPage.module.css";
 import axios from "axios";
 import "../../css/customBottomSheet_postView.css";
