@@ -1,7 +1,7 @@
 // import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 // import { BottomSheet, expandOnContentDrag } from "react-spring-bottom-sheet";
 // import 'react-spring-bottom-sheet/dist/style.css'; // 스타일 파일을 불러옵니다.
-// import "../../css/customBottomSheet_postView.css";
+// import "@/css/customBottomSheet_postView.css";
 
 //지금은 안 쓰는 페이지!!
 

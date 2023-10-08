@@ -10,7 +10,7 @@ import CommentPage from "./pages/writing/CommentPage";
 import Start from "./pages/Start";
 import XrealLogin from "./pages/XrealLogin";
 import Camera from "./pages/Camera";
-import "./css/style.css";
+import "@/css/style.css";
 
 export default function App() {
   function setScreenSize() {

@@ -1,5 +1,5 @@
-import HeaderDeco from "../../components/layout/headers/HeaderDeco";
-import "../../css/avatarDeco.css";
+import HeaderDeco from "@/components/layout/headers/HeaderDeco";
+import "@/css/avatarDeco.css";
 import { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import Item from "./Item";

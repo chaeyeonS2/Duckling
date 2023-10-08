@@ -1,9 +1,9 @@
-import Footer from "../../components/layout/Footer";
-import Header from "../../components/layout/headers/Header";
-import "../../css/layout.css";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/headers/Header";
+import "@/css/layout.css";
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import "../../css/customBottomSheet.css";
+import "@/css/customBottomSheet.css";
 import { OrbitControls } from "@react-three/drei";
 import Mypost from "./MyPost";
 import GetGltfModels from "./GetGltfModels";

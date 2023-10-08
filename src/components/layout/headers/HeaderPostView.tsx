@@ -1,4 +1,4 @@
-import styles from "../css/header/headerPostView.module.css";
+import styles from "@/css/header/headerPostView.module.css";
 import { useNavigate } from "react-router-dom";
 
 export interface HeaderPostViewProps {

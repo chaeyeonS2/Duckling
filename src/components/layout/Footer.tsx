@@ -1,4 +1,4 @@
-import "./css/footer.css";
+import "@/css/footer.css";
 import { useNavigate } from "react-router-dom";
 
 export interface FooterProps {

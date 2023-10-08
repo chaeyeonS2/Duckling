@@ -1,4 +1,4 @@
-import "../../css/lookiing/postBox.css";
+import "@/css/lookiing/postBox.css";
 import useSWRImmutable from "swr/immutable";
 
 export interface PostBoxProps {

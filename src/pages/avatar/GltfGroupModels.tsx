@@ -1,4 +1,4 @@
-import "../../css/avatarDeco.css";
+import "@/css/avatarDeco.css";
 import { useRef, useEffect } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 

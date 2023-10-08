@@ -6,6 +6,11 @@
     "skipLibCheck": true,
     "useDefineForClassFields": true,
 
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

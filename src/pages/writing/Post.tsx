@@ -1,11 +1,11 @@
-import "../../css/post.css";
-import "../../css/layout.css";
-import Footer from "../../components/layout/Footer";
-import HeaderPost from "../../components/layout/headers/HeaderPost";
+import "@/css/post.css";
+import "@/css/layout.css";
+import Footer from "@/components/layout/Footer";
+import HeaderPost from "@/components/layout/headers/HeaderPost";
 import { useState, useRef } from "react";
-import Modal from "../../components/alert/Modal";
-import Uploading from "../../components/alert/Uploading";
-import IsImage from "../../components/alert/IsImage";
+import Modal from "@/components/alert/Modal";
+import Uploading from "@/components/alert/Uploading";
+import IsImage from "@/components/alert/IsImage";
 import axios, { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 

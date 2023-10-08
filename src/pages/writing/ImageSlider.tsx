@@ -1,6 +1,6 @@
-import "../../css/layout.css";
+import "@/css/layout.css";
 import Slider from "react-slick";
-import styles from "../../css/postView.module.css";
+import styles from "@/css/postView.module.css";
 
 export interface ImageSliderProps {
   images: string[];

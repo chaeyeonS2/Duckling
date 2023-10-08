@@ -1,5 +1,5 @@
-import "../css/alert/alertLayout.css";
-import "../css/alert/postShare.css";
+import "@/css/alert/alertLayout.css";
+import "@/css/alert/postShare.css";
 
 export interface PostShareProps {
   onClose: () => void;

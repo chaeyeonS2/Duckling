@@ -1,4 +1,4 @@
-import "../../css/item.css";
+import "@/css/item.css";
 import { useState } from "react";
 import Itembox from "./Itembox";
 import axios from "axios";

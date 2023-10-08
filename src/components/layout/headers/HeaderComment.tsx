@@ -1,4 +1,4 @@
-import styles from "../css/header/headerComment.module.css";
+import styles from "@/css/header/headerComment.module.css";
 import { useNavigate } from "react-router-dom";
 
 export default function HeaderComment() {

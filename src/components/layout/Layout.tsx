@@ -1,6 +1,6 @@
 import Header from "./headers/Header";
 import Footer from "./Footer";
-import "./css/layout.css";
+import "@/css/layout.css";
 
 export default function Layout() {
   return (

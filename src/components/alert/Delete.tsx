@@ -1,5 +1,5 @@
-import "../css/alert/alertLayout.css";
-import "../css/alert/delete.css";
+import "@/css/alert/alertLayout.css";
+import "@/css/alert/delete.css";
 
 export interface DeleteProps {
   onClose: () => void;

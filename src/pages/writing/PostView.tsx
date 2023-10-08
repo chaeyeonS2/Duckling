@@ -1,13 +1,13 @@
-import Footer from "../../components/layout/Footer";
-import "../../css/layout.css";
-import styles from "../../css/postView.module.css";
-import HeaderPostView from "../../components/layout/headers/HeaderPostView";
+import Footer from "@/components/layout/Footer";
+import "@/css/layout.css";
+import styles from "@/css/postView.module.css";
+import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 import { useState, useEffect } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
-import Delete from "../../components/alert/Delete";
-import PostShare from "../../components/alert/PostShare";
-import Modal from "../../components/alert/Modal";
+import Delete from "@/components/alert/Delete";
+import PostShare from "@/components/alert/PostShare";
+import Modal from "@/components/alert/Modal";
 import axios from "axios";
 import ImageSlider from "./ImageSlider";
 

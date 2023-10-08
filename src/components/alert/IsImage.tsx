@@ -1,5 +1,5 @@
-import "../css/alert/alertLayout.css";
-import "../css/alert/isImage.css";
+import "@/css/alert/alertLayout.css";
+import "@/css/alert/isImage.css";
 
 export interface IsImageProps {
   onClose: () => void;

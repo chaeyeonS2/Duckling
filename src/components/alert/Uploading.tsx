@@ -1,5 +1,5 @@
-import "../css/alert/alertLayout.css";
-import "../css/alert/uploading.css";
+import "@/css/alert/alertLayout.css";
+import "@/css/alert/uploading.css";
 
 export default function Uploading() {
   return (

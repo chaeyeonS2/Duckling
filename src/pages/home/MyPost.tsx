@@ -1,6 +1,6 @@
 // import React, { useState, useEffect } from "react";
 // import { BottomSheet } from "react-spring-bottom-sheet";
-// import "../../css/customBottomSheet.css";
+// import "@/css/customBottomSheet.css";
 // import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 

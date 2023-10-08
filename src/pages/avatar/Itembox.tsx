@@ -1,4 +1,4 @@
-import "../../css/item.css";
+import "@/css/item.css";
 import { useState, useEffect } from "react";
 import * as GltfGroupModels from "./GltfGroupModels";
 

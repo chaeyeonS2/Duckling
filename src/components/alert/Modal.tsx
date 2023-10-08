@@ -1,4 +1,4 @@
-import "../css/alert/alertLayout.css";
+import "@/css/alert/alertLayout.css";
 import ReactDOM from "react-dom";
 
 export interface ModalProps {

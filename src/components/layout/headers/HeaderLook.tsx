@@ -1,4 +1,4 @@
-import styles from "../css/header/headerLook.module.css";
+import styles from "@/css/header/headerLook.module.css";
 import { useState } from "react";
 
 export default function HeaderLook() {

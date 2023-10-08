@@ -1,10 +1,10 @@
-import "../../css/layout.css";
+import "@/css/layout.css";
 import { useState, ChangeEvent, FormEvent } from "react";
-import Footer from "../../components/layout/Footer";
-import HeaderComment from "../../components/layout/headers/HeaderComment";
-import styles from "../../css/writing/commentPage.module.css";
+import Footer from "@/components/layout/Footer";
+import HeaderComment from "@/components/layout/headers/HeaderComment";
+import styles from "@/css/writing/commentPage.module.css";
 import axios from "axios";
-import "../../css/customBottomSheet_postView.css";
+import "@/css/customBottomSheet_postView.css";
 import { useLocation } from "react-router-dom";
 
 // TODO: useLocalStorage 사용하기, 비동기화의 위험성 다분함
