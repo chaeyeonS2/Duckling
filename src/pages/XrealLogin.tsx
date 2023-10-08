@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export default function XrealLogin() {
   const navigate = useNavigate(); // useNavigate 훅을 컴포넌트 내부에서 사용
@@ -9,11 +9,7 @@ export default function XrealLogin() {
   const [uid, setUid] = useState("");
   const handleLogin = async () => {
     try {
-      await axios.post<
-        unknown,
-        AxiosResponse<unknown, APIPostsPostRequest>,
-        APIUsersPostRequest
-      >("/api/users", {
+      await axios.post("/api/users", {
         uid: uid,
         profileImg: "/img/home/profile_img.jpg",
         userName: userName,

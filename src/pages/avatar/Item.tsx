@@ -10,9 +10,7 @@ export default function Item({ type }: ItemProps) {
   const [kind, setKind] = useState("top");
   const [assets, setAssets] = useState<APIAssetsResponse>([]);
   const fetchTo = async (kind: string) => {
-    const { data } = await axios.get<APIAssetsResponse>(
-      `/api/assets/${type == "face" ? "face" : "body"}/${kind}`
-    );
+    const { data } = await axios.get(`/api/assets/${type == "face" ? "face" : "body"}/${kind}`);
     setKind(kind);
     setAssets(data);
   };

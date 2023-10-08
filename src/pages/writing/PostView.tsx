@@ -11,13 +11,6 @@ import Modal from "@/components/alert/Modal";
 import axios from "axios";
 import ImageSlider from "./ImageSlider";
 
-interface PostData {
-  title: string;
-  body: string;
-  likes: string;
-  commentCount: string;
-  postImg: string[];
-}
 export default function PostView() {
   const { writerID, postID } = useParams(); // URL 매개변수 가져오기
 
@@ -47,19 +40,25 @@ export default function PostView() {
   const shareClick = () => {
     openModal(<PostShare onClose={closeModal} />);
   };
-  const [postData, setData] = useState<PostData>();
+  const [postData, setData] = useState<Post>();
 
   useEffect(() => {
     const getPost = async () => {
+      // TODO: writerID와 postID이 null일 때 어떻게 해야 하는가
+      if (!writerID) throw new Error("writerID does not exist!");
+      if (!postID) throw new Error("postID does not exist!");
+
       await axios
         .get(`/api/posts/writer/${writerID}/${postID}`)
-        .then((response) => {
-          setData(response.data);
-        })
+        .then((response) => setData(response.data))
+        //       ^?
 
-        .catch((e) => {
-          console.error(e);
-        });
+        .catch((e) => console.error(e));
+      await axios
+        .get(`/api/posts/writer/${writerID}`)
+        .then((response) => console.log(response.data))
+        //       ^?
+        .catch((e) => console.error(e));
     };
 
     if (postID && writerID) {

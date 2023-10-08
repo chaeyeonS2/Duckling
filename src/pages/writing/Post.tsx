@@ -6,7 +6,7 @@ import { useState, useRef } from "react";
 import Modal from "@/components/alert/Modal";
 import Uploading from "@/components/alert/Uploading";
 import IsImage from "@/components/alert/IsImage";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const userID = localStorage.getItem("id");
@@ -18,26 +18,22 @@ export default function Post() {
   const handleUpload = async () => {
     console.log(previewImages);
 
-    // TODO: photoURL과 userName이 null일 때 어떻게 해야 하는가
+    // TODO: userID과 userName이 null일 때 어떻게 해야 하는가
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
 
     try {
       openModal(<Uploading />);
-      const { data } = (await axios.post<
-        unknown,
-        AxiosResponse<unknown, APIPostsPostRequest>,
-        APIPostsPostRequest
-      >("/api/posts", {
+      const res = await axios.post("/api/posts", {
         title: title,
         body: content,
         postImg: previewImages,
         writerID: userName,
         userID: userID,
-      })) as any;
-      // TODO: 예기치 못한 응답 객체 사용
-      console.log("Document uploaded:", data.postID, data.writerID);
+      });
+      const data = res.data;
 
+      console.log("Document uploaded:", data.postID, data.writerID);
       navigate(`/postView/${data.writerID}/${data.postID}`);
     } catch (error) {
       console.error("Error uploading document:", error);
@@ -50,14 +46,6 @@ export default function Post() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // 글쓰기 폼 제출 핸들러
-  const handleSubmit = () => {
-    // TODO: 입력된 정보를 어떻게 처리할지 구현합니다.
-    console.log("제목:", title);
-    console.log("내용:", content);
-    // (예시) 서버에 데이터를 전송하거나, 다른 필요한 동작을 수행할 수 있습니다.
-  };
-
   // 글의 줄 수에 따라 input 필드 높이 조절
   const textarea = useRef<HTMLTextAreaElement>(null);
   const handleResizeHeight = () => {
@@ -69,20 +57,11 @@ export default function Post() {
 
   const [previewImages, setPreviewImages] = useState<string[]>([]); //이미지 주소들 저장하는 배열
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files!;
-
-    const processImages = async () => {
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        let imageDataURL = await readFileAsDataURL(file);
-        setPreviewImages((prevImages) => [...prevImages, imageDataURL]);
-
-        console.log(file);
-      }
-    };
-
-    processImages();
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    for (const file of event.target.files ?? []) {
+      const imageDataURL = await readFileAsDataURL(file);
+      setPreviewImages((prevImages) => [...prevImages, imageDataURL]);
+    }
   };
 
   const readFileAsDataURL = (file: File) => {
@@ -124,19 +103,11 @@ export default function Post() {
   };
 
   const uploadClick = () => {
+    //올라간 이미지가 없으면 업로드 불가 모달 띄우고 있으면 업로드 시작
     if (previewImages.length === 0) {
-      //올라간 이미지가 없으면 업로드 불가 모달 띄우기
       openModal(<IsImage onClose={closeModal} />);
-      console.log("uploadClick");
-    }
-    //올라간 이미지가 있으면 업로드 시작
-    else {
-      //폼 제출
-      handleSubmit();
-      //서버에 업로드
+    } else {
       handleUpload();
-
-      console.log("imgae ok");
     }
   };
 
@@ -157,13 +128,7 @@ export default function Post() {
       <div className="content">
         {/* margin을 위한 div */}
         <div className="marignBox">
-          <form
-            className="post"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit();
-            }}
-          >
+          <form className="post">
             <div className="title">
               <input
                 className="titleInput"
@@ -188,15 +153,8 @@ export default function Post() {
 
               <div className="img-upload-box">
                 {previewImages.map((image, index) => (
-                  <div
-                    className="img-upload-preview"
-                    key={index}
-                    style={{ width: "28vw" }}
-                  >
-                    <div
-                      className="removeIMG"
-                      onClick={() => handleRemoveImage(index)}
-                    >
+                  <div className="img-upload-preview" key={index} style={{ width: "28vw" }}>
+                    <div className="removeIMG" onClick={() => handleRemoveImage(index)}>
                       <img src={"/img/writing/close.png"}></img>
                     </div>
                     <img src={image} alt={`미리보기 ${index}`} />

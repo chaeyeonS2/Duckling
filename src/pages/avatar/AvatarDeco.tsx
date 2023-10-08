@@ -3,21 +3,16 @@ import "@/css/avatarDeco.css";
 import { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import Item from "./Item";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { OrbitControls } from "@react-three/drei";
 import GltfGroupModels from "./GltfGroupModels";
 import useSWR from "swr";
 
 export default function AvatarDeco() {
-  const { data: user, mutate } = useSWR<APIUserResponse>([
-    `/api/users/${localStorage.getItem("id")}`,
-  ]);
+  const { data: user, mutate } = useSWR<APIUserResponse>([`/api/users/${localStorage.getItem("id")}`]);
 
   //데코(얼굴, 옷) 카테고리 선택
-  const [typeDecoState, setDecoTypeState] = useState<[boolean, boolean]>([
-    true,
-    false,
-  ]);
+  const [typeDecoState, setDecoTypeState] = useState<[boolean, boolean]>([true, false]);
   const handleDecoClick = (idx: number) => {
     const newArr = [false, false] as [boolean, boolean];
     newArr[idx] = true;
@@ -30,11 +25,7 @@ export default function AvatarDeco() {
     const uid = localStorage.getItem("id");
 
     await axios
-      .patch<
-        unknown,
-        AxiosResponse<unknown, APIUsersPatchRequest>,
-        APIUsersPatchRequest
-      >(`/api/users/${uid}`, {
+      .patch(`/api/users/${uid}`, {
         userAvatar: user.userAvatar,
       })
       .catch((error) => console.error("Error uploading document:", error));
@@ -65,21 +56,12 @@ export default function AvatarDeco() {
               far: 10,
             }}
           >
-            <spotLight
-              intensity={1}
-              position={[0, 30, 80]}
-              angle={0.2}
-              castShadow
-            />
+            <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} castShadow />
             <ambientLight intensity={0.5} />
             {user && (
               <GltfGroupModels
                 defaultgltf={user.userAvatar}
-                setDefaultGltf={(newGltf) =>
-                  mutate((prev) =>
-                    !prev ? prev : { ...prev, userAvatar: newGltf }
-                  )
-                }
+                setDefaultGltf={(newGltf) => mutate((prev) => (!prev ? prev : { ...prev, userAvatar: newGltf }))}
                 typeDecoState={typeDecoState}
               />
             )}
@@ -106,14 +88,7 @@ export default function AvatarDeco() {
             handleDecoClick(0);
           }}
         >
-          <img
-            src={
-              typeDecoState[0]
-                ? "/img/VectorsmileTrue.png"
-                : "/img/VectorsmileFalse.png"
-            }
-            alt=""
-          />
+          <img src={typeDecoState[0] ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"} alt="" />
         </div>
         <div
           className="btn_cloth"
@@ -121,14 +96,7 @@ export default function AvatarDeco() {
             handleDecoClick(1);
           }}
         >
-          <img
-            src={
-              typeDecoState[1]
-                ? "/img/VectorclothTrue.png"
-                : "/img/VectorclothFalse.png"
-            }
-            alt=""
-          />
+          <img src={typeDecoState[1] ? "/img/VectorclothTrue.png" : "/img/VectorclothFalse.png"} alt="" />
         </div>
       </div>
     </div>

@@ -1,21 +1,13 @@
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
 
-  const handleUpload = async (
-    userID: string,
-    photoURL: string,
-    userName: string
-  ) => {
+  const handleUpload = async (userID: string, photoURL: string, userName: string) => {
     try {
-      await axios.post<
-        unknown,
-        AxiosResponse<unknown, APIPostsPostRequest>,
-        APIUsersPostRequest
-      >("/api/users", {
+      await axios.post("/api/users", {
         uid: userID,
         profileImg: photoURL,
         userName: userName,
@@ -85,11 +77,7 @@ export default function Login() {
           }}
           src={"/img/login/logo.png"}
         />
-        <div
-          style={{ position: "absolute" }}
-          id="twitter-sign-in-btn"
-          onClick={twitterLogin}
-        >
+        <div style={{ position: "absolute" }} id="twitter-sign-in-btn" onClick={twitterLogin}>
           <img
             style={{
               width: "300px",

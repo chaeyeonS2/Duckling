@@ -30,6 +30,10 @@ export default function CommentPage() {
       return;
     }
 
+    // TODO: userID과 userName이 null일 때 어떻게 해야 하는가
+    if (!userName) throw new Error("userName does not exist!");
+    if (!userID) throw new Error("userID does not exist!");
+
     // 여기에 댓글을 서버에 보내는 로직을 추가할 수 있습니다.
     await axios
       .post("/api/comments", {
@@ -44,21 +48,17 @@ export default function CommentPage() {
     console.log("댓글 제출:", comment);
     setComment(""); // 댓글 입력란 초기화
 
-    const { data: comments } = await axios.get<APICommentsReponse>(
-      `/api/comments/root/${postID}`
-    );
+    const { data: comments } = await axios.get(`/api/comments/root/${postID}`);
     comments.sort((a, b) => a.time - b.time);
 
     Promise.all(
       comments.map((comment) =>
-        axios
-          .get<APIUserResponse>(`/api/users/${comment.writerID}`)
-          .then(({ data }) =>
-            setProfileImg((prev) => ({
-              ...prev,
-              [comment.writerID]: data.profileImg,
-            }))
-          )
+        axios.get(`/api/users/${comment.writerID}`).then(({ data }) =>
+          setProfileImg((prev) => ({
+            ...prev,
+            [comment.writerID]: data.profileImg,
+          }))
+        )
       )
     );
 
@@ -78,10 +78,7 @@ export default function CommentPage() {
               {data.map((comment) => (
                 <div className="commentBox">
                   <div className="commentTop">
-                    <div
-                      className={styles.profileImg}
-                      style={{ backgroundImage: `url(${profileImg})` }}
-                    ></div>
+                    <div className={styles.profileImg} style={{ backgroundImage: `url(${profileImg})` }}></div>
                     <div className="userName">{comment.writerID}</div>
                   </div>
                   <div className="commentContent">{comment.text}</div>
@@ -96,10 +93,7 @@ export default function CommentPage() {
 
       <div className={styles.writeComment}>
         <div>
-          <form
-            onSubmit={(e) => handleSubmit(e).catch(console.log)}
-            className={styles.commentInput}
-          >
+          <form onSubmit={(e) => handleSubmit(e).catch(console.log)} className={styles.commentInput}>
             <textarea
               rows={3}
               placeholder="댓글을 입력하세요..."
