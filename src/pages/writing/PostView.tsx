@@ -95,13 +95,13 @@ export default function PostView() {
           <div className={styles.leftBtnGroup}>
             <div>
               <div>
-                <img src={"/img/writing/cookie.png"} />
+                <img src="/img/writing/cookie.png" />
               </div>
               <div className={styles.num}>{postData.likes}</div>
             </div>
             <div onClick={commentClick}>
               <div>
-                <img src={"/img/writing/comment.png"} />
+                <img src="/img/writing/comment.png" />
               </div>
               <div className={styles.num}>{postData.commentCount}</div>
             </div>

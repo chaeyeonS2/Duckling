@@ -68,10 +68,10 @@ export default function AvatarDeco() {
           </Canvas>
         </Suspense>
 
-        {typeDecoState[0] ? <Item type={"face"} /> : <Item type={"cloth"} />}
+        {typeDecoState[0] ? <Item type="face" /> : <Item type="cloth" />}
       </div>
       <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
-        <img src={"/img/deco/save.png"} alt="" />
+        <img src="/img/deco/save.png" alt="" />
       </div>
 
       <div className={styles.chooseBtnGroup}>

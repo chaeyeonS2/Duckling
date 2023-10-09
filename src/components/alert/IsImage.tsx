@@ -7,7 +7,7 @@ export default function IsImage({ onClose }: IsImageProps) {
   return (
     <div className={styles.alertlayout}>
       <div className={styles.imageBox}>
-        <img className={styles.image} src={"/img/home.png"} />
+        <img className={styles.image} src="/img/home.png" />
       </div>
       <div className={styles.textBox}>
         <p className={styles.text1}>사진을 첨부해야 업로드 할 수 있어요</p>

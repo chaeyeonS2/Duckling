@@ -19,14 +19,14 @@ export default function Camera() {
   //     <ARCanvas
   //       onCameraStreamReady={() => console.log("Camera stream ready")}
   //       onCameraStreamError={() => console.error("Camera stream error")}
-  //       sourceType={"webcam"}
+  //       sourceType="webcam"
   //     >
   //       <ambientLight />
   //       <pointLight position={[10, 10, 0]} intensity={10.0} />
   //       <ARMarker
   //         debug={true}
   //         params={{ smooth: true }}
-  //         type={"pattern"}
+  //         type="pattern"
   //         patternUrl={"data/patt.hiro"}
   //         onMarkerFound={() => {
   //           console.log("Marker Found");

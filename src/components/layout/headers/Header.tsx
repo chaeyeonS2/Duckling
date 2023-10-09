@@ -18,18 +18,18 @@ export default function Header() {
     <header className={styles.header}>
       <div>
         {/* <div className={styles.leftBtnGroup}>
-                    <button className={styles.btn_close}><img src={"/img/close.png"} img alt="my image"/></button>
+                    <button className={styles.btn_close}><img src="/img/close.png" img alt="my image"/></button>
                     
                 </div> */}
         <div className={styles.rightBtnGroup}>
           <button className={styles.headerBtn}>
-            <img src={"/img/share.png"} />
+            <img src="/img/share.png" />
           </button>
           <button className={styles.headerBtn} onClick={decoClick}>
-            <img src={"/img/home/deco.png"} />
+            <img src="/img/home/deco.png" />
           </button>
           <button className={styles.headerBtn}>
-            <img src={"/img/home/settings.png"} />
+            <img src="/img/home/settings.png" />
           </button>
         </div>
       </div>

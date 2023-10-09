@@ -12,17 +12,17 @@ export default function HeaderComment() {
     <header className={styles.header}>
       <div>
         <div className={styles.leftBtnDiv}>
-          {/* <div><img src={"/img/writing/cookie.png"}/></div> */}
+          {/* <div><img src="/img/writing/cookie.png"/></div> */}
           <div className={styles.num}></div>
         </div>
         <div className={styles.leftBtnDiv}>
-          {/* <div><img src={"/img/writing/comment.png"}/></div> */}
+          {/* <div><img src="/img/writing/comment.png"/></div> */}
           <div className={styles.num}></div>
         </div>
       </div>
       <div className={styles.rightBtnGroup}>
         <button className={styles.btnClose} onClick={backClick}>
-          <img src={"/img/writing/comment_close.png"} alt="my image" />
+          <img src="/img/writing/comment_close.png" alt="my image" />
         </button>
       </div>
     </header>

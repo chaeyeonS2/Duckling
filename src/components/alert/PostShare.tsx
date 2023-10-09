@@ -7,7 +7,7 @@ export default function PostShare({ onClose }: PostShareProps) {
   return (
     <div className={styles.container}>
       <div>
-        <img className={styles.imageBox} src={"/img/home.png"} />
+        <img className={styles.imageBox} src="/img/home.png" />
       </div>
       <div>
         <p>주소가 복사되었습니다. :-D</p>

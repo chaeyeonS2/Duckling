@@ -9,7 +9,7 @@ export default function HeaderDeco() {
     <header className={styles.header} style={{ backgroundColor: "#f8b4d4" }}>
       <div className={styles.rightBtnGroup}>
         <button className={styles.btnClose} onClick={closeClick}>
-          <img src={"/img/close.png"} />
+          <img src="/img/close.png" />
         </button>
       </div>
     </header>

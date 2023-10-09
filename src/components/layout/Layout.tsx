@@ -1,6 +1,7 @@
 import Header from "./headers/Header";
 import Footer from "./Footer";
 
+// TODO: 모든 page layout를 이걸로 통일하기
 export default function Layout() {
   return (
     <div className="layout">

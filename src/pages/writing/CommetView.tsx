@@ -67,7 +67,7 @@
 //         header={
 //         <div className="bottomBar">
 //             <div className='candy'>
-//                 <div><img src={"/img/writing/cookie.png"}/></div>
+//                 <div><img src="/img/writing/cookie.png"/></div>
 //                 <div className='num'>215</div>
 //             </div>
 //             <div className='comment' onClick={() =>
@@ -76,7 +76,7 @@
 //                     source: 'snap-to-top',
 //                     velocity: 1,
 //                     })}>
-//                 <div><img src={"/img/writing/comment.png"}/></div>
+//                 <div><img src="/img/writing/comment.png"/></div>
 //                 <div className='num'>423</div>
 //             </div>
 
@@ -157,7 +157,7 @@
 //                             <br />
 
 //                             <button className="Btn_comment" type="submit">
-//                             <img src={"/img/writing/comment-upload-true-btn.png"}/>
+//                             <img src="/img/writing/comment-upload-true-btn.png"/>
 //                             </button>
 //                         </form>
 //                 </div>

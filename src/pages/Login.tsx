@@ -61,9 +61,9 @@ export default function Login() {
   return (
     <div>
       <div className={styles.pageContainer}>
-        <img className={styles.logoImage} src={"/img/login/logo.png"} />
+        <img className={styles.logoImage} src="/img/login/logo.png" />
         <div className={styles.twitterSignInButton} id="twitter-sign-in-btn" onClick={twitterLogin}>
-          <img className={styles.twitterImage} src={"/img/login/twitter.png"} />
+          <img className={styles.twitterImage} src="/img/login/twitter.png" />
         </div>
         <Link className={styles.xmcLink} to="/xmc">
           XMC용 로그인 페이지로 이동

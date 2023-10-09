@@ -155,7 +155,7 @@ export default function Post() {
                 {previewImages.map((image, index) => (
                   <div className={styles.imgUploadPreview} key={index}>
                     <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
-                      <img className={styles.previewImg} src={"/img/writing/close.png"}></img>
+                      <img className={styles.previewImg} src="/img/writing/close.png"></img>
                     </div>
                     <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
                   </div>
@@ -167,7 +167,7 @@ export default function Post() {
       </div>
       <div className={styles.toolBar}>
         <div className={styles.camera} onClick={handleCameraBtnClick}>
-          <img className={styles.cameraIcon} src={"/img/writing/camera.png"} />
+          <img className={styles.cameraIcon} src="/img/writing/camera.png" />
         </div>
         <input
           ref={inputFileRef}

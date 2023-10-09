@@ -20,12 +20,12 @@ export default function HeaderPost({ uploadClick }: HeaderPostProps) {
       <div>
         <div className={styles.leftBtnGroup}>
           <button className={styles.headerBtn} onClick={closeClick}>
-            <img src={"/img/close.png"} alt="my image" />
+            <img src="/img/close.png" alt="my image" />
           </button>
         </div>
         <div className={styles.rightBtnGroup}>
           <button className={styles.headerBtn} onClick={checkClick}>
-            <img src={"/img/writing/check.png"} />
+            <img src="/img/writing/check.png" />
           </button>
         </div>
       </div>

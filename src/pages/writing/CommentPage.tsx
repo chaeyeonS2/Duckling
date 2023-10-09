@@ -103,7 +103,7 @@ export default function CommentPage() {
             <br />
 
             <button className={styles.commentButton} type="submit">
-              <img src={"/img/writing/comment-upload-true-btn.png"} />
+              <img src="/img/writing/comment-upload-true-btn.png" />
             </button>
           </form>
         </div>

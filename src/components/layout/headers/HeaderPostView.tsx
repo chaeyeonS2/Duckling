@@ -30,18 +30,18 @@ export default function HeaderPostView({ deleteClick, shareClick }: HeaderPostVi
       <div>
         <div className={styles.leftBtnGroup}>
           <button className={styles.headerButton} onClick={closeClick}>
-            <img src={"/img/writing/close.png"} alt="my image" />
+            <img src="/img/writing/close.png" alt="my image" />
           </button>
         </div>
         <div className={styles.rightBtnGroup}>
           <button className={styles.headerButton} onClick={handleCopy}>
-            <img src={"/img/share.png"} />
+            <img src="/img/share.png" />
           </button>
           <button className={styles.headerButton}>
-            <img src={"/img/writing/new-post.png"} />
+            <img src="/img/writing/new-post.png" />
           </button>
           <button className={styles.headerButton} onClick={deleteClick}>
-            <img src={"/img/writing/trash-can.png"} />
+            <img src="/img/writing/trash-can.png" />
           </button>
         </div>
       </div>

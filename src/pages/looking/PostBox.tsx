@@ -27,11 +27,11 @@ export default function PostBox({ post: data }: PostBoxProps) {
       </div>
       <div className={styles.postInfo2}>
         <div>
-          <img src={"/img/looking/cookie.png"} />
+          <img src="/img/looking/cookie.png" />
         </div>
         <p className={styles.postInfoText}>{data.likes}</p>
         <div>
-          <img src={"/img/looking/comment.png"} />
+          <img src="/img/looking/comment.png" />
         </div>
         <p className={styles.postInfoText}>{data.commentCount}</p>
       </div>

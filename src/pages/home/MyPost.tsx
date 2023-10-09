@@ -58,7 +58,7 @@ export default function MyPost() {
   //         />
   //         <div className="userName homeSheet">{userName}</div>
   //         <div className="btnAddNew homeSheet" onClick={newpostClick}>
-  //           <img src={"/img/writing/add.png"} alt="" />
+  //           <img src="/img/writing/add.png" alt="" />
   //         </div>
   //       </div>
   //     }
