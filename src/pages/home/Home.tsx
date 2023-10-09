@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/headers/Header";
-import "@/css/layout.css";
+
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import "@/css/customBottomSheet.css";
@@ -31,13 +31,7 @@ export default function Home() {
               far: 10,
             }}
           >
-            <spotLight
-              intensity={1}
-              position={[0, 30, 80]}
-              angle={0.2}
-              penumbra={1}
-              castShadow
-            />
+            <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} penumbra={1} castShadow />
             <ambientLight intensity={0.5} />
 
             <GetGltfModels />

@@ -1,5 +1,5 @@
-import styles from "@/css/header/header.module.css";
 import { useNavigate } from "react-router-dom";
+import * as styles from "./header.css";
 
 // const shareToTwitter = () => {
 //     const sharedLink =
@@ -16,19 +16,19 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.headerBtnGroup}>
+      <div>
         {/* <div className={styles.leftBtnGroup}>
                     <button className={styles.btn_close}><img src={"/img/close.png"} img alt="my image"/></button>
                     
                 </div> */}
         <div className={styles.rightBtnGroup}>
-          <button className={styles.btn_share}>
+          <button className={styles.headerBtn}>
             <img src={"/img/share.png"} />
           </button>
-          <button className={styles.btn_goAvatar} onClick={decoClick}>
+          <button className={styles.headerBtn} onClick={decoClick}>
             <img src={"/img/home/deco.png"} />
           </button>
-          <button className={styles.btn_goAvatar}>
+          <button className={styles.headerBtn}>
             <img src={"/img/home/settings.png"} />
           </button>
         </div>

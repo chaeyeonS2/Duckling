@@ -1,4 +1,4 @@
-import "@/css/footer.css";
+import * as styles from "./footer.css";
 import { useNavigate } from "react-router-dom";
 
 export interface FooterProps {
@@ -37,15 +37,15 @@ export default function Footer({ btn: active }: FooterProps) {
   btnActive();
 
   return (
-    <footer className="footer">
-      <div id="footerBtnGroup">
-        <button id="btn_home" onClick={lookClick}>
+    <footer className={styles.footer}>
+      <div className={styles.footerBtnGroup}>
+        <button className={styles.footerBtn} onClick={lookClick}>
           <img src={homeImg} />
         </button>
-        <button id="btn_avatar" onClick={homeClick}>
+        <button className={styles.footerBtn} onClick={homeClick}>
           <img src={avatarImg} />
         </button>
-        <button id="btn_camera" onClick={cameraClick}>
+        <button className={styles.footerBtn} onClick={cameraClick}>
           <img src={cameraImg} />
         </button>
       </div>

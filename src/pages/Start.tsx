@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import styles from "./Start.module.css";
+import * as styles from "./start.css";
 
 export default function Start() {
   const navigate = useNavigate();

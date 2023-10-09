@@ -1,21 +1,20 @@
-import "@/css/alert/alertLayout.css";
-import "@/css/alert/isImage.css";
+import * as styles from "./isImage.css";
 
 export interface IsImageProps {
   onClose: () => void;
 }
 export default function IsImage({ onClose }: IsImageProps) {
   return (
-    <div className="alertlayout">
-      <div className="imageBox">
-        <img style={{ width: "33px", height: "33px" }} src={"/img/home.png"} />
+    <div className={styles.alertlayout}>
+      <div className={styles.imageBox}>
+        <img className={styles.image} src={"/img/home.png"} />
       </div>
-      <div className="textBox">
-        <p className="text1 textcontent">사진을 첨부해야 업로드 할 수 있어요</p>
-        <p className="text2 textcontent">덕질 일상을 다채롭게 기록해보아요</p>
+      <div className={styles.textBox}>
+        <p className={styles.text1}>사진을 첨부해야 업로드 할 수 있어요</p>
+        <p className={styles.text2}>덕질 일상을 다채롭게 기록해보아요</p>
       </div>
-      <div className="btnBox">
-        <button className="btn_ok" onClick={onClose}>
+      <div className={styles.btnBox}>
+        <button className={styles.btnOk} onClick={onClose}>
           확인
         </button>
       </div>

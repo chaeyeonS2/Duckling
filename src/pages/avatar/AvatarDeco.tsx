@@ -1,5 +1,5 @@
 import HeaderDeco from "@/components/layout/headers/HeaderDeco";
-import "@/css/avatarDeco.css";
+import * as styles from "./avatarDeco.css";
 import { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import Item from "./Item";
@@ -32,18 +32,11 @@ export default function AvatarDeco() {
   };
 
   return (
-    <div className="layoutDeco">
+    <div className={styles.layoutDeco}>
       <div>
         <HeaderDeco />
       </div>
-      <div
-        className="avatarDeco"
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundImage: "url(/img/home/background.png)",
-        }}
-      >
+      <div className={styles.avatarDeco}>
         <Suspense fallback={null}>
           <Canvas
             style={{ background: "transparent" }}
@@ -77,13 +70,13 @@ export default function AvatarDeco() {
 
         {typeDecoState[0] ? <Item type={"face"} /> : <Item type={"cloth"} />}
       </div>
-      <div className="saveAvatar" onClick={() => handleAvatarUpload()}>
+      <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
         <img src={"/img/deco/save.png"} alt="" />
       </div>
 
-      <div className="chooseBtnGroup">
+      <div className={styles.chooseBtnGroup}>
         <div
-          className="btn_face"
+          className={styles.btnFace}
           onClick={() => {
             handleDecoClick(0);
           }}
@@ -91,7 +84,7 @@ export default function AvatarDeco() {
           <img src={typeDecoState[0] ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"} alt="" />
         </div>
         <div
-          className="btn_cloth"
+          className={styles.btnCloth}
           onClick={() => {
             handleDecoClick(1);
           }}

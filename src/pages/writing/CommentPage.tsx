@@ -1,11 +1,10 @@
-import "@/css/layout.css";
 import { useState, ChangeEvent, FormEvent } from "react";
 import Footer from "@/components/layout/Footer";
 import HeaderComment from "@/components/layout/headers/HeaderComment";
-import styles from "@/css/writing/commentPage.module.css";
 import axios from "axios";
-import "@/css/customBottomSheet_postView.css";
 import { useLocation } from "react-router-dom";
+
+import * as styles from "./commentPage.css";
 
 // TODO: useLocalStorage 사용하기, 비동기화의 위험성 다분함
 const userID = localStorage.getItem("id");
@@ -72,16 +71,16 @@ export default function CommentPage() {
       <HeaderComment />
       <div className={styles.content}>
         {data && (
-          <div className="BottomSheet-content">
-            <div className="comment-get-layout" style={{ height: "80%" }}>
+          <div className={styles.bottomSheetContent}>
+            <div className={styles.commentGetLayout}>
               {/* 댓글 */}
               {data.map((comment) => (
-                <div className="commentBox">
-                  <div className="commentTop">
+                <div className={styles.commentBox}>
+                  <div className={styles.commentTop}>
                     <div className={styles.profileImg} style={{ backgroundImage: `url(${profileImg})` }}></div>
-                    <div className="userName">{comment.writerID}</div>
+                    <div className={styles.userName}>{comment.writerID}</div>
                   </div>
-                  <div className="commentContent">{comment.text}</div>
+                  <div>{comment.text}</div>
                 </div>
               ))}
 
@@ -95,6 +94,7 @@ export default function CommentPage() {
         <div>
           <form onSubmit={(e) => handleSubmit(e).catch(console.log)} className={styles.commentInput}>
             <textarea
+              className={styles.commentInputTextarea}
               rows={3}
               placeholder="댓글을 입력하세요..."
               value={comment}
@@ -102,7 +102,7 @@ export default function CommentPage() {
             ></textarea>
             <br />
 
-            <button className="Btn_comment" type="submit">
+            <button className={styles.commentButton} type="submit">
               <img src={"/img/writing/comment-upload-true-btn.png"} />
             </button>
           </form>

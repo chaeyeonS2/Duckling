@@ -1,6 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import "@/css/layout.css";
-import styles from "@/css/postView.module.css";
+
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 import { useState, useEffect } from "react";
 
@@ -10,6 +9,8 @@ import PostShare from "@/components/alert/PostShare";
 import Modal from "@/components/alert/Modal";
 import axios from "axios";
 import ImageSlider from "./ImageSlider";
+
+import * as styles from "./postView.css";
 
 export default function PostView() {
   const { writerID, postID } = useParams(); // URL 매개변수 가져오기
@@ -75,30 +76,30 @@ export default function PostView() {
       {postData && (
         <div className={styles.content}>
           <div className={styles.marignBox}>
-            <form className={styles.post}>
+            <form>
               <div className={styles.title}>
-                <p className={styles.text}>{postData.title}</p>
+                <p>{postData.title}</p>
               </div>
 
               <div className={styles.writinggetBox}>
                 <ImageSlider images={postData.postImg} />
 
-                <p className={styles.text_content}>{postData.body}</p>
+                <p className={styles.textContent}>{postData.body}</p>
               </div>
             </form>
           </div>
         </div>
       )}
       {postData && (
-        <div className={styles.bottomBar}>
+        <div>
           <div className={styles.leftBtnGroup}>
-            <div className={styles.candy}>
+            <div>
               <div>
                 <img src={"/img/writing/cookie.png"} />
               </div>
               <div className={styles.num}>{postData.likes}</div>
             </div>
-            <div className={styles.comment} onClick={commentClick}>
+            <div onClick={commentClick}>
               <div>
                 <img src={"/img/writing/comment.png"} />
               </div>

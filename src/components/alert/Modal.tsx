@@ -1,18 +1,15 @@
-import "@/css/alert/alertLayout.css";
+import * as styles from "./modal.css";
 import ReactDOM from "react-dom";
 
 export interface ModalProps {
   isOpen: boolean;
 }
-export default function Modal({
-  isOpen,
-  children,
-}: React.PropsWithChildren<ModalProps>) {
+export default function Modal({ isOpen, children }: React.PropsWithChildren<ModalProps>) {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
-    <div className="modal-overlay ">
-      <div className="modal ">
+    <div className={styles.modalOverlay}>
+      <div>
         {children}
         {/* <button onClick={onClose}>Close</button> */}
       </div>

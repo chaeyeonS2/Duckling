@@ -1,4 +1,5 @@
 //@ts-ignore
+import { loadDecoModel } from "@/utils/loadDecoModel";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // 부모와 자식 gltf 모델들을 로드하고 그룹에 추가하는 함수
@@ -32,14 +33,7 @@ const loadModelToHome = (
   putDecoGltfToHome(defaultgltf["shoes"], 1.1, 0, -0.04, 0, groupRef);
   putDecoGltfToHome(defaultgltf["accessory"], 1.1, 0, -0.04, 0, groupRef);
   putDecoGltfToHome("/gltf/avatar/keyring.glb", 0.02, 0, 0.155, 0.01, groupRef);
-  putDecoGltfToHome(
-    "/gltf/avatar/stage.glb",
-    0.04,
-    0,
-    -0.055,
-    0.0025,
-    groupRef
-  );
+  putDecoGltfToHome("/gltf/avatar/stage.glb", 0.04, 0, -0.055, 0.0025, groupRef);
 };
 
 function putDecoGltfToHome(
@@ -50,18 +44,9 @@ function putDecoGltfToHome(
   positionZ: number,
   groupRef: React.RefObject<THREE.Group<THREE.Object3DEventMap>>
 ) {
-  if (!gltfPath) return;
-
-  // gltfPath가 null이나 undefined가 아닌 경우에만 실행
-  const gltfLoader = new GLTFLoader();
-  gltfLoader.load(gltfPath, (childGltf) => {
+  loadDecoModel(gltfPath, setScale, positionX, positionY, positionZ).then((gltf) => {
     if (!groupRef.current) return;
-
-    const model = childGltf.scene;
-    model.scale.set(setScale, setScale, setScale);
-    model.position.set(positionX, positionY, positionZ);
-    groupRef.current.add(model);
-
+    groupRef.current.add(gltf.scene);
     console.log(gltfPath);
   });
 }

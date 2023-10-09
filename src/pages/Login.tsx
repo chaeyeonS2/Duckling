@@ -2,7 +2,7 @@ import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
-import styles from "./Login.module.css";
+import * as styles from "./login.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function Login() {
     <div>
       <div className={styles.pageContainer}>
         <img className={styles.logoImage} src={"/img/login/logo.png"} />
-        <div id="twitter-sign-in-btn" onClick={twitterLogin}>
+        <div className={styles.twitterSignInButton} id="twitter-sign-in-btn" onClick={twitterLogin}>
           <img className={styles.twitterImage} src={"/img/login/twitter.png"} />
         </div>
         <Link className={styles.xmcLink} to="/xmc">

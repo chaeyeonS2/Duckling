@@ -1,14 +1,11 @@
-import styles from "@/css/header/headerPostView.module.css";
+import * as styles from "./headerPostView.css";
 import { useNavigate } from "react-router-dom";
 
 export interface HeaderPostViewProps {
   deleteClick: () => void;
   shareClick: () => void;
 }
-export default function HeaderPostView({
-  deleteClick,
-  shareClick,
-}: HeaderPostViewProps) {
+export default function HeaderPostView({ deleteClick, shareClick }: HeaderPostViewProps) {
   const handleCopy = () => {
     const currentURL = window.location.href;
 
@@ -30,20 +27,20 @@ export default function HeaderPostView({
 
   return (
     <header className={styles.header}>
-      <div className={styles.headerBtnGroup}>
+      <div>
         <div className={styles.leftBtnGroup}>
-          <button className={styles.btn_close} onClick={closeClick}>
+          <button className={styles.headerButton} onClick={closeClick}>
             <img src={"/img/writing/close.png"} alt="my image" />
           </button>
         </div>
         <div className={styles.rightBtnGroup}>
-          <button className={styles.btn_share} onClick={handleCopy}>
+          <button className={styles.headerButton} onClick={handleCopy}>
             <img src={"/img/share.png"} />
           </button>
-          <button className={styles.btn_goAvatar}>
+          <button className={styles.headerButton}>
             <img src={"/img/writing/new-post.png"} />
           </button>
-          <button className={styles.btn_goAvatar} onClick={deleteClick}>
+          <button className={styles.headerButton} onClick={deleteClick}>
             <img src={"/img/writing/trash-can.png"} />
           </button>
         </div>

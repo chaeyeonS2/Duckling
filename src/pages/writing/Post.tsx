@@ -1,5 +1,3 @@
-import "@/css/post.css";
-import "@/css/layout.css";
 import Footer from "@/components/layout/Footer";
 import HeaderPost from "@/components/layout/headers/HeaderPost";
 import { useState, useRef } from "react";
@@ -8,6 +6,8 @@ import Uploading from "@/components/alert/Uploading";
 import IsImage from "@/components/alert/IsImage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import * as styles from "./post.css";
 
 const userID = localStorage.getItem("id");
 const userName = localStorage.getItem("userName");
@@ -121,17 +121,17 @@ export default function Post() {
       {/* 고정 헤더 */}
       <HeaderPost
         uploadClick={uploadClick}
-        //closeClick = {closeClick}
+        // closeClick = {closeClick}
       />
       {/* 모달 */}
       <Modal isOpen={modalIsOpen}>{modalContent}</Modal>
       <div className="content">
         {/* margin을 위한 div */}
-        <div className="marignBox">
-          <form className="post">
-            <div className="title">
+        <div className={styles.marignBox}>
+          <form>
+            <div className={styles.title}>
               <input
-                className="titleInput"
+                className={styles.titleInput}
                 type="text"
                 name="title"
                 value={title}
@@ -139,9 +139,9 @@ export default function Post() {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <article className="writing">
+            <article className={styles.writing}>
               <textarea
-                className="writingInput"
+                className={styles.writingInput}
                 rows={1}
                 ref={textarea}
                 name="content"
@@ -151,13 +151,13 @@ export default function Post() {
                 onChange={(e) => setContent(e.target.value)}
               />
 
-              <div className="img-upload-box">
+              <div className={styles.imgUploadBox}>
                 {previewImages.map((image, index) => (
-                  <div className="img-upload-preview" key={index} style={{ width: "28vw" }}>
-                    <div className="removeIMG" onClick={() => handleRemoveImage(index)}>
-                      <img src={"/img/writing/close.png"}></img>
+                  <div className={styles.imgUploadPreview} key={index}>
+                    <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
+                      <img className={styles.previewImg} src={"/img/writing/close.png"}></img>
                     </div>
-                    <img src={image} alt={`미리보기 ${index}`} />
+                    <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
                   </div>
                 ))}
               </div>
@@ -165,9 +165,9 @@ export default function Post() {
           </form>
         </div>
       </div>
-      <div className="toolBar">
-        <div className="camera" onClick={handleCameraBtnClick}>
-          <img src={"/img/writing/camera.png"} />
+      <div className={styles.toolBar}>
+        <div className={styles.camera} onClick={handleCameraBtnClick}>
+          <img className={styles.cameraIcon} src={"/img/writing/camera.png"} />
         </div>
         <input
           ref={inputFileRef}

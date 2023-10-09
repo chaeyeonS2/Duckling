@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import * as styles from "./xrealLogin.css";
+
 export default function XrealLogin() {
   const navigate = useNavigate(); // useNavigate 훅을 컴포넌트 내부에서 사용
 
@@ -24,28 +26,20 @@ export default function XrealLogin() {
     }
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
+    <div className={styles.pageContainer}>
       <input
         type="uid"
         placeholder="UID"
         value={uid}
         onChange={(e) => setUid(e.target.value)}
-        style={{ marginBottom: "10px" }} // 마진 추가
+        className={styles.textInput}
       />
       <input
         type="userName"
         placeholder="userName"
         value={userName}
         onChange={(e) => setEmail(e.target.value)}
-        style={{ marginBottom: "10px" }} // 마진 추가
+        className={styles.textInput}
       />
       <button onClick={handleLogin}>Login</button>
     </div>

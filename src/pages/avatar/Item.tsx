@@ -1,7 +1,8 @@
-import "@/css/item.css";
 import { useState } from "react";
-import Itembox from "./Itembox";
 import axios from "axios";
+import * as GltfGroupModels from "./GltfGroupModels";
+
+import * as styles from "./item.css";
 
 export interface ItemProps {
   type: string;
@@ -23,101 +24,52 @@ export default function Item({ type }: ItemProps) {
     setSelectDeco(newArr);
   };
 
-  if (!assets) return null;
+  const handleItemClick = (gltfPath: string) => () => {
+    GltfGroupModels.isClick(kind, gltfPath);
+  };
 
+  if (!assets) return null;
+  const items =
+    type === "face"
+      ? [
+          ["eyes", "눈"],
+          ["mouth", "입"],
+        ]
+      : [
+          ["top", "상의"],
+          ["bottom", "하의"],
+          ["shoes", "신발"],
+          ["accessory", "기타"],
+        ];
   return (
     <div>
-      {type === "face" ? (
-        <div className="faceDeco Deco">
-          <div className="faceBtnGroup typeItemBtnGroup">
-            <div
-              className={kind === "eyes" ? "selectBtn" : "nonSelectbtn"}
-              onClick={() => {
-                fetchTo("eyes");
-              }}
-            >
-              눈
+      <div className={styles.deco}>
+        <div className={styles.buttonGroup}>
+          {items.map(([key, text]) => (
+            <div className={kind === key ? styles.selectBtn : styles.nonSelectbtn} onClick={() => fetchTo(key)}>
+              {text}
             </div>
-            <div
-              className={kind === "mouth" ? "selectBtn" : "nonSelectbtn"}
-              onClick={() => {
-                fetchTo("mouth");
-              }}
-            >
-              입
-            </div>
-          </div>
-          <div className="itemBoxDiv">
-            {assets && //아이템 썸네일 박스
-              assets.map((item, index) => {
-                return (
-                  <Itembox
-                    key={index}
-                    type={kind}
-                    imgSrc={item.assetImg}
-                    index={item.assetID}
-                    handleClick={handleClick}
-                    selectDeco={selectDeco}
-                    gltfPath={item.assetGltf}
-                  />
-                );
-              })}
-          </div>
+          ))}
         </div>
-      ) : (
-        <div className="clothDeco Deco">
-          <div className="clothBtnGroup typeItemBtnGroup">
-            <div
-              className={kind === "top" ? "selectBtn" : "nonSelectbtn"}
-              onClick={() => {
-                fetchTo("top");
-              }}
-            >
-              상의
-            </div>
-            <div
-              className={kind === "bottom" ? "selectBtn" : "nonSelectbtn"}
-              onClick={() => {
-                setKind("bottom");
-              }}
-            >
-              하의
-            </div>
-            <div
-              className={kind === "shoes" ? "selectBtn" : "nonSelectbtn"}
-              onClick={() => {
-                setKind("shoes");
-              }}
-            >
-              신발
-            </div>
-            <div
-              className={kind === "accessory" ? "selectBtn" : "nonSelectbtn"}
-              onClick={() => {
-                setKind("accessory");
-              }}
-            >
-              기타
-            </div>
-          </div>
-          <div className="itemBoxDiv">
-            {assets && //아이템 썸네일 박스
-              assets.map((item, index) => {
-                return (
-                  <Itembox
-                    key={index}
-                    type={kind}
-                    imgSrc={item.assetImg}
-                    index={item.assetID}
-                    handleClick={handleClick}
-                    selectDeco={selectDeco}
-                    gltfPath={item.assetGltf}
-                  />
-                );
-              })}
-          </div>
+        <div className={styles.itemBoxDiv}>
+          {assets?.map((item, index) => {
+            return (
+              <div
+                key={item.assetID}
+                className={selectDeco[index] ? styles.itemBoxClick : styles.itemBox}
+                onClick={() => handleClick(index)}
+              >
+                <img
+                  className={styles.itemImg}
+                  src={item.assetImg}
+                  onClick={handleItemClick(item.assetGltf)}
+                  alt=""
+                ></img>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </div>
   );
 }

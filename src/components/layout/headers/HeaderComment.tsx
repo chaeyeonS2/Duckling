@@ -1,4 +1,4 @@
-import styles from "@/css/header/headerComment.module.css";
+import * as styles from "./headerComment.css";
 import { useNavigate } from "react-router-dom";
 
 export default function HeaderComment() {
@@ -10,18 +10,18 @@ export default function HeaderComment() {
 
   return (
     <header className={styles.header}>
-      <div className={styles.leftBtnGroup}>
-        <div className={styles.candy}>
+      <div>
+        <div className={styles.leftBtnDiv}>
           {/* <div><img src={"/img/writing/cookie.png"}/></div> */}
           <div className={styles.num}></div>
         </div>
-        <div className={styles.comment}>
+        <div className={styles.leftBtnDiv}>
           {/* <div><img src={"/img/writing/comment.png"}/></div> */}
           <div className={styles.num}></div>
         </div>
       </div>
       <div className={styles.rightBtnGroup}>
-        <button className={styles.btn_close} onClick={backClick}>
+        <button className={styles.btnClose} onClick={backClick}>
           <img src={"/img/writing/comment_close.png"} alt="my image" />
         </button>
       </div>

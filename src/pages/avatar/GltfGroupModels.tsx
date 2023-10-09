@@ -1,6 +1,5 @@
-import "@/css/avatarDeco.css";
+import { loadDecoModel } from "@/utils/loadDecoModel";
 import { useRef, useEffect } from "react";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // TODO: refactor
 var addGltfPath = "";
@@ -18,11 +17,7 @@ export interface GltfGroupModelsProps {
   defaultgltf: User["userAvatar"];
   setDefaultGltf: (newGltf: User["userAvatar"]) => void;
 }
-export default function GltfGroupModels({
-  defaultgltf,
-  typeDecoState,
-  setDefaultGltf,
-}: GltfGroupModelsProps) {
+export default function GltfGroupModels({ defaultgltf, typeDecoState, setDefaultGltf }: GltfGroupModelsProps) {
   const groupRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
@@ -33,15 +28,12 @@ export default function GltfGroupModels({
     window.addEventListener("globalFunctionCalled", handleGlobalFunctionCall);
 
     return () => {
-      window.removeEventListener(
-        "globalFunctionCalled",
-        handleGlobalFunctionCall
-      );
+      window.removeEventListener("globalFunctionCalled", handleGlobalFunctionCall);
     };
   }, []);
 
   //deco 추가하는 함수
-  const putDecoGltf = (
+  const putDecoGltf = async (
     gltfPath: string,
     setScale: number,
     positionX: number,
@@ -49,33 +41,18 @@ export default function GltfGroupModels({
     positionZ: number,
     type: string
   ) => {
-    if (!gltfPath) {
-      // TODO: null이나 undefined일 가능성은 어디로부터 기인되는가?
-      console.log("Invalid gltfPath:", gltfPath);
-      return;
+    if (!groupRef.current) return;
+    const { scene: model } = await loadDecoModel(gltfPath, setScale, positionX, positionY, positionZ);
+    model.userData.type = type;
+
+    // 기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
+    const childToRemove = groupRef.current.children.find((child) => child.userData.type === type);
+    if (childToRemove) {
+      groupRef.current.remove(childToRemove);
     }
 
-    // gltfPath가 null이나 undefined가 아닌 경우에만 실행
-    const gltfLoader = new GLTFLoader();
-    gltfLoader.load(gltfPath, (childGltf) => {
-      if (!groupRef.current) return;
-
-      const model = childGltf.scene;
-      model.scale.set(setScale, setScale, setScale);
-      model.position.set(positionX, positionY, positionZ);
-      model.userData.type = type;
-
-      // 기존에 있고, 현재 모델의 타입과 일치하는 타입의 모델 지우기
-      const childToRemove = groupRef.current.children.find(
-        (child) => child.userData.type === type
-      );
-      if (childToRemove) {
-        groupRef.current.remove(childToRemove);
-      }
-
-      setDefaultGltf({ [type]: gltfPath, ...defaultgltf });
-      groupRef.current.add(model);
-    });
+    setDefaultGltf({ [type]: gltfPath, ...defaultgltf });
+    groupRef.current.add(model);
   };
 
   // gltf 모델들을 로드하고 그룹에 추가하는 함수

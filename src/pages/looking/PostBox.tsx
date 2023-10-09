@@ -1,48 +1,43 @@
-import "@/css/lookiing/postBox.css";
 import useSWRImmutable from "swr/immutable";
+import * as styles from "./postBox.css";
 
 export interface PostBoxProps {
   post: Post;
 }
 export default function PostBox({ post: data }: PostBoxProps) {
-  const { data: userData } = useSWRImmutable<APIUserResponse>([
-    `/api/users/${data.userID}`,
-  ]);
+  const { data: userData } = useSWRImmutable<APIUserResponse>([`/api/users/${data.userID}`]);
 
   return (
-    <div className="one-post-box">
-      <div className="one-post-info">
-        <div className="one-post-profile">
-          <div
-            className="profileImg"
-            style={{ backgroundImage: `url(${userData?.profileImg})` }}
-          ></div>
-          <div className="userName">{data.writerID}</div>
-          <div className="date">{data.date}</div>
+    <div className={styles.postBox}>
+      <div>
+        <div className={styles.postProfile}>
+          <div className={styles.profileImg} style={{ backgroundImage: `url(${userData?.profileImg})` }}></div>
+          <div className={styles.userName}>{data.writerID}</div>
+          <div className={styles.date}>{data.date}</div>
         </div>
       </div>
 
-      <div className="one-post-img-layout">
-        <div className="one-post-img-back">
-          <div className="back"></div>
-          <div className="one-post-img">
-            <img className="" src={data.postImg[0]} />
+      <div className={styles.postImgLayout}>
+        <div className={styles.postImgBack}>
+          <div className={styles.back}></div>
+          <div className={styles.postImgContainer}>
+            <img className={styles.postImg} src={data.postImg[0]} />
           </div>
         </div>
       </div>
-      <div className="one-post-info2">
+      <div className={styles.postInfo2}>
         <div>
           <img src={"/img/looking/cookie.png"} />
         </div>
-        <text>{data.likes}</text>
+        <p className={styles.postInfoText}>{data.likes}</p>
         <div>
           <img src={"/img/looking/comment.png"} />
         </div>
-        <text>{data.commentCount}</text>
+        <p className={styles.postInfoText}>{data.commentCount}</p>
       </div>
 
-      <div className="one-post-content">
-        <p>{data.body}</p>
+      <div className={styles.postContentContainer}>
+        <p className={styles.postContent}>{data.body}</p>
       </div>
     </div>
   );
