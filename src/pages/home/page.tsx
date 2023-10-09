@@ -5,9 +5,10 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import "@/css/customBottomSheet.css";
 import { OrbitControls } from "@react-three/drei";
-import Mypost from "./MyPost";
-import GetGltfModels from "./GetGltfModels";
-export default function Home() {
+import Mypost from "./_components/MyPost";
+import GetGltfModels from "./_components/GetGltfModels";
+
+export default function HomePage() {
   return (
     <div className="layoutA">
       <Header />

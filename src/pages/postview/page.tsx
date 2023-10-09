@@ -8,11 +8,11 @@ import Delete from "@/components/alert/Delete";
 import PostShare from "@/components/alert/PostShare";
 import Modal from "@/components/alert/Modal";
 import axios from "axios";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "./_components/ImageSlider";
 
-import * as styles from "./postView.css";
+import * as styles from "./page.css";
 
-export default function PostView() {
+export default function PostViewPage() {
   const { writerID, postID } = useParams(); // URL 매개변수 가져오기
 
   const navigate = useNavigate();

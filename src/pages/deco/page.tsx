@@ -1,14 +1,15 @@
 import HeaderDeco from "@/components/layout/headers/HeaderDeco";
-import * as styles from "./avatarDeco.css";
 import { useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import Item from "./Item";
+import Item from "./_components/Item";
 import axios from "axios";
 import { OrbitControls } from "@react-three/drei";
-import GltfGroupModels from "./GltfGroupModels";
+import GltfGroupModels from "./_components/GltfGroupModels";
 import useSWR from "swr";
 
-export default function AvatarDeco() {
+import * as styles from "./page.css";
+
+export default function DecoPage() {
   const { data: user, mutate } = useSWR<APIUserResponse>([`/api/users/${localStorage.getItem("id")}`]);
 
   //데코(얼굴, 옷) 카테고리 선택

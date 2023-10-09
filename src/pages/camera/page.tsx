@@ -2,7 +2,7 @@
 // import { useState } from "react";
 // import ReactDOM from "react-dom";
 
-export default function Camera() {
+export default function CameraPage() {
   return <></>;
   //   function Box() {
   //     const [selected, setSelected] = useState(false);

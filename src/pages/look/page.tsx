@@ -1,6 +1,6 @@
 import Footer from "@/components/layout/Footer";
 
-import PostBox from "./PostBox";
+import PostBox from "./_components/PostBox";
 import HeaderLook from "@/components/layout/headers/HeaderLook";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
@@ -14,7 +14,7 @@ const layoutStyle: React.CSSProperties = {
   overflow: "auto",
 };
 
-export default function Look() {
+export default function LookPage() {
   const navigate = useNavigate();
   const { data: posts } = useSWR<APIPostsResponse>(["/api/posts"]);
 

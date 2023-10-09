@@ -7,12 +7,12 @@ import IsImage from "@/components/alert/IsImage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import * as styles from "./post.css";
+import * as styles from "./page.css";
 
 const userID = localStorage.getItem("id");
 const userName = localStorage.getItem("userName");
 
-export default function Post() {
+export default function NewPostPage() {
   const navigate = useNavigate();
 
   const handleUpload = async () => {

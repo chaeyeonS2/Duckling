@@ -1,14 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AvatarDeco from "@/pages/avatar/AvatarDeco";
-import Post from "@/pages/writing/Post";
-import Home from "@/pages/home/Home";
-import PostView from "@/pages/writing/PostView";
-import Login from "@/pages/Login";
-import Look from "@/pages/looking/Look";
-import CommentPage from "@/pages/writing/CommentPage";
+import AnimationPage from "@/pages/animation/page";
+import CommentPage from "@/pages/comment/page";
+import DecoPage from "@/pages/deco/page";
+import PostViewPage from "@/pages/postview/page";
+import XrealLoginPage from "@/pages/xmc/page";
+import NewPostPage from "@/pages/newPost/page";
+import CameraPage from "@/pages/camera/page";
+import LoginPage from "@/pages/login/page";
+import LookPage from "@/pages/look/page";
+import HomePage from "@/pages/home/page";
 import Start from "@/pages/Start";
-import XrealLogin from "@/pages/XrealLogin";
-import Camera from "@/pages/Camera";
 
 export default function Router() {
   return (
@@ -16,24 +17,26 @@ export default function Router() {
       <Routes>
         {/* start loading */}
         <Route path="/" element={<Start />} />
-        {/* HOME */}
-        <Route path="/home" element={<Home />} />
-        {/* Login */}
-        <Route path="/login" element={<Login />} />
-        {/* <POST VIEW /> */}
-        <Route path="/postview/:writerID/:postID" element={<PostView />} />
-        {/* <아바타 꾸미기/> */}
-        <Route path="/deco" element={<AvatarDeco />} />
-        {/* <새글쓰기/> */}
-        <Route path="/newPost" element={<Post />} />
-        {/* <둘러보기/> */}
-        <Route path="/look" element={<Look />} />
+        {/* animation */}
+        <Route path="/animation" element={<AnimationPage />} />
+        {/* ar camera */}
+        <Route path="/camera" element={<CameraPage />} />
         {/* <댓글창/> */}
         <Route path="/comment" element={<CommentPage />} />
+        {/* <아바타 꾸미기/> */}
+        <Route path="/deco" element={<DecoPage />} />
+        {/* HOME */}
+        <Route path="/home" element={<HomePage />} />
+        {/* Login */}
+        <Route path="/login" element={<LoginPage />} />
+        {/* <둘러보기/> */}
+        <Route path="/look" element={<LookPage />} />
+        {/* <새글쓰기/> */}
+        <Route path="/newPost" element={<NewPostPage />} />
+        {/* <POST VIEW /> */}
+        <Route path="/postview/:writerID/:postID" element={<PostViewPage />} />
         {/* xmc용 로그인 */}
-        <Route path="/xmc" element={<XrealLogin />} />
-        {/* ar camera */}
-        <Route path="/camera" element={<Camera />} />
+        <Route path="/xmc" element={<XrealLoginPage />} />
       </Routes>
     </BrowserRouter>
   );

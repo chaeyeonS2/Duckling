@@ -2,9 +2,9 @@ import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
-import * as styles from "./login.css";
+import * as styles from "./page.css";
 
-export default function Login() {
+export default function LoginPage() {
   const navigate = useNavigate();
 
   const handleUpload = async (userID: string, photoURL: string, userName: string) => {

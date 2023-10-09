@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import * as styles from "./xrealLogin.css";
+import * as styles from "./page.css";
 
-export default function XrealLogin() {
+export default function XrealLoginPage() {
   const navigate = useNavigate(); // useNavigate 훅을 컴포넌트 내부에서 사용
 
   const [userName, setEmail] = useState("");

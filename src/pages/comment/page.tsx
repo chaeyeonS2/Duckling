@@ -4,7 +4,7 @@ import HeaderComment from "@/components/layout/headers/HeaderComment";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
-import * as styles from "./commentPage.css";
+import * as styles from "./page.css";
 
 // TODO: useLocalStorage 사용하기, 비동기화의 위험성 다분함
 const userID = localStorage.getItem("id");
