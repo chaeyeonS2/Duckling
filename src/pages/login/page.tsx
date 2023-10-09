@@ -43,8 +43,8 @@ export default function LoginPage() {
 
         // local storage에 저장
         localStorage.setItem("id", userID);
-        localStorage.setItem("profileImg", String(photoURL));
-        localStorage.setItem("userName", String(userName));
+        localStorage.setItem("profileImg", photoURL);
+        localStorage.setItem("userName", userName);
 
         //서버에 올리기
         handleUpload(userID, photoURL, userName);

@@ -10,7 +10,7 @@ import useSWR from "swr";
 import * as styles from "./page.css";
 
 export default function DecoPage() {
-  const { data: user, mutate } = useSWR<APIUserResponse>([`/api/users/${localStorage.getItem("id")}`]);
+  const { data: user, mutate } = useSWR<APIUserResponse>(() => [`/api/users/${localStorage.getItem("id")}`]);
 
   //데코(얼굴, 옷) 카테고리 선택
   const [typeDecoState, setDecoTypeState] = useState<[boolean, boolean]>([true, false]);
@@ -24,7 +24,6 @@ export default function DecoPage() {
     if (!user) return;
 
     const uid = localStorage.getItem("id");
-
     await axios
       .patch(`/api/users/${uid}`, {
         userAvatar: user.userAvatar,

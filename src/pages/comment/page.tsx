@@ -6,10 +6,6 @@ import { useLocation } from "react-router-dom";
 
 import * as styles from "./page.css";
 
-// TODO: useLocalStorage 사용하기, 비동기화의 위험성 다분함
-const userID = localStorage.getItem("id");
-const userName = localStorage.getItem("userName");
-
 export default function CommentPage() {
   const location = useLocation();
   const postID: string = location.state.postID;
@@ -28,6 +24,8 @@ export default function CommentPage() {
     if (comment === "") {
       return;
     }
+    const userID = localStorage.getItem("id");
+    const userName = localStorage.getItem("userName");
 
     // TODO: userID과 userName이 null일 때 어떻게 해야 하는가
     if (!userName) throw new Error("userName does not exist!");
@@ -37,7 +35,7 @@ export default function CommentPage() {
     await axios
       .post("/api/comments", {
         text: comment,
-        userID: userID,
+        userID,
         rootID: postID,
         writerID: userName,
       })

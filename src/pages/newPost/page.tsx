@@ -9,15 +9,14 @@ import { useNavigate } from "react-router-dom";
 
 import * as styles from "./page.css";
 
-const userID = localStorage.getItem("id");
-const userName = localStorage.getItem("userName");
-
 export default function NewPostPage() {
   const navigate = useNavigate();
 
   const handleUpload = async () => {
     console.log(previewImages);
 
+    const userID = localStorage.getItem("id");
+    const userName = localStorage.getItem("userName");
     // TODO: userID과 userName이 null일 때 어떻게 해야 하는가
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
