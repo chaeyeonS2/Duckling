@@ -1,13 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-import * as GltfGroupModels from "./GltfGroupModels";
 
 import * as styles from "./item.css";
 
 export interface ItemProps {
   type: string;
+  onItemClick?: (kind: string, item: APIAssetsResponse[number]) => void;
 }
-export default function Item({ type }: ItemProps) {
+export default function Item({ type, onItemClick }: ItemProps) {
   const [kind, setKind] = useState("top");
   const [assets, setAssets] = useState<APIAssetsResponse>([]);
   const fetchTo = async (kind: string) => {
@@ -22,10 +22,6 @@ export default function Item({ type }: ItemProps) {
     newArr[idx] = true;
 
     setSelectDeco(newArr);
-  };
-
-  const handleItemClick = (gltfPath: string) => () => {
-    GltfGroupModels.isClick(kind, gltfPath);
   };
 
   if (!assets) return null;
@@ -62,7 +58,7 @@ export default function Item({ type }: ItemProps) {
                 <img
                   className={styles.itemImg}
                   src={item.assetImg}
-                  onClick={handleItemClick(item.assetGltf)}
+                  onClick={() => onItemClick?.(kind, item)}
                   alt=""
                 ></img>
               </div>

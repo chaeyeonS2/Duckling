@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import Item from "./_components/Item";
 import axios from "axios";
 import { OrbitControls } from "@react-three/drei";
-import GltfGroupModels from "./_components/GltfGroupModels";
+import ModelGroup from "./_components/ModelGroup";
 import useSWR from "swr";
 
 import * as styles from "./page.css";
@@ -13,11 +13,9 @@ export default function DecoPage() {
   const { data: user, mutate } = useSWR<APIUserResponse>(() => [`/api/users/${localStorage.getItem("id")}`]);
 
   //데코(얼굴, 옷) 카테고리 선택
-  const [typeDecoState, setDecoTypeState] = useState<[boolean, boolean]>([true, false]);
+  const [isFaceDeco, setIsFaceDeco] = useState(true);
   const handleDecoClick = (idx: number) => {
-    const newArr = [false, false] as [boolean, boolean];
-    newArr[idx] = true;
-    setDecoTypeState(newArr);
+    setIsFaceDeco(idx == 0 ? true : false);
   };
 
   const handleAvatarUpload = async () => {
@@ -52,10 +50,10 @@ export default function DecoPage() {
             <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} castShadow />
             <ambientLight intensity={0.5} />
             {user && (
-              <GltfGroupModels
+              <ModelGroup
                 defaultgltf={user.userAvatar}
                 setDefaultGltf={(newGltf) => mutate((prev) => (!prev ? prev : { ...prev, userAvatar: newGltf }))}
-                typeDecoState={typeDecoState}
+                isFaceDeco={isFaceDeco}
               />
             )}
             <OrbitControls
@@ -67,8 +65,12 @@ export default function DecoPage() {
             />
           </Canvas>
         </Suspense>
-
-        {typeDecoState[0] ? <Item type="face" /> : <Item type="cloth" />}
+        <Item
+          type={isFaceDeco ? "face" : "cloth"}
+          onItemClick={(kind, { assetGltf }) =>
+            mutate((prev) => (!prev ? prev : { ...prev, userAvatar: { ...prev.userAvatar, [kind]: assetGltf } }))
+          }
+        />
       </div>
       <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
         <img src="/img/deco/save.png" alt="" />
@@ -81,7 +83,7 @@ export default function DecoPage() {
             handleDecoClick(0);
           }}
         >
-          <img src={typeDecoState[0] ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"} alt="" />
+          <img src={isFaceDeco ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"} alt="" />
         </div>
         <div
           className={styles.btnCloth}
@@ -89,7 +91,7 @@ export default function DecoPage() {
             handleDecoClick(1);
           }}
         >
-          <img src={typeDecoState[1] ? "/img/VectorclothTrue.png" : "/img/VectorclothFalse.png"} alt="" />
+          <img src={!isFaceDeco ? "/img/VectorclothTrue.png" : "/img/VectorclothFalse.png"} alt="" />
         </div>
       </div>
     </div>
