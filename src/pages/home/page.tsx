@@ -10,7 +10,7 @@ import ModelGroup from "./_components/ModelGroup";
 
 export default function HomePage() {
   return (
-    <div className="layoutA">
+    <div>
       <Header />
       <div
         className="content"
