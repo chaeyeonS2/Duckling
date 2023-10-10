@@ -52,19 +52,10 @@ export default function PostViewPage() {
       await axios
         .get(`/api/posts/writer/${writerID}/${postID}`)
         .then((response) => setData(response.data))
-        //       ^?
-
-        .catch((e) => console.error(e));
-      await axios
-        .get(`/api/posts/writer/${writerID}`)
-        .then((response) => console.log(response.data))
-        //       ^?
         .catch((e) => console.error(e));
     };
 
-    if (postID && writerID) {
-      getPost();
-    }
+    getPost();
   }, [postID, writerID]);
 
   return (
