@@ -14,16 +14,10 @@ export default function SWRWrapper({ children }: React.PropsWithChildren) {
   );
 }
 
-async function generalFetcher<T = any>([url, body, params]: [
-  string,
-  object?,
-  object?
-]) {
+async function generalFetcher<T = any>([url, body, params]: [string, object?, object?]) {
   return await axios<T>(url, {
     method: "GET",
     data: body,
     params,
   });
 }
-
-axios.defaults.baseURL = "https://us-central1-netural-app.cloudfunctions.net";

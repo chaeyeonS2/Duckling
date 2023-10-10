@@ -1,8 +1,8 @@
 import SWRWrapper from "@/components/SWRWrapper";
-import "./firebase/config";
 import Router from "./components/Router";
 
-import "./firebase/config";
+import "./config/axios";
+import "./config/firebase";
 import "@/css/global.css";
 
 export default function Routes() {
