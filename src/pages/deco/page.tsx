@@ -49,13 +49,7 @@ export default function DecoPage() {
           >
             <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} castShadow />
             <ambientLight intensity={0.5} />
-            {user && (
-              <ModelGroup
-                defaultgltf={user.userAvatar}
-                setDefaultGltf={(newGltf) => mutate((prev) => (!prev ? prev : { ...prev, userAvatar: newGltf }))}
-                isFaceDeco={isFaceDeco}
-              />
-            )}
+            {user && <ModelGroup defaultgltf={user.userAvatar} isFaceDeco={isFaceDeco} />}
             <OrbitControls
               enableZoom={false} // 확대/축소 비활성화
               enableRotate={true} // 회전 활성화
@@ -65,12 +59,7 @@ export default function DecoPage() {
             />
           </Canvas>
         </Suspense>
-        <Item
-          type={isFaceDeco ? "face" : "cloth"}
-          onItemClick={(kind, { assetGltf }) =>
-            mutate((prev) => (!prev ? prev : { ...prev, userAvatar: { ...prev.userAvatar, [kind]: assetGltf } }))
-          }
-        />
+        <Item type={isFaceDeco ? "face" : "cloth"} onItemClick={(kind, { assetGltf }) => mutate((prev) => (!prev ? prev : { ...prev, userAvatar: { ...prev.userAvatar, [kind]: assetGltf } }))} />
       </div>
       <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
         <img src="/img/deco/save.png" alt="" />
