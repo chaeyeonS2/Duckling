@@ -6,7 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import "@/css/customBottomSheet.css";
 import { OrbitControls } from "@react-three/drei";
 import Mypost from "./_components/MyPost";
-import GetGltfModels from "./_components/GetGltfModels";
+import ModelGroup from "./_components/ModelGroup";
 
 export default function HomePage() {
   return (
@@ -35,7 +35,7 @@ export default function HomePage() {
             <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} penumbra={1} castShadow />
             <ambientLight intensity={0.5} />
 
-            <GetGltfModels />
+            <ModelGroup />
 
             <OrbitControls
               enableZoom={false} // 확대/축소 비활성화
