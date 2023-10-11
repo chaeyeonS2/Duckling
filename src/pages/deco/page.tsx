@@ -59,7 +59,12 @@ export default function DecoPage() {
             />
           </Canvas>
         </Suspense>
-        <Item type={isFaceDeco ? "face" : "cloth"} onItemClick={(kind, { assetGltf }) => mutate((prev) => (!prev ? prev : { ...prev, userAvatar: { ...prev.userAvatar, [kind]: assetGltf } }))} />
+        <Item
+          type={isFaceDeco ? "face" : "cloth"}
+          onItemClick={(kind, { assetGltf }) =>
+            mutate((prev) => (!prev ? prev : { ...prev, userAvatar: { ...prev.userAvatar, [kind]: assetGltf } }))
+          }
+        />
       </div>
       <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
         <img src="/img/deco/save.png" alt="" />
