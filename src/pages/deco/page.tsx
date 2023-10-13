@@ -5,12 +5,12 @@ import Item from "./_components/Item";
 import axios from "axios";
 import { OrbitControls } from "@react-three/drei";
 import ModelGroup from "./_components/ModelGroup";
-import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 import * as styles from "./page.css";
 
 export default function DecoPage() {
-  const { data: user, mutate } = useSWR<APIUserResponse>(() => [`/api/users/${localStorage.getItem("id")}`]);
+  const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
 
   //데코(얼굴, 옷) 카테고리 선택
   const [isFaceDeco, setIsFaceDeco] = useState(true);

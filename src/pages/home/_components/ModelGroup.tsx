@@ -3,7 +3,7 @@ import { useGLTFs } from "@/lib/GltfManager";
 import GroupWrpper from "@/components/GroupWrapper";
 
 export default function ModelGroup() {
-  const { data: user } = useSWRImmutable<APIUserResponse>(() => [`/api/users/${localStorage.getItem("id")}`]);
+  const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
   const models = useGLTFs(
     ...Object.values(user?.userAvatar ?? {}).map((path) => ({ gltfPath: path, identifier: "deco" })),
     "gltf/avatar/basic_avatar_[no_face].gltf",

@@ -5,7 +5,7 @@ export interface PostBoxProps {
   post: Post;
 }
 export default function PostBox({ post: data }: PostBoxProps) {
-  const { data: userData } = useSWRImmutable<APIUserResponse>([`/api/users/${data.userID}`]);
+  const { data: userData } = useSWRImmutable<APIUserResponse>(`/api/users/${data.userID}`);
 
   return (
     <div className={styles.postBox}>

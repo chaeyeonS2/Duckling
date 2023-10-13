@@ -16,7 +16,7 @@ const layoutStyle: React.CSSProperties = {
 
 export default function LookPage() {
   const navigate = useNavigate();
-  const { data: posts } = useSWR<APIPostsResponse>(["/api/posts"]);
+  const { data: posts } = useSWR<APIPostsResponse>("/api/posts");
 
   const handlePostClick = (userName: string, postID: string) => {
     navigate(`/postview/${userName}/${postID}`);

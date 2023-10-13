@@ -14,8 +14,10 @@ export default function SWRWrapper({ children }: React.PropsWithChildren) {
   );
 }
 
-async function generalFetcher<T = any>([url, body, params]: [string, object?, object?]) {
+async function generalFetcher<T = any>(urlOrParam: string | [string, object?, object?]) {
   try {
+    const [url, body, params] = typeof urlOrParam === "string" ? [urlOrParam, undefined, undefined] : urlOrParam;
+
     return await axios<T>(url, {
       method: "GET",
       data: body,
