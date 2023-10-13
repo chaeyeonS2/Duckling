@@ -5,8 +5,8 @@ import GroupWrpper from "@/components/GroupWrapper";
 export default function ModelGroup() {
   const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
   const models = useGLTFs(
-    ...Object.values(user?.userAvatar ?? {}).map((path) => ({ gltfPath: path, identifier: "deco" })),
-    "gltf/avatar/basic_avatar_[no_face].gltf",
+    ...Object.values(user?.userAvatar ?? {}).map((path) => ({ gltfPath: path, identfier: "deco" } as const)),
+    "/gltf/avatar/basic_avatar_[no_face].gltf",
     "/gltf/avatar/keyring.glb",
     "/gltf/avatar/stage.glb"
   );

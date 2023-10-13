@@ -8,7 +8,7 @@ export interface ModelGroupProps {
 
 export default function ModelGroup({ defaultgltf, isFaceDeco }: ModelGroupProps) {
   const models = useGLTFs(
-    ...Object.values(defaultgltf).map((path) => ({ gltfPath: path, identifier: "deco" })),
+    ...Object.values(defaultgltf).map((path) => ({ gltfPath: path, identfier: "deco" } as const)),
     "/gltf/avatar/cheek_avatarglb.gltf",
     "/gltf/avatar/keyring.glb",
     "/gltf/avatar/nose.gltf",
