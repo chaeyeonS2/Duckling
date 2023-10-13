@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 interface GLTFLoadOptions {
@@ -64,6 +64,13 @@ class GltfManager {
 
 const gltfManager = new GltfManager();
 
+function getGLTF(registry: typeof gltfManager.registry, gltfPath: string, identfier?: "deco") {
+  const gltfKey = identfier ?? gltfPath.split(/[\/|\.]/).slice(-2, -1)[0];
+  const model = registry.get(gltfPath);
+  if (!model) gltfManager.loadModel(gltfPath, gltfDataset[gltfKey]);
+  return model;
+}
+
 /**
  * 단일 모델에 대하여 경로를 제공받아서 실행합니다.
  * @param gltfPath 불러올 모델 경로
@@ -71,14 +78,12 @@ const gltfManager = new GltfManager();
  * @returns 모델이 존재한다면 바로 사용, 존재하지 않는다면 불러오고 나중에 재랜더링하여 사용
  */
 export const useGLTF = (gltfPath: string, identfier?: "deco") => {
-  const gltfKey = identfier ?? gltfPath.split(/[\/|\.]/).slice(-2, -1)[0];
   const registry = useSyncExternalStore(
     (listener) => gltfManager.subscribe(listener),
     () => gltfManager.getSnapshot()
   );
-  const model = registry.get(gltfPath);
-  if (!model) gltfManager.loadModel(gltfPath, gltfDataset[gltfKey]);
-  return model;
+
+  return getGLTF(registry, gltfPath, identfier);
 };
 
 /**
@@ -86,20 +91,22 @@ export const useGLTF = (gltfPath: string, identfier?: "deco") => {
  * @param modelData 불러올 모델 데이터, 내용은 `useGltf` 파라미터와 동일
  * @returns `useGltf`의 반환값의 배열 버전. 관련 로직은 모두 동일
  */
-export const useGLTFs = (...modelData: Array<string | { gltfPath: string; identfier?: "deco" }>) => {
-  const models = [];
+export const useGLTFs = (...gltfPathData: Array<string | { gltfPath: string; identfier?: "deco" }>) => {
   const registry = useSyncExternalStore(
     (listener) => gltfManager.subscribe(listener),
     () => gltfManager.getSnapshot()
   );
-  for (const data of modelData) {
-    const identfier = typeof data === "string" ? undefined : data.identfier;
-    const gltfPath = typeof data === "string" ? data : data.gltfPath;
-    const gltfKey = identfier ?? gltfPath.split(/[\/|\.]/).slice(-2, -1)[0];
 
-    const model = registry.get(gltfPath);
-    if (!model) gltfManager.loadModel(gltfPath, gltfDataset[gltfKey]);
-    models.push(model);
-  }
+  const models = useMemo(() => {
+    const models = [];
+    for (const gltfPathDatum of gltfPathData) {
+      const identfier = typeof gltfPathDatum === "string" ? undefined : gltfPathDatum.identfier;
+      const gltfPath = typeof gltfPathDatum === "string" ? gltfPathDatum : gltfPathDatum.gltfPath;
+      const model = getGLTF(registry, gltfPath, identfier);
+      if (model) models.push(model);
+    }
+    return models;
+  }, [registry]);
+
   return models;
 };
