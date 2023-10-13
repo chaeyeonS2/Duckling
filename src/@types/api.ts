@@ -47,7 +47,7 @@ type APIUserResponse = Omit<User, "userID">;
 type APIUsersAvatarReponse = APIUserResponse;
 
 type APIAssetsResponse = Array<{
-  assetID: number;
+  assetID: string;
   assetGltf: string;
   assetImg: string;
 }>;

@@ -1,30 +1,24 @@
 import { useState } from "react";
-import axios from "axios";
 
 import * as styles from "./item.css";
+import useSWRImmutable from "swr/immutable";
 
 export interface ItemProps {
   type: string;
   onItemClick?: (kind: string, item: APIAssetsResponse[number]) => void;
 }
 export default function Item({ type, onItemClick }: ItemProps) {
-  const [kind, setKind] = useState("top");
-  const [assets, setAssets] = useState<APIAssetsResponse>([]);
-  const fetchTo = async (kind: string) => {
-    const { data } = await axios.get(`/api/assets/${type == "face" ? "face" : "body"}/${kind}`);
-    setKind(kind);
-    setAssets(data);
+  const [currentKind, setCurrentKind] = useState("top");
+  const [currentAsset, setCurrentAsset] = useState<string>();
+  const { data: assets } = useSWRImmutable<APIAssetsResponse>(
+    `/api/assets/${type == "face" ? "face" : "body"}/${currentKind}`
+  );
+
+  const handleClick = (kind: string, item: APIAssetsResponse[number]) => {
+    onItemClick?.(kind, item);
+    setCurrentAsset(item.assetID);
   };
 
-  const [selectDeco, setSelectDeco] = useState<boolean[]>([false]);
-  const handleClick = (idx: number) => {
-    const newArr = Array(assets.length).fill(false);
-    newArr[idx] = true;
-
-    setSelectDeco(newArr);
-  };
-
-  if (!assets) return null;
   const items =
     type === "face"
       ? [
@@ -41,24 +35,28 @@ export default function Item({ type, onItemClick }: ItemProps) {
     <div>
       <div className={styles.deco}>
         <div className={styles.buttonGroup}>
-          {items.map(([key, text]) => (
-            <div className={kind === key ? styles.selectBtn : styles.nonSelectbtn} onClick={() => fetchTo(key)}>
+          {items.map(([kind, text]) => (
+            <div
+              key={kind}
+              className={currentKind === kind ? styles.selectBtn : styles.nonSelectbtn}
+              onClick={() => setCurrentKind(kind)}
+            >
               {text}
             </div>
           ))}
         </div>
         <div className={styles.itemBoxDiv}>
-          {assets?.map((item, index) => {
+          {assets?.map((item) => {
             return (
               <div
                 key={item.assetID}
-                className={selectDeco[index] ? styles.itemBoxClick : styles.itemBox}
-                onClick={() => handleClick(index)}
+                className={currentAsset == item.assetID ? styles.itemBoxClick : styles.itemBox}
+                onClick={() => handleClick(currentKind, item)}
               >
                 <img
                   className={styles.itemImg}
                   src={item.assetImg}
-                  onClick={() => onItemClick?.(kind, item)}
+                  onClick={() => onItemClick?.(currentKind, item)}
                   alt=""
                 ></img>
               </div>

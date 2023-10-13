@@ -14,7 +14,7 @@ export default function DecoPage() {
   const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
 
   //데코(얼굴, 옷) 카테고리 선택
-  const [isFaceDeco, setIsFaceDeco] = useState(true);
+  const [isFaceDeco, setIsFaceDeco] = useState(false);
   const handleDecoClick = (idx: number) => {
     setIsFaceDeco(idx == 0 ? true : false);
   };
