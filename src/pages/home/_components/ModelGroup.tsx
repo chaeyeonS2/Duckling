@@ -12,8 +12,10 @@ export default function ModelGroup() {
   );
 
   return (
-    <group position={[0, -0.01, 0]} rotation={[0.08, 0, 0]}>
-      <GroupWrpper groups={models.filter((m): m is NonNullable<typeof m> => !!m)} />
-    </group>
+    <GroupWrpper
+      groups={models.filter((m): m is NonNullable<typeof m> => !!m)}
+      position={[0, -0.01, 0]}
+      rotation={[0.08, 0, 0]}
+    />
   );
 }

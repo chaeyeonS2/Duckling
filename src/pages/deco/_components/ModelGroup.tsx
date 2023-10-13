@@ -16,8 +16,11 @@ export default function ModelGroup({ defaultgltf, isFaceDeco }: ModelGroupProps)
   );
 
   return (
-    <group scale={isFaceDeco ? 1.3 : 0.8} position={isFaceDeco ? [0, -0.02, 0] : [0, 0.045, 0]} rotation={[0.08, 0, 0]}>
-      <GroupWrpper groups={models.filter((m): m is NonNullable<typeof m> => !!m)} />
-    </group>
+    <GroupWrpper
+      groups={models.filter((m): m is NonNullable<typeof m> => !!m)}
+      scale={isFaceDeco ? 1.3 : 0.8}
+      position={isFaceDeco ? [0, -0.02, 0] : [0, 0.045, 0]}
+      rotation={[0.08, 0, 0]}
+    />
   );
 }
