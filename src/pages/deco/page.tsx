@@ -6,6 +6,7 @@ import axios from "axios";
 import { OrbitControls } from "@react-three/drei";
 import ModelGroup from "./_components/ModelGroup";
 import useSWRImmutable from "swr/immutable";
+import { produce } from "immer";
 
 import * as styles from "./page.css";
 
@@ -16,6 +17,16 @@ export default function DecoPage() {
   const [isFaceDeco, setIsFaceDeco] = useState(true);
   const handleDecoClick = (idx: number) => {
     setIsFaceDeco(idx == 0 ? true : false);
+  };
+
+  const handleDecoItemClick = (kind: string, { assetGltf }: { assetGltf: string }) => {
+    if (!user) return;
+    const newUser = produce(user, (draft) => {
+      // @ts-ignore TODO: 나중에 타입 정의
+      draft.userAvatar[kind] = assetGltf;
+    });
+
+    mutate(newUser, { revalidate: false });
   };
 
   const handleAvatarUpload = async () => {
@@ -59,12 +70,7 @@ export default function DecoPage() {
             />
           </Canvas>
         </Suspense>
-        <Item
-          type={isFaceDeco ? "face" : "cloth"}
-          onItemClick={(kind, { assetGltf }) =>
-            mutate((prev) => (!prev ? prev : { ...prev, userAvatar: { ...prev.userAvatar, [kind]: assetGltf } }))
-          }
-        />
+        <Item type={isFaceDeco ? "face" : "cloth"} onItemClick={handleDecoItemClick} />
       </div>
       <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
         <img src="/img/deco/save.png" alt="" />
