@@ -7,7 +7,7 @@ function GroupWrpper({ groups }: GroupWrpperProps) {
   const groupRef = useRef<THREE.Group>(null);
 
   useEffect(() => {
-    groupRef.current?.add(...groups);
+    if (groups.length > 0) groupRef.current?.add(...groups);
   }, [groups]);
 
   return <group ref={groupRef} />;

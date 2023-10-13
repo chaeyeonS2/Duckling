@@ -83,15 +83,15 @@ export default function PostViewPage() {
       )}
       {postData && (
         <div>
-          <div className={styles.leftBtnGroup}>
-            <div>
-              <div>
+          <div className={styles.leftBtn}>
+            <div className={styles.leftBtn}>
+              <div className={styles.leftBtn}>
                 <img src="/img/writing/cookie.png" />
               </div>
               <div className={styles.num}>{postData.likes}</div>
             </div>
-            <div onClick={commentClick}>
-              <div>
+            <div className={styles.leftBtn} onClick={commentClick}>
+              <div className={styles.leftBtn}>
                 <img src="/img/writing/comment.png" />
               </div>
               <div className={styles.num}>{postData.commentCount}</div>

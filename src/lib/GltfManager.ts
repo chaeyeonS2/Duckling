@@ -72,7 +72,10 @@ const gltfManager = new GltfManager();
  */
 export const useGLTF = (gltfPath: string, identfier?: "deco") => {
   const gltfKey = identfier ?? gltfPath.split(/[\/|\.]/).slice(-2, -1)[0];
-  const registry = useSyncExternalStore(gltfManager.subscribe, gltfManager.getSnapshot);
+  const registry = useSyncExternalStore(
+    (listener) => gltfManager.subscribe(listener),
+    () => gltfManager.getSnapshot()
+  );
   const model = registry.get(gltfPath);
   if (!model) gltfManager.loadModel(gltfPath, gltfDataset[gltfKey]);
   return model;
@@ -85,7 +88,10 @@ export const useGLTF = (gltfPath: string, identfier?: "deco") => {
  */
 export const useGLTFs = (...modelData: Array<string | { gltfPath: string; identfier?: "deco" }>) => {
   const models = [];
-  const registry = useSyncExternalStore(gltfManager.subscribe, gltfManager.getSnapshot);
+  const registry = useSyncExternalStore(
+    (listener) => gltfManager.subscribe(listener),
+    () => gltfManager.getSnapshot()
+  );
   for (const data of modelData) {
     const identfier = typeof data === "string" ? undefined : data.identfier;
     const gltfPath = typeof data === "string" ? data : data.gltfPath;
@@ -97,5 +103,3 @@ export const useGLTFs = (...modelData: Array<string | { gltfPath: string; identf
   }
   return models;
 };
-
-export default GltfManager;

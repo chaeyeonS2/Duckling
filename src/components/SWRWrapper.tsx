@@ -6,7 +6,7 @@ export default function SWRWrapper({ children }: React.PropsWithChildren) {
   return (
     <SWRConfig
       value={{
-        fetcher: (params) => generalFetcher(params).then((res) => res.data),
+        fetcher: (params) => generalFetcher(params).then((res) => res?.data),
       }}
     >
       {children}
@@ -15,9 +15,13 @@ export default function SWRWrapper({ children }: React.PropsWithChildren) {
 }
 
 async function generalFetcher<T = any>([url, body, params]: [string, object?, object?]) {
-  return await axios<T>(url, {
-    method: "GET",
-    data: body,
-    params,
-  });
+  try {
+    return await axios<T>(url, {
+      method: "GET",
+      data: body,
+      params,
+    });
+  } catch {
+    return undefined;
+  }
 }

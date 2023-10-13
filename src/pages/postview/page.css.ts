@@ -50,20 +50,8 @@ export const writinggetBox = style({
   overflow: "auto",
 });
 
-export const headerBtnGroup = style({
-  selectors: {
-    "& div": {
-      display: "inline-block",
-    },
-  },
-});
-
-export const leftBtnGroup = style({
-  selectors: {
-    "& div": {
-      float: "left",
-      color: "white",
-      padding: "5px",
-    },
-  },
+export const leftBtn = style({
+  float: "left",
+  color: "white",
+  padding: "5px",
 });
