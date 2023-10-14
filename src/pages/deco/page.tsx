@@ -1,22 +1,29 @@
 import HeaderDeco from "@/components/layout/headers/HeaderDeco";
-import { useState, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import { useState, useRef } from "react";
+import type { RootState } from "@react-three/fiber";
 import Item from "./_components/Item";
 import axios from "axios";
-import { OrbitControls } from "@react-three/drei";
-import ModelGroup from "./_components/ModelGroup";
+import AvatarModelGroup from "@/components/AvatarModelGroup";
 import useSWRImmutable from "swr/immutable";
 import { produce } from "immer";
 
 import * as styles from "./page.css";
+import AvatarCanvas from "@/components/AvatarCanvas";
 
 export default function DecoPage() {
   const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
-
+  const cameraRef = useRef<RootState>(null);
   //데코(얼굴, 옷) 카테고리 선택
   const [isFaceDeco, setIsFaceDeco] = useState(false);
   const handleDecoClick = (idx: number) => {
     setIsFaceDeco(idx == 0 ? true : false);
+
+    if (!cameraRef.current) return;
+    if (idx == 0) {
+      cameraRef.current.camera.zoom = 1;
+    } else {
+      cameraRef.current.camera.zoom = 0.6;
+    }
   };
 
   const handleDecoItemClick = (kind: string, { assetGltf }: { assetGltf: string }) => {
@@ -45,31 +52,18 @@ export default function DecoPage() {
       <div>
         <HeaderDeco />
       </div>
-      <div className={styles.avatarDeco}>
-        <Suspense fallback={null}>
-          <Canvas
-            style={{ background: "transparent" }}
-            shadows
-            camera={{
-              rotation: [0, 0, 0],
-              fov: 150,
-              zoom: 100,
-              near: 1,
-              far: 10,
-            }}
-          >
-            <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} castShadow />
-            <ambientLight intensity={0.5} />
-            {user && <ModelGroup defaultgltf={user.userAvatar} isFaceDeco={isFaceDeco} />}
-            <OrbitControls
-              enableZoom={false} // 확대/축소 비활성화
-              enableRotate={true} // 회전 활성화
-              enablePan={false} // 이동 비활성화
-              enableDamping // 부드러운 움직임 효과 활성화
-              dampingFactor={0.1} // 부드러운 움직임 강도 설정
-            />
-          </Canvas>
-        </Suspense>
+      <div
+        className={styles.avatarDeco}
+        style={{
+          width: "100vw",
+          height: "100vh",
+          backgroundImage: "url(/img/home/background.png)",
+        }}
+      >
+        <AvatarCanvas ref={cameraRef}>
+          <AvatarModelGroup />
+        </AvatarCanvas>
+
         <Item type={isFaceDeco ? "face" : "cloth"} onItemClick={handleDecoItemClick} />
       </div>
       <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
