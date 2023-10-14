@@ -2,21 +2,28 @@ import { useState } from "react";
 
 import * as styles from "./item.css";
 import useSWRImmutable from "swr/immutable";
+import { produce } from "immer";
 
 export interface ItemProps {
   type: string;
-  onItemClick?: (kind: string, item: APIAssetsResponse[number]) => void;
 }
-export default function Item({ type, onItemClick }: ItemProps) {
+export default function Item({ type }: ItemProps) {
   const [currentKind, setCurrentKind] = useState("top");
   const [currentAsset, setCurrentAsset] = useState<string>();
   const { data: assets } = useSWRImmutable<APIAssetsResponse>(
     `/api/assets/${type == "face" ? "face" : "body"}/${currentKind}`
   );
+  const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
 
   const handleClick = (kind: string, item: APIAssetsResponse[number]) => {
-    onItemClick?.(kind, item);
     setCurrentAsset(item.assetID);
+
+    const newUser = produce(user, (draft) => {
+      // @ts-ignore TODO: 나중에 타입 정의
+      draft.userAvatar[kind] = item.assetGltf;
+    });
+
+    mutate(newUser, { revalidate: false });
   };
 
   const items =
@@ -53,12 +60,7 @@ export default function Item({ type, onItemClick }: ItemProps) {
                 className={currentAsset == item.assetID ? styles.itemBoxClick : styles.itemBox}
                 onClick={() => handleClick(currentKind, item)}
               >
-                <img
-                  className={styles.itemImg}
-                  src={item.assetImg}
-                  onClick={() => onItemClick?.(currentKind, item)}
-                  alt=""
-                ></img>
+                <img className={styles.itemImg} src={item.assetImg} alt=""></img>
               </div>
             );
           })}

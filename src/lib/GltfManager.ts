@@ -1,4 +1,4 @@
-import { useMemo, useSyncExternalStore } from "react";
+import { useSyncExternalStore } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 interface GLTFLoadOptions {
@@ -97,16 +97,13 @@ export const useGLTFs = (...gltfPathData: Array<string | { gltfPath: string; ide
     () => gltfManager.getSnapshot()
   );
 
-  const models = useMemo(() => {
-    const models = [];
-    for (const gltfPathDatum of gltfPathData) {
-      const identfier = typeof gltfPathDatum === "string" ? undefined : gltfPathDatum.identfier;
-      const gltfPath = typeof gltfPathDatum === "string" ? gltfPathDatum : gltfPathDatum.gltfPath;
-      const model = getGLTF(registry, gltfPath, identfier);
-      if (model) models.push(model);
-    }
-    return models;
-  }, [registry]);
-
+  const models = [];
+  for (const gltfPathDatum of gltfPathData) {
+    const identfier = typeof gltfPathDatum === "string" ? undefined : gltfPathDatum.identfier;
+    const gltfPath = typeof gltfPathDatum === "string" ? gltfPathDatum : gltfPathDatum.gltfPath;
+    const model = getGLTF(registry, gltfPath, identfier);
+    if (model) models.push(model);
+  }
+  console.log(models);
   return models;
 };

@@ -5,13 +5,12 @@ import Item from "./_components/Item";
 import axios from "axios";
 import AvatarModelGroup from "@/components/AvatarModelGroup";
 import useSWRImmutable from "swr/immutable";
-import { produce } from "immer";
 
 import * as styles from "./page.css";
 import AvatarCanvas from "@/components/AvatarCanvas";
 
 export default function DecoPage() {
-  const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
+  const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
   const cameraRef = useRef<RootState>(null);
   //데코(얼굴, 옷) 카테고리 선택
   const [isFaceDeco, setIsFaceDeco] = useState(false);
@@ -26,21 +25,11 @@ export default function DecoPage() {
     }
   };
 
-  const handleDecoItemClick = (kind: string, { assetGltf }: { assetGltf: string }) => {
-    if (!user) return;
-    const newUser = produce(user, (draft) => {
-      // @ts-ignore TODO: 나중에 타입 정의
-      draft.userAvatar[kind] = assetGltf;
-    });
-
-    mutate(newUser, { revalidate: false });
-  };
-
-  const handleAvatarUpload = async () => {
+  const handleAvatarUpload = () => {
     if (!user) return;
 
     const uid = localStorage.getItem("id");
-    await axios
+    axios
       .patch(`/api/users/${uid}`, {
         userAvatar: user.userAvatar,
       })
@@ -64,9 +53,10 @@ export default function DecoPage() {
           <AvatarModelGroup />
         </AvatarCanvas>
 
-        <Item type={isFaceDeco ? "face" : "cloth"} onItemClick={handleDecoItemClick} />
+        <Item type={isFaceDeco ? "face" : "cloth"} />
       </div>
-      <div className={styles.saveAvatar} onClick={() => handleAvatarUpload()}>
+
+      <div className={styles.saveAvatar} onClick={handleAvatarUpload}>
         <img src="/img/deco/save.png" alt="" />
       </div>
 
