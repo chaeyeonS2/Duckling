@@ -25,7 +25,7 @@ export const btnNo = style({
   margin: "10px",
   color: "#000",
   textAlign: "center",
-  fontFamily: "Pretendard",
+
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: "600",
@@ -40,7 +40,7 @@ export const btnOk = style({
   margin: "10px",
   color: "#000",
   textAlign: "center",
-  fontFamily: "Pretendard",
+
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: "600",

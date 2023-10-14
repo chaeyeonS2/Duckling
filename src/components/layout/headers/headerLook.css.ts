@@ -6,7 +6,7 @@ export const focused = style({
 
 export const focusedText = style({
   color: "#000",
-  fontFamily: "Pretendard",
+
   fontSize: "22px",
   fontStyle: "normal",
   fontWeight: "600",
@@ -37,7 +37,7 @@ export const tab = style({
 
 export const tabText = style({
   color: "#b5b5b5",
-  fontFamily: "Pretendard",
+
   fontSize: "22px",
   fontStyle: "normal",
   fontWeight: "600",

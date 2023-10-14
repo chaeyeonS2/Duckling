@@ -24,7 +24,7 @@ export const btnOk = style({
   border: "0px",
   color: "#000",
   textAlign: "center",
-  fontFamily: "Pretendard",
+
   fontSize: "14px",
   fontStyle: "normal",
   fontWeight: "600",
@@ -45,7 +45,7 @@ export const imageBox = style({
 export const text1 = style({
   paddingTop: "15px",
   color: "var(--white,#fff)",
-  fontFamily: "Pretendard",
+
   fontSize: "15px",
   fontStyle: "normal",
   fontWeight: "500",
@@ -57,7 +57,7 @@ export const text1 = style({
 export const text2 = style({
   paddingTop: "2%",
   color: "var(--white,#fff)",
-  fontFamily: "Pretendard",
+
   fontSize: "11px",
   fontStyle: "normal",
   fontWeight: "400",

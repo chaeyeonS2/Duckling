@@ -22,7 +22,7 @@ export const loadingBar = style({
 export const textBoxUpload = style({
   marginTop: "15px",
   color: "var(--white,#fff)",
-  fontFamily: "Pretendard",
+
   fontSize: "15px",
   fontStyle: "normal",
   fontWeight: "400",

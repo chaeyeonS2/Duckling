@@ -51,7 +51,7 @@ export const postContent = style({
   width: "augo",
   height: "auto",
   color: "#fff",
-  fontFamily: "Pretendard",
+
   fontSize: "16px",
   fontStyle: "normal",
   fontWeight: "400",

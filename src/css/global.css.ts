@@ -7,6 +7,13 @@ globalStyle(".content", {
   paddingBottom: "88px",
 });
 
-globalStyle("body", {
+globalStyle("html, body, #root", {
   overflow: "hidden",
+  width: "100%",
+  height: "100%",
+});
+
+globalStyle("*", {
+  all: "revert",
+  fontFamily: "Pretendard",
 });

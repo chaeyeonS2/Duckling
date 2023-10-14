@@ -20,7 +20,7 @@ export const imageBox = style({
 export const text = style({
   paddingTop: "5px",
   color: "var(--white,#fff)",
-  fontFamily: "Pretendard",
+
   fontSize: "15px",
   fontStyle: "normal",
   fontWeight: "500",
