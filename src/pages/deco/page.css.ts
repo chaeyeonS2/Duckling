@@ -1,48 +1,73 @@
 import { style } from "@vanilla-extract/css";
 
-export const layoutDeco = style({
-  paddingTop: "30px",
-  minHeight: "90vh",
-  position: "relative",
+export const pageContainer = style({
   width: "100%",
+  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-end",
 });
 
-export const avatarDeco = style({
-  width: "100vw",
-  height: "100vh",
-  position: "absolute",
-  backgroundColor: "rgb(255, 255, 255)",
-  backgroundImage: "url(/img/home/backgroundexport const png)",
+export const topActionsContainer = style({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-end",
+  marginBottom: "12px",
+  padding: "0 21px",
 });
 
-export const chooseBtnGroup = style({
+export const categorySelectGroup = style({
   border: "1px solid black",
-  position: "absolute",
   padding: "5px",
-  bottom: "53%",
-  marginLeft: "5%",
+  display: "flex",
+  width: "fit-content",
+  flexDirection: "column",
+  backgroundColor: "white",
+  gap: "5px",
 });
 
-export const btnFace = style({
+export const categorySelectButton = style({
   width: "36px",
   height: "36px",
-  backgroundColor: "rgb(0, 0, 0)",
-  display: "flex",
-  marginBottom: "5px",
+  backgroundColor: "white",
+  border: "none",
+  selectors: {
+    "&[aria-selected=true]": {
+      backgroundColor: "black",
+    },
+  },
 });
 
-export const btnCloth = style({
-  width: "36px",
-  height: "36px",
-  display: "flex",
-  backgroundColor: "rgb(0, 0, 0)",
+export const iconImg = style({ maxWidth: "100%", maxHeight: "100%" });
+
+export const decorationListContainer = style({
+  height: "50%",
+  backgroundColor: "rgba(0, 0, 0, 0.2)",
+  overflowY: "auto",
+  overflowX: "hidden",
+  padding: "21px",
+  paddingBottom: "8px",
 });
 
-export const saveAvatar = style({
-  width: "auto",
-  height: "auto",
-  position: "absolute",
-  padding: "15px",
-  bottom: "44%",
-  right: "0",
+export const buttonGroup = style({
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "10px",
+  marginBottom: "16px",
+});
+
+export const button = style({
+  width: "fit-content",
+  height: "fit-content",
+  padding: "6px 14px",
+  border: "1px solid #000",
+  textAlign: "center",
+  whiteSpace: "nowrap",
+  background: "#fff",
+  selectors: {
+    "&[aria-selected=true]": {
+      background: "#bdff6b",
+      boxShadow: "2px 2px",
+    },
+  },
 });

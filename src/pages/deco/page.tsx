@@ -9,11 +9,25 @@ import useSWRImmutable from "swr/immutable";
 import * as styles from "./page.css";
 import AvatarCanvas from "@/components/AvatarCanvas";
 
+const subNav = {
+  face: [
+    ["eyes", "눈"],
+    ["mouth", "입"],
+  ],
+  body: [
+    ["top", "상의"],
+    ["bottom", "하의"],
+    ["shoes", "신발"],
+    ["accessory", "기타"],
+  ],
+};
 export default function DecoPage() {
   const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
   const cameraRef = useRef<RootState>(null);
   //데코(얼굴, 옷) 카테고리 선택
   const [isFaceDeco, setIsFaceDeco] = useState(false);
+  const [currentKind, setCurrentKind] = useState("top");
+
   const handleDecoClick = (idx: number) => {
     setIsFaceDeco(idx == 0 ? true : false);
 
@@ -37,47 +51,79 @@ export default function DecoPage() {
   };
 
   return (
-    <div className={styles.layoutDeco}>
-      <div>
-        <HeaderDeco />
-      </div>
-      <div
-        className={styles.avatarDeco}
+    <>
+      <HeaderDeco />
+
+      <AvatarCanvas
+        ref={cameraRef}
         style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundImage: "url(/img/home/background.png)",
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          zIndex: -1,
         }}
       >
-        <AvatarCanvas ref={cameraRef}>
-          <AvatarModelGroup />
-        </AvatarCanvas>
+        <AvatarModelGroup />
+      </AvatarCanvas>
 
-        <Item type={isFaceDeco ? "face" : "cloth"} />
-      </div>
+      <img
+        src="/img/home/background.png"
+        alt=""
+        style={{ position: "absolute", zIndex: -1, height: "100%", width: "100%" }}
+      />
 
-      <div className={styles.saveAvatar} onClick={handleAvatarUpload}>
-        <img src="/img/deco/save.png" alt="" />
-      </div>
+      <main className={styles.pageContainer}>
+        <div className={styles.topActionsContainer}>
+          <div className={styles.categorySelectGroup}>
+            <button
+              className={styles.categorySelectButton}
+              aria-selected={isFaceDeco}
+              onClick={() => {
+                handleDecoClick(0);
+              }}
+            >
+              <img
+                src={isFaceDeco ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"}
+                className={styles.iconImg}
+                alt=""
+              />
+            </button>
+            <button
+              className={styles.categorySelectButton}
+              aria-selected={!isFaceDeco}
+              onClick={() => {
+                handleDecoClick(1);
+              }}
+            >
+              <img
+                src={!isFaceDeco ? "/img/VectorclothTrue.png" : "/img/VectorclothFalse.png"}
+                className={styles.iconImg}
+                alt=""
+              />
+            </button>
+          </div>
 
-      <div className={styles.chooseBtnGroup}>
-        <div
-          className={styles.btnFace}
-          onClick={() => {
-            handleDecoClick(0);
-          }}
-        >
-          <img src={isFaceDeco ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"} alt="" />
+          <button className={styles.button} onClick={handleAvatarUpload} aria-selected>
+            저장하기
+          </button>
         </div>
-        <div
-          className={styles.btnCloth}
-          onClick={() => {
-            handleDecoClick(1);
-          }}
-        >
-          <img src={!isFaceDeco ? "/img/VectorclothTrue.png" : "/img/VectorclothFalse.png"} alt="" />
+
+        <div className={styles.decorationListContainer}>
+          <div className={styles.buttonGroup}>
+            {subNav[isFaceDeco ? "face" : "body"].map(([kind, text]) => (
+              <button
+                key={kind}
+                className={styles.button}
+                onClick={() => setCurrentKind(kind)}
+                aria-selected={currentKind === kind}
+              >
+                {text}
+              </button>
+            ))}
+          </div>
+          <Item currentKind={currentKind} isFaceDeco={isFaceDeco} />
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 }
