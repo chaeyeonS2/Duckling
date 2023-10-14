@@ -104,6 +104,5 @@ export const useGLTFs = (...gltfPathData: Array<string | { gltfPath: string; ide
     const model = getGLTF(registry, gltfPath, identfier);
     if (model) models.push(model);
   }
-  console.log(models);
   return models;
 };
