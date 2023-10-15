@@ -17,3 +17,12 @@ globalStyle("*", {
   all: "revert",
   fontFamily: "Pretendard",
 });
+
+globalStyle("*::-webkit-scrollbar", { width: "14px" });
+globalStyle("*::-webkit-scrollbar-thumb", {
+  backgroundColor: "#2828284D",
+  backgroundClip: "padding-box",
+  border: "4px solid rgba(0, 0, 0, 0)",
+  borderTopWidth: "14px",
+  borderBottomWidth: "14px",
+});
