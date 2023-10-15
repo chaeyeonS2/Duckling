@@ -67,13 +67,14 @@ export default function DecoPage() {
         <AvatarModelGroup />
       </AvatarCanvas>
 
-      <img
-        src="/img/home/background.png"
-        alt=""
-        style={{ position: "absolute", zIndex: -1, height: "100%", width: "100%" }}
-      />
-
-      <main className={styles.pageContainer}>
+      <main
+        className={styles.pageContainer}
+        style={{
+          width: "100vw",
+          height: "100vh",
+          backgroundImage: "url(/img/home/background.png)",
+        }}
+      >
         <div className={styles.topActionsContainer}>
           <div className={styles.categorySelectGroup}>
             <button
