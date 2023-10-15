@@ -26,17 +26,15 @@ export default function Footer({ btn: active }: FooterProps) {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.footerBtnGroup}>
-        <Link to="/home" className={styles.footerBtn}>
-          <img src={homeImg} />
-        </Link>
-        <Link to="/look" className={styles.footerBtn}>
-          <img src={avatarImg} />
-        </Link>
-        <Link to="/camera" className={styles.footerBtn}>
-          <img src={cameraImg} />
-        </Link>
-      </div>
+      <Link to="/home" className={styles.footerBtn}>
+        <img src={homeImg} />
+      </Link>
+      <Link to="/look" className={styles.footerBtn}>
+        <img src={avatarImg} />
+      </Link>
+      <Link to="/camera" className={styles.footerBtn}>
+        <img src={cameraImg} />
+      </Link>
     </footer>
   );
 }

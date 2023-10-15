@@ -7,17 +7,14 @@ export const footer = style({
   left: "0px",
   width: "100vw",
   position: "fixed",
+  display: "flex",
 });
 
 export const footerBtn = style({
-  flex: "1",
+  flex: 1,
   border: "0px solid skyblue",
   backgroundColor: "rgba(0,0,0,0)",
   color: "rgba(0,0,0,0)",
-});
-
-export const footerBtnGroup = style({
-  display: "flex",
-  alignItems: "stretch",
-  height: "100%",
+  textAlign: "center",
+  alignSelf: "center",
 });
