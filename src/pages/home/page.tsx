@@ -24,7 +24,7 @@ export default function HomePage() {
       </div>
       <Mypost />
 
-      <Footer btn={1} />
+      <Footer />
     </div>
   );
 }

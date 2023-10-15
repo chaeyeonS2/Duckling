@@ -1,39 +1,20 @@
+import Icon from "@/components/Icon";
 import * as styles from "./footer.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-export interface FooterProps {
-  btn?: number;
-}
-export default function Footer({ btn: active }: FooterProps) {
-  //어떤 버튼이 활성화인지
-  let homeImg = "/img/home.png";
-  let avatarImg = "/img/person.png";
-  let cameraImg = "/img/camera.png";
-
-  // TODO: tab ui같은데 index를 내부적으로 제어하도록 만들기
-  const btnActive = () => {
-    if (active === 0) {
-      homeImg = "/img/home_click.png"; //LookingActive
-    } else if (active === 1) {
-      //avatarActive
-      avatarImg = "/img/person_click.png";
-    } else {
-      //camera active
-      cameraImg = "/img/camera_click.png";
-    }
-  };
-  btnActive();
+export default function Footer() {
+  const { pathname } = useLocation();
 
   return (
     <footer className={styles.footer}>
-      <Link to="/home" className={styles.footerBtn}>
-        <img src={homeImg} />
+      <Link to="/look" className={styles.footerBtn} aria-checked={pathname == "/look"}>
+        <Icon className={styles.icon} id={"home-" + (pathname == "/look" ? "fill" : "outline")} />
       </Link>
-      <Link to="/look" className={styles.footerBtn}>
-        <img src={avatarImg} />
+      <Link to="/home" className={styles.footerBtn} aria-checked={pathname == "/home"}>
+        <Icon className={styles.icon} id={"avatar-" + (pathname == "/home" ? "fill" : "outline")} />
       </Link>
-      <Link to="/camera" className={styles.footerBtn}>
-        <img src={cameraImg} />
+      <Link to="/camera" className={styles.footerBtn} aria-checked={pathname == "/camera"}>
+        <Icon className={styles.icon} id={"camera-" + (pathname == "/camera" ? "fill" : "outline")} />
       </Link>
     </footer>
   );
