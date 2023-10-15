@@ -22,8 +22,8 @@ const AvatarCanvas = forwardRef<RootState, React.PropsWithChildren<React.Compone
         }}
         {...props}
       >
-        <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} castShadow />
-        <ambientLight intensity={0.5} />
+        <spotLight position={[0, 0.2, 0.5]} />
+        <ambientLight />
 
         {children}
 
