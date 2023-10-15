@@ -46,8 +46,8 @@ export const decorationListContainer = style({
   backgroundColor: "rgba(0, 0, 0, 0.2)",
   overflowY: "auto",
   overflowX: "hidden",
-  padding: "21px",
-  paddingBottom: "8px",
+  // * 스크롤바 너비 때문에 임의로 오른쪽 패딩을 -10함
+  padding: "21px 11px 8px 21px",
   zIndex: 99,
 });
 
