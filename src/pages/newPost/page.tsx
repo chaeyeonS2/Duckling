@@ -177,8 +177,7 @@ export default function NewPostPage() {
           onChange={handleImageUpload}
         />
       </div>
-      {/* 고정 푸터 */}
-      <Footer btn={1} />
+      <Footer />
     </div>
   );
 }

@@ -99,9 +99,7 @@ export default function PostViewPage() {
           </div>
         </div>
       )}
-
-      {/* 고정 푸터 user 값에 따라 수정해야함*/}
-      <Footer btn={0} />
+      <Footer />
     </div>
   );
 }

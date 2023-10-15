@@ -33,7 +33,7 @@ export default function LookPage() {
             </div>
           ))}
       </div>
-      <Footer btn={0} />
+      <Footer />
     </div>
   );
 }

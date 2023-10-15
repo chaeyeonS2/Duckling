@@ -106,8 +106,7 @@ export default function CommentPage() {
           </form>
         </div>
       </div>
-      {/* 고정 푸터 btn 전달값 유저에 따라 수정해야함*/}
-      <Footer btn={1} />
+      <Footer />
     </div>
   );
 }
