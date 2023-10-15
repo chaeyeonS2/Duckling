@@ -55,15 +55,7 @@ export default function DecoPage() {
     <>
       <HeaderDeco />
 
-      <AvatarCanvas
-        ref={cameraRef}
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-        }}
-      >
+      <AvatarCanvas ref={cameraRef}>
         <AvatarModelGroup />
       </AvatarCanvas>
 

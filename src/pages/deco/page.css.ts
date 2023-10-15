@@ -14,6 +14,7 @@ export const topActionsContainer = style({
   alignItems: "flex-end",
   marginBottom: "12px",
   padding: "0 21px",
+  zIndex: 99,
 });
 
 export const categorySelectGroup = style({
@@ -47,6 +48,7 @@ export const decorationListContainer = style({
   overflowX: "hidden",
   padding: "21px",
   paddingBottom: "8px",
+  zIndex: 99,
 });
 
 export const buttonGroup = style({

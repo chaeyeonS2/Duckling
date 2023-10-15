@@ -11,7 +11,7 @@ const AvatarCanvas = forwardRef<RootState, React.PropsWithChildren<React.Compone
           if (typeof ref === "function") ref(rootState);
           else ref.current = rootState;
         }}
-        style={{ background: "transparent" }}
+        style={{ background: "transparent", position: "absolute", width: "100%", height: "100%" }}
         shadows
         camera={{
           rotation: [0, 0, 0],
@@ -22,7 +22,7 @@ const AvatarCanvas = forwardRef<RootState, React.PropsWithChildren<React.Compone
         }}
         {...props}
       >
-        <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} penumbra={1} castShadow />
+        <spotLight intensity={1} position={[0, 30, 80]} angle={0.2} castShadow />
         <ambientLight intensity={0.5} />
 
         {children}
