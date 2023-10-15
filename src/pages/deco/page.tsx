@@ -30,6 +30,7 @@ export default function DecoPage() {
 
   const handleDecoClick = (idx: number) => {
     setIsFaceDeco(idx == 0 ? true : false);
+    setCurrentKind(idx == 0 ? "eyes" : "top");
 
     if (!cameraRef.current) return;
     if (idx == 0) {
