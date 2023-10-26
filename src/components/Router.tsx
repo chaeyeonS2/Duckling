@@ -7,6 +7,7 @@ import XrealLoginPage from "@/pages/xmc/page";
 import NewPostPage from "@/pages/newPost/page";
 import CameraPage from "@/pages/camera/page";
 import LoginPage from "@/pages/login/page";
+import SharePage from "@/pages/share/page";
 import LookPage from "@/pages/look/page";
 import HomePage from "@/pages/home/page";
 import Start from "@/pages/Start";
@@ -23,6 +24,8 @@ export default function Router() {
         <Route path="/camera" element={<CameraPage />} />
         {/* <댓글창/> */}
         <Route path="/comment" element={<CommentPage />} />
+        {/* <공유하기 /> */}
+        <Route path="/share" element={<SharePage />} />
         {/* <아바타 꾸미기/> */}
         <Route path="/deco" element={<DecoPage />} />
         {/* HOME */}
