@@ -1,78 +1,43 @@
-// import React, { useState, useEffect } from "react";
-// import { BottomSheet } from "react-spring-bottom-sheet";
-// import "@/css/customBottomSheet.css";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+//https://github.com/Temzasse/react-modal-sheet#vanilla-css
+import Sheet from "react-modal-sheet";
+import { useState } from "react";
+import style from "styled-components";
 
-// TODO: 이거 왜 모두 주석처리 됐나요
+const CustomSheet = style(Sheet)`
+  margin: 0 auto;
+  max-width: 680px;
 
-// var photoURL = "";
-// var userName = "";
+  .react-modal-sheet-container {
+    background-color: #222 !important;
+  }
+
+  .react-modal-sheet-backdrop {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .react-modal-sheet-drag-indicator {
+    background-color: #666 !important;
+  }
+`;
+
 export default function MyPost() {
-  return <></>;
-  // const [postInfoArray, setPostArray] = useState([""]);
-  // const navigate = useNavigate();
-  // const newpostClick = () => {
-  //   navigate("/newPost");
-  // };
-  // //bottom sheet css 적용을 위한 코드
-  // useEffect(() => {
-  //   userName = localStorage.getItem("userName");
-  //   photoURL = localStorage.getItem("profileImg");
-  //   const getPostInfo = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `/api/posts/writer/${userName}`
-  //       );
-  //       if (response.data !== null) {
-  //         const newPostInfoArray = response.data.map((item) => ({
-  //           postImg: item.postImg[0],
-  //           postId: item.postID,
-  //         }));
-  //         setPostArray(newPostInfoArray);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getPostInfo(); // 컴포넌트가 마운트될 때 getPost 함수 호출
-  // }, []);
-  // const handlePostClick = (userName, postID) => {
-  //   navigate(`/postview/${userName}/${postID}`);
-  // };
-  // return (
-  //   <BottomSheet
-  //     id="parentDiv-home"
-  //     open
-  //     skipInitialTransition
-  //     snapPoints={({ maxHeight }) => [
-  //       maxHeight * 0 + 80, //최소
-  //       maxHeight / 2, //최대
-  //     ]}
-  //     blocking={false} //배경 블록 현상 해결
-  //     header={
-  //       <div className="bottom_header homeSheet">
-  //         <div
-  //           className="profileImg homeSheet"
-  //           style={{ backgroundImage: `url(${photoURL})` }}
-  //         />
-  //         <div className="userName homeSheet">{userName}</div>
-  //         <div className="btnAddNew homeSheet" onClick={newpostClick}>
-  //           <img src="/img/writing/add.png" alt="" />
-  //         </div>
-  //       </div>
-  //     }
-  //   >
-  //     <div className="bottom_content homeSheet">
-  //       {postInfoArray.map((info, index) => (
-  //         <div
-  //           className="postImg"
-  //           onClick={() => handlePostClick(userName, info.postId)}
-  //         >
-  //           <img className="item_img" src={info.postImg} alt="" />
-  //         </div>
-  //       ))}
-  //     </div>
-  //   </BottomSheet>
-  // );
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <>
+      <div>
+        <button onClick={() => setOpen(true)}>Open sheet</button>
+      </div>
+
+      <Sheet isOpen={true} onClose={() => setOpen(true)}>
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>
+            <div>aaa</div>
+          </Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop />
+      </Sheet>
+    </>
+  );
 }
