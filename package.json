@@ -5,16 +5,21 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --cache --write .",
     "preview": "vite preview",
-    "ts-check": "tsc --noEmit"
+    "ts-check": "tsc --noEmit",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "dependencies": {
     "@ar-js-org/ar.js": "^3.4.5",
     "@react-three/drei": "^9.78.1",
     "@react-three/fiber": "^8.14.1",
+    "@types/three": "^0.142.0",
+    "@zappar/zappar-react-three-fiber": "^2.4.9",
     "axios": "^1.4.0",
     "firebase": "^10.1.0",
     "immer": "^10.0.3",
@@ -33,6 +38,7 @@
     "@vanilla-extract/css": "^1.13.0",
     "@vanilla-extract/vite-plugin": "^3.9.0",
     "@vitejs/plugin-react": "^4.0.3",
+    "react-app-rewired": "^2.2.1",
     "typescript": "^5.2.2",
     "vite": "^4.4.5"
   }
