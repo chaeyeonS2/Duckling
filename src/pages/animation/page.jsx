@@ -15,17 +15,17 @@ export default function AnimationPage() {
     // 아바타 모델 로드
     loader.load("/gltf/avatar/animation_100.glb", (gltf) => {
       const avatarMesh = gltf.scene;
-      avatarRef.current.add(avatarMesh);
-
+      avatarRef.current.add(avatarMesh);  
       // 아바타의 뼈 구조 추출
       avatarSkeleton = gltf.scene.getObjectByName("mixamorig_Spine1"); // 실제 이름으로 변경
       //avatarSkeleton = gltf.scene.getObjectByName("mixamorig_Hip"); // 실제 이름으로 변경
-      // 의상 뼈 로드
-      loader.load("/gltf/avatar/Mantoman_Rigged.gltf", (gltf) => {
+      loader.load("/gltf/avatar/herin_top_rigging.glb", (gltf) => {
+        const clothMesh = gltf.scene;
+        clothingRef.current.add(clothMesh);
+        //의상 뼈 로드
         const clothingBone = gltf.scene.getObjectByName("mixamorig_Spine1");
         clothingRef.current.add(clothingBone);
       });
-      
 
       // 애니메이션 Mixer를 생성하고 애니메이션 클립을 추가합니다.
       mixer.current = new AnimationMixer(avatarMesh);
@@ -36,7 +36,6 @@ export default function AnimationPage() {
         });
       }
     });
-
 
     // 프레임마다 아바타 메쉬의 뼈 구조를 기반으로 의상 메쉬의 위치 업데이트
     const updateClothingPosition = () => {
