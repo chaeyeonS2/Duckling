@@ -18,7 +18,7 @@ export default function HomePage() {
           backgroundImage: "url(/img/home/background.png)",
         }}
       >
-        <AvatarCanvas>
+        <AvatarCanvas style={{ background: "transparent", position: "absolute", width: "100%", height: "100%" }}>
           <AvatarModelGroup />
         </AvatarCanvas>
       </div>

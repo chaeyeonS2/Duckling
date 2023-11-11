@@ -55,7 +55,10 @@ export default function DecoPage() {
     <>
       <HeaderDeco style={{ backgroundColor: "#f8b4d4" }} />
 
-      <AvatarCanvas ref={cameraRef}>
+      <AvatarCanvas
+        ref={cameraRef}
+        style={{ background: "transparent", position: "absolute", width: "100%", height: "100%" }}
+      >
         <AvatarModelGroup />
       </AvatarCanvas>
 

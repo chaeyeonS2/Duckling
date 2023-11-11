@@ -25,7 +25,6 @@ const AvatarCanvas = forwardRef<RootState, React.PropsWithChildren<React.Compone
     return (
       <Canvas
         onCreated={rootStateRef}
-        style={{ background: "transparent", position: "absolute", width: "100%", height: "100%" }}
         shadows
         camera={{
           rotation: [0, 0, 0],
