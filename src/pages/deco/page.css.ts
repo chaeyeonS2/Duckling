@@ -6,6 +6,17 @@ export const pageContainer = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
+  backgroundImage: "url(/img/home/background.png)",
+});
+
+export const bottomContainer = style({
+  width: "100%",
+  height: "fit-content",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-end",
+  position: "fixed",
+  bottom: 0,
 });
 
 export const topActionsContainer = style({

@@ -1,30 +1,29 @@
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/headers/Header";
-
-import "@/css/customBottomSheet.css";
-import Mypost from "./_components/MyPost";
 import AvatarModelGroup from "@/components/AvatarModelGroup";
+import Header from "@/components/layout/headers/Header";
 import AvatarCanvas from "@/components/AvatarCanvas";
+import Footer from "@/components/layout/Footer";
+import { Link } from "react-router-dom";
+
+import * as styles from "./page.css";
 
 export default function HomePage() {
   return (
-    <div>
-      <Header />
-      <div
-        className="content"
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundImage: "url(/img/home/background.png)",
-        }}
-      >
-        <AvatarCanvas style={{ background: "transparent", position: "absolute", width: "100%", height: "100%" }}>
-          <AvatarModelGroup />
-        </AvatarCanvas>
-      </div>
-      <Mypost />
-
+    <main className={styles.pageContainer}>
+      <Header>
+        <Link to="/share">
+          <img src="/img/share.png" />
+        </Link>
+        <Link to="/deco">
+          <img src="/img/home/deco.png" />
+        </Link>
+        <Link to="/">
+          <img src="/img/home/settings.png" />
+        </Link>
+      </Header>
+      <AvatarCanvas>
+        <AvatarModelGroup />
+      </AvatarCanvas>
       <Footer />
-    </div>
+    </main>
   );
 }

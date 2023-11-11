@@ -1,13 +1,16 @@
-import HeaderDeco from "@/components/layout/headers/HeaderDeco";
 import { useState, useRef } from "react";
-import type { RootState } from "@react-three/fiber";
-import Item from "./_components/Item";
-import axios from "axios";
+
 import AvatarModelGroup from "@/components/AvatarModelGroup";
+import Header from "@/components/layout/headers/Header";
+import AvatarCanvas from "@/components/AvatarCanvas";
+import { Link } from "react-router-dom";
+import Item from "./_components/Item";
+
+import type { RootState } from "@react-three/fiber";
 import useSWRImmutable from "swr/immutable";
+import axios from "axios";
 
 import * as styles from "./page.css";
-import AvatarCanvas from "@/components/AvatarCanvas";
 
 const subNav = {
   face: [
@@ -52,24 +55,18 @@ export default function DecoPage() {
   };
 
   return (
-    <>
-      <HeaderDeco style={{ backgroundColor: "#f8b4d4" }} />
+    <main className={styles.pageContainer}>
+      <Header>
+        <Link to="/home">
+          <img src="/img/close.png" />
+        </Link>
+      </Header>
 
-      <AvatarCanvas
-        ref={cameraRef}
-        style={{ background: "transparent", position: "absolute", width: "100%", height: "100%" }}
-      >
+      <AvatarCanvas ref={cameraRef}>
         <AvatarModelGroup />
       </AvatarCanvas>
 
-      <main
-        className={styles.pageContainer}
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundImage: "url(/img/home/background.png)",
-        }}
-      >
+      <div className={styles.bottomContainer}>
         <div className={styles.topActionsContainer}>
           <div className={styles.categorySelectGroup}>
             <button
@@ -120,7 +117,7 @@ export default function DecoPage() {
           </div>
           <Item currentKind={currentKind} isFaceDeco={isFaceDeco} />
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 }

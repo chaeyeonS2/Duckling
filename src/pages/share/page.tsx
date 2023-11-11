@@ -1,9 +1,11 @@
 import AvatarModelGroup from "@/components/AvatarModelGroup";
+import Header from "@/components/layout/headers/Header";
 import AvatarCanvas from "@/components/AvatarCanvas";
-import { useRef } from "react";
-import { button } from "../deco/page.css";
+import { Link } from "react-router-dom";
+
 import { RootState } from "@react-three/fiber";
-import HeaderDeco from "@/components/layout/headers/HeaderDeco";
+import { button } from "../deco/page.css";
+import { useRef } from "react";
 
 import * as styles from "./page.css";
 
@@ -16,7 +18,11 @@ export default function SharePage() {
   };
   return (
     <div>
-      <HeaderDeco />
+      <Header>
+        <Link to="/home">
+          <img src="/img/close.png" />
+        </Link>
+      </Header>
       <div className={styles.pageContainer}>
         <div className={styles.canvasContainer}>
           <AvatarCanvas ref={rootStateRef} className={styles.avatarCanvas}>
