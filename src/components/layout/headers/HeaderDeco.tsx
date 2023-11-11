@@ -1,16 +1,13 @@
+import { Link } from "react-router-dom";
 import * as styles from "./header.css";
 
-export default function HeaderDeco() {
-  const closeClick = () => {
-    window.location.href = "/home"; // "/home"으로 새로고침
-  };
-
+export default function HeaderDeco({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <header className={styles.header} style={{ backgroundColor: "#f8b4d4" }}>
+    <header className={styles.header + " " + className} {...props}>
       <div className={styles.rightBtnGroup}>
-        <button className={styles.btnClose} onClick={closeClick}>
+        <Link className={styles.btnClose} to="/home">
           <img src="/img/close.png" />
-        </button>
+        </Link>
       </div>
     </header>
   );

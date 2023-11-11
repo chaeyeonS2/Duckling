@@ -53,7 +53,7 @@ export default function DecoPage() {
 
   return (
     <>
-      <HeaderDeco />
+      <HeaderDeco style={{ backgroundColor: "#f8b4d4" }} />
 
       <AvatarCanvas ref={cameraRef}>
         <AvatarModelGroup />
