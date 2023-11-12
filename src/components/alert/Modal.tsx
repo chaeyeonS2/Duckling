@@ -14,6 +14,6 @@ export default function Modal({ isOpen, children }: React.PropsWithChildren<Moda
         {/* <button onClick={onClose}>Close</button> */}
       </div>
     </div>,
-    document.getElementById("modal")!
+    document.getElementById("modal-root")!
   );
 }
