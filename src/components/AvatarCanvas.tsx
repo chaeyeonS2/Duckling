@@ -1,17 +1,30 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, RootState } from "@react-three/fiber";
-import { forwardRef } from "react";
+import React, { forwardRef, useCallback } from "react";
 
 const AvatarCanvas = forwardRef<RootState, React.PropsWithChildren<React.ComponentProps<typeof Canvas>>>(
   ({ children, ...props }, ref) => {
+    const rootStateRef = useCallback((rootState: RootState) => {
+      if (!ref) return;
+
+      rootState.gl.domElement.addEventListener(
+        "webglcontextlost",
+        function (event) {
+          event.preventDefault();
+          setTimeout(function () {
+            rootState.gl.forceContextRestore();
+          }, 100);
+        },
+        false
+      );
+
+      if (typeof ref === "function") ref(rootState);
+      else ref.current = rootState;
+    }, []);
+
     return (
       <Canvas
-        onCreated={(rootState) => {
-          if (!ref) return;
-          if (typeof ref === "function") ref(rootState);
-          else ref.current = rootState;
-        }}
-        style={{ background: "transparent", position: "absolute", width: "100%", height: "100%" }}
+        onCreated={rootStateRef}
         shadows
         camera={{
           rotation: [0, 0, 0],
