@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { Link } from "react-router-dom";
 
 import * as styles from "./page.css";
+import MyPost from "./_components/MyPost";
 
 export default function HomePage() {
   return (
@@ -23,6 +24,7 @@ export default function HomePage() {
       <AvatarCanvas>
         <AvatarModelGroup />
       </AvatarCanvas>
+      <MyPost />
       <Footer />
     </main>
   );
