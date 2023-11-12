@@ -1,78 +1,88 @@
-// import React, { useState, useEffect } from "react";
-// import { BottomSheet } from "react-spring-bottom-sheet";
-// import "@/css/customBottomSheet.css";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+//https://github.com/Temzasse/react-modal-sheet#vanilla-css
+import Sheet, { SheetRef } from "react-modal-sheet";
+import { useRef } from "react";
+import * as styles from "./myPost.css";
+import { useNavigate } from "react-router-dom";
+import useSWR from "swr";
 
-// TODO: 이거 왜 모두 주석처리 됐나요
-
-// var photoURL = "";
-// var userName = "";
 export default function MyPost() {
-  return <></>;
-  // const [postInfoArray, setPostArray] = useState([""]);
-  // const navigate = useNavigate();
-  // const newpostClick = () => {
-  //   navigate("/newPost");
-  // };
-  // //bottom sheet css 적용을 위한 코드
-  // useEffect(() => {
-  //   userName = localStorage.getItem("userName");
-  //   photoURL = localStorage.getItem("profileImg");
-  //   const getPostInfo = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `/api/posts/writer/${userName}`
-  //       );
-  //       if (response.data !== null) {
-  //         const newPostInfoArray = response.data.map((item) => ({
-  //           postImg: item.postImg[0],
-  //           postId: item.postID,
-  //         }));
-  //         setPostArray(newPostInfoArray);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   getPostInfo(); // 컴포넌트가 마운트될 때 getPost 함수 호출
-  // }, []);
-  // const handlePostClick = (userName, postID) => {
-  //   navigate(`/postview/${userName}/${postID}`);
-  // };
-  // return (
-  //   <BottomSheet
-  //     id="parentDiv-home"
-  //     open
-  //     skipInitialTransition
-  //     snapPoints={({ maxHeight }) => [
-  //       maxHeight * 0 + 80, //최소
-  //       maxHeight / 2, //최대
-  //     ]}
-  //     blocking={false} //배경 블록 현상 해결
-  //     header={
-  //       <div className="bottom_header homeSheet">
-  //         <div
-  //           className="profileImg homeSheet"
-  //           style={{ backgroundImage: `url(${photoURL})` }}
-  //         />
-  //         <div className="userName homeSheet">{userName}</div>
-  //         <div className="btnAddNew homeSheet" onClick={newpostClick}>
-  //           <img src="/img/writing/add.png" alt="" />
-  //         </div>
-  //       </div>
-  //     }
-  //   >
-  //     <div className="bottom_content homeSheet">
-  //       {postInfoArray.map((info, index) => (
-  //         <div
-  //           className="postImg"
-  //           onClick={() => handlePostClick(userName, info.postId)}
-  //         >
-  //           <img className="item_img" src={info.postImg} alt="" />
-  //         </div>
-  //       ))}
-  //     </div>
-  //   </BottomSheet>
-  // );
+  const ref = useRef<SheetRef>();
+  const snapTo = (i: number) => ref.current?.snapTo(i);
+
+  return (
+    <>
+      <Sheet
+        isOpen={true}
+        onClose={() => snapTo(1)}
+        snapPoints={[500, 80]}
+        initialSnap={1}
+        style={{
+          marginBottom: "88px",
+          borderLeft: "1px solid black",
+          borderRight: "1px solid black",
+        }}
+      >
+        <Sheet.Container
+          style={{
+            borderTopRightRadius: "20px",
+            borderTopLeftRadius: "20px",
+          }}
+        >
+          <Sheet.Header
+            style={{
+              height: "55px",
+              borderRadius: "20px 20px 0 0",
+              borderTop: "5px solid black",
+              boxShadow: "0px -2px 0px rgba(0, 0, 0, 0.3)",
+              paddingTop: "12px",
+              paddingBottom: "12px",
+            }}
+          >
+            <CustomHeader />
+          </Sheet.Header>
+          <Sheet.Content>
+            <Sheet.Scroller draggableAt="both">
+              <CustomContent />
+            </Sheet.Scroller>
+          </Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop style={{ backgroundColor: "rgba(0,0,0,0)" }} />
+      </Sheet>
+    </>
+  );
+}
+
+function CustomHeader() {
+  const navigate = useNavigate();
+  const newpostClick = () => {
+    navigate("/newPost");
+  };
+  return (
+    <div>
+      <div className={styles.profileImg} style={{ backgroundImage: `url(${localStorage.getItem("photoURL")})` }} />
+      <div className={styles.userName}>{localStorage.getItem("userName")}</div>
+      <div className={styles.btnAddNew} onClick={newpostClick}>
+        <img className={styles.btnAddNewImage} src="/img/writing/add.png" alt="" />
+      </div>
+    </div>
+  );
+}
+
+function CustomContent() {
+  const { data: posts } = useSWR<APIPostsWriterReponse>("/api/posts/writer/" + localStorage.getItem("userName"));
+
+  const navigate = useNavigate();
+  const handlePostClick = (userName: string, postID: string) => {
+    navigate(`/postview/${userName}/${postID}`);
+  };
+  return (
+    <div className={styles.content}>
+      {posts &&
+        posts.map((post, index) => (
+          <div key={index} className={styles.postImg} onClick={() => handlePostClick(post.writerID, post.postID)}>
+            <img className={styles.item_img} src={post.postImg[0]} alt="" />
+          </div>
+        ))}
+    </div>
+  );
 }
