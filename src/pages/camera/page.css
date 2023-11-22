@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+/* import { style } from "@vanilla-extract/css";
 
 export const zapparPlacementUi = style({
   position: "absolute",
@@ -12,4 +12,9 @@ export const zapparPlacementUi = style({
   fontFamily: "sans-serif",
   padding: "10px",
   borderRadius: "5px",
-});
+}); */
+
+.view3d-wrapper {
+  width: 100%;
+  height: 60vh;
+}

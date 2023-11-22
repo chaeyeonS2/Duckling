@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ar-js-org/ar.js": "^3.4.5",
+    "@egjs/react-view3d": "^2.3.1",
     "@react-three/drei": "^9.78.1",
     "@react-three/fiber": "^8.14.1",
     "@types/three": "^0.142.0",
