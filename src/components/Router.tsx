@@ -26,7 +26,7 @@ export default function Router() {
         {/* <댓글창/> */}
         <Route path="/comment" element={<CommentPage />} />
         {/* <공유하기 /> */}
-        <Route path="/share" element={<SharePage />} />
+        <Route path="/share/:userID" element={<SharePage />} />
         {/* <아바타 꾸미기/> */}
         <Route path="/deco" element={<DecoPage />} />
         {/* HOME */}

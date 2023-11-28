@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <main className={styles.pageContainer}>
       <Header>
-        <Link to="/share">
+        <Link to={"/share/" + localStorage.getItem("id")}>
           <img src="/img/share.png" />
         </Link>
         <Link to="/deco">
