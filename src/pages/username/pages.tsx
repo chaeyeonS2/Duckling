@@ -12,14 +12,8 @@ export default function UsernamePage() {
   return (
     <main className={styles.pageContainer}>
       <Header>
-        <Link to="/share">
+        <Link to={"/share/" + userID}>
           <img src="/img/share.png" />
-        </Link>
-        <Link to="/deco">
-          <img src="/img/home/deco.png" />
-        </Link>
-        <Link to="/">
-          <img src="/img/home/settings.png" />
         </Link>
       </Header>
       <AvatarCanvas>
