@@ -50,7 +50,6 @@ export const text1 = style({
   fontStyle: "normal",
   fontWeight: "500",
   lineHeight: "normal",
-  margin: "0",
   textAlign: "center",
 });
 
@@ -62,7 +61,6 @@ export const text2 = style({
   fontStyle: "normal",
   fontWeight: "400",
   lineHeight: "normal",
-  margin: "0",
   textAlign: "center",
 });
 
