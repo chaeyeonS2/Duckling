@@ -5,7 +5,7 @@ import ConfirmModal from "@/components/alert/ConfirmModal";
 import AlertModal from "@/components/alert/AlertModal";
 import { useNavigate } from "react-router-dom";
 import BaseModal from "@/components/alert/BaseModal";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import axios from "axios";
 
@@ -43,6 +43,7 @@ export default function SettingPage() {
                   계정 정보 복구는 불가능합니다
                 </>
               }
+              logoImgSrc={<Icon id="warning" size="medium" />}
               description="덕클링 이력, 덕클링 닉네임, 덕클링 활동 이력이 전부 삭제됩니다."
               onNo={() => overlays.close(reallyConfirmId)}
               onYes={() => {
@@ -70,8 +71,37 @@ export default function SettingPage() {
     ));
   };
 
-  const handleAvatarChange = () => {
-    // TODO: 프로필 사진 변경
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const handleProfileImgClick = () => {
+    inputFileRef.current?.click();
+  };
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    let overlayId = -1;
+    overlays.open(({ overlayId: id }) => {
+      overlayId = id;
+      return <BaseModal title="프로필 이미지를 변경중입니다" />;
+    });
+    try {
+      await axios.patch(`/api/users/${localStorage.getItem("id")}`, {
+        profileImg: URL.createObjectURL(e.target.files[0]),
+      });
+      overlays.close(overlayId);
+    } catch (e) {
+      overlays.open(({ overlayId }) => (
+        <AlertModal
+          logoImgSrc={<Icon id="warning" size="medium" />}
+          title="프로필 이미지 변경에 실패했습니다"
+          description="잠시 후 다시 시도해주세요"
+          onClose={() => {
+            overlays.close(overlayId);
+          }}
+        />
+      ));
+      overlays.close(overlayId);
+      return;
+    }
+
     mutate();
     overlays.open(({ overlayId }) => {
       useEffect(() => {
@@ -112,7 +142,7 @@ export default function SettingPage() {
         <div style={{ width: "24px", height: "24px" }} />
       </header>
       <div className={styles.container}>
-        <div className={styles.avatar}></div>
+        <img src={user?.profileImg ?? ""} alt="" className={styles.avatar} onClick={handleProfileImgClick} />
         <label htmlFor="nicknameInput" className={styles.inputLabel}>
           닉네임
         </label>
@@ -124,7 +154,7 @@ export default function SettingPage() {
               placeholder="닉네임"
               onChange={handleInputChange}
               className={styles.input}
-              value={usernameValue}
+              value={(usernameValue || user?.userName) ?? ""}
             />
             <Icon id="check" size="small" className={styles.inputIcon} aria-hidden={inputState != "confirm"} />
             <Icon id="exclam" size="small" className={styles.inputIcon} aria-hidden={inputState != "invalid"} />
@@ -144,6 +174,15 @@ export default function SettingPage() {
           서비스 탈퇴
         </button>
       </div>
+
+      <input
+        ref={inputFileRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        multiple
+        onChange={handleAvatarChange}
+      />
     </div>
   );
 }

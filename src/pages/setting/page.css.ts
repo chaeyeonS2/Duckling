@@ -22,12 +22,18 @@ export const container = style({
 });
 
 export const avatar = style({
+  display: "block",
+  margin: "0 auto",
   marginTop: "31px",
+  width: "124px",
+  height: "124px",
+  border: "2px solid black",
+  borderRadius: "50%",
 });
 
 export const inputLabel = style({
   marginTop: "49px",
-
+  display: "block",
   fontWeight: 600,
   fontSize: "18px",
 });
