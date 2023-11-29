@@ -1,24 +1,15 @@
-import * as styles from "./isImage.css";
+import BaseModal, { BaseModalProps } from "./BaseModal";
+import * as styles from "./modal.css";
 
-export interface AlertModalProps {
-  logoImgSrc?: string | JSX.Element;
-  title?: string;
-  description?: string;
+export interface AlertModalProps extends BaseModalProps {
+  onClose?: () => void;
 }
-export default function AlertModal({
-  logoImgSrc,
-  title,
-  description,
-  children,
-}: React.PropsWithChildren<AlertModalProps>) {
+export default function AlertModal({ onClose, ...props }: AlertModalProps) {
   return (
-    <div className={styles.alertlayout}>
-      {typeof logoImgSrc === "string" ? <img className={styles.image} src={logoImgSrc} /> : logoImgSrc}
-      <div className={styles.textBox}>
-        {title && <p className={styles.text1}>{title}</p>}
-        {description && <p className={styles.text2}>{description}</p>}
-      </div>
-      {children}
-    </div>
+    <BaseModal {...props}>
+      <button className={styles.btnOk} onClick={onClose}>
+        확인
+      </button>
+    </BaseModal>
   );
 }

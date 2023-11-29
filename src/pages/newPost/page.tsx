@@ -4,10 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import * as styles from "./page.css";
-import ConfirmModal from "@/components/alert/ConfirmModal";
+import AlertModal from "@/components/alert/AlertModal";
 import { overlays } from "@/overlays";
 import Icon from "@/components/Icon";
-import AlertModal from "@/components/alert/AlertModal";
+import BaseModal from "@/components/alert/BaseModal";
 
 export default function NewPostPage() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function NewPostPage() {
       overlays.open(({ overlayId: id }) => {
         overlayId = id;
         return (
-          <AlertModal
+          <BaseModal
             logoImgSrc={<img src="/img/writing/upload_loading.gif" alt="" />}
             title="게시글이 올라가고 있어요~!"
           />
@@ -45,7 +45,7 @@ export default function NewPostPage() {
       console.log("Document uploaded:", data.postID, data.writerID);
 
       overlays.open(({ overlayId }) => (
-        <ConfirmModal
+        <AlertModal
           onClose={() => {
             overlays.close(overlayId);
             navigate(`/postView/${data.writerID}/${data.postID}`);
@@ -114,7 +114,7 @@ export default function NewPostPage() {
     }
 
     overlays.open(({ overlayId }) => (
-      <ConfirmModal
+      <AlertModal
         onClose={() => overlays.close(overlayId)}
         logoImgSrc={<Icon id="image" size="medium" />}
         title="사진을 첨부해야 업로드 할 수 있어요"

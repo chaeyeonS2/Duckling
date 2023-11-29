@@ -1,15 +1,21 @@
-import AlertModal, { AlertModalProps } from "./AlertModal";
-import * as styles from "./isImage.css";
+import BaseModal, { BaseModalProps } from "./BaseModal";
+import * as styles from "./modal.css";
 
-export interface ConfirmModalProps extends AlertModalProps {
-  onClose?: () => void;
+export interface ConfirmModalProps extends BaseModalProps {
+  onYes?: () => void;
+  onNo?: () => void;
 }
-export default function ConfirmModal({ onClose, ...props }: ConfirmModalProps) {
+export default function ConfirmModal({ onYes, onNo, ...props }: ConfirmModalProps) {
   return (
-    <AlertModal {...props}>
-      <button className={styles.btnOk} onClick={onClose}>
-        확인
-      </button>
-    </AlertModal>
+    <BaseModal {...props}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "12px" }}>
+        <button className={styles.btnNo} onClick={onNo}>
+          아니오
+        </button>
+        <button className={styles.btnOk} onClick={onYes}>
+          네
+        </button>
+      </div>
+    </BaseModal>
   );
 }

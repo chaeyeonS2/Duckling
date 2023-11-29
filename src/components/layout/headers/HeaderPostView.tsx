@@ -1,14 +1,29 @@
-import Delete from "@/components/alert/Delete";
-import PostShare from "@/components/alert/PostShare";
 import { overlays } from "@/overlays";
 import * as styles from "./headerPostView.css";
 import { useNavigate } from "react-router-dom";
+import AlertModal from "@/components/alert/AlertModal";
+import ConfirmModal from "@/components/alert/ConfirmModal";
+import Icon from "@/components/Icon";
 
 export default function HeaderPostView() {
   const navigate = useNavigate();
 
   const deleteClick = () => {
-    overlays.open(({ overlayId }) => <Delete onClose={() => overlays.close(overlayId)} />);
+    overlays.open(({ overlayId }) => (
+      <ConfirmModal
+        title={
+          <>
+            해당 글은 영구적으로 삭제 됩니다.
+            <br />
+            정말 삭제 하실건가요? (˙ᴖ˙ก̀)
+          </>
+        }
+        onYes={() => {
+          // TODO: impl post delete
+        }}
+        onNo={() => overlays.close(overlayId)}
+      />
+    ));
   };
 
   const shareClick = () => {
@@ -17,7 +32,19 @@ export default function HeaderPostView() {
     navigator.clipboard
       .writeText(currentURL)
       .then(() => {
-        overlays.open(({ overlayId }) => <PostShare onClose={() => overlays.close(overlayId)} />);
+        overlays.open(({ overlayId }) => (
+          <AlertModal
+            onClose={() => overlays.close(overlayId)}
+            logoImgSrc={<Icon id="link" size="medium" />}
+            title={
+              <>
+                주소가 복사되었습니다. :-D
+                <br />
+                원하는 곳에 붙여넣기 해주세요!
+              </>
+            }
+          />
+        ));
       })
       .catch((err) => {
         console.error("URL 복사 실패:", err);
