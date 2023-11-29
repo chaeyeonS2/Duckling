@@ -5,10 +5,13 @@ import ConfirmModal from "@/components/alert/ConfirmModal";
 import AlertModal from "@/components/alert/AlertModal";
 import { useNavigate } from "react-router-dom";
 import BaseModal from "@/components/alert/BaseModal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import useSWRImmutable from "swr/immutable";
+import axios from "axios";
 
 export default function SettingPage() {
   const navigate = useNavigate();
+  const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
 
   const handleLogout = () => {
     overlays.open(({ overlayId }) => (
@@ -69,7 +72,7 @@ export default function SettingPage() {
 
   const handleAvatarChange = () => {
     // TODO: 프로필 사진 변경
-
+    mutate();
     overlays.open(({ overlayId }) => {
       useEffect(() => {
         setTimeout(() => {
@@ -78,6 +81,27 @@ export default function SettingPage() {
       }, []);
       return <BaseModal title="프로필 이미지가 변경되었습니다" />;
     });
+  };
+
+  const [usernameValue, setUsernameValue] = useState(() => user?.userName ?? "");
+  const [inputState, setInputState] = useState<"idle" | "invalid" | "confirm">("idle");
+  const handleUsernameChange = async () => {
+    axios
+      .patch(`/api/users/${localStorage.getItem("id")}`, {
+        userName: usernameValue,
+      })
+      .then(() => {
+        setInputState("confirm");
+        mutate();
+      })
+      .catch(() => {
+        setInputState("invalid");
+        mutate();
+      });
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputState("idle");
+    setUsernameValue(e.target.value);
   };
 
   return (
@@ -92,9 +116,23 @@ export default function SettingPage() {
         <label htmlFor="nicknameInput" className={styles.inputLabel}>
           닉네임
         </label>
-        <div className={styles.inputContainer}>
-          <input type="text" id="nicknameInput" placeholder="닉네임" className={styles.input} />
-          <button className={styles.inputButton}>변경하기</button>
+        <div className={styles.usernameContainer}>
+          <div className={styles.inputContainer}>
+            <input
+              type="text"
+              id="nicknameInput"
+              placeholder="닉네임"
+              onChange={handleInputChange}
+              className={styles.input}
+              value={usernameValue}
+            />
+            <Icon id="check" size="small" className={styles.inputIcon} aria-hidden={inputState != "confirm"} />
+            <Icon id="exclam" size="small" className={styles.inputIcon} aria-hidden={inputState != "invalid"} />
+          </div>
+
+          <button className={styles.inputButton} onClick={handleUsernameChange} data-state={inputState}>
+            변경하기
+          </button>
         </div>
       </div>
       <div className={styles.footer}>
