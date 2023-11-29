@@ -109,7 +109,7 @@ export default function SettingPage() {
       <header className={styles.header}>
         <Icon id="close" size="medium" />
         <p>설정</p>
-        <div />
+        <div style={{ width: "24px", height: "24px" }} />
       </header>
       <div className={styles.container}>
         <div className={styles.avatar}></div>
