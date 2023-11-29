@@ -22,6 +22,7 @@ export default function HeaderPostView() {
           // TODO: impl post delete
         }}
         onNo={() => overlays.close(overlayId)}
+        yesText="네,삭제할게요"
       />
     ));
   };
