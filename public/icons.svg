@@ -30,5 +30,58 @@
     <symbol viewBox="0 0 24 24" id="check">
       <path d="M20 4V6H18V8H16V10H14V12H12V14H10V16H9V17H7V16H6V14H4V13H2V16H4V18H6V20H7V21H9V20H10V18H12V16H14V14H16V12H18V10H20V8H22V4H20Z" fill="white"/>
     </symbol>
+    <symbol viewBox="0 0 24 24" id="cookie">
+      <g clip-path="url(#clip0_755_6532)">
+        <path d="M23.431 6.28467H22.291V11.9997H23.431V6.28467Z" fill="white"/>
+        <path d="M22.2901 3.99756H21.1426V6.28506H22.2901V3.99756Z" fill="white"/>
+        <path d="M21.142 2.85742H20.002V3.99742H21.142V2.85742Z" fill="white"/>
+        <path d="M20.0023 1.71729H17.7148V2.85729H20.0023V1.71729Z" fill="white"/>
+        <path d="M14.2884 6.28492H16.5759V5.14492H17.7159V3.99742H16.5759V2.85742H14.2884V3.99742H13.1484V5.14492H14.2884V6.28492Z" fill="white"/>
+        <path d="M10.0002 12.14L10.0002 14.4275L11.1402 14.4275L11.1402 15.5675L12.2877 15.5675L12.2877 14.4275L13.4277 14.4275L13.4277 12.14L12.2877 12.14L12.2877 11L11.1402 11L11.1402 12.14L10.0002 12.14Z" fill="white"/>
+        <path d="M13.1477 22.2822H6.28516V23.4297H13.1477V22.2822Z" fill="white"/>
+        <path d="M17.7154 0.569824H9.71289V1.71732H17.7154V0.569824Z" fill="white"/>
+        <path d="M10.8611 16.5747H8.57359V17.7147H7.43359V20.0022H8.57359V21.1422H10.8611V20.0022H12.0011V17.7147H10.8611V16.5747Z" fill="white"/>
+        <path d="M9.71359 1.71729H7.43359V2.85729H9.71359V1.71729Z" fill="white"/>
+        <path d="M13.0997 22.29H17.1797V21.1H13.0997V22.29Z" fill="white"/>
+        <path d="M18.2891 21.1296L18.2891 18.8496L17.1491 18.8496L17.1491 21.1296L18.2891 21.1296Z" fill="white"/>
+        <path d="M7.43266 9.71252H9.71266V8.57252H10.8602V6.28502H9.71266V5.14502H7.43266V6.28502H6.28516V8.57252H7.43266V9.71252Z" fill="white"/>
+        <path d="M4.00492 15.4274H6.28492V14.2874H7.43242V11.9999H6.28492V10.8599H4.00492V11.9999H2.85742V14.2874H4.00492V15.4274Z" fill="white"/>
+        <path d="M16.5049 15H19.4951V13.5025H21V10.4975H19.4951V9H16.5049V10.4975H15V13.5025H16.5049V15Z" fill="white"/>
+        <path d="M7.43203 2.85742H5.14453V3.99742H7.43203V2.85742Z" fill="white"/>
+        <path d="M18.2809 18.855H20.5684V17.715H18.2809V18.855Z" fill="white"/>
+        <path d="M6.28453 21.1421H5.14453V22.2821H6.28453V21.1421Z" fill="white"/>
+        <path d="M5.14492 20.0024H2.85742V21.1424H5.14492V20.0024Z" fill="white"/>
+        <path d="M5.14586 3.99756H4.00586V5.14506H5.14586V3.99756Z" fill="white"/>
+        <path d="M20.567 17.7148H21.707V16.5673H20.567V17.7148Z" fill="white"/>
+        <path d="M4.00492 5.14502H2.85742V7.43252H4.00492V5.14502Z" fill="white"/>
+        <path d="M21.708 16.5674H22.8555V14.2799H21.708V16.5674Z" fill="white"/>
+        <path d="M2.85875 17.7148H1.71875V20.0023H2.85875V17.7148Z" fill="white"/>
+        <path d="M2.85875 7.43213H1.71875V9.71213H2.85875V7.43213Z" fill="white"/>
+        <path d="M22.8541 14.2798H23.9941V11.9998H22.8541V14.2798Z" fill="white"/>
+        <path d="M1.71781 9.7124H0.570312V17.7149H1.71781V9.7124Z" fill="white"/>
+      </g>
+      <defs>
+        <clipPath id="clip0_755_6532">
+          <rect width="24" height="24" fill="white"/>
+        </clipPath>
+      </defs>
+    </symbol>
+    <symbol viewBox="0 0 24 24" id="comment">
+      <path d="M21 5V4H20V3H19V2H5V3H4V4H3V5H2V15H3V16H4V17H5V18H6V22H10V21H11V20H12V19H13V18H19V17H20V16H21V15H22V5H21ZM20 13H19V14H18V15H17V16H12V17H11V18H10V19H9V20H8V16H7V15H6V14H5V13H4V7H5V6H6V5H7V4H17V5H18V6H19V7H20V13Z" fill="white"/>
+    </symbol>
+    <symbol viewBox="0 0 24 24" id="vertical-dots">
+      <rect x="10" y="11" width="2" height="2" fill="black"/>
+      <rect x="10" y="5" width="2" height="2" fill="black"/>
+      <rect x="10" y="17" width="2" height="2" fill="black"/>
+      <rect x="11" y="10" width="2" height="2" fill="black"/>
+      <rect x="11" y="4" width="2" height="2" fill="black"/>
+      <rect x="11" y="16" width="2" height="2" fill="black"/>
+      <rect x="12" y="11" width="2" height="2" fill="black"/>
+      <rect x="12" y="5" width="2" height="2" fill="black"/>
+      <rect x="12" y="17" width="2" height="2" fill="black"/>
+      <rect x="11" y="12" width="2" height="2" fill="black"/>
+      <rect x="11" y="6" width="2" height="2" fill="black"/>
+      <rect x="11" y="18" width="2" height="2" fill="black"/>
+    </symbol>
   </defs>
 </svg> 

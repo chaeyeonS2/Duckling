@@ -1,57 +1,60 @@
 import { style } from "@vanilla-extract/css";
 
-export const bottomBar = style({
+export const layout = style({
+  display: "grid",
+  gridTemplateRows: "auto 1fr auto",
+  height: "100%",
+  width: "100%",
+  overflow: "hidden",
+});
+
+export const container = style({
+  border: "2px inset black",
+  borderTop: "6px solid black",
+  borderBottom: "none",
+  borderRadius: "20px 20px 0 0",
+
+  display: "grid",
+  gridTemplateRows: "auto 1fr auto",
+  height: "100%",
+  width: "100%",
+  overflow: "hidden",
+});
+
+export const postHeader = style({
+  padding: "16px 24px",
   display: "flex",
-  bottom: "88px",
-  left: "0px",
-  position: "fixed",
-  width: "100vw",
-  textAlign: "center",
-  zIndex: "9999",
-  height: "50px",
-  backgroundColor: "black",
-});
-
-export const content = style({
-  paddingTop: "45px",
-});
-
-export const marignBox = style({
-  padding: "0.5vw",
-  width: "99vw",
-});
-
-export const num = style({
-  float: "left",
-  paddingRight: "10px",
-});
-
-export const textContent = style({
-  textAlign: "left",
-  margin: "20px",
-  marginTop: "30px",
-  marginBottom: "100px",
+  alignItems: "center",
+  justifyContent: "space-between",
 });
 
 export const title = style({
-  height: "45px",
-  padding: "10px",
-  borderRadius: "20px 20px 0 0",
-  borderLeft: "1px solid black",
-  borderRight: "1px solid black",
-  borderTop: "5px solid black",
+  fontSize: "20px",
+  fontWeight: "500",
+  whiteSpace: "nowrap",
+});
+
+export const timestemp = style({
+  marginTop: "8px",
+  fontSize: "14px",
+  color: "#B8B8B8",
+});
+
+export const content = style({
+  padding: "16px 20px",
+  fontSize: "16px",
+});
+
+export const metadataContainer = style({
+  display: "flex",
+  color: "white",
+  backgroundColor: "black",
+  gap: "15px",
+  padding: "11px 18px",
+});
+
+export const metadata = style({
   display: "flex",
   alignItems: "center",
-});
-
-export const writinggetBox = style({
-  height: "80vh",
-  border: "1px solid black",
-  overflow: "auto",
-});
-
-export const leftBtn = style({
-  float: "left",
-  color: "white",
-  padding: "5px",
+  gap: "3px",
 });
