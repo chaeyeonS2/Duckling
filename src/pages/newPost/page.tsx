@@ -4,10 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import * as styles from "./page.css";
-import AlertModal from "@/components/alert/AlertModal";
-import { overlays } from "@/overlays";
+import AlertModal from "@/components/modal/AlertModal";
+import { overlays } from "@/utils/overlays";
 import Icon from "@/components/Icon";
-import BaseModal from "@/components/alert/BaseModal";
+import BaseModal from "@/components/modal/BaseModal";
 
 export default function NewPostPage() {
   const navigate = useNavigate();

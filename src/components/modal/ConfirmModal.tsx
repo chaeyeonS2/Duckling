@@ -10,7 +10,7 @@ export interface ConfirmModalProps extends BaseModalProps {
 export default function ConfirmModal({ yesText = "네", noText = "아니요", onYes, onNo, ...props }: ConfirmModalProps) {
   return (
     <BaseModal {...props}>
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "12px" }}>
+      <div className={styles.btnGroup}>
         <button className={styles.btnNo} onClick={onNo}>
           {noText}
         </button>

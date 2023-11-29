@@ -1,10 +1,10 @@
 import Icon from "@/components/Icon";
 import * as styles from "./page.css";
-import { overlays } from "@/overlays";
-import ConfirmModal from "@/components/alert/ConfirmModal";
-import AlertModal from "@/components/alert/AlertModal";
+import { overlays } from "@/utils/overlays";
+import ConfirmModal from "@/components/modal/ConfirmModal";
+import AlertModal from "@/components/modal/AlertModal";
 import { useNavigate } from "react-router-dom";
-import BaseModal from "@/components/alert/BaseModal";
+import BaseModal from "@/components/modal/BaseModal";
 import { useEffect, useRef, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import axios from "axios";

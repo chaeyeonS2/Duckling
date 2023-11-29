@@ -46,6 +46,13 @@ export const text2 = style({
   fontWeight: "400",
 });
 
+export const btnGroup = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "12px",
+});
+
 export const btnNo = style({
   backgroundColor: "#bdff6b",
   width: "80px",
