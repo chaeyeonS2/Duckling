@@ -1,12 +1,13 @@
 import Footer from "@/components/layout/Footer";
 import { useState, useRef } from "react";
-import Modal from "@/components/alert/Modal";
-import Uploading from "@/components/alert/Uploading";
-import IsImage from "@/components/alert/IsImage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import * as styles from "./page.css";
+import ConfirmModal from "@/components/alert/ConfirmModal";
+import { overlays } from "@/overlays";
+import Icon from "@/components/Icon";
+import AlertModal from "@/components/alert/AlertModal";
 
 export default function NewPostPage() {
   const navigate = useNavigate();
@@ -20,8 +21,18 @@ export default function NewPostPage() {
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
 
+    let overlayId = -1;
     try {
-      openModal(<Uploading />);
+      overlays.open(({ overlayId: id }) => {
+        overlayId = id;
+        return (
+          <AlertModal
+            logoImgSrc={<img src="/img/writing/upload_loading.gif" alt="" />}
+            title="게시글이 올라가고 있어요~!"
+          />
+        );
+      });
+
       const res = await axios.post("/api/posts", {
         title: title,
         body: content,
@@ -32,11 +43,21 @@ export default function NewPostPage() {
       const data = res.data;
 
       console.log("Document uploaded:", data.postID, data.writerID);
-      navigate(`/postView/${data.writerID}/${data.postID}`);
+
+      overlays.open(({ overlayId }) => (
+        <ConfirmModal
+          onClose={() => {
+            overlays.close(overlayId);
+            navigate(`/postView/${data.writerID}/${data.postID}`);
+          }}
+          logoImgSrc={<Icon id="check" size="medium" />}
+          title="게시글이 업로드 되었습니다"
+        />
+      ));
     } catch (error) {
       console.error("Error uploading document:", error);
     } finally {
-      closeModal();
+      overlays.close(overlayId);
     }
   };
 
@@ -86,27 +107,20 @@ export default function NewPostPage() {
     inputFileRef.current?.click();
   };
 
-  //modal
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<JSX.Element>();
-
-  const openModal = (content: JSX.Element) => {
-    setModalContent(content);
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalContent(undefined);
-    setModalIsOpen(false);
-  };
-
   const uploadClick = () => {
-    //올라간 이미지가 없으면 업로드 불가 모달 띄우고 있으면 업로드 시작
-    if (previewImages.length === 0) {
-      openModal(<IsImage onClose={closeModal} />);
-    } else {
+    if (previewImages.length !== 0) {
       handleUpload();
+      return;
     }
+
+    overlays.open(({ overlayId }) => (
+      <ConfirmModal
+        onClose={() => overlays.close(overlayId)}
+        logoImgSrc={<Icon id="image" size="medium" />}
+        title="사진을 첨부해야 업로드 할 수 있어요"
+        description="덕질 일상을 다채롭게 기록해보아요"
+      />
+    ));
   };
 
   //지금은 그냥 뒤로가기, 나중에 '정말 취소하시겠어요?' 모달 추가 시 사용 예정
@@ -115,59 +129,56 @@ export default function NewPostPage() {
   //   };
 
   return (
-    <>
-      <div className={styles.layout}>
-        <header className={styles.header}>
-          <button onClick={() => navigate(-1)} className={styles.headerButton}>
-            <img src="/img/close.png" alt="뒤로가기" />
-          </button>
-          <button onClick={uploadClick} className={styles.headerButton}>
-            <img src="/img/writing/check.png" alt="완료하기" />
-          </button>
-        </header>
-        <form className={styles.formContainer}>
-          <input
-            className={styles.titleInput}
-            type="text"
-            name="title"
-            value={title}
-            placeholder="제목을 입력하세요."
-            onChange={(e) => setTitle(e.target.value)}
+    <div className={styles.layout}>
+      <header className={styles.header}>
+        <button onClick={() => navigate(-1)} className={styles.headerButton}>
+          <img src="/img/close.png" alt="뒤로가기" />
+        </button>
+        <button onClick={uploadClick} className={styles.headerButton}>
+          <img src="/img/writing/check.png" alt="완료하기" />
+        </button>
+      </header>
+      <form className={styles.formContainer}>
+        <input
+          className={styles.titleInput}
+          type="text"
+          name="title"
+          value={title}
+          placeholder="제목을 입력하세요."
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <div>
+          <hr />
+          <textarea
+            className={styles.writingInput}
+            rows={1}
+            ref={textarea}
+            name="content"
+            value={content}
+            placeholder="자유롭게 덕질 일상을 기록해요 ( ⸝•ᴗ•⸝)"
+            onInput={handleResizeHeight}
+            onChange={(e) => setContent(e.target.value)}
           />
-          <div>
-            <hr />
-            <textarea
-              className={styles.writingInput}
-              rows={1}
-              ref={textarea}
-              name="content"
-              value={content}
-              placeholder="자유롭게 덕질 일상을 기록해요 ( ⸝•ᴗ•⸝)"
-              onInput={handleResizeHeight}
-              onChange={(e) => setContent(e.target.value)}
-            />
 
-            <div className={styles.imgUploadBox}>
-              {previewImages.map((image, index) => (
-                <div className={styles.imgUploadPreview} key={index}>
-                  <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
-                    <img className={styles.previewImg} src="/img/writing/close.png"></img>
-                  </div>
-                  <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
+          <div className={styles.imgUploadBox}>
+            {previewImages.map((image, index) => (
+              <div className={styles.imgUploadPreview} key={index}>
+                <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
+                  <img className={styles.previewImg} src="/img/writing/close.png"></img>
                 </div>
-              ))}
-            </div>
+                <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
+              </div>
+            ))}
           </div>
-          <div className={styles.toolBar}>
-            <div onClick={handleCameraBtnClick}>
-              <img src="/img/writing/camera.png" />
-            </div>
+        </div>
+        <div className={styles.toolBar}>
+          <div onClick={handleCameraBtnClick}>
+            <img src="/img/writing/camera.png" />
           </div>
-        </form>
-        <Footer />
-      </div>
+        </div>
+      </form>
+      <Footer />
 
-      <Modal isOpen={modalIsOpen}>{modalContent}</Modal>
       <input
         ref={inputFileRef}
         type="file"
@@ -176,6 +187,6 @@ export default function NewPostPage() {
         multiple
         onChange={handleImageUpload}
       />
-    </>
+    </div>
   );
 }

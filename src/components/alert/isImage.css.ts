@@ -2,7 +2,6 @@ import { style } from "@vanilla-extract/css";
 
 export const alertlayout = style({
   width: "300px",
-  height: "170px",
   backgroundColor: "black",
   position: "fixed",
   top: "45%",
@@ -10,11 +9,35 @@ export const alertlayout = style({
   transform: "translate(-50%,-50%)",
   textAlign: "center",
   color: "white",
+  padding: "20px 18px",
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "12px",
 });
 
-export const btnBox = style({
-  width: "100%",
-  paddingTop: "2px",
+export const image = style({
+  width: "24px",
+  height: "24px",
+});
+
+export const textBox = style({
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "4px",
+});
+
+export const text1 = style({
+  fontSize: "15px",
+  fontWeight: "500",
+});
+
+export const text2 = style({
+  fontSize: "11px",
+  fontWeight: "400",
 });
 
 export const btnOk = style({
@@ -23,49 +46,8 @@ export const btnOk = style({
   backgroundColor: "white",
   border: "0px",
   color: "#000",
-  textAlign: "center",
 
   fontSize: "14px",
-  fontStyle: "normal",
   fontWeight: "600",
   lineHeight: "100%",
-});
-
-export const image = style({
-  width: "33px",
-  height: "33px",
-});
-
-export const imageBox = style({
-  height: "33px",
-  width: "100%",
-  paddingTop: "21px",
-});
-
-export const text1 = style({
-  paddingTop: "15px",
-  color: "var(--white,#fff)",
-
-  fontSize: "15px",
-  fontStyle: "normal",
-  fontWeight: "500",
-  lineHeight: "normal",
-  textAlign: "center",
-});
-
-export const text2 = style({
-  paddingTop: "2%",
-  color: "var(--white,#fff)",
-
-  fontSize: "11px",
-  fontStyle: "normal",
-  fontWeight: "400",
-  lineHeight: "normal",
-  textAlign: "center",
-});
-
-export const textBox = style({
-  width: "100%",
-  height: "40%",
-  alignItems: "center",
 });
