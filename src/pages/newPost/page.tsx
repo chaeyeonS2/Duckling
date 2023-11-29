@@ -1,5 +1,4 @@
 import Footer from "@/components/layout/Footer";
-import HeaderPost from "@/components/layout/headers/HeaderPost";
 import { useState, useRef } from "react";
 import Modal from "@/components/alert/Modal";
 import Uploading from "@/components/alert/Uploading";
@@ -116,68 +115,67 @@ export default function NewPostPage() {
   //   };
 
   return (
-    <div className="layout">
-      {/* 고정 헤더 */}
-      <HeaderPost
-        uploadClick={uploadClick}
-        // closeClick = {closeClick}
-      />
-      {/* 모달 */}
-      <Modal isOpen={modalIsOpen}>{modalContent}</Modal>
-      <div className="content">
-        {/* margin을 위한 div */}
-        <div className={styles.marignBox}>
-          <form>
-            <div className={styles.title}>
-              <input
-                className={styles.titleInput}
-                type="text"
-                name="title"
-                value={title}
-                placeholder="제목을 입력하세요"
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <article className={styles.writing}>
-              <textarea
-                className={styles.writingInput}
-                rows={1}
-                ref={textarea}
-                name="content"
-                value={content}
-                placeholder="자유롭게 덕질 일상을 기록해요 ( ⸝•ᴗ•⸝)"
-                onInput={handleResizeHeight}
-                onChange={(e) => setContent(e.target.value)}
-              />
+    <>
+      <div className={styles.layout}>
+        <header className={styles.header}>
+          <button onClick={() => navigate(-1)} className={styles.headerButton}>
+            <img src="/img/close.png" alt="뒤로가기" />
+          </button>
+          <button onClick={uploadClick} className={styles.headerButton}>
+            <img src="/img/writing/check.png" alt="완료하기" />
+          </button>
+        </header>
+        <form className={styles.formContainer}>
+          <input
+            className={styles.titleInput}
+            type="text"
+            name="title"
+            value={title}
+            placeholder="제목을 입력하세요."
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <div>
+            <hr />
+            <textarea
+              className={styles.writingInput}
+              rows={1}
+              ref={textarea}
+              name="content"
+              value={content}
+              placeholder="자유롭게 덕질 일상을 기록해요 ( ⸝•ᴗ•⸝)"
+              onInput={handleResizeHeight}
+              onChange={(e) => setContent(e.target.value)}
+            />
 
-              <div className={styles.imgUploadBox}>
-                {previewImages.map((image, index) => (
-                  <div className={styles.imgUploadPreview} key={index}>
-                    <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
-                      <img className={styles.previewImg} src="/img/writing/close.png"></img>
-                    </div>
-                    <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
+            <div className={styles.imgUploadBox}>
+              {previewImages.map((image, index) => (
+                <div className={styles.imgUploadPreview} key={index}>
+                  <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
+                    <img className={styles.previewImg} src="/img/writing/close.png"></img>
                   </div>
-                ))}
-              </div>
-            </article>
-          </form>
-        </div>
+                  <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.toolBar}>
+            <div onClick={handleCameraBtnClick}>
+              <img src="/img/writing/camera.png" />
+            </div>
+          </div>
+        </form>
+        <Footer />
       </div>
-      <div className={styles.toolBar}>
-        <div className={styles.camera} onClick={handleCameraBtnClick}>
-          <img className={styles.cameraIcon} src="/img/writing/camera.png" />
-        </div>
-        <input
-          ref={inputFileRef}
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          multiple
-          onChange={handleImageUpload}
-        />
-      </div>
-      <Footer />
-    </div>
+
+      <Modal isOpen={modalIsOpen}>{modalContent}</Modal>
+      <input
+        ref={inputFileRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        multiple
+        onChange={handleImageUpload}
+      />
+    </>
   );
 }
