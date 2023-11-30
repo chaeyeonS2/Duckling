@@ -30,7 +30,7 @@ export default function ARCameraPage() {
     <>
       <View3D
         ref={view3DRef}
-        src="/gltf/test/animation_100.glb"
+        src="/gltf/test/Rumba Dancing.gltf"
         iosSrc="/gltf/test/test03_3.usd"
         arPriority={["webAR", "sceneViewer", "quickLook"]}
         initialZoom={5}
