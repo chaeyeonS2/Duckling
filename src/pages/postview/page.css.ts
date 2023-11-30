@@ -46,15 +46,6 @@ export const content = style({
 });
 
 export const metadataContainer = style({
-  display: "flex",
-  color: "white",
   backgroundColor: "black",
-  gap: "15px",
-  padding: "11px 18px",
-});
-
-export const metadata = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "3px",
+  color: "white",
 });
