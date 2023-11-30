@@ -6,6 +6,7 @@ import Router from "./components/Router";
 import "./config/axios";
 import "./config/firebase";
 import "@/css/global.css";
+import "minireset.css";
 
 export default function Routes() {
   return (
