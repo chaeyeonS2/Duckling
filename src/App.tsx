@@ -1,6 +1,6 @@
 import GltfProvider from "./components/GltfProvider";
 import SWRWrapper from "@/components/SWRWrapper";
-import { OverlayAnchor } from "./overlays";
+import { OverlayAnchor } from "./utils/overlays";
 import Router from "./components/Router";
 
 import "./config/axios";

@@ -8,7 +8,7 @@ import { button } from "../deco/page.css";
 import { useRef } from "react";
 
 import * as styles from "./page.css";
-import { overlays } from "@/overlays";
+import { overlays } from "@/utils/overlays";
 import Icon from "@/components/Icon";
 
 export default function SharePage() {

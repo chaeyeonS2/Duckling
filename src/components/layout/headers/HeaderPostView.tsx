@@ -1,8 +1,8 @@
-import { overlays } from "@/overlays";
+import { overlays } from "@/utils/overlays";
 import * as styles from "./headerPostView.css";
 import { useNavigate } from "react-router-dom";
-import AlertModal from "@/components/alert/AlertModal";
-import ConfirmModal from "@/components/alert/ConfirmModal";
+import AlertModal from "@/components/modal/AlertModal";
+import ConfirmModal from "@/components/modal/ConfirmModal";
 import Icon from "@/components/Icon";
 
 export default function HeaderPostView() {
