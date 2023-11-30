@@ -2,9 +2,14 @@ import useSWRImmutable from "swr/immutable";
 import { useGltf } from "@/components/GltfProvider";
 import GroupWrpper from "@/components/GroupWrapper";
 
-export default function AvatarModelGroup() {
-  const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
+export interface AvatarModelGroupProps {
+  userId?: string | null;
+}
+export default function AvatarModelGroup({ userId = localStorage.getItem("id") }: AvatarModelGroupProps) {
+  const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${userId}`);
   const { getGLTFs } = useGltf();
+
+  if (userId === null) return null;
 
   const models = getGLTFs(
     ...Object.values(user?.userAvatar ?? {}).map((path) => ({ gltfPath: path, identfier: "deco" } as const)),

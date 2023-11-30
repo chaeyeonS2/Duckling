@@ -1,7 +1,7 @@
 import AvatarModelGroup from "@/components/AvatarModelGroup";
 import Header from "@/components/layout/headers/Header";
 import AvatarCanvas from "@/components/AvatarCanvas";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { RootState } from "@react-three/fiber";
 import { button } from "../deco/page.css";
@@ -12,6 +12,8 @@ import { overlays } from "@/utils/overlays";
 import Icon from "@/components/Icon";
 
 export default function SharePage() {
+  const { userID } = useParams();
+
   const rootStateRef = useRef<RootState>(null);
   const onCaptureClick = () => {
     if (!rootStateRef.current) return;
@@ -61,7 +63,7 @@ export default function SharePage() {
       <div className={styles.pageContainer}>
         <div className={styles.canvasContainer}>
           <AvatarCanvas ref={rootStateRef} className={styles.avatarCanvas}>
-            <AvatarModelGroup />
+            <AvatarModelGroup userId={userID} />
           </AvatarCanvas>
         </div>
         <button onClick={onCaptureClick} className={button + " " + styles.captureButton} aria-selected>
