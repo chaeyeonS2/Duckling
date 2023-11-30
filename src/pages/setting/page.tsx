@@ -137,7 +137,7 @@ export default function SettingPage() {
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
-        <Icon id="close" size="medium" />
+        <Icon id="close" size="medium" onClick={() => navigate(-1)} />
         <p>설정</p>
         <div style={{ width: "24px", height: "24px" }} />
       </header>
