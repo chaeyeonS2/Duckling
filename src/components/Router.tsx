@@ -12,7 +12,7 @@ import HomePage from "@/pages/home/page";
 import Start from "@/pages/Start";
 import SettingPage from "@/pages/setting/page";
 import UsernamePage from "@/pages/username/pages";
-
+import ARCameraPage from "@/pages/camera/page";
 
 export default function Router() {
   return (
