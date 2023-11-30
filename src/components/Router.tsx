@@ -11,6 +11,7 @@ import SharePage from "@/pages/share/page";
 import LookPage from "@/pages/look/page";
 import HomePage from "@/pages/home/page";
 import Start from "@/pages/Start";
+import UsernamePage from "@/pages/username/pages";
 
 export default function Router() {
   return (
@@ -25,7 +26,7 @@ export default function Router() {
         {/* <댓글창/> */}
         <Route path="/comment" element={<CommentPage />} />
         {/* <공유하기 /> */}
-        <Route path="/share" element={<SharePage />} />
+        <Route path="/share/:userID" element={<SharePage />} />
         {/* <아바타 꾸미기/> */}
         <Route path="/deco" element={<DecoPage />} />
         {/* HOME */}
@@ -40,6 +41,7 @@ export default function Router() {
         <Route path="/postview/:writerID/:postID" element={<PostViewPage />} />
         {/* xmc용 로그인 */}
         <Route path="/xmc" element={<XrealLoginPage />} />
+        <Route path="/username/:userID" element={<UsernamePage />} />
       </Routes>
     </BrowserRouter>
   );
