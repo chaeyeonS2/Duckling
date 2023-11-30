@@ -131,5 +131,56 @@
     <symbol viewBox="0 0 3 12" id="exclam">
       <path fill="currentcolor" d="M2.34403 0.394531L2.1536 7.82129H0.278603L0.0881733 0.394531H2.34403ZM0.000282634 9.90137C-0.0143658 9.22754 0.542275 8.67822 1.23075 8.68555C1.88261 8.67822 2.44657 9.22754 2.44657 9.90137C2.44657 10.5825 1.88261 11.1318 1.23075 11.1318C0.542275 11.1318 -0.0143658 10.5825 0.000282634 9.90137Z" />
     </symbol>
+
+    <symbol viewBox="0 0 24 24" id="finger-heart">
+      <path fill="currentcolor" d="M21.142 20.5723H20.002V23.9998H21.142V20.5723Z" />
+      <path fill="currentcolor" d="M20.003 19.4326H18.8555V20.5726H20.003V19.4326Z" />
+      <path fill="currentcolor" d="M18.8548 20.5723H17.7148V21.7123H18.8548V20.5723Z" />
+      <path fill="currentcolor" d="M18.8548 18.2852H17.7148V19.4327H18.8548V18.2852Z" />
+      <path fill="currentcolor" d="M17.7159 21.7124H16.5684V22.8599H17.7159V21.7124Z" />
+      <path fill="currentcolor" d="M17.7152 17.145H15.4277V18.285H17.7152V17.145Z" />
+      <path fill="currentcolor" d="M17.7159 8.00244H16.5684V11.4299H17.7159V8.00244Z" />
+      <path fill="currentcolor" d="M16.5677 22.8599H15.4277V23.9999H16.5677V22.8599Z" />
+      <path fill="currentcolor" d="M16.5677 11.4302H15.4277V12.5702H16.5677V11.4302Z" />
+      <path fill="currentcolor" d="M16.5671 6.85498H14.2871V8.00248H16.5671V6.85498Z" />
+      <path fill="currentcolor" d="M15.4271 18.2852H14.2871V19.4327H15.4271V18.2852Z" />
+      <path fill="currentcolor" d="M15.4281 15.9976H13.1406V17.1451H15.4281V15.9976Z" />
+      <path fill="currentcolor" d="M15.4271 12.5698H14.2871V13.7173H15.4271V12.5698Z" />
+      <path fill="currentcolor" d="M14.2881 19.4326H13.1406V20.5726H14.2881V19.4326Z" />
+      <path fill="currentcolor" d="M14.2881 13.7173H13.1406V14.8573H14.2881V13.7173Z" />
+      <path fill="currentcolor" d="M14.2881 8.00244H13.1406V9.14244H14.2881V8.00244Z" />
+      <path fill="currentcolor" d="M13.14 20.5723H12V21.7123H13.14V20.5723Z" />
+      <path fill="currentcolor" d="M13.14 14.8574H12V15.9974H13.14V14.8574Z" />
+      <path fill="currentcolor" d="M13.14 9.14258H12V10.2826H13.14V9.14258Z" />
+      <path fill="currentcolor" d="M11.9994 15.9976H10.8594V17.1451H11.9994V15.9976Z" />
+      <path fill="currentcolor" d="M11.9994 10.2827H10.8594V11.4302H11.9994V10.2827Z" />
+      <path fill="currentcolor" d="M10.8604 17.145H9.71289V18.285H10.8604V17.145Z" />
+      <path fill="currentcolor" d="M10.8604 11.4302H9.71289V12.5702H10.8604V11.4302Z" />
+      <path fill="currentcolor" d="M9.71227 12.5698H8.57227V13.7173H9.71227V12.5698Z" />
+      <path fill="currentcolor" d="M9.71227 9.14258H8.57227V11.4301H9.71227V9.14258Z" />
+      <path fill="currentcolor" d="M8.57328 13.7173H7.42578V14.8573H8.57328V13.7173Z" />
+      <path fill="currentcolor" d="M7.42516 0V1.14H6.28516V3.4275H7.42516V4.575H8.57266V5.715H9.71266V6.855H10.8602V5.715H12.0002V4.575H13.1402V3.4275H14.2877V1.14H13.1402V0H10.8602V1.14H9.71266V0H7.42516Z" />
+      <path fill="currentcolor" d="M8.57203 8.00244H5.14453V9.14244H8.57203V8.00244Z" />
+      <path fill="currentcolor" d="M6.28453 12.5698H5.14453V17.1448H6.28453V15.9973H7.42453V14.8573H6.28453V12.5698Z" />
+      <path fill="currentcolor" d="M5.14555 17.145H3.99805V18.285H5.14555V17.145Z" />
+      <path fill="currentcolor" d="M5.14555 9.14258H3.99805V12.5701H5.14555V9.14258Z" />
+      <path fill="currentcolor" d="M3.99742 18.2852H2.85742V24.0002H3.99742V18.2852Z" />
+    </symbol>
+
+    <symbol viewBox="0 0 24 24" id="finger-rock">
+      <path fill="currentcolor" d="M21.142 3.42773H20.002V18.2852H21.142V3.42773Z" />
+      <path fill="currentcolor" d="M18.8545 20.5727H7.43203V19.4327H6.28453V20.5727H5.14453V24.0002H21.142V20.5727H20.002V18.2852H18.8545V20.5727ZM18.8545 22.8602H16.5745V21.7127H18.8545V22.8602Z" />
+      <path fill="currentcolor" d="M20.0023 2.2876H17.7148V3.4276H20.0023V2.2876Z" />
+      <path fill="currentcolor" d="M16.5746 13.7173H14.2871V14.8573H16.5746V13.7173Z" />
+      <path fill="currentcolor" d="M11.9998 14.8574H8.57227V15.9974H11.9998V14.8574Z" />
+      <path fill="currentcolor" d="M9.71227 10.2826H8.57227V11.4301H10.8598V8.00264H13.1473V11.4301H10.8598V12.5701H11.9998V14.8576H13.1473V13.7176H14.2873V8.00264H16.5748V13.7176H17.7148V3.42764H16.5748V6.85514H10.8598V1.14014H9.71227V10.2826Z" />
+      <path fill="currentcolor" d="M9.71164 0H7.43164V1.14H9.71164V0Z" />
+      <path fill="currentcolor" d="M8.57164 13.7173H7.43164V14.8573H8.57164V13.7173Z" />
+      <path fill="currentcolor" d="M8.57203 10.2826V9.14264H7.43203V1.14014H6.28453V9.14264H5.14453V10.2826H8.57203Z" />
+      <path fill="currentcolor" d="M6.28453 18.2852H5.14453V19.4327H6.28453V18.2852Z" />
+      <path fill="currentcolor" d="M5.14586 15.9976H4.00586V18.2851H5.14586V15.9976Z" />
+      <path fill="currentcolor" d="M5.14586 10.2827H4.00586V11.4302H5.14586V10.2827Z" />
+      <path fill="currentcolor" d="M4.00492 11.4302H2.85742V15.9977H4.00492V11.4302Z" />
+    </symbol>
   </defs>
 </svg> 

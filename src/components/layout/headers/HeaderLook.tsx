@@ -1,30 +1,20 @@
-import * as styles from "./headerLook.css";
+import Icon from "@/components/Icon";
 import { useState } from "react";
+
+import * as styles from "./headerLook.css";
 
 export default function HeaderLook() {
   const [currentTab, setCurrentTab] = useState("최신");
 
-  const selectMenuHandler = (type: string) => {
-    setCurrentTab(type);
-  };
-
   return (
     <header className={styles.header}>
-      {/* 선택 시 className에 {styles.focused} 추가 */}
-      <div
-        className={`${styles.tab} ${currentTab === "인기" ? styles.focused : ""}`}
-        onClick={() => selectMenuHandler("인기")}
-      >
-        <img src={currentTab === "인기" ? "/img/looking/popular.png" : "/img/looking/popular_non.png"}></img>
-        <p className={`${styles.tabText} ${currentTab === "인기" ? styles.focusedText : ""}`}>인기</p>
+      <div className={styles.tab} onClick={() => setCurrentTab("인기")} aria-selected={currentTab === "인기"}>
+        <Icon id="finger-heart" size="medium" />
+        <p className={styles.tabText}>인기</p>
       </div>
-      {/* 선택 시 className에 {styles.focused} 추가 */}
-      <div
-        className={`${styles.tab} ${currentTab === "최신" ? styles.focused : ""}`}
-        onClick={() => selectMenuHandler("최신")}
-      >
-        <img src={currentTab === "최신" ? "/img/looking/new.png" : "/img/looking/new_non.png"}></img>
-        <p className={`${styles.tabText} ${currentTab === "인기" ? styles.focusedText : ""}`}>최신</p>
+      <div className={styles.tab} onClick={() => setCurrentTab("최신")} aria-selected={currentTab === "최신"}>
+        <Icon id="finger-rock" size="medium" />
+        <p className={styles.tabText}>최신</p>
       </div>
     </header>
   );
