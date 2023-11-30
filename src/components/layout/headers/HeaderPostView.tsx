@@ -1,25 +1,56 @@
+import { overlays } from "@/utils/overlays";
 import * as styles from "./headerPostView.css";
 import { useNavigate } from "react-router-dom";
+import AlertModal from "@/components/modal/AlertModal";
+import ConfirmModal from "@/components/modal/ConfirmModal";
+import Icon from "@/components/Icon";
 
-export interface HeaderPostViewProps {
-  deleteClick: () => void;
-  shareClick: () => void;
-}
-export default function HeaderPostView({ deleteClick, shareClick }: HeaderPostViewProps) {
-  const handleCopy = () => {
+export default function HeaderPostView() {
+  const navigate = useNavigate();
+
+  const deleteClick = () => {
+    overlays.open(({ overlayId }) => (
+      <ConfirmModal
+        title={
+          <>
+            해당 글은 영구적으로 삭제 됩니다.
+            <br />
+            정말 삭제 하실건가요? (˙ᴖ˙ก̀)
+          </>
+        }
+        onYes={() => {
+          // TODO: impl post delete
+        }}
+        onNo={() => overlays.close(overlayId)}
+        yesText="네,삭제할게요"
+      />
+    ));
+  };
+
+  const shareClick = () => {
     const currentURL = window.location.href;
 
-    // 클립보드에 URL 복사 시도
     navigator.clipboard
       .writeText(currentURL)
       .then(() => {
-        shareClick();
+        overlays.open(({ overlayId }) => (
+          <AlertModal
+            onClose={() => overlays.close(overlayId)}
+            logoImgSrc={<Icon id="link" size="medium" />}
+            title={
+              <>
+                주소가 복사되었습니다. :-D
+                <br />
+                원하는 곳에 붙여넣기 해주세요!
+              </>
+            }
+          />
+        ));
       })
       .catch((err) => {
         console.error("URL 복사 실패:", err);
       });
   };
-  const navigate = useNavigate();
 
   const closeClick = () => {
     navigate(-1);
@@ -28,22 +59,20 @@ export default function HeaderPostView({ deleteClick, shareClick }: HeaderPostVi
   return (
     <header className={styles.header}>
       <div>
-        <div className={styles.leftBtnGroup}>
-          <button className={styles.headerButton} onClick={closeClick}>
-            <img src="/img/writing/close.png" alt="my image" />
-          </button>
-        </div>
-        <div className={styles.rightBtnGroup}>
-          <button className={styles.headerButton} onClick={handleCopy}>
-            <img src="/img/share.png" />
-          </button>
-          <button className={styles.headerButton}>
-            <img src="/img/writing/new-post.png" />
-          </button>
-          <button className={styles.headerButton} onClick={deleteClick}>
-            <img src="/img/writing/trash-can.png" />
-          </button>
-        </div>
+        <button className={styles.headerButton} onClick={closeClick}>
+          <img src="/img/writing/close.png" alt="my image" />
+        </button>
+      </div>
+      <div>
+        <button className={styles.headerButton} onClick={shareClick}>
+          <img src="/img/share.png" />
+        </button>
+        <button className={styles.headerButton}>
+          <img src="/img/writing/new-post.png" />
+        </button>
+        <button className={styles.headerButton} onClick={deleteClick}>
+          <img src="/img/writing/trash-can.png" />
+        </button>
       </div>
     </header>
   );

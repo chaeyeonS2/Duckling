@@ -56,7 +56,6 @@ export const postContent = style({
   fontStyle: "normal",
   fontWeight: "400",
   lineHeight: "150%",
-  margin: "0",
   padding: "10px",
 });
 

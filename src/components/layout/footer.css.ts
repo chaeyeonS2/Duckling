@@ -2,10 +2,7 @@ import { style } from "@vanilla-extract/css";
 
 export const footer = style({
   height: "88px",
-  width: "100vw",
   display: "flex",
-  position: "fixed",
-  bottom: 0,
   backgroundColor: "#454545",
 });
 
