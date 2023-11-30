@@ -12,6 +12,8 @@ export default function PostMetadataBar({ postData }: PostMetadataBarProps) {
   const [liked, setLiked] = useState(false);
 
   const cookieClick = () => {
+    setLiked((prev) => !prev);
+    axios.patch(`/api/posts/likes/${postData.postID}`);
   };
   const commentClick = () => {
     navigate("/comment", { state: { postID: postData.postID } });
