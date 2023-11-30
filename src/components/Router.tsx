@@ -11,7 +11,9 @@ import SharePage from "@/pages/share/page";
 import LookPage from "@/pages/look/page";
 import HomePage from "@/pages/home/page";
 import Start from "@/pages/Start";
+import SettingPage from "@/pages/setting/page";
 import UsernamePage from "@/pages/username/pages";
+
 
 export default function Router() {
   return (
@@ -39,6 +41,7 @@ export default function Router() {
         <Route path="/newPost" element={<NewPostPage />} />
         {/* <POST VIEW /> */}
         <Route path="/postview/:writerID/:postID" element={<PostViewPage />} />
+        <Route path="/setting" element={<SettingPage />} />
         {/* xmc용 로그인 */}
         <Route path="/xmc" element={<XrealLoginPage />} />
         <Route path="/username/:userID" element={<UsernamePage />} />

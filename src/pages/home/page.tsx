@@ -17,7 +17,7 @@ export default function HomePage() {
         <Link to="/deco">
           <img src="/img/home/deco.png" />
         </Link>
-        <Link to="/">
+        <Link to="/setting">
           <img src="/img/home/settings.png" />
         </Link>
       </Header>

@@ -3,17 +3,19 @@ import * as styles from "./modal.css";
 
 export interface ConfirmModalProps extends BaseModalProps {
   onYes?: () => void;
+  yesText?: string;
   onNo?: () => void;
+  noText?: string;
 }
-export default function ConfirmModal({ onYes, onNo, ...props }: ConfirmModalProps) {
+export default function ConfirmModal({ yesText = "네", noText = "아니요", onYes, onNo, ...props }: ConfirmModalProps) {
   return (
     <BaseModal {...props}>
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "12px" }}>
         <button className={styles.btnNo} onClick={onNo}>
-          아니오
+          {noText}
         </button>
         <button className={styles.btnOk} onClick={onYes}>
-          네
+          {yesText}
         </button>
       </div>
     </BaseModal>
