@@ -1,7 +1,6 @@
-import View3D, { ARButton, AROverlay } from "@egjs/react-view3d";
-import ARScaleControl from "@egjs/react-view3d";
+import View3D from "@egjs/react-view3d";
 import * as styles from "./page.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "@egjs/view3d/css/view3d-bundle.min.css";
 import "@egjs/view3d/css/view3d-ar.min.css";
@@ -10,22 +9,18 @@ import AnimationMenu from "./_components/AnimationMenu";
 
 export default function ARCameraPage() {
   const view3DRef = useRef<View3D | null>(null);
-  const arScaleControlOptions = {
-    min: 1,
-    max: 1,
-  };
-
-  const arButtonOptions = {
-    availableText: "View in AR",
-    unavailableText: "AR is not available in this browser",
-    // 나머지 옵션들도 필요한 경우에 수정해주세요.
-  };
+  const [playingAnimation, setplayingAnimation] = useState<number>(1);
 
   useEffect(() => {
-    view3DRef.current?.loadPlugins(new ARButton(arButtonOptions));
-    //const arScaleControl = new ARScaleControl(arScaleControlOptions);
-    //view3DRef.current?.arScaleControl;
-  }, []);
+    const initializeView3D = async () => {
+      await view3DRef.current?.init();
+    };
+    initializeView3D();
+  }, [playingAnimation]);
+
+  const handleDataFromAnimationMenu = (data: number) => {
+    setplayingAnimation(data);
+  };
 
   return (
     <>
@@ -33,20 +28,14 @@ export default function ARCameraPage() {
         <View3D
           className={styles.canvas}
           ref={view3DRef}
-          src="/gltf/test/Rumba Dancing.gltf"
+          src="/gltf/test/Rumba Dancing.gltf" //  /gltf/test/Rumba Dancing.gltf
           iosSrc="/gltf/test/test03_3.usd"
           arPriority={["webAR", "sceneViewer", "quickLook"]}
           center={[0, 0.9, 0.25]} //위치 조정
-          //loadPlugins={arBtn}
+          defaultAnimationIndex={playingAnimation}
+          useDefaultEnv={true}
         ></View3D>
-        {/* <button
-          onClick={() => {
-            view3DRef.current?.loadPlugins(new ARButton());
-          }}
-        >
-          CLICK ME
-        </button> */}
-        <AnimationMenu />
+        <AnimationMenu ref={view3DRef} animationNum={handleDataFromAnimationMenu} />
         <Footer />
       </div>
     </>
