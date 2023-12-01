@@ -6,7 +6,15 @@ export const menuContainer = style({
   backgroundColor: "rgba(0, 0, 0, 0.70)",
   borderTopLeftRadius: "20px",
   borderTopRightRadius: "20px",
-
-//   display: "flex",
-//   flexDirection: "column",
+  //   display: "flex",
+  //   flexDirection: "column",
 });
+
+export const title = style({
+  fontSize: "15px",
+  color: "white",
+  margin : "15px",
+});
+
+export const menu = style({
+  });
