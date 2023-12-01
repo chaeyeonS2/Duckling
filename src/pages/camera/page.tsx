@@ -6,6 +6,7 @@ import "@egjs/view3d/css/view3d-bundle.min.css";
 import "@egjs/view3d/css/view3d-ar.min.css";
 import Footer from "@/components/layout/Footer";
 import AnimationMenu from "./_components/AnimationMenu";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default function ARCameraPage() {
   const view3DRef = useRef<View3D | null>(null);
@@ -21,6 +22,14 @@ export default function ARCameraPage() {
   const handleDataFromAnimationMenu = (data: number) => {
     setplayingAnimation(data);
   };
+
+  useEffect(() => {
+    const loader = new GLTFLoader();
+    loader.load("gltf/bottom/hani_pants.gltf", (gltf) => {
+      const clothingMesh = gltf.scene;
+      view3DRef.current?.scene.add(clothingMesh);
+    });
+  }, []);
 
   return (
     <>
