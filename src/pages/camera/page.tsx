@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import "@egjs/view3d/css/view3d-bundle.min.css";
 import "@egjs/view3d/css/view3d-ar.min.css";
 import Footer from "@/components/layout/Footer";
-import MyPost from "../home/_components/MyPost";
 import AnimationMenu from "./_components/AnimationMenu";
 
 export default function ARCameraPage() {
@@ -37,8 +36,7 @@ export default function ARCameraPage() {
           src="/gltf/test/Rumba Dancing.gltf"
           iosSrc="/gltf/test/test03_3.usd"
           arPriority={["webAR", "sceneViewer", "quickLook"]}
-          initialZoom={5}
-          center={[0.2, 1, 0]}
+          center={[0, 0.9, 0.25]} //위치 조정
           //loadPlugins={arBtn}
         ></View3D>
         {/* <button
