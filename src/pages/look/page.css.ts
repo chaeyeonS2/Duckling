@@ -9,17 +9,13 @@ export const layout = style({
 });
 
 export const content = style({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "24px",
   padding: "22px 20px",
   overflowY: "auto",
   overflowX: "hidden",
 });
 
 export const postBox = style({
+  marginBottom: "24px",
   width: "90vw",
   height: "auto",
   boxShadow: "2px 2px",
@@ -74,7 +70,7 @@ export const postContent = style({
 export const postImgContainer = style({
   width: "90vw",
   height: "80vw",
-  marginTop: "18px",
+  marginTop: "11px",
   border: "1px solid #000",
 });
 
@@ -94,5 +90,4 @@ export const profileImg = style({
   width: "30px",
   height: "30px",
   borderRadius: "100%",
-  backgroundSize: "cover",
 });

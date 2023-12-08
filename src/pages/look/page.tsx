@@ -44,9 +44,5 @@ export default function LookPage() {
 
 function Avatar({ userId }: { userId: string }) {
   const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${userId}`);
-  return (
-    <div className={styles.profileImg}>
-      <img src={user?.profileImg} />
-    </div>
-  );
+  return <img className={styles.profileImg} src={user?.profileImg} />;
 }
