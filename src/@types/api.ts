@@ -16,7 +16,8 @@ type APIMaps = CreateMapItem<"/api/users", "GET", APIUsersGetResponse> &
   CreateMapItem<`/api/users/${string}`, "DELETE"> &
   CreateMapItem<`/api/users/avatar/${string}`, "GET", APIUsersAvatarReponse> &
   CreateMapItem<`/api/assets/${string}/${string}`, "GET", APIAssetsResponse> &
-  CreateMapItem<"/api/posts", "GET", APIPostsResponse> &
+  CreateMapItem<`/api/posts/?limit=${string}&start=${string}`, "GET", APIPostsResponse> &
+  CreateMapItem<`/api/posts/likes/?limit=${string}&start=${string}`, "GET"> &
   CreateMapItem<"/api/posts", "POST", APIPostResponse, APIPostsPostRequest> &
   CreateMapItem<`/api/posts/${string}`, "GET", APIPostResponse> &
   CreateMapItem<`/api/posts/${string}`, "DELETE"> &
@@ -24,7 +25,8 @@ type APIMaps = CreateMapItem<"/api/users", "GET", APIUsersGetResponse> &
   CreateMapItem<`/api/posts/writer/${string}/${string}`, "GET", APIPostResponse> &
   CreateMapItem<`/api/posts/likes/${string}`, "PATCH"> &
   CreateMapItem<"/api/comments", "POST", APICommentsReponse[number], APICommentPostRequest> &
-  CreateMapItem<`/api/comments/root/${string}`, "GET", APICommentsReponse>;
+  CreateMapItem<`/api/comments/root/${string}`, "GET", APICommentsReponse> &
+  CreateMapItem<`/api/twitter/${string}`, "POST", APITwitchPostRequest>;
 
 type APIMap = UnionToIntersection<
   {
@@ -39,8 +41,10 @@ type APIMap = UnionToIntersection<
 type APIUsersGetResponse = Array<APIUserResponse>;
 type APIUsersPostRequest = {
   uid: string;
-  profileImg: string;
   userName: string;
+  profileImg: string;
+  consumer_key: string;
+  consumer_secret: string;
 };
 type APIUsersPatchRequest = Partial<Omit<APIUserResponse, "uid">>;
 type APIUserResponse = Omit<User, "userID">;
@@ -50,6 +54,8 @@ type APIAssetsResponse = Array<{
   assetID: string;
   assetGltf: string;
   assetImg: string;
+  consumer_key: string;
+  consumer_secret: string;
 }>;
 
 type APIPostsResponse = Post[];
@@ -72,3 +78,8 @@ type APICommentsReponse = Array<{
   time: number;
   date: string;
 }>;
+
+type APITwitchPostRequest = {
+  postImg_id_string: string;
+  text: string;
+};
