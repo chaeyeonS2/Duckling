@@ -45,7 +45,12 @@ export const content = style({
   fontSize: "16px",
 });
 
+export const imageSlider = style({
+  height: "fit-content",
+});
+
 export const metadataContainer = style({
+  padding: "11px 18px",
   backgroundColor: "black",
   color: "white",
 });

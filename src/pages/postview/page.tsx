@@ -24,8 +24,10 @@ export default function PostViewPage() {
           </div>
           <Icon id="vertical-dots" size="medium" />
         </div>
-        <ImageSlider images={postData?.postImg ?? []} />
-        <p className={styles.content}>{postData?.body}</p>
+        <div>
+          <ImageSlider images={postData?.postImg ?? []} className={styles.imageSlider} />
+          <p className={styles.content}>{postData?.body}</p>
+        </div>
         <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
       </div>
       <Footer />

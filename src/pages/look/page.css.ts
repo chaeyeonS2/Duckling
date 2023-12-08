@@ -48,32 +48,28 @@ export const postBox = style({
   marginBottom: "24px",
   width: "90vw",
   height: "auto",
-  boxShadow: "2px 2px",
 });
 
 export const postProfile = style({
   width: "100%",
   height: "30px",
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
 });
 
 export const userName = style({
-  float: "left",
-  display: "flex",
-  alignItems: "center",
-  width: "auto",
-  height: "30px",
-  fontSize: "18px",
+  fontSize: "16px",
+  fontWeight: 600,
   marginLeft: "10px",
 });
 
 export const date = style({
-  float: "right",
-  display: "flex",
-  alignItems: "center",
-  width: "auto",
-  height: "30px",
+  flex: 1,
+  textAlign: "end",
   marginRight: "10px",
-  fontSize: "18px",
+  fontSize: "14px",
+  fontWeight: 400,
   color: "#b8b8b8",
 });
 
@@ -102,6 +98,7 @@ export const postImgContainer = style({
   height: "80vw",
   marginTop: "11px",
   border: "1px solid #000",
+  boxShadow: "2px -4px",
 });
 
 export const postImg = style({
@@ -112,6 +109,7 @@ export const postImg = style({
 
 export const metadataContainer = style({
   backgroundColor: "white",
+  padding: "11px 0px",
   color: "black",
 });
 
