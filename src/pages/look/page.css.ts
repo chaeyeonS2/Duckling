@@ -16,6 +16,7 @@ export const content = style({
   gap: "24px",
   padding: "22px 20px",
   overflowY: "auto",
+  overflowX: "hidden",
 });
 
 export const postBox = style({
@@ -51,16 +52,23 @@ export const date = style({
 });
 
 export const postContent = style({
-  backgroundColor: "black",
   width: "100%",
   height: "fit-content",
+  padding: "5px 10px",
   color: "#fff",
+  backgroundColor: "black",
 
   fontSize: "16px",
   fontStyle: "normal",
   fontWeight: "400",
   lineHeight: "150%",
-  padding: "10px",
+
+  display: "-webkit-box",
+  textOverflow: "ellipsis",
+  wordWrap: "break-word",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 2,
+  overflow: "hidden",
 });
 
 export const postImgContainer = style({
