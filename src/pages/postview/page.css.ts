@@ -45,16 +45,12 @@ export const content = style({
   fontSize: "16px",
 });
 
-export const metadataContainer = style({
-  display: "flex",
-  color: "white",
-  backgroundColor: "black",
-  gap: "15px",
-  padding: "11px 18px",
+export const imageSlider = style({
+  height: "fit-content",
 });
 
-export const metadata = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "3px",
+export const metadataContainer = style({
+  padding: "11px 18px",
+  backgroundColor: "black",
+  color: "white",
 });
