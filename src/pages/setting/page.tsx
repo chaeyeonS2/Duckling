@@ -86,6 +86,7 @@ export default function SettingPage() {
       await axios.patch(`/api/users/${localStorage.getItem("id")}`, {
         profileImg: URL.createObjectURL(e.target.files[0]),
       });
+      localStorage.setItem("profileImg", URL.createObjectURL(e.target.files[0]));
       overlays.close(overlayId);
     } catch (e) {
       overlays.open(({ overlayId }) => (
@@ -128,6 +129,7 @@ export default function SettingPage() {
         setInputState("invalid");
         mutate();
       });
+    localStorage.setItem("userName", usernameValue);
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputState("idle");

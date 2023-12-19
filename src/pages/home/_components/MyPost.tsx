@@ -59,7 +59,7 @@ function CustomHeader() {
   };
   return (
     <div>
-      <div className={styles.profileImg} style={{ backgroundImage: `url(${localStorage.getItem("photoURL")})` }} />
+      <div className={styles.profileImg} style={{ backgroundImage: `url(${localStorage.getItem("profileImg")})` }} />
       <div className={styles.userName}>{localStorage.getItem("userName")}</div>
       <div className={styles.btnAddNew} onClick={newpostClick}>
         <img className={styles.btnAddNewImage} src="/img/writing/add.png" alt="" />
