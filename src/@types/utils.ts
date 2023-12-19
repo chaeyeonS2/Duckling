@@ -6,11 +6,7 @@ type Split<S extends string, D extends string> = string extends S
   ? [T, ...Split<U, D>]
   : [S];
 
-type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never) extends (k: infer I) => void
-  ? I extends Record<string, unknown>
-    ? I
-    : never
-  : never;
+type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
 type ConcatStringArray<Strings extends readonly string[], Acc extends string = ""> = Strings extends readonly [
   infer Head,
