@@ -5,12 +5,8 @@ type CheckAPIMap<
   M extends Methods
 > = `${K}-${LengthOfPath<K>}` extends infer KT extends keyof APIMaps
   ? M extends keyof APIMaps[KT]
-    ? APIMaps[KT][M] extends infer T extends undefined | [unknown, unknown]
-      ? T extends [infer R, infer D]
-        ? [R, D]
-        : ["invalid method!", "invalid method!"]
-      : never
-    : never
+    ? APIMaps[KT][M]
+    : ["invalid method!", "invalid method!"]
   : never;
 
 declare module "swr" {

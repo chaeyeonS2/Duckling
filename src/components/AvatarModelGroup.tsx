@@ -22,6 +22,7 @@ export default function AvatarModelGroup({
     "/gltf/avatar/keyring.glb",
     "/gltf/avatar/nose.gltf",
     "/gltf/avatar/stage.glb"
+    //"/gltf/avatar/pink_nasi.gltf"
   );
 
   return <GroupWrpper groups={models} position={position} {...props} />;

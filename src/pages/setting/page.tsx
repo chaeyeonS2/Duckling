@@ -75,6 +75,21 @@ export default function SettingPage() {
   const handleProfileImgClick = () => {
     inputFileRef.current?.click();
   };
+
+  const convertFileToDataUrl = (file: File) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const dataUrl = reader.result;
+        resolve(dataUrl);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
     let overlayId = -1;
@@ -83,9 +98,14 @@ export default function SettingPage() {
       return <BaseModal title="프로필 이미지를 변경중입니다" />;
     });
     try {
+      const file = e.target.files[0];
+      const dataUrl = await convertFileToDataUrl(file);
+      if (dataUrl) {
+      }
       await axios.patch(`/api/users/${localStorage.getItem("id")}`, {
-        profileImg: URL.createObjectURL(e.target.files[0]),
+        profileImg: dataUrl as string,
       });
+      localStorage.setItem("profileImg", dataUrl as string);
       overlays.close(overlayId);
     } catch (e) {
       overlays.open(({ overlayId }) => (
@@ -128,6 +148,7 @@ export default function SettingPage() {
         setInputState("invalid");
         mutate();
       });
+    localStorage.setItem("userName", usernameValue);
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputState("idle");

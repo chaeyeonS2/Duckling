@@ -1,39 +1,50 @@
-// import { ARCanvas, ARMarker } from "@artcom/react-three-arjs";
-// import { useState } from "react";
-// import ReactDOM from "react-dom";
+import View3D from "@egjs/react-view3d";
+import * as styles from "./page.css";
+import { useEffect, useRef, useState } from "react";
 
-export default function CameraPage() {
-  return <></>;
-  //   function Box() {
-  //     const [selected, setSelected] = useState(false);
+import "@egjs/view3d/css/view3d-bundle.min.css";
+import "@egjs/view3d/css/view3d-ar.min.css";
+import Footer from "@/components/layout/Footer";
+import AnimationMenu from "./_components/AnimationMenu";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-  //     return (
-  //       <mesh onClick={() => setSelected(!selected)}>
-  //         <boxGeometry args={[1, 1, 1]} />
-  //         <meshStandardMaterial color={selected ? "yellow" : "hotpink"} />
-  //       </mesh>
-  //     );
-  //   }
+export default function ARCameraPage() {
+  const view3DRef = useRef<View3D | null>(null);
+  const [playingAnimation, setplayingAnimation] = useState<number>(1);
 
-  //   return (
-  //     <ARCanvas
-  //       onCameraStreamReady={() => console.log("Camera stream ready")}
-  //       onCameraStreamError={() => console.error("Camera stream error")}
-  //       sourceType="webcam"
-  //     >
-  //       <ambientLight />
-  //       <pointLight position={[10, 10, 0]} intensity={10.0} />
-  //       <ARMarker
-  //         debug={true}
-  //         params={{ smooth: true }}
-  //         type="pattern"
-  //         patternUrl={"data/patt.hiro"}
-  //         onMarkerFound={() => {
-  //           console.log("Marker Found");
-  //         }}
-  //       >
-  //         <Box />
-  //       </ARMarker>
-  //     </ARCanvas>
-  //   );
+  useEffect(() => {
+    const initializeView3D = async () => {
+      await view3DRef.current?.init();
+      //의상 추가할 때 쓸 코드
+      // const loader = new GLTFLoader();
+      // loader.load("/gltf/avatar/stage.glb", (gltf) => {
+      //   const clothingMesh = gltf.scene;
+      //   view3DRef.current?.scene.add(clothingMesh);
+      // });
+    };
+    initializeView3D();
+  }, [playingAnimation]);
+
+  const handleDataFromAnimationMenu = (data: number) => {
+    setplayingAnimation(data);
+  };
+
+  return (
+    <>
+      <div className={styles.pageContainer}>
+        <View3D
+          className={styles.canvas}
+          ref={view3DRef}
+          src="/gltf/test/Rumba Dancing.gltf" //  /gltf/test/Rumba Dancing.gltf
+          iosSrc="/gltf/test/test03_3.usd"
+          arPriority={["webAR", "sceneViewer", "quickLook"]}
+          center={[0, 0.9, 0.25]} //위치 조정
+          defaultAnimationIndex={playingAnimation}
+          useDefaultEnv={true}
+        ></View3D>
+        <AnimationMenu ref={view3DRef} animationNum={handleDataFromAnimationMenu} />
+        <Footer />
+      </div>
+    </>
+  );
 }
