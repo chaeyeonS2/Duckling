@@ -7,12 +7,14 @@ import * as styles from "./page.css";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const handleUpload = async (userID: string, photoURL: string, userName: string) => {
+  const handleUpload = async (userID: string, photoURL: string, userName: string, token: string, secret: string) => {
     try {
       await axios.post("/api/users", {
         uid: userID,
         profileImg: photoURL,
         userName: userName,
+        consumer_key: token,
+        consumer_secret: secret,
       });
       console.log("login upload success");
     } catch (error) {
@@ -28,29 +30,38 @@ export default function LoginPage() {
       .then((result) => {
         //This gives you a the Twitter OAuth 1.0 Access Token and Secret.
         //You can use these server side with your app's credentials to access the Twitter API.
-        TwitterAuthProvider.credentialFromResult(result);
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        if (credential) {
+          const token = credential.accessToken;
+          const secret = credential.secret;
+          console.log(credential);
+          console.log("token:", token);
+          console.log("secret:", secret);
 
-        // 로그인 성공 시, Firebase 사용자 객체에서 필요한 정보를 가져옴
-        const user = result.user;
-        const userID = user.uid;
-        const userName = user.displayName;
-        const photoURL = user.photoURL; //tiwtter 프로필 사진 가져옴
-        console.log("Firebase userID:", userName);
+          // 로그인 성공 시, Firebase 사용자 객체에서 필요한 정보를 가져옴
+          const user = result.user;
+          const userID = user.uid;
+          const userName = user.displayName;
+          const photoURL = user.photoURL; //tiwtter 프로필 사진 가져옴
+          console.log("Firebase userID:", userName);
 
-        // TODO: photoURL과 userName이 null일 때 어떻게 해야 하는가
-        if (!userName) throw new Error("userName does not exist!");
-        if (!photoURL) throw new Error("photoURL does not exist!");
+          // TODO: photoURL과 userName이 null일 때 어떻게 해야 하는가
+          if (!userName) throw new Error("userName does not exist!");
+          if (!photoURL) throw new Error("photoURL does not exist!");
 
-        // local storage에 저장
-        localStorage.setItem("id", userID);
-        localStorage.setItem("profileImg", photoURL);
-        localStorage.setItem("userName", userName);
+          // local storage에 저장
+          localStorage.setItem("id", userID);
+          localStorage.setItem("profileImg", photoURL);
+          localStorage.setItem("userName", userName);
 
-        //서버에 올리기
-        handleUpload(userID, photoURL, userName);
+          //서버에 올리기
+          if (token !== undefined && secret !== undefined) {
+            handleUpload(userID, photoURL, userName, token, secret);
+          }
 
-        if (user != null) {
-          navigate("/home");
+          if (user != null) {
+            navigate("/home");
+          }
         }
       })
       .catch((error) => {

@@ -16,11 +16,11 @@ export default function ARCameraPage() {
     const initializeView3D = async () => {
       await view3DRef.current?.init();
       //의상 추가할 때 쓸 코드
-      const loader = new GLTFLoader();
-      loader.load("/gltf/avatar/stage.glb", (gltf) => {
-        const clothingMesh = gltf.scene;
-        view3DRef.current?.scene.add(clothingMesh);
-      });
+      // const loader = new GLTFLoader();
+      // loader.load("/gltf/avatar/stage.glb", (gltf) => {
+      //   const clothingMesh = gltf.scene;
+      //   view3DRef.current?.scene.add(clothingMesh);
+      // });
     };
     initializeView3D();
   }, [playingAnimation]);
@@ -35,7 +35,7 @@ export default function ARCameraPage() {
         <View3D
           className={styles.canvas}
           ref={view3DRef}
-          src="/gltf/test/animation_100.glb" //  /gltf/test/Rumba Dancing.gltf
+          src="/gltf/test/Rumba Dancing.gltf" //  /gltf/test/Rumba Dancing.gltf
           iosSrc="/gltf/test/test03_3.usd"
           arPriority={["webAR", "sceneViewer", "quickLook"]}
           center={[0, 0.9, 0.25]} //위치 조정
