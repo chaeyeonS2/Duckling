@@ -63,8 +63,20 @@ export default function DecoPage() {
         </Link>
       </Header>
 
-      <AvatarCanvas ref={cameraRef} style={{ transform: `translateY(-56px)` }}>
-        <AvatarModelGroup position={[0, 0.03, 0]} />
+      <AvatarCanvas
+        ref={cameraRef}
+        style={{ transform: `translateY(-56px)` }}
+        camera={{
+          fov: 150,
+          zoom: 100,
+          near: 1,
+          far: 10,
+        }}
+      >
+        <AvatarModelGroup
+          position={isFaceDeco ? [0, -0.025, 0] : [0, 0.05, 0]}
+          scale={isFaceDeco ? [1.75, 1.75, 1.75] : [1, 1, 1]}
+        />
       </AvatarCanvas>
 
       <div className={styles.bottomContainer}>
