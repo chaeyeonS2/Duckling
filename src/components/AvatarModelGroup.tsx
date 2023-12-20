@@ -4,8 +4,9 @@ import GroupWrpper from "@/components/GroupWrapper";
 
 export interface AvatarModelGroupProps {
   userId?: string | null;
+  position?: [x: number, y: number, z: number];
 }
-export default function AvatarModelGroup({ userId = localStorage.getItem("id") }: AvatarModelGroupProps) {
+export default function AvatarModelGroup({ userId = localStorage.getItem("id"), position }: AvatarModelGroupProps) {
   const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${userId}`);
   const { getGLTFs } = useGltf();
 
@@ -19,5 +20,5 @@ export default function AvatarModelGroup({ userId = localStorage.getItem("id") }
     "/gltf/avatar/stage.glb"
   );
 
-  return <GroupWrpper groups={models} position={[0, -0.01, 0]} rotation={[0.08, 0, 0]} />;
+  return <GroupWrpper groups={models} position={position} />;
 }

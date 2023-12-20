@@ -62,8 +62,8 @@ export default function DecoPage() {
         </Link>
       </Header>
 
-      <AvatarCanvas ref={cameraRef}>
-        <AvatarModelGroup />
+      <AvatarCanvas ref={cameraRef} style={{ transform: `translateY(-56px)` }}>
+        <AvatarModelGroup position={[0, 0.03, 0]} />
       </AvatarCanvas>
 
       <div className={styles.bottomContainer}>

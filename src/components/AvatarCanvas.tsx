@@ -27,7 +27,6 @@ const AvatarCanvas = forwardRef<RootState, React.PropsWithChildren<React.Compone
         onCreated={rootStateRef}
         shadows
         camera={{
-          rotation: [0, 0, 0],
           fov: 150,
           zoom: 100,
           near: 1,
@@ -42,8 +41,8 @@ const AvatarCanvas = forwardRef<RootState, React.PropsWithChildren<React.Compone
 
         <OrbitControls
           enableRotate // 회전 활성화
-          enablePan={false} // 이동 비활성화
           enableDamping // 부드러운 움직임 효과 활성화
+          enablePan={false} // 이동 비활성화
           dampingFactor={0.1} // 부드러운 움직임 강도 설정
         />
       </Canvas>
