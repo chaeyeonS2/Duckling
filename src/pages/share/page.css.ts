@@ -12,10 +12,6 @@ export const canvasContainer = style({
   height: "480px",
 });
 
-export const avatarCanvas = style({
-  transform: "translateY(60px)",
-});
-
 export const captureButton = style({
   width: "100%",
   marginTop: "70px",

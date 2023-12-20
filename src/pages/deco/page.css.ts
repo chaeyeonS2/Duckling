@@ -11,12 +11,13 @@ export const pageContainer = style({
 
 export const bottomContainer = style({
   width: "100%",
-  height: "fit-content",
+  height: "100%",
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
   position: "fixed",
   bottom: 0,
+  pointerEvents: "none",
 });
 
 export const topActionsContainer = style({
@@ -26,6 +27,7 @@ export const topActionsContainer = style({
   marginBottom: "12px",
   padding: "0 21px",
   zIndex: 99,
+  pointerEvents: "fill",
 });
 
 export const categorySelectGroup = style({
@@ -60,6 +62,7 @@ export const decorationListContainer = style({
   // * 스크롤바 너비 때문에 임의로 오른쪽 패딩을 -10함
   padding: "21px 11px 8px 21px",
   zIndex: 99,
+  pointerEvents: "fill",
 });
 
 export const buttonGroup = style({
