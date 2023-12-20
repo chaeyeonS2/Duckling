@@ -34,7 +34,7 @@ declare module "swr" {
 }
 
 declare module "axios" {
-  export interface Axios {
+  export interface AxiosInstance {
     get<
       K extends keyof APIMap,
       T extends CheckAPIMap<K, "GET">,

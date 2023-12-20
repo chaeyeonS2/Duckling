@@ -37,8 +37,8 @@ export default function NewPostPage() {
         title: title,
         body: content,
         postImg: previewImages,
-        writerID: userName,
-        userID: userID,
+        writerName: userName,
+        writerID: userID,
       });
       const data = res.data;
 
