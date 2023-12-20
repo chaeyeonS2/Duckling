@@ -16,8 +16,8 @@ export default function UsernamePage() {
           <img src="/img/share.png" />
         </Link>
       </Header>
-      <AvatarCanvas>
-        <AvatarModelGroup userId={userID ?? null} />
+      <AvatarCanvas style={{ transform: `translateY(-56px)` }}>
+        <AvatarModelGroup userId={userID ?? null} position={[0, -0.05, 0]} />
       </AvatarCanvas>
       <Footer />
     </main>

@@ -21,8 +21,8 @@ export default function HomePage() {
           <img src="/img/home/settings.png" />
         </Link>
       </Header>
-      <AvatarCanvas>
-        <AvatarModelGroup />
+      <AvatarCanvas style={{ transform: `translateY(-56px)` }}>
+        <AvatarModelGroup position={[0, -0.05, 0]} />
       </AvatarCanvas>
       <MyPost />
       <Footer />

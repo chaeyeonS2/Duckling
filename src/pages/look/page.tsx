@@ -17,7 +17,7 @@ export default function LookPage() {
     setCurrentTab(tab);
     setSize(1);
   };
-  const { data, size, setSize, isValidating, isLoading } = useSWRInfinite<APIPostsResponse>(
+  const { data, setSize } = useSWRInfinite(
     (index) => `/api/posts/${currentTab == "최신" ? "" : "likes/"}?limit=${PAGE_SIZE}&start=${index * PAGE_SIZE}`
   );
 
@@ -26,10 +26,6 @@ export default function LookPage() {
   };
 
   const posts = data ? Array.from(data).flat() : [];
-  const isLoadingMore = isLoading || (size > 0 && data && !data[size - 1]);
-  const isEmpty = data?.[0]?.length === 0;
-  const isReachingEnd = isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
-  const isRefreshing = isValidating && data && data.length === size;
   const contentElemRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleScroll = () => {
@@ -82,6 +78,6 @@ export default function LookPage() {
 }
 
 function Avatar({ userId }: { userId: string }) {
-  const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${userId}`);
+  const { data: user } = useSWRImmutable(`/api/users/${userId}`);
   return <img className={styles.profileImg} src={user?.profileImg} />;
 }

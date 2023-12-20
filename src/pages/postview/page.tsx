@@ -11,7 +11,7 @@ import PostMetadataBar from "@/components/PostMetadataBar";
 
 export default function PostViewPage() {
   const { writerID, postID } = useParams();
-  const { data: postData } = useSWRImmutable<APIPostResponse>(`/api/posts/writer/${writerID}/${postID}`);
+  const { data: postData } = useSWRImmutable(`/api/posts/writer/${writerID}/${postID}`);
 
   return (
     <div className={styles.layout}>

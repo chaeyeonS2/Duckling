@@ -11,7 +11,7 @@ import axios from "axios";
 
 export default function SettingPage() {
   const navigate = useNavigate();
-  const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
+  const { data: user, mutate } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
 
   const handleLogout = () => {
     overlays.open(({ overlayId }) => (
