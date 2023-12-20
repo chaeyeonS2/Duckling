@@ -6,7 +6,6 @@ import "@egjs/view3d/css/view3d-bundle.min.css";
 import "@egjs/view3d/css/view3d-ar.min.css";
 import Footer from "@/components/layout/Footer";
 import AnimationMenu from "./_components/AnimationMenu";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 export default function ARCameraPage() {
   const view3DRef = useRef<View3D | null>(null);

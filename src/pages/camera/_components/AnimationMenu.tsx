@@ -9,7 +9,7 @@ interface AnimationMenuProps {
 }
 
 const AnimationMenu = forwardRef<View3D, AnimationMenuProps>((props, ref) => {
-  const { data: icons } = useSWRImmutable<APIAssetsResponse>(`/api/assets/body/top`);
+  const { data: icons } = useSWRImmutable(`/api/assets/?kind=top`);
   const view3DRef = ref as MutableRefObject<View3D>;
   const [isAvailableAR, setIsAvailableAR] = useState<boolean>(false);
 
@@ -20,10 +20,10 @@ const AnimationMenu = forwardRef<View3D, AnimationMenuProps>((props, ref) => {
     }
   };
 
-//   const animationNames = view3DRef.current?.animator.clips.map((clip) => {
-//     clip.name;
-//   });
-//   console.log(animationNames);
+  //   const animationNames = view3DRef.current?.animator.clips.map((clip) => {
+  //     clip.name;
+  //   });
+  //   console.log(animationNames);
 
   useEffect(() => {
     checkAvailableAR();

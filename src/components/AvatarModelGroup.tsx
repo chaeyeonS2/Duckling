@@ -1,12 +1,16 @@
 import useSWRImmutable from "swr/immutable";
 import { useGltf } from "@/components/GltfProvider";
-import GroupWrpper from "@/components/GroupWrapper";
+import GroupWrpper, { GroupWrpperProps } from "@/components/GroupWrapper";
 
-export interface AvatarModelGroupProps {
+export interface AvatarModelGroupProps extends Omit<GroupWrpperProps, "groups"> {
   userId?: string | null;
   position?: [x: number, y: number, z: number];
 }
-export default function AvatarModelGroup({ userId = localStorage.getItem("id"), position }: AvatarModelGroupProps) {
+export default function AvatarModelGroup({
+  userId = localStorage.getItem("id"),
+  position,
+  ...props
+}: AvatarModelGroupProps) {
   const { data: user } = useSWRImmutable(`/api/users/${userId}`);
   const { getGLTFs } = useGltf();
 
@@ -21,5 +25,5 @@ export default function AvatarModelGroup({ userId = localStorage.getItem("id"), 
     //"/gltf/avatar/pink_nasi.gltf"
   );
 
-  return <GroupWrpper groups={models} position={position} />;
+  return <GroupWrpper groups={models} position={position} {...props} />;
 }

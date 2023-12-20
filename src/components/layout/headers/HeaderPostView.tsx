@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AlertModal from "@/components/modal/AlertModal";
 import ConfirmModal from "@/components/modal/ConfirmModal";
 import Icon from "@/components/Icon";
+import axios from "axios";
 
 export default function HeaderPostView() {
   const navigate = useNavigate();
@@ -20,6 +21,17 @@ export default function HeaderPostView() {
         }
         onYes={() => {
           // TODO: impl post delete
+          axios.delete(`/api/posts/${localStorage.getItem("id")}`).then(() => {
+            overlays.open(({ overlayId }) => (
+              <AlertModal
+                title="게시글이 삭제되었습니다."
+                onClose={() => {
+                  overlays.close(overlayId);
+                  navigate("/share");
+                }}
+              />
+            ));
+          });
         }}
         onNo={() => overlays.close(overlayId)}
         yesText="네,삭제할게요"
