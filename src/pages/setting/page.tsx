@@ -105,7 +105,7 @@ export default function SettingPage() {
       await axios.patch(`/api/users/${localStorage.getItem("id")}`, {
         profileImg: dataUrl as string,
       });
-      localStorage.setItem("profileImg", URL.createObjectURL(e.target.files[0]));
+      localStorage.setItem("profileImg", dataUrl as string);
       overlays.close(overlayId);
     } catch (e) {
       overlays.open(({ overlayId }) => (
