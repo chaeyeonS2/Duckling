@@ -48,7 +48,7 @@ export default function NewPostPage() {
         <AlertModal
           onClose={() => {
             overlays.close(overlayId);
-            navigate(`/postView/${data.writerID}/${data.postID}`);
+            navigate(`/postView/${data.postID}`);
           }}
           logoImgSrc={<Icon id="check" size="medium" />}
           title="게시글이 업로드 되었습니다"

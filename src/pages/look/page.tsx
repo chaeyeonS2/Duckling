@@ -22,8 +22,8 @@ export default function LookPage() {
       `/api/posts/?sortBy=${currentTab == "최신" ? "" : "likes/"}&limit=${PAGE_SIZE}&start=${index * PAGE_SIZE}`
   );
 
-  const handlePostClick = (userName: string, postID: string) => () => {
-    navigate(`/postview/${userName}/${postID}`);
+  const handlePostClick = (postID: string) => () => {
+    navigate(`/postview/${postID}`);
   };
 
   const posts = data ? Array.from(data).flat() : [];
@@ -57,7 +57,7 @@ export default function LookPage() {
       </header>
       <div className={styles.content} ref={contentElemRef}>
         {posts?.map((post, index) => (
-          <div className={styles.postBox} key={index} onClick={handlePostClick(post.writerID, post.postID)}>
+          <div className={styles.postBox} key={index} onClick={handlePostClick(post.postID)}>
             <div className={styles.postProfile}>
               <Avatar userId={post.userID} />
               <div className={styles.userName}>{post.writerID}</div>
