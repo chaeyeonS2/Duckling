@@ -13,7 +13,7 @@ export default function PostMetadataBar({ postData }: PostMetadataBarProps) {
 
   const cookieClick = () => {
     setLiked((prev) => !prev);
-    axios.patch(`/api/posts/likes/${postData.postID}`);
+    axios.patch(`/api/posts/likes/${postData.postID}/${localStorage.getItem("id")}`);
   };
   const commentClick = () => {
     navigate("/comment", { state: { postID: postData.postID } });

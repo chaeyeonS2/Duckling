@@ -7,7 +7,7 @@ export interface AvatarModelGroupProps {
   position?: [x: number, y: number, z: number];
 }
 export default function AvatarModelGroup({ userId = localStorage.getItem("id"), position }: AvatarModelGroupProps) {
-  const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${userId}`);
+  const { data: user } = useSWRImmutable(`/api/users/${userId}`);
   const { getGLTFs } = useGltf();
 
   if (userId === null) return null;

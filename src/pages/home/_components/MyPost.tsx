@@ -69,7 +69,7 @@ function CustomHeader() {
 }
 
 function CustomContent() {
-  const { data: posts } = useSWR<APIPostsWriterReponse>("/api/posts/writer/" + localStorage.getItem("userName"));
+  const { data: posts } = useSWR(`/api/posts/writer/${localStorage.getItem("userName")}`);
 
   const navigate = useNavigate();
   const handlePostClick = (userName: string, postID: string) => {

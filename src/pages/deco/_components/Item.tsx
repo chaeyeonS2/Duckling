@@ -5,21 +5,18 @@ import useSWRImmutable from "swr/immutable";
 import { produce } from "immer";
 
 export interface ItemProps {
-  currentKind: string;
-  isFaceDeco: boolean;
+  currentKind: keyof User["userAvatar"];
 }
-export default function Item({ currentKind, isFaceDeco }: ItemProps) {
+export default function Item({ currentKind }: ItemProps) {
   const [currentAsset, setCurrentAsset] = useState<string>();
-  const { data: assets } = useSWRImmutable<APIAssetsResponse>(
-    `/api/assets/${isFaceDeco ? "face" : "body"}/${currentKind}`
-  );
-  const { data: user, mutate } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
+  const { data: assets } = useSWRImmutable(`/api/assets/?kind=${currentKind}`);
+  const { data: user, mutate } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
 
-  const handleClick = (kind: string, item: APIAssetsResponse[number]) => {
+  const handleClick = (kind: keyof User["userAvatar"], item: Asset) => {
     setCurrentAsset(item.assetID);
 
     const newUser = produce(user, (draft) => {
-      // @ts-ignore TODO: 나중에 타입 정의
+      if (!draft) return;
       draft.userAvatar[kind] = item.assetGltf;
     });
 

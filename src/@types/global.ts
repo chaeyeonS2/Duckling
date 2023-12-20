@@ -2,30 +2,42 @@ interface Post {
   postID: string;
   title: string;
   body: string;
-  postImg: string[];
   writerID: string;
-  userID: string;
+  writerName: string;
+  likes: string[];
+  commentCount: number;
+  postImg: string[];
   time: number;
   date: string;
-  likes: number;
-  commentCount: number;
 }
+
 interface User {
-  userID: string;
-  profileImg: string;
+  uid: string;
   userName: string;
+  profileImg: string;
+  consumer_key: string;
+  consumer_secret: string;
   userAvatar: {
-    eyes: string;
-    mouth: string;
     top: string;
     bottom: string;
-    accessory: string;
     shoes: string;
+    accessory: string;
+    eyes: string;
+    mouth: string;
   };
 }
 
+interface Comment {
+  commentID: string;
+  text: string;
+  rootID: string;
+  writerID: string;
+  time: number;
+  date: string;
+}
+
 interface Asset {
-  assetID: number;
+  assetID: string;
   assetGltf: string;
   assetImg: string;
 }
@@ -37,6 +49,7 @@ interface GLTFAsset {
   cameras: Array<THREE.Camera>;
   asset: Object;
 }
+
 declare module "three/examples/jsm/loaders/GLTFLoader.js" {
   /**
    * TODO: 귀찮아서 모든 메서드를 명시하진 않음.
