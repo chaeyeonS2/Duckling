@@ -18,7 +18,7 @@ export default function LookPage() {
     setSize(1);
   };
   const { data, setSize } = useSWRInfinite(
-    (index) => `/api/posts/${currentTab == "최신" ? "" : "likes/"}?limit=${PAGE_SIZE}&start=${index * PAGE_SIZE}`
+    (index) => `/api/posts/?${currentTab == "최신" ? "" : "sortBy=likes&"}limit=${PAGE_SIZE}&start=${index * PAGE_SIZE}`
   );
 
   const handlePostClick = (userName: string, postID: string) => () => {
