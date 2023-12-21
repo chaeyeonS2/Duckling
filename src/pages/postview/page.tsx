@@ -10,8 +10,8 @@ import * as styles from "./page.css";
 import PostMetadataBar from "@/components/PostMetadataBar";
 
 export default function PostViewPage() {
-  const { writerID, postID } = useParams();
-  const { data: postData } = useSWRImmutable(`/api/posts/writer/${writerID}/${postID}`);
+  const { postID } = useParams();
+  const { data: postData } = useSWRImmutable(`/api/posts/${postID}`);
 
   return (
     <div className={styles.layout}>

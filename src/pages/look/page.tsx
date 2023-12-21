@@ -58,8 +58,8 @@ export default function LookPage() {
         {posts?.map((post, index) => (
           <div className={styles.postBox} key={index} onClick={handlePostClick(post.writerID, post.postID)}>
             <div className={styles.postProfile}>
-              <Avatar userId={post.userID} />
-              <div className={styles.userName}>{post.writerID}</div>
+              <Avatar userId={post.writerID} />
+              <div className={styles.userName}>{post.writerName}</div>
               <div className={styles.date}>{post.date}</div>
             </div>
 
@@ -79,5 +79,6 @@ export default function LookPage() {
 
 function Avatar({ userId }: { userId: string }) {
   const { data: user } = useSWRImmutable(`/api/users/${userId}`);
-  return <img className={styles.profileImg} src={user?.profileImg} />;
+  console.log("user?.profileImg: ", user);
+  return <img className={styles.profileImg} src={user?.profileImg ?? ""} />;
 }
