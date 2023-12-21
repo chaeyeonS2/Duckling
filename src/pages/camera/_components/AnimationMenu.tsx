@@ -9,7 +9,7 @@ interface AnimationMenuProps {
 }
 
 const AnimationMenu = forwardRef<View3D, AnimationMenuProps>((props, ref) => {
-  const { data: icons } = useSWRImmutable(`/api/assets/?kind=top`);
+  const { data: icons } = useSWRImmutable(`/api/assets/?kind=ar`);
   const view3DRef = ref as MutableRefObject<View3D>;
   const [isAvailableAR, setIsAvailableAR] = useState<boolean>(false);
 

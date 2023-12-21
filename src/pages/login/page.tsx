@@ -7,14 +7,24 @@ import * as styles from "./page.css";
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const handleUpload = async (userID: string, photoURL: string, userName: string, token: string, secret: string) => {
+  const handleUpload = async (
+    userID: string,
+    photoURL: string,
+    userName: string,
+    token: string,
+    secret: string
+    // access_token: string,
+    // access_token_secret: string
+  ) => {
     try {
       await axios.post("/api/users", {
         uid: userID,
         profileImg: photoURL,
         userName: userName,
-        consumer_key: token,
-        consumer_secret: secret,
+        access_token: token,
+        access_token_secret: secret,
+        // access_token: ,
+        // access_token_secret: secret,
       });
       console.log("login upload success");
     } catch (error) {
@@ -25,6 +35,7 @@ export default function LoginPage() {
   const twitterLogin = () => {
     // Twitter 로그인 팝업 띄우기
     const provider = new TwitterAuthProvider();
+    console.log("provider: ", provider);
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -43,7 +54,9 @@ export default function LoginPage() {
           const userID = user.uid;
           const userName = user.displayName;
           const photoURL = user.photoURL; //tiwtter 프로필 사진 가져옴
-          console.log("Firebase userID:", userName);
+          //const accessToken = user.accessToken;
+
+          console.log("Firebase result:", result);
 
           // TODO: photoURL과 userName이 null일 때 어떻게 해야 하는가
           if (!userName) throw new Error("userName does not exist!");
