@@ -47,10 +47,14 @@ export default function SettingPage() {
               logoImgSrc={<Icon id="warning" size="medium" />}
               description="덕클링 이력, 덕클링 닉네임, 덕클링 활동 이력이 전부 삭제됩니다."
               onNo={() => overlays.close(reallyConfirmId)}
-              onYes={() => {
-                overlays.close(signoutConfirmId);
-                // TODO: 탈퇴 처리
+              onYes={async () => {
+                overlays.close(reallyConfirmId);
+                const inProgressModal = overlays.open(() => (
+                  <BaseModal logoImgSrc={<Icon id="warning" size="medium" />} title="탈퇴중..." />
+                ));
                 await axios.delete(`/api/users/${localStorage.getItem("id")}`);
+                overlays.close(inProgressModal);
+
                 overlays.open(({ overlayId }) => (
                   <AlertModal
                     logoImgSrc={<Icon id="warning" size="medium" />}
@@ -80,11 +84,9 @@ export default function SettingPage() {
 
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-    let overlayId = -1;
-    overlays.open(({ overlayId: id }) => {
-      overlayId = id;
-      return <BaseModal title="프로필 이미지를 변경중입니다" />;
-    });
+    const overlayId = overlays.open(() => <BaseModal title="프로필 이미지를 변경중입니다" />);
+    const file = e.target.files[0];
+    const dataUrl = await convertFileToDataUrl(file);
     try {
       await axios.patch(`/api/users/${localStorage.getItem("id")}`, {
         profileImg: dataUrl as string,
