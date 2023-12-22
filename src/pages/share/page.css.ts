@@ -14,7 +14,7 @@ export const canvasContainer = style({
 
 export const captureButton = style({
   width: "100%",
-  marginTop: "70px",
+  marginTop: "10vw",
 });
 
 // TODO: temp, modal style를 둘 곳을 정해야 함
