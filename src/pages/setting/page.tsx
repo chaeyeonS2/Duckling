@@ -1,13 +1,17 @@
-import Icon from "@/components/Icon";
-import * as styles from "./page.css";
-import { overlays } from "@/utils/overlays";
 import ConfirmModal from "@/components/modal/ConfirmModal";
 import AlertModal from "@/components/modal/AlertModal";
-import { useNavigate } from "react-router-dom";
 import BaseModal from "@/components/modal/BaseModal";
-import { useEffect, useRef, useState } from "react";
-import useSWRImmutable from "swr/immutable";
+import Icon from "@/components/Icon";
+
 import axios from "axios";
+import { getAuth } from "firebase/auth";
+import { overlays } from "@/utils/overlays";
+import useSWRImmutable from "swr/immutable";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import convertFileToDataUrl from "@/utils/convertFileToDataUrl";
+
+import * as styles from "./page.css";
 
 export default function SettingPage() {
   const navigate = useNavigate();
@@ -18,7 +22,15 @@ export default function SettingPage() {
       <ConfirmModal
         title="로그아웃 하시겠습니까?"
         onNo={() => overlays.close(overlayId)}
-        onYes={() => {}}
+        onYes={() => {
+          overlays.close(overlayId);
+          getAuth()
+            .signOut()
+            .then(() => {
+              navigate("/");
+            })
+            .catch(console.log);
+        }}
         noText="취소"
         yesText="로그아웃"
       />
@@ -44,8 +56,13 @@ export default function SettingPage() {
               logoImgSrc={<Icon id="warning" size="medium" />}
               description="덕클링 이력, 덕클링 닉네임, 덕클링 활동 이력이 전부 삭제됩니다."
               onNo={() => overlays.close(reallyConfirmId)}
-              onYes={() => {
-                overlays.close(signoutConfirmId);
+              onYes={async () => {
+                overlays.close(reallyConfirmId);
+                const inProgressModal = overlays.open(() => (
+                  <BaseModal logoImgSrc={<Icon id="warning" size="medium" />} title="탈퇴중..." />
+                ));
+                await axios.delete(`/api/users/${localStorage.getItem("id")}`);
+                overlays.close(inProgressModal);
                 overlays.open(({ overlayId }) => (
                   <AlertModal
                     logoImgSrc={<Icon id="warning" size="medium" />}
@@ -73,37 +90,15 @@ export default function SettingPage() {
     inputFileRef.current?.click();
   };
 
-  const convertFileToDataUrl = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const dataUrl = reader.result;
-        resolve(dataUrl);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-    let overlayId = -1;
-    overlays.open(({ overlayId: id }) => {
-      overlayId = id;
-      return <BaseModal title="프로필 이미지를 변경중입니다" />;
-    });
+    const overlayId = overlays.open(() => <BaseModal title="프로필 이미지를 변경중입니다" />);
+    const file = e.target.files[0];
+    const dataUrl = await convertFileToDataUrl(file);
     try {
-      const file = e.target.files[0];
-      const dataUrl = await convertFileToDataUrl(file);
-      if (dataUrl) {
-      }
       await axios.patch(`/api/users/${localStorage.getItem("id")}`, {
         profileImg: dataUrl as string,
       });
-      localStorage.setItem("profileImg", dataUrl as string);
-      overlays.close(overlayId);
     } catch (e) {
       overlays.open(({ overlayId }) => (
         <AlertModal
@@ -115,10 +110,12 @@ export default function SettingPage() {
           }}
         />
       ));
-      overlays.close(overlayId);
       return;
+    } finally {
+      overlays.close(overlayId);
     }
 
+    localStorage.setItem("profileImg", dataUrl as string);
     mutate();
     overlays.open(({ overlayId }) => {
       useEffect(() => {

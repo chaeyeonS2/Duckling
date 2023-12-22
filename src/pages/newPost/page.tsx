@@ -20,26 +20,17 @@ export default function NewPostPage() {
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
 
-    let overlayId = -1;
+    const overlayId = overlays.open(() => (
+      <BaseModal logoImgSrc={<img src="/img/writing/upload_loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
+    ));
     try {
-      overlays.open(({ overlayId: id }) => {
-        overlayId = id;
-        return (
-          <BaseModal
-            logoImgSrc={<img src="/img/writing/upload_loading.gif" alt="" />}
-            title="게시글이 올라가고 있어요~!"
-          />
-        );
-      });
-
-      const res = await axios.post("/api/posts", {
+      const { data } = await axios.post("/api/posts", {
         title: title,
         body: content,
         postImg: previewImages,
         writerName: userName,
         writerID: userID,
       });
-      const data = res.data;
 
       console.log("Document uploaded:", data.postID, data.writerID);
 
