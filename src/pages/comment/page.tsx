@@ -27,7 +27,6 @@ export default function CommentPage() {
     const userID = localStorage.getItem("id");
     const userName = localStorage.getItem("userName");
 
-    // TODO: userID과 userName이 null일 때 어떻게 해야 하는가
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
 
@@ -64,7 +63,6 @@ export default function CommentPage() {
 
   return (
     <div className="layout">
-      {/* // TODO: layout 컴포넌트 재사용하기 */}
       {/* 고정 헤더 */}
       <HeaderComment />
       <div className={styles.content}>

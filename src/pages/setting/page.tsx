@@ -18,9 +18,7 @@ export default function SettingPage() {
       <ConfirmModal
         title="로그아웃 하시겠습니까?"
         onNo={() => overlays.close(overlayId)}
-        onYes={() => {
-          // TODO: 로그아웃 처리
-        }}
+        onYes={() => {}}
         noText="취소"
         yesText="로그아웃"
       />
@@ -48,7 +46,6 @@ export default function SettingPage() {
               onNo={() => overlays.close(reallyConfirmId)}
               onYes={() => {
                 overlays.close(signoutConfirmId);
-                // TODO: 탈퇴 처리
                 overlays.open(({ overlayId }) => (
                   <AlertModal
                     logoImgSrc={<Icon id="warning" size="medium" />}

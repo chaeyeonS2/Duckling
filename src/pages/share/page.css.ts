@@ -17,7 +17,6 @@ export const captureButton = style({
   marginTop: "10vw",
 });
 
-// TODO: temp, modal style를 둘 곳을 정해야 함
 export const modalContainer = style({
   position: "absolute",
   height: "100vh",
@@ -57,12 +56,5 @@ export const button = style({
   justifyContent: "center",
   alignItems: "center",
   gap: "8px",
-  color: "black",
-});
-
-// TODO: Icon 컴포넌트에서 크기를 prop로 받을까?
-export const icon = style({
-  width: "20px",
-  height: "20px",
   color: "black",
 });
