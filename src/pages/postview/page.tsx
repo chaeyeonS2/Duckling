@@ -1,5 +1,4 @@
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
-import ImageSlider from "./_components/ImageSlider";
 import Footer from "@/components/layout/Footer";
 import Icon from "@/components/Icon";
 
@@ -8,6 +7,7 @@ import useSWRImmutable from "swr/immutable";
 
 import * as styles from "./page.css";
 import PostMetadataBar from "@/components/PostMetadataBar";
+import Slider from "react-slick";
 
 export default function PostViewPage() {
   const { postID } = useParams();
@@ -25,7 +25,11 @@ export default function PostViewPage() {
           <Icon id="vertical-dots" size="medium" />
         </div>
         <div>
-          <ImageSlider images={postData?.postImg ?? []} className={styles.imageSlider} />
+          <Slider dots variableWidth arrows={false} infinite={false}>
+            {postData?.postImg.map((image, index) => (
+              <img className={styles.postImgBig} src={image} alt={`Slide ${index}`} key={index} />
+            ))}
+          </Slider>
           <p className={styles.content}>{postData?.body}</p>
         </div>
         <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
