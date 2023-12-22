@@ -8,6 +8,7 @@ import BaseModal from "@/components/modal/BaseModal";
 import { useEffect, useRef, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import axios from "axios";
+import convertFileToDataUrl from "@/utils/convertFileToDataUrl";
 
 export default function SettingPage() {
   const navigate = useNavigate();
@@ -77,20 +78,6 @@ export default function SettingPage() {
     inputFileRef.current?.click();
   };
 
-  const convertFileToDataUrl = (file: File) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const dataUrl = reader.result;
-        resolve(dataUrl);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
     let overlayId = -1;
@@ -99,15 +86,9 @@ export default function SettingPage() {
       return <BaseModal title="프로필 이미지를 변경중입니다" />;
     });
     try {
-      const file = e.target.files[0];
-      const dataUrl = await convertFileToDataUrl(file);
-      if (dataUrl) {
-      }
       await axios.patch(`/api/users/${localStorage.getItem("id")}`, {
         profileImg: dataUrl as string,
       });
-      localStorage.setItem("profileImg", dataUrl as string);
-      overlays.close(overlayId);
     } catch (e) {
       overlays.open(({ overlayId }) => (
         <AlertModal
@@ -119,10 +100,12 @@ export default function SettingPage() {
           }}
         />
       ));
-      overlays.close(overlayId);
       return;
+    } finally {
+      overlays.close(overlayId);
     }
 
+    localStorage.setItem("profileImg", dataUrl as string);
     mutate();
     overlays.open(({ overlayId }) => {
       useEffect(() => {
