@@ -42,7 +42,6 @@ export default function Router() {
         <Route path="/postview/:postID" element={<PostViewPage />} />
         {/* xmc용 로그인 */}
         <Route path="/xmc" element={<XrealLoginPage />} />
-        {/* <설정/> */}
         <Route path="/setting" element={<SettingPage />} />
         <Route path="/username/:userID" element={<UsernamePage />} />
       </Routes>
