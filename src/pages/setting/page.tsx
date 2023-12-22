@@ -49,6 +49,7 @@ export default function SettingPage() {
               onYes={() => {
                 overlays.close(signoutConfirmId);
                 // TODO: 탈퇴 처리
+                await axios.delete(`/api/users/${localStorage.getItem("id")}`);
                 overlays.open(({ overlayId }) => (
                   <AlertModal
                     logoImgSrc={<Icon id="warning" size="medium" />}
