@@ -23,7 +23,7 @@ export default function PostMetadataBar({ postData }: PostMetadataBarProps) {
     <div className={styles.metadataContainer}>
       <div onClick={cookieClick} className={styles.metadata} aria-selected={liked}>
         <Icon id="cookie" size="medium" />
-        <span>{postData?.likes}</span>
+        <span>{postData?.likes.length}</span>
       </div>
       <div onClick={commentClick} className={styles.metadata}>
         <Icon id="comment" size="medium" />
