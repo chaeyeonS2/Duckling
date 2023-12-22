@@ -1,10 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import AvatarModelGroup from "@/components/AvatarModelGroup";
 import Header from "@/components/layout/headers/Header";
 import AvatarCanvas from "@/components/AvatarCanvas";
-import { Link } from "react-router-dom";
-import Item from "./_components/Item";
+import { useGltf } from "@/components/GltfProvider";
+import GroupWrpper from "@/components/GroupWrapper";
 
 import type { RootState } from "@react-three/fiber";
 import useSWRImmutable from "swr/immutable";
@@ -26,14 +26,29 @@ const subNav = {
 } as const;
 
 export default function DecoPage() {
-  const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
   const cameraRef = useRef<RootState>(null);
-  //데코(얼굴, 옷) 카테고리 선택
-  const [isFaceDeco, setIsFaceDeco] = useState(false);
   const [currentKind, setCurrentKind] = useState<keyof User["userAvatar"]>("top");
+  const [currentAsset, setCurrentAsset] = useState<string>();
+  const isFaceDeco = currentKind === "eyes" || currentKind === "mouth";
+
+  const { data: assets } = useSWRImmutable(`/api/assets/?kind=${currentKind}`);
+  const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
+  const [avatar, setAvatar] = useState<Partial<User["userAvatar"]>>(user?.userAvatar ?? {});
+  useEffect(() => {
+    if (!user) return;
+    setAvatar(user.userAvatar);
+  }, [user]);
+
+  const { getGLTFs } = useGltf();
+  const models = getGLTFs(
+    ...Object.values(avatar).map((path) => ({ gltfPath: path, identfier: "deco" } as const)),
+    "/gltf/avatar/T_POSED_BODY_RIGGED_FINAL.gltf",
+    "/gltf/avatar/keyring.glb",
+    "/gltf/avatar/nose.gltf",
+    "/gltf/avatar/stage.glb"
+  );
 
   const handleDecoClick = (idx: number) => {
-    setIsFaceDeco(idx == 0 ? true : false);
     setCurrentKind(idx == 0 ? "eyes" : "top");
 
     if (!cameraRef.current) return;
@@ -44,13 +59,25 @@ export default function DecoPage() {
     }
   };
 
-  const handleAvatarUpload = () => {
-    if (!user) return;
+  const handleKindClick = (kind: keyof User["userAvatar"]) => {
+    setCurrentKind(kind);
+    setCurrentAsset(undefined);
+  };
 
+  const handleItemClick = (kind: keyof User["userAvatar"], item: Asset) => {
+    setCurrentAsset(item.assetID);
+
+    setAvatar((prev) => ({
+      ...prev,
+      [kind]: item.assetGltf,
+    }));
+  };
+
+  const handleAvatarUpload = () => {
     const uid = localStorage.getItem("id");
     axios
       .patch(`/api/users/${uid}`, {
-        userAvatar: user.userAvatar,
+        userAvatar: avatar,
       })
       .catch((error) => console.error("Error uploading document:", error));
   };
@@ -73,7 +100,8 @@ export default function DecoPage() {
           far: 10,
         }}
       >
-        <AvatarModelGroup
+        <GroupWrpper
+          groups={models}
           position={isFaceDeco ? [0, -0.025, 0] : [0, 0.05, 0]}
           scale={isFaceDeco ? [1.75, 1.75, 1.75] : [1, 1, 1]}
         />
@@ -85,9 +113,7 @@ export default function DecoPage() {
             <button
               className={styles.categorySelectButton}
               aria-selected={isFaceDeco}
-              onClick={() => {
-                handleDecoClick(0);
-              }}
+              onClick={() => handleDecoClick(0)}
             >
               <img
                 src={isFaceDeco ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"}
@@ -98,9 +124,7 @@ export default function DecoPage() {
             <button
               className={styles.categorySelectButton}
               aria-selected={!isFaceDeco}
-              onClick={() => {
-                handleDecoClick(1);
-              }}
+              onClick={() => handleDecoClick(1)}
             >
               <img
                 src={!isFaceDeco ? "/img/VectorclothTrue.png" : "/img/VectorclothFalse.png"}
@@ -121,14 +145,28 @@ export default function DecoPage() {
               <button
                 key={kind}
                 className={styles.button}
-                onClick={() => setCurrentKind(kind)}
+                onClick={() => handleKindClick(kind)}
                 aria-selected={currentKind === kind}
               >
                 {text}
               </button>
             ))}
           </div>
-          <Item currentKind={currentKind} />
+
+          <div className={styles.itemBoxDiv}>
+            {assets?.map((item) => {
+              return (
+                <div
+                  key={item.assetID}
+                  className={styles.itemBox}
+                  aria-selected={currentAsset == item.assetID}
+                  onClick={() => handleItemClick(currentKind, item)}
+                >
+                  <img className={styles.itemImg} src={item.assetImg} alt="" />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </main>

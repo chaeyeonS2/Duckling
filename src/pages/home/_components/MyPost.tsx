@@ -4,6 +4,7 @@ import { useRef } from "react";
 import * as styles from "./myPost.css";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
+import useSWRImmutable from "swr/immutable";
 
 export default function MyPost() {
   const ref = useRef<SheetRef>();
@@ -53,13 +54,14 @@ export default function MyPost() {
 }
 
 function CustomHeader() {
+  const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
   const navigate = useNavigate();
   const newpostClick = () => {
     navigate("/newPost");
   };
   return (
     <div>
-      <div className={styles.profileImg} style={{ backgroundImage: `url(${localStorage.getItem("profileImg")})` }} />
+      <div className={styles.profileImg} style={{ backgroundImage: `url(${user?.profileImg})` }} />
       <div className={styles.userName}>{localStorage.getItem("userName")}</div>
       <div className={styles.btnAddNew} onClick={newpostClick}>
         <img className={styles.btnAddNewImage} src="/img/writing/add.png" alt="" />

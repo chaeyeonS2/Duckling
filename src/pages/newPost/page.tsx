@@ -17,7 +17,6 @@ export default function NewPostPage() {
 
     const userID = localStorage.getItem("id");
     const userName = localStorage.getItem("userName");
-    // TODO: userID과 userName이 null일 때 어떻게 해야 하는가
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
 

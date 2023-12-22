@@ -58,7 +58,6 @@ export default function LoginPage() {
 
           console.log("Firebase result:", result);
 
-          // TODO: photoURL과 userName이 null일 때 어떻게 해야 하는가
           if (!userName) throw new Error("userName does not exist!");
           if (!photoURL) throw new Error("photoURL does not exist!");
 
