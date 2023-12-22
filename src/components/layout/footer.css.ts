@@ -4,6 +4,7 @@ export const footer = style({
   height: "88px",
   display: "flex",
   backgroundColor: "#454545",
+  zIndex: 100,
 });
 
 export const footerBtn = style({

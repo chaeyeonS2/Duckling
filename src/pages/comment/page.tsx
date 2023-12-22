@@ -12,7 +12,7 @@ export default function CommentPage() {
 
   // userID: profileImg
   const [profileImg, setProfileImg] = useState<Record<string, string>>();
-  const [data, setData] = useState<APICommentsReponse>();
+  const [data, setData] = useState<Comment[]>();
   const [comment, setComment] = useState("");
 
   const handleCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -45,7 +45,7 @@ export default function CommentPage() {
     console.log("댓글 제출:", comment);
     setComment(""); // 댓글 입력란 초기화
 
-    const { data: comments } = await axios.get(`/api/comments/root/${postID}`);
+    const { data: comments } = await axios.get(`/api/comments/${postID}`);
     comments.sort((a, b) => a.time - b.time);
 
     Promise.all(

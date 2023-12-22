@@ -23,13 +23,14 @@ const subNav = {
     ["shoes", "신발"],
     ["accessory", "기타"],
   ],
-};
+} as const;
+
 export default function DecoPage() {
-  const { data: user } = useSWRImmutable<APIUserResponse>(`/api/users/${localStorage.getItem("id")}`);
+  const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
   const cameraRef = useRef<RootState>(null);
   //데코(얼굴, 옷) 카테고리 선택
   const [isFaceDeco, setIsFaceDeco] = useState(false);
-  const [currentKind, setCurrentKind] = useState("top");
+  const [currentKind, setCurrentKind] = useState<keyof User["userAvatar"]>("top");
 
   const handleDecoClick = (idx: number) => {
     setIsFaceDeco(idx == 0 ? true : false);
@@ -62,8 +63,20 @@ export default function DecoPage() {
         </Link>
       </Header>
 
-      <AvatarCanvas ref={cameraRef}>
-        <AvatarModelGroup />
+      <AvatarCanvas
+        ref={cameraRef}
+        style={{ transform: `translateY(-56px)` }}
+        camera={{
+          fov: 150,
+          zoom: 100,
+          near: 1,
+          far: 10,
+        }}
+      >
+        <AvatarModelGroup
+          position={isFaceDeco ? [0, -0.025, 0] : [0, 0.05, 0]}
+          scale={isFaceDeco ? [1.75, 1.75, 1.75] : [1, 1, 1]}
+        />
       </AvatarCanvas>
 
       <div className={styles.bottomContainer}>
@@ -115,7 +128,7 @@ export default function DecoPage() {
               </button>
             ))}
           </div>
-          <Item currentKind={currentKind} isFaceDeco={isFaceDeco} />
+          <Item currentKind={currentKind} />
         </div>
       </div>
     </main>

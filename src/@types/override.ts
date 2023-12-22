@@ -1,15 +1,37 @@
+import { SWRConfiguration, SWRResponse } from "swr";
+
 type CheckAPIMap<
   K extends keyof APIMap,
   M extends Methods
 > = `${K}-${LengthOfPath<K>}` extends infer KT extends keyof APIMaps
   ? M extends keyof APIMaps[KT]
-    ? APIMaps[KT][M] extends infer T extends undefined | [unknown, unknown]
-      ? T extends [infer R, infer D]
-        ? [R, D]
-        : ["invalid method!", "invalid method!"]
-      : never
-    : never
+    ? APIMaps[KT][M]
+    : ["invalid method!", "invalid method!"]
   : never;
+
+declare module "swr" {
+  // override type declaration of "useSWR" and "useSWRImmutable"
+  export interface SWRHook {
+    <
+      K extends keyof APIMap,
+      T extends CheckAPIMap<K, "GET">,
+      IsValid = T extends ["invalid method!", "invalid method!"] ? false : true
+    >(
+      url: IsValid extends false ? T : K,
+      config?: SWRConfiguration<T[1]>
+    ): IsValid extends false ? SWRResponse<T> : SWRResponse<T[0], T[1]>;
+
+    <
+      K extends keyof APIMap,
+      T extends CheckAPIMap<K, "GET">,
+      D,
+      IsValid = T extends ["invalid method!", "invalid method!"] ? false : true
+    >(
+      url: IsValid extends false ? T : K,
+      config?: SWRConfiguration<T[1]>
+    ): IsValid extends false ? SWRResponse<T> : SWRResponse<T[0], T[1], D>;
+  }
+}
 
 declare module "axios" {
   export interface AxiosInstance {

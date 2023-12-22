@@ -8,7 +8,7 @@ import { button } from "../deco/page.css";
 import { useRef } from "react";
 
 import * as styles from "./page.css";
-import { overlays } from "@/overlays";
+import { overlays } from "@/utils/overlays";
 import Icon from "@/components/Icon";
 
 export default function SharePage() {
@@ -62,8 +62,8 @@ export default function SharePage() {
       </Header>
       <div className={styles.pageContainer}>
         <div className={styles.canvasContainer}>
-          <AvatarCanvas ref={rootStateRef} className={styles.avatarCanvas}>
-            <AvatarModelGroup userId={userID} />
+          <AvatarCanvas ref={rootStateRef}>
+            <AvatarModelGroup userId={userID} position={[0, -0.05, 0]} />
           </AvatarCanvas>
         </div>
         <button onClick={onCaptureClick} className={button + " " + styles.captureButton} aria-selected>

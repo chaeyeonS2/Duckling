@@ -1,15 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AnimationPage from "@/pages/animation/page";
-import CommentPage from "@/pages/comment/page";
-import DecoPage from "@/pages/deco/page";
+import UsernamePage from "@/pages/username/pages";
 import PostViewPage from "@/pages/postview/page";
-import XrealLoginPage from "@/pages/xmc/page";
 import NewPostPage from "@/pages/newPost/page";
-import CameraPage from "@/pages/camera/page";
+import CommentPage from "@/pages/comment/page";
+import SettingPage from "@/pages/setting/page";
+import ARCameraPage from "@/pages/camera/page";
+import XrealLoginPage from "@/pages/xmc/page";
 import LoginPage from "@/pages/login/page";
 import SharePage from "@/pages/share/page";
 import LookPage from "@/pages/look/page";
 import HomePage from "@/pages/home/page";
+import DecoPage from "@/pages/deco/page";
 import Start from "@/pages/Start";
 import UsernamePage from "@/pages/username/pages";
 
@@ -22,7 +24,7 @@ export default function Router() {
         {/* animation */}
         <Route path="/animation" element={<AnimationPage />} />
         {/* ar camera */}
-        <Route path="/camera" element={<CameraPage />} />
+        <Route path="/camera" element={<ARCameraPage />} />
         {/* <댓글창/> */}
         <Route path="/comment" element={<CommentPage />} />
         {/* <공유하기 /> */}
@@ -38,9 +40,10 @@ export default function Router() {
         {/* <새글쓰기/> */}
         <Route path="/newPost" element={<NewPostPage />} />
         {/* <POST VIEW /> */}
-        <Route path="/postview/:writerID/:postID" element={<PostViewPage />} />
+        <Route path="/postview/:postID" element={<PostViewPage />} />
         {/* xmc용 로그인 */}
         <Route path="/xmc" element={<XrealLoginPage />} />
+        <Route path="/setting" element={<SettingPage />} />
         <Route path="/username/:userID" element={<UsernamePage />} />
       </Routes>
     </BrowserRouter>

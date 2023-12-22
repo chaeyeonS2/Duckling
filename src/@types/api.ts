@@ -9,22 +9,40 @@ type CreateMapItem<K extends string, M extends Methods, R = unknown, D = unknown
     [_ in M]: unknown extends D ? (M extends "GET" | "DELETE" ? [R, unknown] : [unknown, R]) : [R, D];
   }
 >;
-type APIMaps = CreateMapItem<"/api/users", "GET", APIUsersGetResponse> &
-  CreateMapItem<"/api/users", "POST", APIUserResponse, APIUsersPostRequest> &
-  CreateMapItem<`/api/users/${string}`, "GET", APIUserResponse> &
-  CreateMapItem<`/api/users/${string}`, "PATCH", APIUsersPatchRequest> &
-  CreateMapItem<`/api/users/${string}`, "DELETE"> &
-  CreateMapItem<`/api/users/avatar/${string}`, "GET", APIUsersAvatarReponse> &
-  CreateMapItem<`/api/assets/${string}/${string}`, "GET", APIAssetsResponse> &
-  CreateMapItem<"/api/posts", "GET", APIPostsResponse> &
-  CreateMapItem<"/api/posts", "POST", APIPostResponse, APIPostsPostRequest> &
-  CreateMapItem<`/api/posts/${string}`, "GET", APIPostResponse> &
-  CreateMapItem<`/api/posts/${string}`, "DELETE"> &
-  CreateMapItem<`/api/posts/writer/${string}`, "GET", APIPostsResponse> &
-  CreateMapItem<`/api/posts/writer/${string}/${string}`, "GET", APIPostResponse> &
-  CreateMapItem<`/api/posts/likes/${string}`, "PATCH"> &
-  CreateMapItem<"/api/comments", "POST", APICommentsReponse[number], APICommentPostRequest> &
-  CreateMapItem<`/api/comments/root/${string}`, "GET", APICommentsReponse>;
+type APIMaps = unknown &
+  // users
+  CreateMapItem<"/api/users", "POST", User, Omit<User, "userAvatar">> &
+  CreateMapItem<`/api/users/${string}`, "GET", User> &
+  CreateMapItem<
+    `/api/users/${string}`,
+    "PATCH",
+    Partial<Pick<User, "userName" | "profileImg"> & { userAvatar: Partial<User["userAvatar"]> }>
+  > &
+  CreateMapItem<`/api/users/${string}`, "DELETE", NormalMessageResponse<"유저 정보가 삭제되었습니다.">> &
+  CreateMapItem<`/api/users/avatar/${string}`, "GET", User["userAvatar"]> &
+  // posts
+  CreateMapItem<"/api/posts", "POST", Post, Pick<Post, "title" | "body" | "postImg" | "writerID" | "writerName">> &
+  CreateMapItem<`/api/posts/?sortBy=${string}&limit=${string}&start=${string}`, "GET", Post[]> &
+  CreateMapItem<`/api/posts/${string}`, "GET", Post> &
+  CreateMapItem<`/api/posts/${string}`, "DELETE", NormalMessageResponse<"게시글이 삭제되었습니다.">> &
+  CreateMapItem<`/api/posts/writer/${string}`, "GET", Post[]> &
+  CreateMapItem<`/api/posts/likes/${string}/${string}`, "PATCH", { likes: string[] }> &
+  // comment
+  CreateMapItem<"/api/comments", "POST", Comment, Pick<Comment, "text" | "rootID" | "writerID"> & { userID: string }> &
+  CreateMapItem<`/api/comments/${string}`, "GET", Comment[]> &
+  CreateMapItem<`/api/comments/${string}`, "DELETE", NormalMessageResponse<"답글이 삭제되었습니다.">> &
+  // twitter
+  CreateMapItem<
+    `/api/twitter/${string}`,
+    "POST",
+    Record<"postImg_id_string" | "text", string>,
+    Record<"status" | "media_ids", string>
+  > &
+  // asset
+  CreateMapItem<`/api/assets/${string}`, "GET", Asset> &
+  CreateMapItem<`/api/assets/?kind=${string}`, "GET", Asset[]> &
+  CreateMapItem<`/api/assets/ar`, "GET", Asset[]> &
+  CreateMapItem<`/api/assets/ar/${string}`, "GET", Asset>;
 
 type APIMap = UnionToIntersection<
   {
@@ -36,39 +54,4 @@ type APIMap = UnionToIntersection<
   }[keyof APIMaps]
 >;
 
-type APIUsersGetResponse = Array<APIUserResponse>;
-type APIUsersPostRequest = {
-  uid: string;
-  profileImg: string;
-  userName: string;
-};
-type APIUsersPatchRequest = Partial<Omit<APIUserResponse, "uid">>;
-type APIUserResponse = Omit<User, "userID">;
-type APIUsersAvatarReponse = APIUserResponse;
-
-type APIAssetsResponse = Array<{
-  assetID: string;
-  assetGltf: string;
-  assetImg: string;
-}>;
-
-type APIPostsResponse = Post[];
-type APIPostsPostRequest = Pick<Post, "title" | "body" | "postImg" | "writerID" | "userID">;
-type APIPostResponse = Post;
-type APIPostsWriterReponse = Post[];
-type APIPostWriterReponse = Post;
-
-type APICommentPostRequest = {
-  text: string;
-  userID: string;
-  rootID: string;
-  writerID: string;
-};
-type APICommentsReponse = Array<{
-  commentID: string;
-  text: string;
-  rootID: string;
-  writerID: string;
-  time: number;
-  date: string;
-}>;
+type NormalMessageResponse<T extends string> = { messsage: T };
