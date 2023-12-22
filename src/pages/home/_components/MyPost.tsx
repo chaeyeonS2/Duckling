@@ -30,7 +30,7 @@ export default function MyPost() {
         >
           <Sheet.Header
             style={{
-              height: "55px",
+              height: "88px",
               borderRadius: "20px 20px 0 0",
               borderTop: "5px solid black",
               boxShadow: "0px -2px 0px rgba(0, 0, 0, 0.3)",
