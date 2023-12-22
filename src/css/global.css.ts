@@ -16,6 +16,7 @@ globalStyle("html, body, #root", {
 globalStyle("*", {
   all: "revert",
   fontFamily: "Pretendard",
+  boxSizing: "border-box",
 });
 
 globalStyle("*::-webkit-scrollbar", { width: "14px" });

@@ -72,14 +72,15 @@ function CustomContent() {
   const { data: posts } = useSWR(`/api/posts/writer/${localStorage.getItem("id")}`);
 
   const navigate = useNavigate();
-  const handlePostClick = (userName: string, postID: string) => {
-    navigate(`/postview/${userName}/${postID}`);
+  const handlePostClick = (postID: string) => {
+    navigate(`/postview/${postID}`);
   };
+
   return (
     <div className={styles.content}>
       {posts &&
         posts.map((post, index) => (
-          <div key={index} className={styles.postImg} onClick={() => handlePostClick(post.writerID, post.postID)}>
+          <div key={index} className={styles.postImg} onClick={() => handlePostClick(post.postID)}>
             <img className={styles.item_img} src={post.postImg[0]} alt="" />
           </div>
         ))}

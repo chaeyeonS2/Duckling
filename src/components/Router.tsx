@@ -1,18 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AnimationPage from "@/pages/animation/page";
-import CommentPage from "@/pages/comment/page";
-import DecoPage from "@/pages/deco/page";
+import UsernamePage from "@/pages/username/pages";
 import PostViewPage from "@/pages/postview/page";
-import XrealLoginPage from "@/pages/xmc/page";
 import NewPostPage from "@/pages/newPost/page";
+import CommentPage from "@/pages/comment/page";
+import SettingPage from "@/pages/setting/page";
+import ARCameraPage from "@/pages/camera/page";
+import XrealLoginPage from "@/pages/xmc/page";
 import LoginPage from "@/pages/login/page";
 import SharePage from "@/pages/share/page";
 import LookPage from "@/pages/look/page";
 import HomePage from "@/pages/home/page";
+import DecoPage from "@/pages/deco/page";
 import Start from "@/pages/Start";
-import SettingPage from "@/pages/setting/page";
-import UsernamePage from "@/pages/username/pages";
-import ARCameraPage from "@/pages/camera/page";
 
 export default function Router() {
   return (
@@ -39,7 +39,7 @@ export default function Router() {
         {/* <새글쓰기/> */}
         <Route path="/newPost" element={<NewPostPage />} />
         {/* <POST VIEW /> */}
-        <Route path="/postview/:writerID/:postID" element={<PostViewPage />} />
+        <Route path="/postview/:postID" element={<PostViewPage />} />
         {/* xmc용 로그인 */}
         <Route path="/xmc" element={<XrealLoginPage />} />
         {/* <설정/> */}

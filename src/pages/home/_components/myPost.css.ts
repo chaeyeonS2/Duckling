@@ -35,7 +35,7 @@ export const btnAddNewImage = style({
 
 export const content = style({
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))",
+  gridTemplateColumns: "repeat(3, 1fr)",
 });
 
 export const postImg = style({
@@ -49,5 +49,5 @@ export const postImg = style({
 export const item_img = style({
   width: "100%",
   height: "100%",
-  objectFit: "cover"
-})
+  objectFit: "cover",
+});

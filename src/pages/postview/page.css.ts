@@ -17,8 +17,9 @@ export const container = style({
   display: "grid",
   gridTemplateRows: "auto 1fr auto",
   height: "100%",
-  width: "100%",
-  overflow: "hidden",
+  width: "100vw",
+  overflowY: "auto",
+  overflowX: "hidden",
 });
 
 export const postHeader = style({
@@ -45,9 +46,7 @@ export const content = style({
   fontSize: "16px",
 });
 
-export const imageSlider = style({
-  height: "fit-content",
-});
+export const postImgBig = style({ objectFit: "contain" });
 
 export const metadataContainer = style({
   padding: "11px 18px",
