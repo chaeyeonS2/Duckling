@@ -13,7 +13,6 @@ import LookPage from "@/pages/look/page";
 import HomePage from "@/pages/home/page";
 import DecoPage from "@/pages/deco/page";
 import Start from "@/pages/Start";
-import UsernamePage from "@/pages/username/pages";
 
 export default function Router() {
   return (
