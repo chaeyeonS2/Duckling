@@ -18,7 +18,8 @@ export default function LookPage() {
     setSize(1);
   };
   const { data, setSize } = useSWRInfinite(
-    (index) => `/api/posts/?sortBy=${currentTab == "최신" ? "time" : "likes"}&limit=${PAGE_SIZE}&start=${index * PAGE_SIZE}`
+    (index) =>
+      `/api/posts/?sortBy=${currentTab == "최신" ? "time" : "likes"}&limit=${PAGE_SIZE}&start=${index * PAGE_SIZE}`
   );
 
   const handlePostClick = (postID: string) => () => {
@@ -56,7 +57,7 @@ export default function LookPage() {
       </header>
       <div className={styles.content} ref={contentElemRef}>
         {posts?.map((post, index) => (
-          <div className={styles.postBox} key={index} onClick={handlePostClick(post.postID)}>
+          <div className={styles.postBox} key={index}>
             <div className={styles.postProfile}>
               <Avatar userId={post.writerID} />
               <div className={styles.userName}>{post.writerName}</div>
@@ -68,7 +69,9 @@ export default function LookPage() {
             </div>
             <div className={styles.metadataContainer}>{post && <PostMetadataBar postData={post} />}</div>
 
-            <p className={styles.postContent}>{post.body}</p>
+            <p className={styles.postContent} onClick={handlePostClick(post.postID)}>
+              {post.body}
+            </p>
           </div>
         ))}
       </div>
