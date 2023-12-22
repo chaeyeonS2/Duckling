@@ -8,7 +8,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --cache --write .",
     "preview": "vite preview",
-    "ts-check": "tsc --noEmit"
+    "ts-check": "tsc --noEmit",
+    "build": "vite build"
   },
   "dependencies": {
     "@egjs/react-view3d": "^2.3.1",
