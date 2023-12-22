@@ -41,6 +41,8 @@ export const camera = style({
 });
 
 export const iconBox = style({
+  display: "flex",
+  alignItems: "center",
   width: "70px",
   height: "70px",
   borderRadius: "35px",
@@ -56,4 +58,4 @@ export const iconBox = style({
   },
 });
 
-export const iconImg = style({ width: "60px", height: "60px" });
+export const iconImg = style({ width: "auto", height: "70px", margin: "auto" });

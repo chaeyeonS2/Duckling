@@ -9,7 +9,7 @@ import AnimationMenu from "./_components/AnimationMenu";
 
 export default function ARCameraPage() {
   const view3DRef = useRef<View3D | null>(null);
-  const [playingAnimation, setplayingAnimation] = useState<number>(1);
+  const [playingGtlfModel, setplayingGtlfModel] = useState<string>("");
 
   useEffect(() => {
     const initializeView3D = async () => {
@@ -21,27 +21,28 @@ export default function ARCameraPage() {
       //   view3DRef.current?.scene.add(clothingMesh);
       // });
     };
-    initializeView3D();
-  }, [playingAnimation]);
+    //initializeView3D();
+  }, []);
 
-  const handleDataFromAnimationMenu = (data: number) => {
-    setplayingAnimation(data);
+  const handleDataFromAnimationMenu = (data: string) => {
+    setplayingGtlfModel(data);
   };
 
   return (
     <>
       <div className={styles.pageContainer}>
         <View3D
+          key={playingGtlfModel} // playingGtlfModel을 기반으로 한 고유한 키 추가
           className={styles.canvas}
           ref={view3DRef}
-          src="/gltf/test/Rumba Dancing.gltf" //  /gltf/test/Rumba Dancing.gltf
-          iosSrc="/gltf/test/test03_3.usd"
+          src={playingGtlfModel}
+          iosSrc="/gltf/test/test3.usdz"
           arPriority={["webAR", "sceneViewer", "quickLook"]}
           center={[0, 0.9, 0.25]} //위치 조정
-          defaultAnimationIndex={playingAnimation}
+          //defaultAnimationIndex={playingAnimation}
           useDefaultEnv={true}
         ></View3D>
-        <AnimationMenu ref={view3DRef} animationNum={handleDataFromAnimationMenu} />
+        <AnimationMenu ref={view3DRef} animationGltf={handleDataFromAnimationMenu} />
         <Footer />
       </div>
     </>
