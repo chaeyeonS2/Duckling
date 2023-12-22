@@ -12,7 +12,7 @@ function open(Component: React.FC<{ overlayId: number }>) {
     </div>
   );
   listener();
-  stack++;
+  return stack++;
 }
 
 function close(id: number) {
