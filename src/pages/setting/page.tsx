@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import useSWRImmutable from "swr/immutable";
 import axios from "axios";
 import convertFileToDataUrl from "@/utils/convertFileToDataUrl";
+import { getAuth } from "firebase/auth";
 
 export default function SettingPage() {
   const navigate = useNavigate();
@@ -20,7 +21,13 @@ export default function SettingPage() {
         title="로그아웃 하시겠습니까?"
         onNo={() => overlays.close(overlayId)}
         onYes={() => {
-          // TODO: 로그아웃 처리
+          overlays.close(overlayId);
+          getAuth()
+            .signOut()
+            .then(() => {
+              navigate("/");
+            })
+            .catch(console.log);
         }}
         noText="취소"
         yesText="로그아웃"
