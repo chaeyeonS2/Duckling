@@ -39,11 +39,11 @@ export default function SharePage() {
                 className={button + " " + styles.button}
                 aria-selected
               >
-                <Icon className={styles.icon} id="download" />
+                <Icon id="download" size="medium" />
                 Save
               </button>
               <button className={button + " " + styles.button} disabled>
-                <Icon className={styles.icon} id="twitter" />
+                <Icon id="twitter" size="medium" />
                 twitter
               </button>
             </div>
