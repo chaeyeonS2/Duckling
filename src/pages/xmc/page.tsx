@@ -11,7 +11,6 @@ export default function XrealLoginPage() {
   const [uid, setUid] = useState("");
   const handleLogin = async () => {
     try {
-      // TODO: wtf is this
       // @ts-ignore
       await axios.post("/api/users", {
         uid: uid,
