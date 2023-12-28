@@ -26,6 +26,7 @@ const AvatarCanvas = forwardRef<RootState, CanvasProps>(({ children, camera, ...
       onCreated={rootStateRef}
       shadows
       camera={{
+        //position: [0, 0, 5],
         fov: 150,
         zoom: 100,
         near: 1,
