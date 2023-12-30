@@ -130,19 +130,31 @@ export default function SettingPage() {
   const [usernameValue, setUsernameValue] = useState(() => user?.userName ?? "");
   const [inputState, setInputState] = useState<"idle" | "invalid" | "confirm">("idle");
   const handleUsernameChange = async () => {
+    const loadingOverlayId = overlays.open(() => <BaseModal title="프로필 닉네임을 변경중입니다" />);
     axios
       .patch(`/api/users/${localStorage.getItem("id")}`, {
         userName: usernameValue,
       })
       .then(() => {
         setInputState("confirm");
-        mutate();
+        localStorage.setItem("userName", usernameValue);
+
+        overlays.open(({ overlayId }) => {
+          useEffect(() => {
+            setTimeout(() => {
+              overlays.close(overlayId);
+            }, 3000);
+          }, []);
+          return <BaseModal title="프로필 닉네임이 변경되었습니다" />;
+        });
       })
       .catch(() => {
         setInputState("invalid");
+      })
+      .finally(() => {
+        overlays.close(loadingOverlayId);
         mutate();
       });
-    localStorage.setItem("userName", usernameValue);
   };
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputState("idle");
