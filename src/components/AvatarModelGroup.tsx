@@ -21,7 +21,7 @@ export default function AvatarModelGroup({
     "/gltf/avatar/T_POSED_BODY_RIGGED_FINAL.gltf",
     "/gltf/avatar/keyring.glb",
     "/gltf/avatar/nose.gltf",
-    "/gltf/avatar/stage.glb"
+    "/gltf/avatar/stage.glb",
   );
 
   return <GroupWrpper groups={models} position={position} {...props} />;
