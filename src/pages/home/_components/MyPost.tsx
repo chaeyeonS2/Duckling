@@ -18,7 +18,7 @@ export default function MyPost() {
         snapPoints={[500, 80]}
         initialSnap={1}
         style={{
-          marginBottom: "75px",
+          marginBottom: "70px",
           borderLeft: "1px solid black",
           borderRight: "1px solid black",
         }}
