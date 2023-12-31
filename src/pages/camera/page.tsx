@@ -1,6 +1,8 @@
 import View3D from "@egjs/react-view3d";
 import * as styles from "./page.css";
 import { useEffect, useRef, useState } from "react";
+import Header from "@/components/layout/headers/Header";
+import { Link } from "react-router-dom";
 
 import "@egjs/view3d/css/view3d-bundle.min.css";
 import "@egjs/view3d/css/view3d-ar.min.css";
@@ -31,6 +33,17 @@ export default function ARCameraPage() {
   return (
     <>
       <div className={styles.pageContainer}>
+        <Header>
+          <Link to={"/share/" + localStorage.getItem("id")}>
+            <img src="/img/share.png" />
+          </Link>
+          <Link to="/deco">
+            <img src="/img/home/deco.png" />
+          </Link>
+          <Link to="/setting">
+            <img src="/img/home/settings.png" />
+          </Link>
+        </Header>
         <View3D
           key={playingGtlfModel} // playingGtlfModel을 기반으로 한 고유한 키 추가
           className={styles.canvas}
