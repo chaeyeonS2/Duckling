@@ -7,12 +7,12 @@ export const header = style({
 
 export const tab = style({
   flex: 1,
-  padding: "14px 0",
-  backgroundColor: "white",
   display: "flex",
   alignItems: "center",
-  paddingLeft: "15%",
+  justifyContent: "center",
+  padding: "14px 0",
   borderBottom: "5px solid #b5b5b5",
+  backgroundColor: "white",
   color: "#B5B5B5",
   selectors: {
     "&[aria-selected=true]": {
