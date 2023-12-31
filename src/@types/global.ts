@@ -24,6 +24,7 @@ interface User {
     accessory: string;
     eyes: string;
     mouth: string;
+    //TODO: texture, socks 추가
   };
 }
 

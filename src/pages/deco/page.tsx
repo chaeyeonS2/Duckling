@@ -16,12 +16,14 @@ const subNav = {
   face: [
     ["eyes", "눈"],
     ["mouth", "입"],
+    ["texture", "피부"],
   ],
   body: [
     ["top", "상의"],
     ["bottom", "하의"],
+    ["socks", "양말"],
     ["shoes", "신발"],
-    ["accessory", "기타"],
+    ["accessory", "액세서리"],
   ],
 } as const;
 
