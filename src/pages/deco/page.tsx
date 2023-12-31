@@ -27,13 +27,13 @@ const subNav = {
 
 export default function DecoPage() {
   const cameraRef = useRef<RootState>(null);
-  const [currentKind, setCurrentKind] = useState<keyof User["userAvatar"]>("top");
+  const [currentKind, setCurrentKind] = useState<keyof Avatar>("top");
   const [currentAsset, setCurrentAsset] = useState<string>();
   const isFaceDeco = currentKind === "eyes" || currentKind === "mouth";
 
   const { data: assets } = useSWRImmutable(`/api/assets/?kind=${currentKind}`);
   const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
-  const [avatar, setAvatar] = useState<Partial<User["userAvatar"]>>(user?.userAvatar ?? {});
+  const [avatar, setAvatar] = useState<Partial<Avatar>>(user?.userAvatar ?? {});
   useEffect(() => {
     if (!user) return;
     setAvatar(user.userAvatar);
@@ -58,12 +58,12 @@ export default function DecoPage() {
     }
   };
 
-  const handleKindClick = (kind: keyof User["userAvatar"]) => {
+  const handleKindClick = (kind: keyof Avatar) => {
     setCurrentKind(kind);
     setCurrentAsset(undefined);
   };
 
-  const handleItemClick = (kind: keyof User["userAvatar"], item: Asset) => {
+  const handleItemClick = (kind: keyof Avatar, item: Asset) => {
     setCurrentAsset(item.assetID);
 
     setAvatar((prev) => ({
