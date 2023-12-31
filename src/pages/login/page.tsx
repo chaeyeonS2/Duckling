@@ -1,5 +1,7 @@
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Logo from "@/assets/logo.svg?react";
+import Icon from "@/components/Icon";
 import axios from "axios";
 
 import * as styles from "./page.css";
@@ -82,16 +84,12 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <div className={styles.pageContainer}>
-        <img className={styles.logoImage} src="/img/login/logo.png" />
-        <div className={styles.twitterSignInButton} id="twitter-sign-in-btn" onClick={twitterLogin}>
-          <img className={styles.twitterImage} src="/img/login/twitter.png" />
-        </div>
-        <Link className={styles.xmcLink} to="/xmc">
-          XMC용 로그인 페이지로 이동
-        </Link>
-      </div>
+    <div className={styles.pageContainer}>
+      <Logo className={styles.logoImage} />
+      <button className={styles.button} onClick={twitterLogin}>
+        <Icon className={styles.buttonIcon} id="x-logo" size="small" />
+        <span>X로 시작하기</span>
+      </button>
     </div>
   );
 }
