@@ -1,17 +1,12 @@
+import * as styles from "./Icon.css";
+
 export interface IconProps {
   id: string;
   size?: "small" | "medium" | "large";
 }
-export default function Icon({ id, size, style, ...props }: IconProps & React.SVGProps<SVGSVGElement>) {
+export default function Icon({ id, size, className, ...props }: IconProps & React.SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      style={{
-        width: size === "small" ? "18px" : size === "medium" ? "24px" : size === "large" ? "32px" : "",
-        height: size === "small" ? "18px" : size === "medium" ? "24px" : size === "large" ? "32px" : "",
-        ...style,
-      }}
-      {...props}
-    >
+    <svg className={(size ? styles.iconSize[size] : "") + " " + className} {...props}>
       <use href={`/icons.svg#${id}`} />
     </svg>
   );
