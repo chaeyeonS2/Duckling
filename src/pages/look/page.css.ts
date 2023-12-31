@@ -46,7 +46,7 @@ export const content = style({
 
 export const postBox = style({
   marginBottom: "24px",
-  width: "90vw",
+  width: "100%",
   height: "auto",
 });
 
@@ -94,7 +94,7 @@ export const postContent = style({
 });
 
 export const postImgContainer = style({
-  width: "90vw",
+  width: "100%",
   height: "80vw",
   marginTop: "11px",
   border: "1px solid #000",
