@@ -63,13 +63,19 @@ export default function DecoPage() {
     setCurrentAsset(undefined);
   };
 
-  const handleItemClick = (kind: keyof Avatar, item: Asset) => {
-    setCurrentAsset(item.assetID);
+  const handleItemClick = (kind: keyof User["userAvatar"], item: Asset) => {
+    setCurrentAsset((prev) => (prev == item.assetID ? undefined : item.assetID));
 
-    setAvatar((prev) => ({
-      ...prev,
-      [kind]: item.assetGltf,
-    }));
+    setAvatar((avatar) => {
+      const newAvatar = Object.create(avatar);
+
+      if (newAvatar[kind] == item.assetGltf) {
+        delete newAvatar[kind];
+      } else {
+        newAvatar[kind] = item.assetGltf;
+      }
+      return newAvatar;
+    });
   };
 
   const handleAvatarUpload = () => {
