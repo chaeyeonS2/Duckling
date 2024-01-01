@@ -20,6 +20,7 @@ export default function HeaderPostView() {
           </>
         }
         onYes={() => {
+          overlays.close(overlayId);
           axios.delete(`/api/posts/${localStorage.getItem("id")}`).then(() => {
             overlays.open(({ overlayId }) => (
               <AlertModal

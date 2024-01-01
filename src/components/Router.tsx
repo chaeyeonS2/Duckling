@@ -6,7 +6,6 @@ import NewPostPage from "@/pages/newPost/page";
 import CommentPage from "@/pages/comment/page";
 import SettingPage from "@/pages/setting/page";
 import ARCameraPage from "@/pages/camera/page";
-import XrealLoginPage from "@/pages/xmc/page";
 import LoginPage from "@/pages/login/page";
 import SharePage from "@/pages/share/page";
 import LookPage from "@/pages/look/page";
@@ -40,8 +39,6 @@ export default function Router() {
         <Route path="/newPost" element={<NewPostPage />} />
         {/* <POST VIEW /> */}
         <Route path="/postview/:postID" element={<PostViewPage />} />
-        {/* xmc용 로그인 */}
-        <Route path="/xmc" element={<XrealLoginPage />} />
         <Route path="/setting" element={<SettingPage />} />
         <Route path="/username/:userID" element={<UsernamePage />} />
       </Routes>

@@ -1,6 +1,5 @@
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 import Footer from "@/components/layout/Footer";
-import Icon from "@/components/Icon";
 
 import { useParams } from "react-router-dom";
 import useSWRImmutable from "swr/immutable";
@@ -8,6 +7,7 @@ import useSWRImmutable from "swr/immutable";
 import * as styles from "./page.css";
 import PostMetadataBar from "@/components/PostMetadataBar";
 import Slider from "react-slick";
+import Avatar from "@/components/Avatar";
 
 export default function PostViewPage() {
   const { postID } = useParams();
@@ -18,11 +18,9 @@ export default function PostViewPage() {
       <HeaderPostView />
       <div className={styles.container}>
         <div className={styles.postHeader}>
-          <div>
-            <p className={styles.title}>{postData?.title}</p>
-            <p className={styles.timestemp}>{postData?.date}</p>
-          </div>
-          <Icon id="vertical-dots" size="medium" />
+          {postData && <Avatar userId={postData.writerID} />}
+          <p className={styles.title}>{postData?.title}</p>
+          <p className={styles.timestemp}>{postData?.date}</p>
         </div>
         <div>
           <Slider dots variableWidth arrows={false} infinite={false}>
@@ -32,8 +30,8 @@ export default function PostViewPage() {
           </Slider>
           <p className={styles.content}>{postData?.body}</p>
         </div>
-        <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
       </div>
+      <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
       <Footer />
     </div>
   );

@@ -15,16 +15,20 @@ interface User {
   uid: string;
   userName: string;
   profileImg: string;
-  consumer_key: string;
-  consumer_secret: string;
-  userAvatar: {
-    top: string;
-    bottom: string;
-    shoes: string;
-    accessory: string;
-    eyes: string;
-    mouth: string;
-  };
+  access_token: string;
+  access_token_secret: string;
+  userAvatar: Avatar;
+}
+
+interface Avatar {
+  top: string;
+  bottom: string;
+  shoes: string;
+  accessory: string;
+  eyes: string;
+  mouth: string;
+  socks: string;
+  skins: string;
 }
 
 interface Comment {

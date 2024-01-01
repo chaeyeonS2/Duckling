@@ -1,13 +1,14 @@
+import { useEffect, useRef, useState } from "react";
+
+import Icon from "@/components/Icon";
+import Avatar from "@/components/Avatar";
 import Footer from "@/components/layout/Footer";
 import PostMetadataBar from "@/components/PostMetadataBar";
 
 import useSWRInfinite from "swr/infinite";
-import useSWRImmutable from "swr/immutable";
 import { useNavigate } from "react-router-dom";
 
 import * as styles from "./page.css";
-import { useEffect, useRef, useState } from "react";
-import Icon from "@/components/Icon";
 
 const PAGE_SIZE = 5;
 export default function LookPage() {
@@ -60,7 +61,6 @@ export default function LookPage() {
           <div className={styles.postBox} key={index}>
             <div className={styles.postProfile}>
               <Avatar userId={post.writerID} />
-              <div className={styles.userName}>{post.writerName}</div>
               <div className={styles.date}>{post.date}</div>
             </div>
 
@@ -78,10 +78,4 @@ export default function LookPage() {
       <Footer />
     </div>
   );
-}
-
-function Avatar({ userId }: { userId: string }) {
-  const { data: user } = useSWRImmutable(`/api/users/${userId}`);
-  console.log("user?.profileImg: ", user);
-  return <img className={styles.profileImg} src={user?.profileImg ?? ""} />;
 }

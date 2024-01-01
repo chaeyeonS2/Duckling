@@ -1,8 +1,8 @@
 import { style } from "@vanilla-extract/css";
 
 export const pageContainer = style({
-  width: "100vw",
-  height: "100vh",
+  height: "100%",
+  width: "100%",
   backgroundColor: "#F1C8D3",
   display: "flex",
   flexDirection: "column",
