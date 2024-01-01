@@ -1,6 +1,5 @@
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 import Footer from "@/components/layout/Footer";
-import Icon from "@/components/Icon";
 
 import { useParams } from "react-router-dom";
 import useSWRImmutable from "swr/immutable";
@@ -22,7 +21,6 @@ export default function PostViewPage() {
             <p className={styles.title}>{postData?.title}</p>
             <p className={styles.timestemp}>{postData?.date}</p>
           </div>
-          <Icon id="vertical-dots" size="medium" />
         </div>
         <div>
           <Slider dots variableWidth arrows={false} infinite={false}>
