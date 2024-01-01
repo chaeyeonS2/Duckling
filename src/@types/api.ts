@@ -16,10 +16,10 @@ type APIMaps = unknown &
   CreateMapItem<
     `/api/users/${string}`,
     "PATCH",
-    Partial<Pick<User, "userName" | "profileImg"> & { userAvatar: Partial<User["userAvatar"]> }>
+    Partial<Pick<User, "userName" | "profileImg"> & { userAvatar: Partial<Avatar> }>
   > &
   CreateMapItem<`/api/users/${string}`, "DELETE", NormalMessageResponse<"유저 정보가 삭제되었습니다.">> &
-  CreateMapItem<`/api/users/avatar/${string}`, "GET", User["userAvatar"]> &
+  CreateMapItem<`/api/users/avatar/${string}`, "GET", Avatar> &
   // posts
   CreateMapItem<"/api/posts", "POST", Post, Pick<Post, "title" | "body" | "postImg" | "writerID" | "writerName">> &
   CreateMapItem<`/api/posts/?sortBy=${string}&limit=${string}&start=${string}`, "GET", Post[]> &
