@@ -7,6 +7,7 @@ import useSWRImmutable from "swr/immutable";
 import * as styles from "./page.css";
 import PostMetadataBar from "@/components/PostMetadataBar";
 import Slider from "react-slick";
+import Avatar from "@/components/Avatar";
 
 export default function PostViewPage() {
   const { postID } = useParams();
@@ -17,10 +18,9 @@ export default function PostViewPage() {
       <HeaderPostView />
       <div className={styles.container}>
         <div className={styles.postHeader}>
-          <div>
-            <p className={styles.title}>{postData?.title}</p>
-            <p className={styles.timestemp}>{postData?.date}</p>
-          </div>
+          {postData && <Avatar userId={postData.writerID} />}
+          <p className={styles.title}>{postData?.title}</p>
+          <p className={styles.timestemp}>{postData?.date}</p>
         </div>
         <div>
           <Slider dots variableWidth arrows={false} infinite={false}>

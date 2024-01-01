@@ -112,10 +112,3 @@ export const metadataContainer = style({
   padding: "11px 0px",
   color: "black",
 });
-
-export const profileImg = style({
-  float: "left",
-  width: "30px",
-  height: "30px",
-  borderRadius: "100%",
-});
