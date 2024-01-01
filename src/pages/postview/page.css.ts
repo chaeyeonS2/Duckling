@@ -30,8 +30,8 @@ export const container = style({
 export const postHeader = style({
   padding: "16px 24px",
   display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
+  flexDirection: "column",
+  gap: "12px",
 });
 
 export const title = style({
@@ -41,7 +41,6 @@ export const title = style({
 });
 
 export const timestemp = style({
-  marginTop: "8px",
   fontSize: "14px",
   color: "#B8B8B8",
 });
