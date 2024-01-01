@@ -30,8 +30,8 @@ export default function PostViewPage() {
           </Slider>
           <p className={styles.content}>{postData?.body}</p>
         </div>
-        <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
       </div>
+      <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
       <Footer />
     </div>
   );
