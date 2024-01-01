@@ -1,5 +1,6 @@
 import useSWRImmutable from "swr/immutable";
 import * as styles from "./Avatar.css";
+import { Link } from "react-router-dom";
 
 export interface AvatarProps {
   userId: string;
@@ -9,9 +10,9 @@ export default function Avatar({ userId }: AvatarProps) {
   if (!user) return null;
 
   return (
-    <div className={styles.container}>
+    <Link className={styles.container} to={`/username/${user.uid}`}>
       <img className={styles.avatarImage} src={user.profileImg} alt="" />
       <span>{user.userName}</span>
-    </div>
+    </Link>
   );
 }

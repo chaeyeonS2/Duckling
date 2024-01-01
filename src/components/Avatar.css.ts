@@ -4,6 +4,8 @@ export const container = style({
   display: "flex",
   alignItems: "center",
   gap: "8px",
+  color: "inherit",
+  textDecoration: "none",
 });
 
 export const avatarImage = style({
