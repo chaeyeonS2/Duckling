@@ -49,14 +49,14 @@ export const text2 = style({
 export const btnGroup = style({
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "stretch",
   gap: "12px",
 });
 
 export const btnNo = style({
   backgroundColor: "#bdff6b",
   width: "80px",
-  height: "30px",
+  minHeight: "30px",
   border: "0px",
   color: "#000",
 
@@ -67,7 +67,7 @@ export const btnNo = style({
 export const btnOk = style({
   backgroundColor: "white",
   width: "80px",
-  height: "30px",
+  minHeight: "30px",
   border: "0px",
   color: "#000",
 
