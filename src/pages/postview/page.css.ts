@@ -20,6 +20,11 @@ export const container = style({
   width: "100vw",
   overflowY: "auto",
   overflowX: "hidden",
+  selectors: {
+    "&::-webkit-scrollbar": {
+      width: 0,
+    },
+  },
 });
 
 export const postHeader = style({
