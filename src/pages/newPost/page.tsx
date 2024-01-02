@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import { useState, useRef } from "react";
+import { useState, useRef, Fragment } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -11,45 +11,6 @@ import BaseModal from "@/components/modal/BaseModal";
 
 export default function NewPostPage() {
   const navigate = useNavigate();
-
-  const handleUpload = async () => {
-    console.log(previewImages);
-
-    const userID = localStorage.getItem("id");
-    const userName = localStorage.getItem("userName");
-    if (!userName) throw new Error("userName does not exist!");
-    if (!userID) throw new Error("userID does not exist!");
-
-    const overlayId = overlays.open(() => (
-      <BaseModal logoImgSrc={<img src="/img/upload_loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
-    ));
-    try {
-      const { data } = await axios.post("/api/posts", {
-        title: title,
-        body: content,
-        postImg: previewImages,
-        writerName: userName,
-        writerID: userID,
-      });
-
-      console.log("Document uploaded:", data.postID, data.writerID);
-
-      overlays.open(({ overlayId }) => (
-        <AlertModal
-          onClose={() => {
-            overlays.close(overlayId);
-            navigate(`/postView/${data.postID}`);
-          }}
-          logoImgSrc={<DynamicIcon id="check" size="medium" />}
-          title="게시글이 업로드 되었습니다"
-        />
-      ));
-    } catch (error) {
-      console.error("Error uploading document:", error);
-    } finally {
-      overlays.close(overlayId);
-    }
-  };
 
   // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
   const [title, setTitle] = useState("");
@@ -97,20 +58,66 @@ export default function NewPostPage() {
     inputFileRef.current?.click();
   };
 
-  const uploadClick = () => {
-    if (previewImages.length !== 0) {
-      handleUpload();
+  const uploadClick = async () => {
+    const reason: JSX.Element[] = [];
+    if (!previewImages.length) reason.push(<li>사진을 첨부해야 업로드 할 수 있어요.</li>);
+    if (!title) reason.push(<li>제목을 작성해야 업로드할 수 있어요.</li>);
+    if (!content) reason.push(<li>본문을 작성해야 업로드할 수 있어요.</li>);
+    if (reason.length != 0) {
+      overlays.open(({ overlayId }) => (
+        <AlertModal
+          onClose={() => overlays.close(overlayId)}
+          logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+          title="게시물 내용이 부족해요!"
+          description={
+            <>
+              <ul>
+                {reason.map((reason, i) => (
+                  <Fragment key={i}>{reason}</Fragment>
+                ))}
+              </ul>
+              <p style={{ fontWeight: 500, marginTop: "8px" }}>덕질 일상을 다채롭게 기록해보아요!</p>
+            </>
+          }
+        />
+      ));
       return;
     }
 
-    overlays.open(({ overlayId }) => (
-      <AlertModal
-        onClose={() => overlays.close(overlayId)}
-        logoImgSrc={<DynamicIcon id="image" size="medium" />}
-        title="사진을 첨부해야 업로드 할 수 있어요"
-        description="덕질 일상을 다채롭게 기록해보아요"
-      />
+    const userID = localStorage.getItem("id");
+    const userName = localStorage.getItem("userName");
+    if (!userName) throw new Error("userName does not exist!");
+    if (!userID) throw new Error("userID does not exist!");
+
+    const overlayId = overlays.open(() => (
+      <BaseModal logoImgSrc={<img src="/img/upload_loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
     ));
+    try {
+      const { data } = await axios.post("/api/posts", {
+        title: title,
+        body: content,
+        postImg: previewImages,
+        writerName: userName,
+        writerID: userID,
+      });
+
+      console.log("Document uploaded:", data.postID, data.writerID);
+
+      overlays.open(({ overlayId }) => (
+        <AlertModal
+          onClose={() => {
+            overlays.close(overlayId);
+            navigate(`/postView/${data.postID}`);
+          }}
+          logoImgSrc={<DynamicIcon id="check" size="medium" />}
+          title="게시글이 업로드 되었습니다"
+        />
+      ));
+    } catch (error) {
+      console.error("Error uploading document:", error);
+    } finally {
+      overlays.close(overlayId);
+    }
   };
 
   //지금은 그냥 뒤로가기, 나중에 '정말 취소하시겠어요?' 모달 추가 시 사용 예정
