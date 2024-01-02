@@ -36,7 +36,7 @@ export default function ARCameraPage() {
   return (
     <>
       <div className={styles.pageContainer}>
-        <Header>
+        <Header closable>
           <Link to={"/share/" + localStorage.getItem("id")}>
             <DynamicIcon id="share" size="medium" />
           </Link>
