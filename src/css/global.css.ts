@@ -14,7 +14,6 @@ globalStyle("html, body, #root", {
 });
 
 globalStyle("*", {
-  all: "revert",
   fontFamily: "Pretendard",
   boxSizing: "border-box",
 });

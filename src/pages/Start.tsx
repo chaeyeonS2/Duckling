@@ -16,7 +16,7 @@ export default function Start() {
   return (
     <div className={styles.pageContainer}>
       <div>
-        <img className={styles.loadingImage} src="/img/login/loadingGif.gif" />
+        <img className={styles.loadingImage} src="/img/loadingGif.gif" />
       </div>
     </div>
   );
