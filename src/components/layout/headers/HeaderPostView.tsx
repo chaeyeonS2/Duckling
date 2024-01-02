@@ -3,7 +3,7 @@ import * as styles from "./headerPostView.css";
 import { useNavigate } from "react-router-dom";
 import AlertModal from "@/components/modal/AlertModal";
 import ConfirmModal from "@/components/modal/ConfirmModal";
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 import axios from "axios";
 
 export default function HeaderPostView() {
@@ -48,7 +48,7 @@ export default function HeaderPostView() {
         overlays.open(({ overlayId }) => (
           <AlertModal
             onClose={() => overlays.close(overlayId)}
-            logoImgSrc={<Icon id="link" size="medium" />}
+            logoImgSrc={<DynamicIcon id="link" size="medium" />}
             title={
               <>
                 주소가 복사되었습니다. :-D
@@ -72,18 +72,18 @@ export default function HeaderPostView() {
     <header className={styles.header}>
       <div>
         <button className={styles.headerButton} onClick={closeClick}>
-          <img src="/img/writing/close.png" alt="my image" />
+          <DynamicIcon id="cancel" size="medium" />
         </button>
       </div>
       <div>
         <button className={styles.headerButton} onClick={shareClick}>
-          <img src="/img/share.png" />
+          <DynamicIcon id="share" size="medium" />
         </button>
         <button className={styles.headerButton}>
-          <img src="/img/writing/new-post.png" />
+          <DynamicIcon id="newpost" size="medium" />
         </button>
         <button className={styles.headerButton} onClick={deleteClick}>
-          <img src="/img/writing/trash-can.png" />
+          <DynamicIcon id="trash-can" size="medium" />
         </button>
       </div>
     </header>

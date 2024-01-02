@@ -48,6 +48,7 @@ export const categorySelectButton = style({
   selectors: {
     "&[aria-selected=true]": {
       backgroundColor: "black",
+      color: "#bdff6b",
     },
   },
 });

@@ -5,6 +5,7 @@ import AvatarCanvas from "@/components/AvatarCanvas";
 import AvatarModelGroup from "@/components/AvatarModelGroup";
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/headers/Header";
+import { DynamicIcon } from "@/components/Icon";
 
 export default function UsernamePage() {
   const { userID } = useParams();
@@ -13,7 +14,7 @@ export default function UsernamePage() {
     <main className={styles.pageContainer}>
       <Header>
         <Link to={"/share/" + userID}>
-          <img src="/img/share.png" />
+          <DynamicIcon id="share" size="medium" />
         </Link>
       </Header>
       <AvatarCanvas style={{ transform: `translateY(-56px)` }}>

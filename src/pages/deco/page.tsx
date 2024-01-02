@@ -11,6 +11,7 @@ import useSWRImmutable from "swr/immutable";
 import axios from "axios";
 
 import * as styles from "./page.css";
+import { DynamicIcon } from "@/components/Icon";
 
 const subNav = {
   face: [
@@ -91,7 +92,7 @@ export default function DecoPage() {
     <main className={styles.pageContainer}>
       <Header>
         <Link to="/home">
-          <img src="/img/close.png" />
+          <DynamicIcon id="cancel" size="medium" />
         </Link>
       </Header>
 
@@ -120,22 +121,14 @@ export default function DecoPage() {
               aria-selected={isFaceDeco}
               onClick={() => handleDecoClick(0)}
             >
-              <img
-                src={isFaceDeco ? "/img/VectorsmileTrue.png" : "/img/VectorsmileFalse.png"}
-                className={styles.iconImg}
-                alt=""
-              />
+              <DynamicIcon className={styles.iconImg} id="face" size="medium" />
             </button>
             <button
               className={styles.categorySelectButton}
               aria-selected={!isFaceDeco}
               onClick={() => handleDecoClick(1)}
             >
-              <img
-                src={!isFaceDeco ? "/img/VectorclothTrue.png" : "/img/VectorclothFalse.png"}
-                className={styles.iconImg}
-                alt=""
-              />
+              <DynamicIcon className={styles.iconImg} id="body" size="medium" />
             </button>
           </div>
 
