@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const footer = style({
-  height: "88px",
+  minHeight: "88px",
   display: "flex",
   backgroundColor: "#454545",
   zIndex: 100,
