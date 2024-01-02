@@ -150,7 +150,7 @@ export default function SettingPage() {
     });
   };
 
-  const [usernameValue, setUsernameValue] = useState(() => user?.userName ?? "");
+  const [usernameValue, setUsernameValue] = useState(user?.userName ?? "");
   const [inputState, setInputState] = useState<"idle" | "invalid" | "confirm">("idle");
   const handleUsernameChange = async () => {
     const loadingOverlayId = overlays.open(() => <BaseModal title="프로필 닉네임을 변경중입니다" />);
@@ -204,7 +204,7 @@ export default function SettingPage() {
               placeholder="닉네임"
               onChange={handleInputChange}
               className={styles.input}
-              value={(usernameValue || user?.userName) ?? ""}
+              value={usernameValue || ""}
             />
             <DynamicIcon id="check" size="small" className={styles.inputIcon} aria-hidden={inputState != "confirm"} />
             <DynamicIcon id="!" size="small" className={styles.inputIcon} aria-hidden={inputState != "invalid"} />
