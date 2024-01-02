@@ -1,20 +1,27 @@
 import { style } from "@vanilla-extract/css";
 
 export const pageContainer = style({
-  width: "288px",
-  margin: "45px auto",
+  width: "100vw",
+  height: "80vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
+  alignItems: "center",
 });
 
 export const canvasContainer = style({
   boxShadow: "2px 2px",
   border: "1px solid #000",
-  width: "100%",
+  width: "288px",
   height: "480px",
 });
 
 export const captureButton = style({
-  width: "100%",
-  marginTop: "10vw",
+  width: "288px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "8px",
 });
 
 export const modalContainer = style({

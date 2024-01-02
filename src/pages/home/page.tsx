@@ -6,19 +6,20 @@ import { Link } from "react-router-dom";
 
 import * as styles from "./page.css";
 import MyPost from "./_components/MyPost";
+import { DynamicIcon } from "@/components/Icon";
 
 export default function HomePage() {
   return (
     <main className={styles.pageContainer}>
       <Header>
         <Link to={"/share/" + localStorage.getItem("id")}>
-          <img src="/img/share.png" />
+          <DynamicIcon id="share" size="medium" />
         </Link>
         <Link to="/deco">
-          <img src="/img/home/deco.png" />
+          <DynamicIcon id="clothes" size="medium" />
         </Link>
         <Link to="/setting">
-          <img src="/img/home/settings.png" />
+          <DynamicIcon id="settings" size="medium" />
         </Link>
       </Header>
       <AvatarCanvas style={{ transform: `translateY(-56px)` }}>

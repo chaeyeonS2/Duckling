@@ -1,3 +1,4 @@
+import { DynamicIcon } from "@/components/Icon";
 import * as styles from "./headerComment.css";
 import { useNavigate } from "react-router-dom";
 
@@ -12,17 +13,17 @@ export default function HeaderComment() {
     <header className={styles.header}>
       <div>
         <div className={styles.leftBtnDiv}>
-          {/* <div><img src="/img/writing/cookie.png"/></div> */}
+          <DynamicIcon id="candy" size="small" />
           <div className={styles.num}></div>
         </div>
         <div className={styles.leftBtnDiv}>
-          {/* <div><img src="/img/writing/comment.png"/></div> */}
+          <DynamicIcon id="comment" size="small" />
           <div className={styles.num}></div>
         </div>
       </div>
       <div className={styles.rightBtnGroup}>
         <button className={styles.btnClose} onClick={backClick}>
-          <img src="/img/writing/comment_close.png" alt="my image" />
+          <DynamicIcon id="cancel" size="small" />
         </button>
       </div>
     </header>

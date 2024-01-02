@@ -5,6 +5,7 @@ import * as styles from "./myPost.css";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import useSWRImmutable from "swr/immutable";
+import { DynamicIcon } from "@/components/Icon";
 
 export default function MyPost() {
   const ref = useRef<SheetRef>();
@@ -64,7 +65,7 @@ function CustomHeader() {
       <div className={styles.profileImg} style={{ backgroundImage: `url(${user?.profileImg})` }} />
       <div className={styles.userName}>{localStorage.getItem("userName")}</div>
       <div className={styles.btnAddNew} onClick={newpostClick}>
-        <img className={styles.btnAddNewImage} src="/img/writing/add.png" alt="" />
+        <DynamicIcon className={styles.btnAddNewImage} id="newpost" size="medium" />
       </div>
     </div>
   );

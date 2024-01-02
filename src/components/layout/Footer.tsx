@@ -1,4 +1,4 @@
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 import * as styles from "./footer.css";
 import { Link, useLocation } from "react-router-dom";
 
@@ -9,13 +9,13 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <Link to="/look" className={styles.footerBtn} aria-checked={tabIdx[0].includes(pathname)}>
-        <Icon className={styles.icon} id={"home-" + (tabIdx[0].includes(pathname) ? "fill" : "outline")} />
+        <DynamicIcon className={styles.icon} id={`home${tabIdx[0].includes(pathname) ? "" : ""}`} />
       </Link>
       <Link to="/home" className={styles.footerBtn} aria-checked={tabIdx[1].includes(pathname)}>
-        <Icon className={styles.icon} id={"avatar-" + (tabIdx[1].includes(pathname) ? "fill" : "outline")} />
+        <DynamicIcon className={styles.icon} id={`mypage${tabIdx[1].includes(pathname) ? "-fill" : ""}`} />
       </Link>
       <Link to="/camera" className={styles.footerBtn} aria-checked={tabIdx[2].includes(pathname)}>
-        <Icon className={styles.icon} id={"camera-" + (tabIdx[2].includes(pathname) ? "fill" : "outline")} />
+        <DynamicIcon className={styles.icon} id={`camera${tabIdx[2].includes(pathname) ? "-fill" : ""}`} />
       </Link>
     </footer>
   );

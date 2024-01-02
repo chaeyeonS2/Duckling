@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 import * as styles from "./page.css";
+import { DynamicIcon } from "@/components/Icon";
 
 export default function CommentPage() {
   const location = useLocation();
@@ -99,7 +100,7 @@ export default function CommentPage() {
             <br />
 
             <button className={styles.commentButton} type="submit">
-              <img src="/img/writing/comment-upload-true-btn.png" />
+              <DynamicIcon id="send" size="medium" />
             </button>
           </form>
         </div>

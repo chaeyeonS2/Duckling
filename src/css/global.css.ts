@@ -13,6 +13,10 @@ globalStyle("html, body, #root", {
   height: "100%",
 });
 
+globalStyle("a", {
+  color: "inherit",
+});
+
 globalStyle("*", {
   fontFamily: "Pretendard",
   boxSizing: "border-box",

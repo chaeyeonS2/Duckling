@@ -2,7 +2,7 @@ import * as styles from "./animationMenu.css";
 import useSWRImmutable from "swr/immutable";
 import { useEffect, useState, forwardRef, MutableRefObject } from "react";
 import View3D from "@egjs/react-view3d";
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 
 interface AnimationMenuProps {
   animationGltf: (data: string) => void;
@@ -46,7 +46,13 @@ const AnimationMenu = forwardRef<View3D, AnimationMenuProps>((props, ref) => {
           onClick={enterAR}
           //onClick={() => handleClick(currentKind, item)}  //클릭 시 ar 카메라 실행
         >
-          <Icon id={`ar-camera-${isAvailableAR ? "true" : "false"}`} size="large" />
+          <DynamicIcon
+            id="avatarmotion-camera"
+            size="large"
+            style={{
+              color: isAvailableAR ? "#BDFF6B" : "gray",
+            }}
+          />
         </div>
         <div className={styles.menu}>
           {icons?.map((item, index) => {

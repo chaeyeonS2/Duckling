@@ -1,10 +1,10 @@
 import ConfirmModal from "@/components/modal/ConfirmModal";
 import AlertModal from "@/components/modal/AlertModal";
 import BaseModal from "@/components/modal/BaseModal";
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 
 import axios from "axios";
-import { getAuth } from "firebase/auth";
+import { deleteUser, getAuth } from "firebase/auth";
 import { overlays } from "@/utils/overlays";
 import useSWRImmutable from "swr/immutable";
 import { useNavigate } from "react-router-dom";
@@ -53,19 +53,42 @@ export default function SettingPage() {
                   계정 정보 복구는 불가능합니다
                 </>
               }
-              logoImgSrc={<Icon id="warning" size="medium" />}
+              logoImgSrc={<DynamicIcon id="warning" size="medium" />}
               description="덕클링 이력, 덕클링 닉네임, 덕클링 활동 이력이 전부 삭제됩니다."
               onNo={() => overlays.close(reallyConfirmId)}
               onYes={async () => {
                 overlays.close(reallyConfirmId);
                 const inProgressModal = overlays.open(() => (
-                  <BaseModal logoImgSrc={<Icon id="warning" size="medium" />} title="탈퇴중..." />
+                  <BaseModal logoImgSrc={<DynamicIcon id="warning" size="medium" />} title="탈퇴중..." />
                 ));
-                await axios.delete(`/api/users/${localStorage.getItem("id")}`);
+
+                const user = getAuth().currentUser;
+                if (!user) {
+                  overlays.open(() => (
+                    <BaseModal
+                      logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+                      title="에러! firebase 연동이 예기치 못하게 중단됐습니다."
+                    />
+                  ));
+                  return;
+                }
+
+                const gotError = await axios.delete(`/api/users/${localStorage.getItem("id")}`).catch(() => true);
+                if (gotError) {
+                  overlays.open(() => (
+                    <BaseModal
+                      logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+                      title="에러! 예기치 못한 에러가 발생했습니다."
+                    />
+                  ));
+                  return;
+                }
+
+                await deleteUser(user);
                 overlays.close(inProgressModal);
                 overlays.open(({ overlayId }) => (
                   <AlertModal
-                    logoImgSrc={<Icon id="warning" size="medium" />}
+                    logoImgSrc={<DynamicIcon id="warning" size="medium" />}
                     title="탈퇴가 완료되었습니다"
                     onClose={() => {
                       overlays.close(overlayId);
@@ -102,7 +125,7 @@ export default function SettingPage() {
     } catch (e) {
       overlays.open(({ overlayId }) => (
         <AlertModal
-          logoImgSrc={<Icon id="warning" size="medium" />}
+          logoImgSrc={<DynamicIcon id="warning" size="medium" />}
           title="프로필 이미지 변경에 실패했습니다"
           description="잠시 후 다시 시도해주세요"
           onClose={() => {
@@ -127,7 +150,7 @@ export default function SettingPage() {
     });
   };
 
-  const [usernameValue, setUsernameValue] = useState(() => user?.userName ?? "");
+  const [usernameValue, setUsernameValue] = useState(user?.userName ?? "");
   const [inputState, setInputState] = useState<"idle" | "invalid" | "confirm">("idle");
   const handleUsernameChange = async () => {
     const loadingOverlayId = overlays.open(() => <BaseModal title="프로필 닉네임을 변경중입니다" />);
@@ -164,7 +187,7 @@ export default function SettingPage() {
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
-        <Icon id="close" size="medium" onClick={() => navigate(-1)} />
+        <DynamicIcon id="cancel" size="medium" onClick={() => navigate(-1)} />
         <p>설정</p>
         <div style={{ width: "24px", height: "24px" }} />
       </header>
@@ -181,10 +204,10 @@ export default function SettingPage() {
               placeholder="닉네임"
               onChange={handleInputChange}
               className={styles.input}
-              value={(usernameValue || user?.userName) ?? ""}
+              value={usernameValue || ""}
             />
-            <Icon id="check" size="small" className={styles.inputIcon} aria-hidden={inputState != "confirm"} />
-            <Icon id="exclam" size="small" className={styles.inputIcon} aria-hidden={inputState != "invalid"} />
+            <DynamicIcon id="check" size="small" className={styles.inputIcon} aria-hidden={inputState != "confirm"} />
+            <DynamicIcon id="!" size="small" className={styles.inputIcon} aria-hidden={inputState != "invalid"} />
           </div>
 
           <button className={styles.inputButton} onClick={handleUsernameChange} data-state={inputState}>
