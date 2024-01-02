@@ -1,6 +1,6 @@
 import View3D from "@egjs/react-view3d";
 import * as styles from "./page.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Header from "@/components/layout/headers/Header";
 import { Link } from "react-router-dom";
 
@@ -8,23 +8,26 @@ import "@egjs/view3d/css/view3d-bundle.min.css";
 import "@egjs/view3d/css/view3d-ar.min.css";
 import Footer from "@/components/layout/Footer";
 import AnimationMenu from "./_components/AnimationMenu";
+import { DynamicIcon } from "@/components/Icon";
 
 export default function ARCameraPage() {
   const view3DRef = useRef<View3D | null>(null);
   const [playingGtlfModel, setplayingGtlfModel] = useState<string>("");
 
+  /*
   useEffect(() => {
     const initializeView3D = async () => {
       await view3DRef.current?.init();
       //의상 추가할 때 쓸 코드
-      // const loader = new GLTFLoader();
-      // loader.load("/gltf/avatar/stage.glb", (gltf) => {
-      //   const clothingMesh = gltf.scene;
-      //   view3DRef.current?.scene.add(clothingMesh);
-      // });
+      const loader = new GLTFLoader();
+      loader.load("/gltf/avatar/stage.glb", (gltf) => {
+        const clothingMesh = gltf.scene;
+        view3DRef.current?.scene.add(clothingMesh);
+      });
     };
-    //initializeView3D();
+    initializeView3D();
   }, []);
+  */
 
   const handleDataFromAnimationMenu = (data: string) => {
     setplayingGtlfModel(data);
@@ -35,13 +38,13 @@ export default function ARCameraPage() {
       <div className={styles.pageContainer}>
         <Header>
           <Link to={"/share/" + localStorage.getItem("id")}>
-            <img src="/img/share.png" />
+            <DynamicIcon id="share" size="medium" />
           </Link>
           <Link to="/deco">
-            <img src="/img/home/deco.png" />
+            <DynamicIcon id="clothes" size="medium" />
           </Link>
           <Link to="/setting">
-            <img src="/img/home/settings.png" />
+            <DynamicIcon id="settings" size="medium" />
           </Link>
         </Header>
         <View3D

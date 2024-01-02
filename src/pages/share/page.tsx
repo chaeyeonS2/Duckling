@@ -9,7 +9,7 @@ import { useRef } from "react";
 
 import * as styles from "./page.css";
 import { overlays } from "@/utils/overlays";
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 
 export default function SharePage() {
   const { userID } = useParams();
@@ -39,11 +39,11 @@ export default function SharePage() {
                 className={button + " " + styles.button}
                 aria-selected
               >
-                <Icon id="download" size="medium" />
+                <DynamicIcon id="save" size="medium" />
                 Save
               </button>
               <button className={button + " " + styles.button} disabled>
-                <Icon id="twitter" size="medium" />
+                <DynamicIcon id="Twitter" size="medium" />
                 twitter
               </button>
             </div>
@@ -57,7 +57,7 @@ export default function SharePage() {
     <div>
       <Header>
         <Link to="/home">
-          <img src="/img/close.png" />
+          <DynamicIcon id="cancel" size="medium" />
         </Link>
       </Header>
       <div className={styles.pageContainer}>

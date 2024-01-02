@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 import Avatar from "@/components/Avatar";
 import Footer from "@/components/layout/Footer";
 import PostMetadataBar from "@/components/PostMetadataBar";
@@ -48,11 +48,11 @@ export default function LookPage() {
     <div className={styles.layout}>
       <header className={styles.header}>
         <div className={styles.tab} onClick={handleTabChange("인기")} aria-selected={currentTab === "인기"}>
-          <Icon id="finger-heart" size="medium" />
+          <DynamicIcon id="popular" size="medium" />
           <p className={styles.tabText}>인기</p>
         </div>
         <div className={styles.tab} onClick={handleTabChange("최신")} aria-selected={currentTab === "최신"}>
-          <Icon id="finger-rock" size="medium" />
+          <DynamicIcon id="new" size="medium" />
           <p className={styles.tabText}>최신</p>
         </div>
       </header>

@@ -1,7 +1,7 @@
 import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Logo from "@/assets/logo.svg?react";
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 import axios from "axios";
 
 import * as styles from "./page.css";
@@ -19,7 +19,7 @@ export default function LoginPage() {
     <div className={styles.pageContainer}>
       <Logo className={styles.logoImage} />
       <button className={styles.button} onClick={handleLoginClick}>
-        <Icon className={styles.buttonIcon} id="x-logo" size="small" />
+        <DynamicIcon className={styles.buttonIcon} id="X-logo" size="small" />
         <span>X로 시작하기</span>
       </button>
     </div>

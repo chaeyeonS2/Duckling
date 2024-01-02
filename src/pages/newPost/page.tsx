@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import * as styles from "./page.css";
 import AlertModal from "@/components/modal/AlertModal";
 import { overlays } from "@/utils/overlays";
-import Icon from "@/components/Icon";
+import { DynamicIcon } from "@/components/Icon";
 import BaseModal from "@/components/modal/BaseModal";
 
 export default function NewPostPage() {
@@ -40,7 +40,7 @@ export default function NewPostPage() {
             overlays.close(overlayId);
             navigate(`/postView/${data.postID}`);
           }}
-          logoImgSrc={<Icon id="check" size="medium" />}
+          logoImgSrc={<DynamicIcon id="check" size="medium" />}
           title="게시글이 업로드 되었습니다"
         />
       ));
@@ -106,7 +106,7 @@ export default function NewPostPage() {
     overlays.open(({ overlayId }) => (
       <AlertModal
         onClose={() => overlays.close(overlayId)}
-        logoImgSrc={<Icon id="image" size="medium" />}
+        logoImgSrc={<DynamicIcon id="image" size="medium" />}
         title="사진을 첨부해야 업로드 할 수 있어요"
         description="덕질 일상을 다채롭게 기록해보아요"
       />
@@ -122,10 +122,10 @@ export default function NewPostPage() {
     <div className={styles.layout}>
       <header className={styles.header}>
         <button onClick={() => navigate(-1)} className={styles.headerButton}>
-          <img src="/img/close.png" alt="뒤로가기" />
+          <DynamicIcon className={styles.previewImg} id="cancel" size="medium" />
         </button>
         <button onClick={uploadClick} className={styles.headerButton}>
-          <img src="/img/writing/check.png" alt="완료하기" />
+          <DynamicIcon className={styles.previewImg} id="check" size="medium" />
         </button>
       </header>
       <form className={styles.formContainer}>
@@ -154,7 +154,7 @@ export default function NewPostPage() {
             {previewImages.map((image, index) => (
               <div className={styles.imgUploadPreview} key={index}>
                 <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
-                  <img className={styles.previewImg} src="/img/writing/close.png"></img>
+                  <DynamicIcon className={styles.previewImg} id="cancel" size="medium" />
                 </div>
                 <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
               </div>
@@ -163,7 +163,7 @@ export default function NewPostPage() {
         </div>
         <div className={styles.toolBar}>
           <div onClick={handleCameraBtnClick}>
-            <img src="/img/writing/camera.png" />
+            <DynamicIcon id="camera" size="medium" />
           </div>
         </div>
       </form>
