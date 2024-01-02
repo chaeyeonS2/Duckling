@@ -4,7 +4,7 @@ import BaseModal from "@/components/modal/BaseModal";
 import { DynamicIcon } from "@/components/Icon";
 
 import axios from "axios";
-import { getAuth } from "firebase/auth";
+import { deleteUser, getAuth } from "firebase/auth";
 import { overlays } from "@/utils/overlays";
 import useSWRImmutable from "swr/immutable";
 import { useNavigate } from "react-router-dom";
@@ -61,7 +61,30 @@ export default function SettingPage() {
                 const inProgressModal = overlays.open(() => (
                   <BaseModal logoImgSrc={<DynamicIcon id="warning" size="medium" />} title="탈퇴중..." />
                 ));
-                await axios.delete(`/api/users/${localStorage.getItem("id")}`);
+
+                const user = getAuth().currentUser;
+                if (!user) {
+                  overlays.open(() => (
+                    <BaseModal
+                      logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+                      title="에러! firebase 연동이 예기치 못하게 중단됐습니다."
+                    />
+                  ));
+                  return;
+                }
+
+                const gotError = await axios.delete(`/api/users/${localStorage.getItem("id")}`).catch(() => true);
+                if (gotError) {
+                  overlays.open(() => (
+                    <BaseModal
+                      logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+                      title="에러! 예기치 못한 에러가 발생했습니다."
+                    />
+                  ));
+                  return;
+                }
+
+                await deleteUser(user);
                 overlays.close(inProgressModal);
                 overlays.open(({ overlayId }) => (
                   <AlertModal
@@ -127,7 +150,7 @@ export default function SettingPage() {
     });
   };
 
-  const [usernameValue, setUsernameValue] = useState(() => user?.userName ?? "");
+  const [usernameValue, setUsernameValue] = useState(user?.userName ?? "");
   const [inputState, setInputState] = useState<"idle" | "invalid" | "confirm">("idle");
   const handleUsernameChange = async () => {
     const loadingOverlayId = overlays.open(() => <BaseModal title="프로필 닉네임을 변경중입니다" />);
@@ -181,7 +204,7 @@ export default function SettingPage() {
               placeholder="닉네임"
               onChange={handleInputChange}
               className={styles.input}
-              value={(usernameValue || user?.userName) ?? ""}
+              value={usernameValue || ""}
             />
             <DynamicIcon id="check" size="small" className={styles.inputIcon} aria-hidden={inputState != "confirm"} />
             <DynamicIcon id="!" size="small" className={styles.inputIcon} aria-hidden={inputState != "invalid"} />
