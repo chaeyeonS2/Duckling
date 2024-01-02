@@ -6,7 +6,7 @@ export const pageContainer = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
-  backgroundImage: "url(/img/home/background.png)",
+  backgroundImage: "url(/img/background.png)",
 });
 
 export const bottomContainer = style({
