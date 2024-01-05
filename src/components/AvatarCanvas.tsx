@@ -40,6 +40,8 @@ const AvatarCanvas = forwardRef<RootState, CanvasProps>(({ children, camera, ...
       {children}
 
       <OrbitControls
+        minDistance={2}
+        maxDistance={8}
         enableRotate // 회전 활성화
         enableDamping // 부드러운 움직임 효과 활성화
         enablePan={false} // 이동 비활성화
