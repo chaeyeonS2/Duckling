@@ -9,7 +9,7 @@ import { overlays } from "@/utils/overlays";
 import useSWRImmutable from "swr/immutable";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import convertFileToDataUrl from "@/utils/convertFileToDataUrl";
+import convertFileToDataUrl from "@/utils/convertBlobToDataUrl";
 
 import * as styles from "./page.css";
 
@@ -64,27 +64,46 @@ export default function SettingPage() {
 
                 const user = getAuth().currentUser;
                 if (!user) {
-                  overlays.open(() => (
-                    <BaseModal
+                  overlays.close(inProgressModal);
+                  overlays.open(({ overlayId }) => (
+                    <AlertModal
                       logoImgSrc={<DynamicIcon id="warning" size="medium" />}
                       title="에러! firebase 연동이 예기치 못하게 중단됐습니다."
+                      onClose={() => overlays.close(overlayId)}
                     />
                   ));
                   return;
                 }
 
-                const gotError = await axios.delete(`/api/users/${localStorage.getItem("id")}`).catch(() => true);
+                const gotError = await deleteUser(user).catch((e) => {
+                  console.log(e);
+                  return true;
+                });
                 if (gotError) {
-                  overlays.open(() => (
-                    <BaseModal
+                  overlays.close(inProgressModal);
+                  overlays.open(({ overlayId }) => (
+                    <AlertModal
                       logoImgSrc={<DynamicIcon id="warning" size="medium" />}
-                      title="에러! 예기치 못한 에러가 발생했습니다."
+                      title="에러! firebase 연동 제거 중 예기치 못한 에러가 발생했습니다."
+                      onClose={() => overlays.close(overlayId)}
                     />
                   ));
                   return;
                 }
 
-                await deleteUser(user);
+                const noError = await axios.delete(`/api/users/${localStorage.getItem("id")}`).catch(console.log);
+                if (!noError) {
+                  overlays.close(inProgressModal);
+                  overlays.open(({ overlayId }) => (
+                    <AlertModal
+                      logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+                      title="에러! 서버 요청 중 예기치 못한 에러가 발생했습니다."
+                      onClose={() => overlays.close(overlayId)}
+                    />
+                  ));
+                  return;
+                }
+
                 overlays.close(inProgressModal);
                 overlays.open(({ overlayId }) => (
                   <AlertModal
