@@ -6,6 +6,7 @@ export default function SWRWrapper({ children }: React.PropsWithChildren) {
   return (
     <SWRConfig
       value={{
+        refreshWhenHidden: false,
         fetcher: (params) => generalFetcher(params).then((res) => res?.data),
       }}
     >
