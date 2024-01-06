@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <Link to="/look" className={styles.footerBtn} aria-checked={tabIdx[0].includes(pathname)}>
-        <DynamicIcon className={styles.icon} id={`home${tabIdx[0].includes(pathname) ? "" : ""}`} />
+        <DynamicIcon className={styles.icon} id={`home${tabIdx[0].includes(pathname) ? "-fill" : ""}`} />
       </Link>
       <Link to="/home" className={styles.footerBtn} aria-checked={tabIdx[1].includes(pathname)}>
         <DynamicIcon className={styles.icon} id={`mypage${tabIdx[1].includes(pathname) ? "-fill" : ""}`} />

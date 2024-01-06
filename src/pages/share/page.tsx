@@ -1,16 +1,19 @@
-import AvatarModelGroup from "@/components/AvatarModelGroup";
-import Header from "@/components/layout/headers/Header";
-import AvatarCanvas from "@/components/AvatarCanvas";
-import { Link, useParams } from "react-router-dom";
-
-import { RootState } from "@react-three/fiber";
-import { button } from "../deco/page.css";
 import { useEffect, useRef } from "react";
 
-import * as styles from "./page.css";
-import { overlays } from "@/utils/overlays";
 import { DynamicIcon } from "@/components/Icon";
 import BaseModal from "@/components/modal/BaseModal";
+import AvatarCanvas from "@/components/AvatarCanvas";
+import Header from "@/components/layout/headers/Header";
+import AvatarModelGroup from "@/components/AvatarModelGroup";
+
+import { Link, useParams } from "react-router-dom";
+import { RootState } from "@react-three/fiber";
+import { overlays } from "@/utils/overlays";
+import mergeImages from "merge-images";
+
+import { button } from "../deco/page.css";
+import * as styles from "./page.css";
+import { overlay } from "three/examples/jsm/nodes/Nodes.js";
 
 export default function SharePage() {
   const { userID } = useParams();
@@ -44,11 +47,17 @@ export default function SharePage() {
   };
 
   const rootStateRef = useRef<RootState>(null);
-  const onCaptureClick = () => {
+  const onCaptureClick = async () => {
     if (!rootStateRef.current) return;
 
     rootStateRef.current.gl.render(rootStateRef.current.scene, rootStateRef.current.camera);
-    const imageSrc = rootStateRef.current.gl.domElement.toDataURL("image/png");
+
+    const loadingOverlayId = overlays.open(() => <BaseModal title="생성중..." />);
+    const imageSrc = await mergeImages([
+      "/img/share-background-green.png",
+      rootStateRef.current.gl.domElement.toDataURL("image/png"),
+    ]);
+    overlays.close(loadingOverlayId);
 
     overlays.open(({ overlayId }) => (
       <>
@@ -82,6 +91,7 @@ export default function SharePage() {
       </Header>
       <div className={styles.pageContainer}>
         <div className={styles.canvasContainer}>
+          <img src="/img/share-background-green.png" alt="" className={styles.backgroundImage} />
           <AvatarCanvas ref={rootStateRef}>
             <AvatarModelGroup userId={userID} position={[0, -0.05, 0]} />
           </AvatarCanvas>
