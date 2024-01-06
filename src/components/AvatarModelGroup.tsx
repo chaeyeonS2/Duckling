@@ -1,4 +1,4 @@
-import useSWRImmutable from "swr/immutable";
+import useSWR from "swr";
 import { useGltf } from "@/components/GltfProvider";
 import GroupWrpper, { GroupWrpperProps } from "@/components/GroupWrapper";
 
@@ -11,7 +11,7 @@ export default function AvatarModelGroup({
   position,
   ...props
 }: AvatarModelGroupProps) {
-  const { data: user } = useSWRImmutable(`/api/users/${userId}`);
+  const { data: user } = useSWR(`/api/users/${userId}`);
   const { getGLTFs } = useGltf();
 
   if (userId === null) return null;
