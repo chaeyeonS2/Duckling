@@ -70,7 +70,7 @@ export default function DecoPage() {
     setCurrentAsset((prev) => (prev == item.assetID ? undefined : item.assetID));
 
     setAvatar((avatar) => {
-      const newAvatar = Object.create(avatar);
+      const newAvatar = { ...avatar };
 
       if (newAvatar[kind] == item.assetGltf) {
         delete newAvatar[kind];
