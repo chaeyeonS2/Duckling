@@ -1,8 +1,10 @@
+import { useRef, useState } from "react";
+
+import axios from "axios";
 import { DynamicIcon } from "./Icon";
 import { useNavigate } from "react-router-dom";
+
 import * as styles from "./PostMetadataBar.css";
-import axios from "axios";
-import { useRef, useState } from "react";
 
 export interface PostMetadataBarProps {
   postData: Post;
@@ -27,8 +29,8 @@ export default function PostMetadataBar({ postData }: PostMetadataBarProps) {
         className={styles.metadata}
         aria-selected={candyRef.current?.checked || postData.likes.includes(localStorage.getItem("id") || "")}
       >
-        <DynamicIcon id="candy" size="medium" />
-        <span>{likes}</span>
+        <DynamicIcon id="candy" size="medium" className={styles.candyIcon} />
+        <span className={styles.candyNumber}>{likes}</span>
       </label>
       <input
         id="candy-button"
