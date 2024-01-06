@@ -32,7 +32,7 @@ export default function DecoPage() {
   const cameraRef = useRef<RootState>(null);
   const [currentKind, setCurrentKind] = useState<keyof Avatar>("top");
   const [currentAsset, setCurrentAsset] = useState<string>();
-  const isFaceDeco = currentKind === "eyes" || currentKind === "mouth";
+  const isFaceDeco = Boolean(subNav.face.find(([kind]) => kind == currentKind));
 
   const { data: assets } = useSWRImmutable(`/api/assets/?kind=${currentKind}`);
   const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
