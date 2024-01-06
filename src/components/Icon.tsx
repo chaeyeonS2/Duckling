@@ -39,6 +39,7 @@ type IconIds =
   | "comment"
   | "edit"
   | "face"
+  | "home-fill"
   | "home"
   | "check"
   | "image"

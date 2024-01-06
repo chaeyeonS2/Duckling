@@ -1,9 +1,4 @@
 import { useEffect, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
-
-import axios from "axios";
-import { overlays } from "@/utils/overlays";
-import { RootState } from "@react-three/fiber";
 
 import { DynamicIcon } from "@/components/Icon";
 import BaseModal from "@/components/modal/BaseModal";
@@ -11,6 +6,12 @@ import AvatarCanvas from "@/components/AvatarCanvas";
 import AlertModal from "@/components/modal/AlertModal";
 import Header from "@/components/layout/headers/Header";
 import AvatarModelGroup from "@/components/AvatarModelGroup";
+
+import { Link, useParams } from "react-router-dom";
+import { RootState } from "@react-three/fiber";
+import { overlays } from "@/utils/overlays";
+import mergeImages from "merge-images";
+import axios from "axios";
 
 import { button } from "../deco/page.css";
 import * as styles from "./page.css";
@@ -65,11 +66,17 @@ export default function SharePage() {
   };
 
   const rootStateRef = useRef<RootState>(null);
-  const onCaptureClick = () => {
+  const onCaptureClick = async () => {
     if (!rootStateRef.current) return;
 
     rootStateRef.current.gl.render(rootStateRef.current.scene, rootStateRef.current.camera);
-    const imageSrc = rootStateRef.current.gl.domElement.toDataURL("image/png");
+
+    const loadingOverlayId = overlays.open(() => <BaseModal title="생성중..." />);
+    const imageSrc = await mergeImages([
+      "/img/share-background-green.png",
+      rootStateRef.current.gl.domElement.toDataURL("image/png"),
+    ]);
+    overlays.close(loadingOverlayId);
 
     overlays.open(({ overlayId }) => {
       const handleClick = (callback: (imgsrc: string) => void) => () => {
@@ -110,6 +117,7 @@ export default function SharePage() {
       </Header>
       <div className={styles.pageContainer}>
         <div className={styles.canvasContainer}>
+          <img src="/img/share-background-green.png" alt="" className={styles.backgroundImage} />
           <AvatarCanvas ref={rootStateRef}>
             <AvatarModelGroup userId={userID} position={[0, -0.05, 0]} />
           </AvatarCanvas>
