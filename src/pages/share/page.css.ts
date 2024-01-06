@@ -13,7 +13,14 @@ export const canvasContainer = style({
   boxShadow: "2px 2px",
   border: "1px solid #000",
   width: "288px",
-  height: "480px",
+  height: "510px",
+  position: "relative",
+});
+
+export const backgroundImage = style({
+  position: "absolute",
+  width: "288px",
+  height: "510px",
 });
 
 export const captureButton = style({
