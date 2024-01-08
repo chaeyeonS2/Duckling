@@ -6,7 +6,7 @@ import ConfirmModal from "@/components/modal/ConfirmModal";
 import { DynamicIcon } from "@/components/Icon";
 import axios from "axios";
 
-export default function HeaderPostView() {
+export default function HeaderPostView({ postData }: { postData?: Post }) {
   const navigate = useNavigate();
 
   const deleteClick = () => {
@@ -69,9 +69,9 @@ export default function HeaderPostView() {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} aria-disabled={postData?.writerID != localStorage.getItem("id")}>
       <div>
-        <button className={styles.headerButton} onClick={closeClick}>
+        <button className={styles.headerButton} name="exit" onClick={closeClick}>
           <DynamicIcon id="cancel" size="medium" />
         </button>
       </div>

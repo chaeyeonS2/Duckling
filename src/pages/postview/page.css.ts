@@ -57,3 +57,68 @@ export const metadataContainer = style({
   backgroundColor: "black",
   color: "white",
 });
+
+export const commentBottomSheet = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  height: "100%",
+  backgroundColor: "white",
+});
+
+export const commentsContainer = style({
+  padding: "15px 20px 0px 20px",
+  overflowY: "auto",
+  display: "flex",
+  flexDirection: "column",
+  gap: "24px",
+});
+
+export const comment = style({
+  width: "100%",
+  height: "fit-content",
+  display: "flex",
+  flexDirection: "column",
+  gap: "12px",
+});
+
+export const commentHeader = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+});
+
+export const commentDate = style({
+  fontSize: "12px",
+  color: "#B8B8B8",
+  alignSelf: "flex-end",
+});
+
+export const commentInputContainer = style({
+  display: "flex",
+  height: "50px",
+  border: "1px solid #000",
+});
+
+export const commentInput = style({
+  flex: 1,
+  padding: "12.5px",
+  border: "none",
+  background: "transparent",
+  resize: "none",
+  fontSize: "18px",
+  fontWeight: 600,
+  selectors: {
+    "&::placeholder": {
+      color: "#d9d9d9",
+    },
+  },
+});
+
+export const submitButton = style({
+  border: "none",
+  borderLeft: "1px solid #000",
+  background: "#e3e3e3",
+  width: "50px",
+  height: "100%",
+});
