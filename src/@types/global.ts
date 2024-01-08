@@ -31,7 +31,7 @@ interface Avatar {
   skins: string;
 }
 
-interface Comment {
+interface PostComment {
   commentID: string;
   text: string;
   rootID: string;
