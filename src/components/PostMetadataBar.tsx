@@ -23,8 +23,8 @@ export default function PostMetadataBar({ postData }: PostMetadataBarProps) {
         className={styles.metadata}
         aria-selected={candyRef.current?.checked || postData.likes.includes(localStorage.getItem("id") || "")}
       >
-        <DynamicIcon id="candy" size="medium" />
-        <span>{likes}</span>
+        <DynamicIcon id="candy" size="medium" className={styles.candyIcon} />
+        <span className={styles.candyNumber}>{likes}</span>
       </label>
       <input
         id="candy-button"

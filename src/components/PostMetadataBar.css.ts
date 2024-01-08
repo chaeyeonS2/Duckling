@@ -15,3 +15,7 @@ export const metadata = style({
     },
   },
 });
+
+export const candyIcon = style({ transform: "scale(1.5) rotate(-25deg)", stroke: "currentColor", strokeWidth: "0.5" });
+
+export const candyNumber = style({ marginLeft: "4px" });

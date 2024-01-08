@@ -12,6 +12,9 @@ import axios from "axios";
 
 import * as styles from "./page.css";
 import { DynamicIcon } from "@/components/Icon";
+import { overlays } from "@/utils/overlays";
+import BaseModal from "@/components/modal/BaseModal";
+import AlertModal from "@/components/modal/AlertModal";
 
 const subNav = {
   face: [
@@ -32,7 +35,7 @@ export default function DecoPage() {
   const cameraRef = useRef<RootState>(null);
   const [currentKind, setCurrentKind] = useState<keyof Avatar>("top");
   const [currentAsset, setCurrentAsset] = useState<string>();
-  const isFaceDeco = currentKind === "eyes" || currentKind === "mouth";
+  const isFaceDeco = Boolean(subNav.face.find(([kind]) => kind == currentKind));
 
   const { data: assets } = useSWRImmutable(`/api/assets/?kind=${currentKind}`);
   const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
@@ -70,7 +73,7 @@ export default function DecoPage() {
     setCurrentAsset((prev) => (prev == item.assetID ? undefined : item.assetID));
 
     setAvatar((avatar) => {
-      const newAvatar = Object.create(avatar);
+      const newAvatar = { ...avatar };
 
       if (newAvatar[kind] == item.assetGltf) {
         delete newAvatar[kind];
@@ -81,13 +84,36 @@ export default function DecoPage() {
     });
   };
 
-  const handleAvatarUpload = () => {
-    const uid = localStorage.getItem("id");
-    axios
-      .patch(`/api/users/${uid}`, {
+  const handleAvatarUpload = async () => {
+    const overlayID = overlays.open(() => (
+      <BaseModal title="저장하는 중..." logoImgSrc={<DynamicIcon id="send" size="medium" />} />
+    ));
+
+    const res = await axios
+      .patch(`/api/users/${localStorage.getItem("id")}`, {
         userAvatar: avatar,
       })
-      .catch((error) => console.error("Error uploading document:", error));
+      .catch(console.error);
+    if (!res) {
+      overlays.close(overlayID);
+      overlays.open(({ overlayId }) => (
+        <AlertModal
+          title="서버 요청 중 예기치 못한 문제가 발생했습니다."
+          logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+          onClose={() => overlays.close(overlayId)}
+        />
+      ));
+      return;
+    }
+
+    overlays.close(overlayID);
+    overlays.open(({ overlayId }) => (
+      <AlertModal
+        title="저장 완료!"
+        logoImgSrc={<DynamicIcon id="check" size="medium" />}
+        onClose={() => overlays.close(overlayId)}
+      />
+    ));
   };
 
   return (

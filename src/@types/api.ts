@@ -40,8 +40,8 @@ type APIMaps = unknown &
   CreateMapItem<
     `/api/twitter/${string}`,
     "POST",
-    Record<"postImg_id_string" | "text", string>,
-    Record<"status" | "media_ids", string>
+    NormalMessageResponse<"Your image tweet is posted successfully">,
+    Record<"postImg_url", string>
   > &
   // asset
   CreateMapItem<`/api/assets/${string}`, "GET", Asset> &
