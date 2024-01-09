@@ -28,15 +28,20 @@ type APIMaps = unknown &
   CreateMapItem<`/api/posts/writer/${string}`, "GET", Post[]> &
   CreateMapItem<`/api/posts/likes/${string}/${string}`, "PATCH", { likes: string[] }> &
   // comment
-  CreateMapItem<"/api/comments", "POST", Comment, Pick<Comment, "text" | "rootID" | "writerID"> & { userID: string }> &
-  CreateMapItem<`/api/comments/${string}`, "GET", Comment[]> &
+  CreateMapItem<
+    "/api/comments",
+    "POST",
+    PostComment,
+    Pick<PostComment, "text" | "rootID" | "writerID"> & { userID: string }
+  > &
+  CreateMapItem<`/api/comments/${string}`, "GET", PostComment[]> &
   CreateMapItem<`/api/comments/${string}`, "DELETE", NormalMessageResponse<"답글이 삭제되었습니다.">> &
   // twitter
   CreateMapItem<
     `/api/twitter/${string}`,
     "POST",
-    Record<"postImg_id_string" | "text", string>,
-    Record<"status" | "media_ids", string>
+    NormalMessageResponse<"Your image tweet is posted successfully">,
+    Record<"postImg_url", string>
   > &
   // asset
   CreateMapItem<`/api/assets/${string}`, "GET", Asset> &

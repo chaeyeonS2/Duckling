@@ -19,6 +19,7 @@
     "firebase": "^10.1.0",
     "framer-motion": "^10.16.16",
     "immer": "^10.0.3",
+    "merge-images": "^2.0.0",
     "minireset.css": "^0.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -30,6 +31,7 @@
     "use-local-storage-state": "^19.0.4"
   },
   "devDependencies": {
+    "@types/merge-images": "^1.2.4",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-slick": "^0.23.10",

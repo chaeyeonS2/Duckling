@@ -90,7 +90,7 @@ export default function NewPostPage() {
     if (!userID) throw new Error("userID does not exist!");
 
     const overlayId = overlays.open(() => (
-      <BaseModal logoImgSrc={<img src="/img/upload_loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
+      <BaseModal logoImgSrc={<img src="/img/upload-loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
     ));
     try {
       const { data } = await axios.post("/api/posts", {
