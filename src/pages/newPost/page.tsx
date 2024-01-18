@@ -129,10 +129,10 @@ export default function NewPostPage() {
     <div className={styles.layout}>
       <header className={styles.header}>
         <button onClick={() => navigate(-1)} className={styles.headerButton}>
-          <DynamicIcon className={styles.previewImg} id="cancel" size="medium" />
+          <DynamicIcon id="cancel" size="medium" />
         </button>
         <button onClick={uploadClick} className={styles.headerButton}>
-          <DynamicIcon className={styles.previewImg} id="check" size="medium" />
+          <DynamicIcon id="check" size="medium" />
         </button>
       </header>
       <form className={styles.formContainer}>
@@ -161,17 +161,15 @@ export default function NewPostPage() {
             {previewImages.map((image, index) => (
               <div className={styles.imgUploadPreview} key={index}>
                 <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
-                  <DynamicIcon className={styles.previewImg} id="cancel" size="medium" />
+                  <DynamicIcon id="cancel" size="medium" />
                 </div>
                 <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
               </div>
             ))}
           </div>
         </div>
-        <div className={styles.toolBar}>
-          <div onClick={handleCameraBtnClick}>
-            <DynamicIcon id="camera" size="medium" />
-          </div>
+        <div className={styles.toolBar} onClick={handleCameraBtnClick}>
+          <DynamicIcon id="camera" size="medium" />
         </div>
       </form>
       <Footer />
