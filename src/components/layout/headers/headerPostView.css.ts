@@ -10,9 +10,4 @@ export const header = style({
 export const headerButton = style({
   border: "0px solid skyblue",
   backgroundColor: "rgba(0,0,0,0)",
-  selectors: {
-    [`${header}[aria-disabled="true"] &:not([name=exit])`]: {
-      color: "rgba(0,0,0,0)",
-    },
-  },
 });

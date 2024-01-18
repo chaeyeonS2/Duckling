@@ -1,6 +1,6 @@
 import { overlays } from "@/utils/overlays";
 import * as styles from "./headerPostView.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AlertModal from "@/components/modal/AlertModal";
 import ConfirmModal from "@/components/modal/ConfirmModal";
 import { DynamicIcon } from "@/components/Icon";
@@ -69,7 +69,7 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
   };
 
   return (
-    <header className={styles.header} aria-disabled={postData?.writerID != localStorage.getItem("id")}>
+    <header className={styles.header}>
       <div>
         <button className={styles.headerButton} name="exit" onClick={closeClick}>
           <DynamicIcon id="cancel" size="medium" />
@@ -80,11 +80,15 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
           <DynamicIcon id="share" size="medium" />
         </button>
         <button className={styles.headerButton}>
-          <DynamicIcon id="newpost" size="medium" />
+          <Link to="/newpost">
+            <DynamicIcon id="newpost" size="medium" />
+          </Link>
         </button>
-        <button className={styles.headerButton} onClick={deleteClick}>
-          <DynamicIcon id="trash-can" size="medium" />
-        </button>
+        {postData?.writerID == localStorage.getItem("id") && (
+          <button className={styles.headerButton} onClick={deleteClick}>
+            <DynamicIcon id="trash-can" size="medium" />
+          </button>
+        )}
       </div>
     </header>
   );
