@@ -21,13 +21,13 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
         }
         onYes={() => {
           overlays.close(overlayId);
-          axios.delete(`/api/posts/${localStorage.getItem("id")}`).then(() => {
+          axios.delete(`/api/posts/${postData?.postID}`).then(() => {
             overlays.open(({ overlayId }) => (
               <AlertModal
                 title="게시글이 삭제되었습니다."
                 onClose={() => {
                   overlays.close(overlayId);
-                  navigate("/share");
+                  navigate("/look");
                 }}
               />
             ));
