@@ -46,6 +46,10 @@ export default function DecoPage() {
   }, [user]);
 
   const { getGLTFs } = useGltf();
+
+  // for lazy load
+  if (assets) getGLTFs(...assets.map(({ assetGltf }) => ({ gltfPath: assetGltf, identfier: "deco" as const })));
+
   const models = getGLTFs(
     ...Object.values(avatar).map((path) => ({ gltfPath: path, identfier: "deco" } as const)),
     "/gltf/avatar/T_POSED_BODY_RIGGED_FINAL.gltf",
