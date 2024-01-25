@@ -8,24 +8,23 @@ import AlertModal from "@/components/modal/AlertModal";
 import { overlays } from "@/utils/overlays";
 import { DynamicIcon } from "@/components/Icon";
 import BaseModal from "@/components/modal/BaseModal";
+import showAsyncModal from "@/utils/showAsyncModal";
 
 export default function NewPostPage() {
   const navigate = useNavigate();
 
-  // 상태(State) 정의: 제목과 내용을 각각의 상태로 관리합니다.
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  // 글의 줄 수에 따라 input 필드 높이 조절
   const textarea = useRef<HTMLTextAreaElement>(null);
   const handleResizeHeight = () => {
     if (!textarea.current) return;
 
-    textarea.current.style.height = "auto"; //height 초기화
+    textarea.current.style.height = "auto";
     textarea.current.style.height = textarea.current.scrollHeight + "px";
   };
 
-  const [previewImages, setPreviewImages] = useState<string[]>([]); //이미지 주소들 저장하는 배열
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     for (const file of event.target.files ?? []) {
@@ -66,7 +65,7 @@ export default function NewPostPage() {
     if (reason.length != 0) {
       overlays.open(({ overlayId }) => (
         <AlertModal
-          onClose={() => overlays.close(overlayId)}
+          overlayId={overlayId}
           logoImgSrc={<DynamicIcon id="warning" size="medium" />}
           title="게시물 내용이 부족해요!"
           description={
@@ -89,35 +88,36 @@ export default function NewPostPage() {
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
 
-    const overlayId = overlays.open(() => (
-      <BaseModal logoImgSrc={<img src="/img/upload-loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
+    overlays.open(({ overlayId }) => (
+      <BaseModal
+        overlayId={overlayId}
+        logoImgSrc={<img src="/img/upload-loading.gif" alt="" />}
+        title="게시글이 올라가고 있어요~!"
+      />
     ));
-    try {
-      const { data } = await axios.post("/api/posts", {
+    const { result } = await showAsyncModal(
+      axios.post("/api/posts", {
         title: title,
         body: content,
         postImg: previewImages,
         writerName: userName,
         writerID: userID,
-      });
-
-      console.log("Document uploaded:", data.postID, data.writerID);
-
-      overlays.open(({ overlayId }) => (
-        <AlertModal
-          onClose={() => {
-            overlays.close(overlayId);
-            navigate(`/postView/${data.postID}`);
-          }}
-          logoImgSrc={<DynamicIcon id="check" size="medium" />}
-          title="게시글이 업로드 되었습니다"
-        />
-      ));
-    } catch (error) {
-      console.error("Error uploading document:", error);
-    } finally {
-      overlays.close(overlayId);
-    }
+      }),
+      {
+        progress: (
+          <BaseModal logoImgSrc={<img src="/img/upload-loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
+        ),
+        success: (
+          <AlertModal
+            onClose={() => {
+              navigate(`/postView/${result!.data.postID}`);
+            }}
+            logoImgSrc={<DynamicIcon id="check" size="medium" />}
+            title="게시글이 업로드 되었습니다"
+          />
+        ),
+      }
+    );
   };
 
   //지금은 그냥 뒤로가기, 나중에 '정말 취소하시겠어요?' 모달 추가 시 사용 예정
@@ -129,10 +129,10 @@ export default function NewPostPage() {
     <div className={styles.layout}>
       <header className={styles.header}>
         <button onClick={() => navigate(-1)} className={styles.headerButton}>
-          <DynamicIcon className={styles.previewImg} id="cancel" size="medium" />
+          <DynamicIcon id="cancel" size="medium" />
         </button>
         <button onClick={uploadClick} className={styles.headerButton}>
-          <DynamicIcon className={styles.previewImg} id="check" size="medium" />
+          <DynamicIcon id="check" size="medium" />
         </button>
       </header>
       <form className={styles.formContainer}>
@@ -161,17 +161,15 @@ export default function NewPostPage() {
             {previewImages.map((image, index) => (
               <div className={styles.imgUploadPreview} key={index}>
                 <div className={styles.closeIconContainer} onClick={() => handleRemoveImage(index)}>
-                  <DynamicIcon className={styles.previewImg} id="cancel" size="medium" />
+                  <DynamicIcon id="cancel" size="medium" />
                 </div>
                 <img className={styles.previewImg} src={image} alt={`미리보기 ${index}`} />
               </div>
             ))}
           </div>
         </div>
-        <div className={styles.toolBar}>
-          <div onClick={handleCameraBtnClick}>
-            <DynamicIcon id="camera" size="medium" />
-          </div>
+        <div className={styles.toolBar} onClick={handleCameraBtnClick}>
+          <DynamicIcon id="camera" size="medium" />
         </div>
       </form>
       <Footer />

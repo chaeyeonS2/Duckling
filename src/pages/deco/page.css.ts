@@ -71,6 +71,9 @@ export const buttonGroup = style({
   flexWrap: "wrap",
   gap: "10px",
   marginBottom: "16px",
+  pointerEvents: "fill",
+  position: "sticky",
+  top: "0px",
 });
 
 export const button = style({

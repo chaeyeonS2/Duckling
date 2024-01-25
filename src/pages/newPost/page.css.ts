@@ -81,8 +81,6 @@ export const imgUploadPreview = style({ width: "28vw", position: "relative", mar
 
 export const closeIconContainer = style({
   position: "absolute",
-  width: "20px",
-  margin: "3px",
   right: "0px",
 });
 
@@ -91,6 +89,7 @@ export const previewImg = style({
   height: "100%",
   background: "#d9d9d9",
   objectFit: "contain",
+  border: "1px solid black",
 });
 
 export const toolBar = style({
@@ -99,5 +98,5 @@ export const toolBar = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "18px 22px",
+  padding: "16px",
 });

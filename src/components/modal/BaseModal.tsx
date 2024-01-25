@@ -4,6 +4,7 @@ export interface BaseModalProps {
   logoImgSrc?: string | JSX.Element;
   title?: React.ReactNode;
   description?: React.ReactNode;
+  overlayId?: number;
 }
 export default function BaseModal({
   logoImgSrc,

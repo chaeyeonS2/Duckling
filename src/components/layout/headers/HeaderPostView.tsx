@@ -1,17 +1,51 @@
 import { overlays } from "@/utils/overlays";
 import * as styles from "./headerPostView.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AlertModal from "@/components/modal/AlertModal";
 import ConfirmModal from "@/components/modal/ConfirmModal";
 import { DynamicIcon } from "@/components/Icon";
 import axios from "axios";
+import showAsyncModal from "@/utils/showAsyncModal";
 
 export default function HeaderPostView({ postData }: { postData?: Post }) {
   const navigate = useNavigate();
 
-  const deleteClick = () => {
+  const deleteClick = async () => {
+    const isConfirmed = await new Promise((res) =>
+      overlays.open(({ overlayId }) => (
+        <ConfirmModal
+          overlayId={overlayId}
+          title={
+            <>
+              해당 글은 영구적으로 삭제 됩니다.
+              <br />
+              정말 삭제 하실건가요? (˙ᴖ˙ก̀)
+            </>
+          }
+          onYes={() => res(true)}
+          onNo={() => res(false)}
+        />
+      ))
+    );
+    if (!isConfirmed) return;
+
+    showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
+      progress: "게시글이 삭제중입니다...",
+      success: (
+        <AlertModal
+          logoImgSrc={<DynamicIcon id="check" size="medium" />}
+          title="게시글이 삭제되었습니다."
+          onClose={() => {
+            navigate("/look");
+          }}
+        />
+      ),
+      failure: "게시글이 삭제되지 못했습니다.",
+    });
+
     overlays.open(({ overlayId }) => (
       <ConfirmModal
+        overlayId={overlayId}
         title={
           <>
             해당 글은 영구적으로 삭제 됩니다.
@@ -20,20 +54,20 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
           </>
         }
         onYes={() => {
-          overlays.close(overlayId);
-          axios.delete(`/api/posts/${localStorage.getItem("id")}`).then(() => {
-            overlays.open(({ overlayId }) => (
+          showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
+            progress: "게시글이 삭제중입니다...",
+            success: (
               <AlertModal
+                logoImgSrc={<DynamicIcon id="check" size="medium" />}
                 title="게시글이 삭제되었습니다."
                 onClose={() => {
-                  overlays.close(overlayId);
-                  navigate("/share");
+                  navigate("/look");
                 }}
               />
-            ));
+            ),
+            failure: "게시글이 삭제되지 못했습니다.",
           });
         }}
-        onNo={() => overlays.close(overlayId)}
         yesText="네,삭제할게요"
       />
     ));
@@ -47,7 +81,7 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
       .then(() => {
         overlays.open(({ overlayId }) => (
           <AlertModal
-            onClose={() => overlays.close(overlayId)}
+            overlayId={overlayId}
             logoImgSrc={<DynamicIcon id="link" size="medium" />}
             title={
               <>
@@ -69,7 +103,7 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
   };
 
   return (
-    <header className={styles.header} aria-disabled={postData?.writerID != localStorage.getItem("id")}>
+    <header className={styles.header}>
       <div>
         <button className={styles.headerButton} name="exit" onClick={closeClick}>
           <DynamicIcon id="cancel" size="medium" />
@@ -80,11 +114,15 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
           <DynamicIcon id="share" size="medium" />
         </button>
         <button className={styles.headerButton}>
-          <DynamicIcon id="newpost" size="medium" />
+          <Link to="/newpost">
+            <DynamicIcon id="newpost" size="medium" />
+          </Link>
         </button>
-        <button className={styles.headerButton} onClick={deleteClick}>
-          <DynamicIcon id="trash-can" size="medium" />
-        </button>
+        {postData?.writerID == localStorage.getItem("id") && (
+          <button className={styles.headerButton} onClick={deleteClick}>
+            <DynamicIcon id="trash-can" size="medium" />
+          </button>
+        )}
       </div>
     </header>
   );

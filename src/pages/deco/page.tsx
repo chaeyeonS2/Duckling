@@ -12,9 +12,8 @@ import axios from "axios";
 
 import * as styles from "./page.css";
 import { DynamicIcon } from "@/components/Icon";
-import { overlays } from "@/utils/overlays";
 import BaseModal from "@/components/modal/BaseModal";
-import AlertModal from "@/components/modal/AlertModal";
+import showAsyncModal from "@/utils/showAsyncModal";
 
 const subNav = {
   face: [
@@ -46,6 +45,10 @@ export default function DecoPage() {
   }, [user]);
 
   const { getGLTFs } = useGltf();
+
+  // for lazy load
+  if (assets) getGLTFs(...assets.map(({ assetGltf }) => ({ gltfPath: assetGltf, identfier: "deco" as const })));
+
   const models = getGLTFs(
     ...Object.values(avatar).map((path) => ({ gltfPath: path, identfier: "deco" } as const)),
     "/gltf/avatar/T_POSED_BODY_RIGGED_FINAL.gltf",
@@ -85,35 +88,16 @@ export default function DecoPage() {
   };
 
   const handleAvatarUpload = async () => {
-    const overlayID = overlays.open(() => (
-      <BaseModal title="저장하는 중..." logoImgSrc={<DynamicIcon id="send" size="medium" />} />
-    ));
-
-    const res = await axios
-      .patch(`/api/users/${localStorage.getItem("id")}`, {
+    showAsyncModal(
+      axios.patch(`/api/users/${localStorage.getItem("id")}`, {
         userAvatar: avatar,
-      })
-      .catch(console.error);
-    if (!res) {
-      overlays.close(overlayID);
-      overlays.open(({ overlayId }) => (
-        <AlertModal
-          title="서버 요청 중 예기치 못한 문제가 발생했습니다."
-          logoImgSrc={<DynamicIcon id="warning" size="medium" />}
-          onClose={() => overlays.close(overlayId)}
-        />
-      ));
-      return;
-    }
-
-    overlays.close(overlayID);
-    overlays.open(({ overlayId }) => (
-      <AlertModal
-        title="저장 완료!"
-        logoImgSrc={<DynamicIcon id="check" size="medium" />}
-        onClose={() => overlays.close(overlayId)}
-      />
-    ));
+      }),
+      {
+        progress: <BaseModal title="저장하는 중..." logoImgSrc={<DynamicIcon id="send" size="medium" />} />,
+        success: "저장 완료!",
+        failure: "서버 요청 중 예기치 못한 문제가 발생했습니다.",
+      }
+    );
   };
 
   return (
