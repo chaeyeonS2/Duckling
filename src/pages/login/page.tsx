@@ -1,7 +1,9 @@
-import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import Logo from "@/assets/logo.svg?react";
 import { DynamicIcon } from "@/components/Icon";
+import Logo from "@/assets/logo.svg?react";
+
+import { getAuth, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
+import showAsyncModal from "@/utils/showAsyncModal";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import * as styles from "./page.css";
@@ -10,9 +12,12 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    twitterLogin()
-      .then(() => navigate("/home"))
-      .catch(console.log);
+    showAsyncModal(twitterLogin(), {
+      progress: "X에 로그인 중...",
+      sucessed: null,
+      onSuccessed: () => navigate("/home"),
+      failed: "로그인 실패!",
+    });
   };
 
   return (
