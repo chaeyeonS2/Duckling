@@ -1,27 +1,52 @@
 import { useRef, useEffect, useState, useMemo } from "react";
-import * as styles from "./Icon.css";
 
 export interface IconProps {
   id: IconIds;
   size?: "small" | "medium" | "large";
 }
-export function StaticIcon({
-  id,
-  size,
-  className = "",
-  ...props
-}: IconProps & Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src">) {
+export function StaticIcon({ id, size, ...props }: IconProps & Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src">) {
   const iconUrl = useMemo(() => new URL(`../assets/icons/${id}.svg`, import.meta.url).href.replace(".svg", ""), [id]);
+  const sizeStyle = size ? resolveSize(size) : "";
 
-  return <img className={(size ? styles.iconSize[size] : "") + " " + className} src={`${iconUrl}.svg`} {...props} />;
+  return (
+    <img
+      style={
+        size
+          ? {
+              width: sizeStyle,
+              height: sizeStyle,
+            }
+          : {}
+      }
+      src={`${iconUrl}.svg`}
+      {...props}
+    />
+  );
 }
 
 type SVGRComponent = typeof import("*.svg?react")["default"];
-export function DynamicIcon({ id, size, className = "", ...props }: IconProps & React.ComponentProps<SVGRComponent>) {
+export function DynamicIcon({ id, size, ...props }: IconProps & React.ComponentProps<SVGRComponent>) {
   const { SvgIcon } = useDynamicSVGImport(id);
+  const sizeStyle = size ? resolveSize(size) : "";
 
   if (!SvgIcon) return;
-  return <SvgIcon className={(size ? styles.iconSize[size] : "") + " " + className} {...props} />;
+  return (
+    <SvgIcon
+      style={
+        size
+          ? {
+              width: sizeStyle,
+              height: sizeStyle,
+            }
+          : {}
+      }
+      {...props}
+    />
+  );
+}
+
+function resolveSize(size: "small" | "medium" | "large") {
+  return size === "small" ? "18px" : size === "medium" ? "24px" : size === "large" ? "32px" : undefined;
 }
 
 type IconIds =
