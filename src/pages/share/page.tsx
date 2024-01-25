@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { DynamicIcon } from "@/components/Icon";
 import BaseModal from "@/components/modal/BaseModal";
 import AvatarCanvas from "@/components/AvatarCanvas";
-import AlertModal from "@/components/modal/AlertModal";
 import Header from "@/components/layout/headers/Header";
 import AvatarModelGroup from "@/components/AvatarModelGroup";
 
@@ -15,97 +14,26 @@ import axios from "axios";
 
 import { button } from "../deco/page.css";
 import * as styles from "./page.css";
+import showAsyncModal from "@/utils/showAsyncModal";
 
 export default function SharePage() {
   const { userID } = useParams();
-
-  const handleDownload = (imageSrc: string) => {
-    const link = document.createElement("a");
-    link.href = imageSrc;
-    link.download = "avatar.png";
-    link.click();
-
-    overlays.open(({ overlayId }) => {
-      useEffect(() => {
-        setTimeout(() => {
-          overlays.close(overlayId);
-        }, 2000);
-      }, []);
-      return <BaseModal title="저장되었습니다!" logoImgSrc={<DynamicIcon id="check" size="medium" />} />;
-    });
-  };
-  const handleXShare = async (imageSrc: string) => {
-    const loadingOverlayId = overlays.open(() => (
-      <BaseModal title="포스팅 중..." logoImgSrc={<DynamicIcon id="X-logo" size="medium" />} />
-    ));
-    const res = await axios
-      .post(`/api/twitter/${localStorage.getItem("id")}`, {
-        postImg_url: imageSrc.replace("data:image/png;base64,", ""),
-      })
-      .catch(console.log);
-    overlays.close(loadingOverlayId);
-    if (!res) {
-      overlays.open(({ overlayId }) => (
-        <AlertModal
-          title="포스팅 실패!"
-          description="예기치 못한 오류가 발생했습니다. 다시 시도해주세요."
-          logoImgSrc={<DynamicIcon id="warning" size="medium" />}
-          onClose={() => overlays.close(overlayId)}
-        />
-      ));
-      return;
-    }
-
-    overlays.open(({ overlayId }) => (
-      <AlertModal
-        title="포스팅 완료!"
-        logoImgSrc={<DynamicIcon id="check" size="medium" />}
-        onClose={() => overlays.close(overlayId)}
-      />
-    ));
-  };
 
   const rootStateRef = useRef<RootState>(null);
   const onCaptureClick = async () => {
     if (!rootStateRef.current) return;
 
     rootStateRef.current.gl.render(rootStateRef.current.scene, rootStateRef.current.camera);
+    const avatarDataUrl = rootStateRef.current.gl.domElement.toDataURL("image/png");
 
-    const loadingOverlayId = overlays.open(() => <BaseModal title="생성중..." />);
-    const imageSrc = await mergeImages([
-      "/img/share-background-green.png",
-      rootStateRef.current.gl.domElement.toDataURL("image/png"),
-    ]);
-    overlays.close(loadingOverlayId);
-
-    overlays.open(({ overlayId }) => {
-      const handleClick = (callback: (imgsrc: string) => void) => () => {
-        overlays.close(overlayId);
-        callback(imageSrc);
-      };
-
-      return (
-        <>
-          <div className={styles.modalContainer}>
-            <div className={styles.modalBody}>
-              <div>
-                <img src={imageSrc} alt="" className={styles.modalImage} />
-              </div>
-              <div className={styles.modalButtonGroup}>
-                <button onClick={handleClick(handleDownload)} className={button + " " + styles.button} aria-selected>
-                  <DynamicIcon id="save" size="medium" />
-                  저장하기
-                </button>
-                <button onClick={handleClick(handleXShare)} className={button + " " + styles.button}>
-                  <DynamicIcon id="X-logo" size="medium" />
-                  공유하기
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      );
+    const { result: imageSrc } = await showAsyncModal(mergeImages(["/img/share-background-green.png", avatarDataUrl]), {
+      progress: "이미지 생성중...",
+      sucessed: null,
+      failed: "이미지 생성이 실패했습니다.",
     });
+    if (imageSrc) {
+      overlays.open(({ overlayId }) => <PreviewModal overlayId={overlayId} imageSrc={imageSrc} />);
+    }
   };
 
   return (
@@ -128,5 +56,60 @@ export default function SharePage() {
         </button>
       </div>
     </div>
+  );
+}
+
+function PreviewModal({ overlayId, imageSrc }: { overlayId: number; imageSrc: string }) {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = imageSrc;
+    link.download = "avatar.png";
+    link.click();
+
+    overlays.close(overlayId);
+    overlays.open(({ overlayId }) => {
+      useEffect(() => {
+        setTimeout(() => {
+          overlays.close(overlayId);
+        }, 2000);
+      }, []);
+      return <BaseModal title="저장되었습니다!" logoImgSrc={<DynamicIcon id="check" size="medium" />} />;
+    });
+  };
+
+  const handleXShare = async () => {
+    overlays.close(overlayId);
+    showAsyncModal(
+      axios.post(`/api/twitter/${localStorage.getItem("id")}`, {
+        postImg_url: imageSrc.replace("data:image/png;base64,", ""),
+      }),
+      {
+        progress: "포스팅 중...",
+        sucessed: "포스팅 완료!",
+        failed: "포스팅 실패!",
+      }
+    );
+  };
+
+  return (
+    <>
+      <div className={styles.modalContainer}>
+        <div className={styles.modalBody}>
+          <div>
+            <img src={imageSrc} alt="" className={styles.modalImage} />
+          </div>
+          <div className={styles.modalButtonGroup}>
+            <button onClick={handleDownload} className={button + " " + styles.button} aria-selected>
+              <DynamicIcon id="save" size="medium" />
+              저장하기
+            </button>
+            <button onClick={handleXShare} className={button + " " + styles.button}>
+              <DynamicIcon id="X-logo" size="medium" />
+              공유하기
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
