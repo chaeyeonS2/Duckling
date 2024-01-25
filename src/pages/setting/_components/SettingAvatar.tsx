@@ -19,8 +19,8 @@ export default function SettingAvatar() {
 
     const { result: dataUrl } = await showAsyncModal(convertFileToDataUrl(e.target.files[0]), {
       progress: "프로필 이미지를 읽는 중...",
-      sucessed: "프로필 이미지 읽기에 성공했습니다",
-      failed: "프로필 이미지 읽기에 실패했습니다",
+      success: "프로필 이미지 읽기에 성공했습니다",
+      failure: "프로필 이미지 읽기에 실패했습니다",
     });
     if (!dataUrl) return;
 
@@ -30,9 +30,9 @@ export default function SettingAvatar() {
       }),
       {
         progress: "프로필 이미지를 변경중...",
-        sucessed: "프로필 이미지가 변경되었습니다",
-        failed: "프로필 이미지 변경에 실패했습니다",
-        onSuccessed: () => {
+        success: "프로필 이미지가 변경되었습니다",
+        failure: "프로필 이미지 변경에 실패했습니다",
+        onSucceed: () => {
           localStorage.setItem("profileImg", dataUrl as string);
           mutate();
         },

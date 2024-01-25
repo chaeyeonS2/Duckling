@@ -6,77 +6,74 @@ import { overlays } from "./overlays";
 
 interface AsyncModalOptions<T> {
   progress?: string | JSX.Element | null;
-  sucessed?: string | JSX.Element | null;
-  failed?: string | JSX.Element | null;
+  success?: string | JSX.Element | null;
+  failure?: string | JSX.Element | null;
   onFailed?: (e: unknown) => void;
-  onSuccessed?: (result: T) => void;
+  onSucceed?: (result: T) => void;
 }
 
 /**
  * 비동기 작업에 대한 세 종류의 모달을 보여줍니다.
- *
- * @param asyncCallback
- * @returns
  */
 export default async function showAsyncModal<T>(
   asyncCallback: Promise<T>,
   {
     progress = "잠시만 기다려주세요",
-    sucessed = "성공적으로 완료되었습니다",
-    failed = "실패했습니다",
+    success = "성공적으로 완료되었습니다",
+    failure = "실패했습니다",
     onFailed = () => {},
-    onSuccessed = () => {},
+    onSucceed = () => {},
   }: AsyncModalOptions<T> = {
     progress: "잠시만 기다려주세요",
-    sucessed: "성공적으로 완료되었습니다",
-    failed: "예기치 못한 오류로 인해 실패했습니다",
+    success: "성공적으로 완료되었습니다",
+    failure: "예기치 못한 오류로 인해 실패했습니다",
     onFailed: () => {},
-    onSuccessed: () => {},
+    onSucceed: () => {},
   }
-): Promise<{ result: T | null; error: Error | null }> {
+): Promise<{ result: T | null; error: unknown | null }> {
   return new Promise(async (res) => {
     const overlayId = overlays.open(() => (typeof progress === "string" ? <BaseModal title={progress} /> : progress));
 
     const result = await Promise.resolve(asyncCallback)
       .then((result) => ({ result }))
-      .catch((error: Error) => ({ error }));
+      .catch((error: unknown) => ({ error }));
 
     overlays.close(overlayId);
     if ("result" in result) {
-      onSuccessed(result.result);
+      onSucceed(result.result);
       overlays.open(({ overlayId: successOverlayId }) => {
         useEffect(() => {
           setTimeout(() => {
             overlays.close(successOverlayId);
           }, 3000);
         }, []);
-        return typeof sucessed === "string" ? (
+        return typeof success === "string" ? (
           <AlertModal
             logoImgSrc={<DynamicIcon id="check" size="medium" />}
-            title={sucessed}
+            title={success}
             onClose={() => {
               overlays.close(successOverlayId);
             }}
           />
         ) : (
-          sucessed
+          success
         );
       });
       res({ result: result.result, error: null });
     } else {
       onFailed(result.error);
       overlays.open(({ overlayId: failOverlayId }) =>
-        typeof failed === "string" ? (
+        typeof failure === "string" ? (
           <AlertModal
             logoImgSrc={<DynamicIcon id="warning" size="medium" />}
-            title={failed}
+            title={failure}
             description="잠시 후 다시 시도해주세요"
             onClose={() => {
               overlays.close(failOverlayId);
             }}
           />
         ) : (
-          failed
+          failure
         )
       );
       res({ result: null, error: result.error });

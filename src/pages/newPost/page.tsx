@@ -107,7 +107,7 @@ export default function NewPostPage() {
         progress: (
           <BaseModal logoImgSrc={<img src="/img/upload-loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
         ),
-        sucessed: (
+        success: (
           <AlertModal
             onClose={() => {
               navigate(`/postView/${result!.data.postID}`);

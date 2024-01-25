@@ -14,9 +14,9 @@ export default function LoginPage() {
   const handleLoginClick = () => {
     showAsyncModal(twitterLogin(), {
       progress: "X에 로그인 중...",
-      sucessed: null,
-      onSuccessed: () => navigate("/home"),
-      failed: "로그인 실패!",
+      success: null,
+      onSucceed: () => navigate("/home"),
+      failure: "로그인 실패!",
     });
   };
 

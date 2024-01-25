@@ -31,7 +31,7 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
 
     showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
       progress: "게시글이 삭제중입니다...",
-      sucessed: (
+      success: (
         <AlertModal
           logoImgSrc={<DynamicIcon id="check" size="medium" />}
           title="게시글이 삭제되었습니다."
@@ -40,7 +40,7 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
           }}
         />
       ),
-      failed: "게시글이 삭제되지 못했습니다.",
+      failure: "게시글이 삭제되지 못했습니다.",
     });
 
     overlays.open(({ overlayId }) => (
@@ -56,7 +56,7 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
         onYes={() => {
           showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
             progress: "게시글이 삭제중입니다...",
-            sucessed: (
+            success: (
               <AlertModal
                 logoImgSrc={<DynamicIcon id="check" size="medium" />}
                 title="게시글이 삭제되었습니다."
@@ -65,7 +65,7 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
                 }}
               />
             ),
-            failed: "게시글이 삭제되지 못했습니다.",
+            failure: "게시글이 삭제되지 못했습니다.",
           });
         }}
         yesText="네,삭제할게요"

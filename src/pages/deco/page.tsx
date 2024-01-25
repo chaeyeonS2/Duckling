@@ -94,8 +94,8 @@ export default function DecoPage() {
       }),
       {
         progress: <BaseModal title="저장하는 중..." logoImgSrc={<DynamicIcon id="send" size="medium" />} />,
-        sucessed: "저장 완료!",
-        failed: "서버 요청 중 예기치 못한 문제가 발생했습니다.",
+        success: "저장 완료!",
+        failure: "서버 요청 중 예기치 못한 문제가 발생했습니다.",
       }
     );
   };

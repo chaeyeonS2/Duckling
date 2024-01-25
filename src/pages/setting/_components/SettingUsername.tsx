@@ -19,9 +19,9 @@ export default function SettingUsername() {
       }),
       {
         progress: "프로필 닉네임을 변경중입니다",
-        sucessed: "프로필 닉네임이 변경되었습니다",
-        failed: "프로필 닉네임 변경에 실패했습니다",
-        onSuccessed: () => {
+        success: "프로필 닉네임이 변경되었습니다",
+        failure: "프로필 닉네임 변경에 실패했습니다",
+        onSucceed: () => {
           setInputState("confirm");
           localStorage.setItem("userName", usernameValue);
         },

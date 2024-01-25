@@ -28,8 +28,8 @@ export default function SharePage() {
 
     const { result: imageSrc } = await showAsyncModal(mergeImages(["/img/share-background-green.png", avatarDataUrl]), {
       progress: "이미지 생성중...",
-      sucessed: null,
-      failed: "이미지 생성이 실패했습니다.",
+      success: null,
+      failure: "이미지 생성이 실패했습니다.",
     });
     if (imageSrc) {
       overlays.open(({ overlayId }) => <PreviewModal overlayId={overlayId} imageSrc={imageSrc} />);
@@ -85,8 +85,8 @@ function PreviewModal({ overlayId, imageSrc }: { overlayId: number; imageSrc: st
       }),
       {
         progress: "포스팅 중...",
-        sucessed: "포스팅 완료!",
-        failed: "포스팅 실패!",
+        success: "포스팅 완료!",
+        failure: "포스팅 실패!",
       }
     );
   };
