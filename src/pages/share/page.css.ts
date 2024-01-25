@@ -32,20 +32,30 @@ export const captureButton = style({
 });
 
 export const modalContainer = style({
-  position: "absolute",
-  height: "100vh",
   width: "100vw",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  backgroundColor: "rgba(0,0,0,.6)",
+  height: "100vh",
+});
+
+export const modalBackdrop = style({
+  position: "absolute",
+  inset: 0,
+  backgroundColor: "rgba(0,0,0,0.5)",
+  zIndex: 1000,
+  width: "100vw",
+  height: "100vh",
 });
 
 export const modalBody = style({
+  position: "absolute",
+  inset: "50% auto auto 50%",
+  transform: "translate(-50%, -50%)",
+  zIndex: 1001,
+
   width: "354px",
   padding: "32px 0",
   color: "white",
   backgroundColor: "black",
+
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",

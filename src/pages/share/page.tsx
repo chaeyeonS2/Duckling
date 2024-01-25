@@ -92,24 +92,23 @@ function PreviewModal({ overlayId, imageSrc }: { overlayId: number; imageSrc: st
   };
 
   return (
-    <>
-      <div className={styles.modalContainer}>
-        <div className={styles.modalBody}>
-          <div>
-            <img src={imageSrc} alt="" className={styles.modalImage} />
-          </div>
-          <div className={styles.modalButtonGroup}>
-            <button onClick={handleDownload} className={button + " " + styles.button} aria-selected>
-              <DynamicIcon id="save" size="medium" />
-              저장하기
-            </button>
-            <button onClick={handleXShare} className={button + " " + styles.button}>
-              <DynamicIcon id="X-logo" size="medium" />
-              공유하기
-            </button>
-          </div>
+    <div className={styles.modalContainer}>
+      <div className={styles.modalBackdrop} onClick={() => overlays.close(overlayId)} />
+      <div className={styles.modalBody}>
+        <div>
+          <img src={imageSrc} alt="" className={styles.modalImage} />
+        </div>
+        <div className={styles.modalButtonGroup}>
+          <button onClick={handleDownload} className={button + " " + styles.button} aria-selected>
+            <DynamicIcon id="save" size="medium" />
+            저장하기
+          </button>
+          <button onClick={handleXShare} className={button + " " + styles.button}>
+            <DynamicIcon id="X-logo" size="medium" />
+            공유하기
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
