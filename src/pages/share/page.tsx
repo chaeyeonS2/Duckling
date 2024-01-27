@@ -15,6 +15,7 @@ import axios from "axios";
 import { button } from "../deco/page.css";
 import * as styles from "./page.css";
 import showAsyncModal from "@/utils/showAsyncModal";
+import ConfirmModal from "@/components/modal/ConfirmModal";
 
 export default function SharePage() {
   const { userID } = useParams();
@@ -79,6 +80,25 @@ function PreviewModal({ overlayId, imageSrc }: { overlayId: number; imageSrc: st
 
   const handleXShare = async () => {
     overlays.close(overlayId);
+
+    const isConfirmed = await new Promise((res) =>
+      overlays.open(({ overlayId }) => (
+        <ConfirmModal
+          overlayId={overlayId}
+          title="정말로 X에 공유하시겠습니까?"
+          onNo={() => {
+            res(false);
+          }}
+          onYes={() => {
+            res(true);
+          }}
+          noText="취소"
+          yesText="공유하기"
+        />
+      ))
+    );
+    if (!isConfirmed) return;
+
     showAsyncModal(
       axios.post(`/api/twitter/${localStorage.getItem("id")}`, {
         postImg_url: imageSrc.replace("data:image/png;base64,", ""),
