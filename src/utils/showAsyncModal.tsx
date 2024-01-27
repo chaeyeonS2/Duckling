@@ -61,7 +61,7 @@ export default async function showAsyncModal<T>(
   }
 ): Promise<{ result: T | null; error: unknown | null }> {
   return new Promise(async (res) => {
-    const progressOverlayId = overlays.open(({ overlayId }) => resolvesModal("failure", overlayId, Progress));
+    const progressOverlayId = overlays.open(({ overlayId }) => resolvesModal("progress", overlayId, Progress));
 
     const result = await Promise.resolve(asyncCallback)
       .then((result) => ({ result }))
