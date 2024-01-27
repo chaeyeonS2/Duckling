@@ -1,56 +1,56 @@
 //https://github.com/Temzasse/react-modal-sheet#vanilla-css
-import Sheet, { SheetRef } from "react-modal-sheet";
-import { useRef } from "react";
-import * as styles from "./myPost.css";
-import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
+import { useRef } from "react";
 import useSWRImmutable from "swr/immutable";
-import { DynamicIcon } from "@/components/Icon";
+import { useNavigate } from "react-router-dom";
 
-export default function MyPost() {
+import { DynamicIcon } from "@/components/Icon";
+import Sheet, { SheetRef } from "react-modal-sheet";
+
+import * as styles from "./MyPostBottomSheet.css.ts";
+
+export default function MyPostBottomSheet() {
   const ref = useRef<SheetRef>();
   const snapTo = (i: number) => ref.current?.snapTo(i);
 
   return (
-    <>
-      <Sheet
-        isOpen={true}
-        onClose={() => snapTo(1)}
-        snapPoints={[500, 80]}
-        initialSnap={1}
+    <Sheet
+      isOpen={true}
+      onClose={() => snapTo(1)}
+      snapPoints={[500, 80]}
+      initialSnap={1}
+      style={{
+        marginBottom: "88px",
+        borderLeft: "1px solid black",
+        borderRight: "1px solid black",
+      }}
+    >
+      <Sheet.Container
         style={{
-          marginBottom: "88px",
-          borderLeft: "1px solid black",
-          borderRight: "1px solid black",
+          borderTopRightRadius: "20px",
+          borderTopLeftRadius: "20px",
         }}
       >
-        <Sheet.Container
+        <Sheet.Header
           style={{
-            borderTopRightRadius: "20px",
-            borderTopLeftRadius: "20px",
+            height: "88px",
+            borderRadius: "20px 20px 0 0",
+            borderTop: "5px solid black",
+            boxShadow: "0px -2px 0px rgba(0, 0, 0, 0.3)",
+            paddingTop: "12px",
+            paddingBottom: "12px",
           }}
         >
-          <Sheet.Header
-            style={{
-              height: "88px",
-              borderRadius: "20px 20px 0 0",
-              borderTop: "5px solid black",
-              boxShadow: "0px -2px 0px rgba(0, 0, 0, 0.3)",
-              paddingTop: "12px",
-              paddingBottom: "12px",
-            }}
-          >
-            <CustomHeader />
-          </Sheet.Header>
-          <Sheet.Content>
-            <Sheet.Scroller draggableAt="both">
-              <CustomContent />
-            </Sheet.Scroller>
-          </Sheet.Content>
-        </Sheet.Container>
-        <Sheet.Backdrop style={{ backgroundColor: "rgba(0,0,0,0)" }} />
-      </Sheet>
-    </>
+          <CustomHeader />
+        </Sheet.Header>
+        <Sheet.Content>
+          <Sheet.Scroller draggableAt="both" style={{ overflowX: "hidden" }}>
+            <CustomContent />
+          </Sheet.Scroller>
+        </Sheet.Content>
+      </Sheet.Container>
+      <Sheet.Backdrop style={{ backgroundColor: "rgba(0,0,0,0)" }} />
+    </Sheet>
   );
 }
 

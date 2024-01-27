@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { Link } from "react-router-dom";
 
 import * as styles from "./page.css";
-import MyPost from "./_components/MyPost";
+import MyPost from "./_components/MyPostBottomSheet";
 import { DynamicIcon } from "@/components/Icon";
 
 export default function HomePage() {
