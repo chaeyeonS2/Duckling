@@ -42,7 +42,7 @@ export default function PostViewPage() {
       text: comment,
       userID,
       rootID: postID,
-      writerID: userName,
+      writerID: userID,
     });
     mutate([
       ...comments,
@@ -50,7 +50,7 @@ export default function PostViewPage() {
         text: comment,
         commentID: "-1",
         rootID: postID,
-        writerID: userName,
+        writerID: userID,
         time: new Date().getMilliseconds(),
         date: new Date().toTimeString(),
       },
