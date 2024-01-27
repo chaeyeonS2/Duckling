@@ -60,12 +60,13 @@ function CustomHeader() {
   const newpostClick = () => {
     navigate("/newPost");
   };
+
   return (
-    <div>
+    <div className={styles.headerContainer}>
       <div className={styles.profileImg} style={{ backgroundImage: `url(${user?.profileImg})` }} />
       <div className={styles.userName}>{localStorage.getItem("userName")}</div>
-      <div className={styles.btnAddNew} onClick={newpostClick}>
-        <DynamicIcon className={styles.btnAddNewImage} id="newpost" size="medium" />
+      <div onClick={newpostClick}>
+        <DynamicIcon id="newpost" size="large" />
       </div>
     </div>
   );
@@ -81,12 +82,15 @@ function CustomContent() {
 
   return (
     <div className={styles.content}>
-      {posts &&
-        posts.map((post, index) => (
-          <div key={index} className={styles.postImg} onClick={() => handlePostClick(post.postID)}>
-            <img className={styles.item_img} src={post.postImg[0]} alt="" />
-          </div>
-        ))}
+      {posts?.map((post, index) => (
+        <img
+          key={index}
+          className={styles.postImage}
+          onClick={() => handlePostClick(post.postID)}
+          src={post.postImg[0]}
+          alt=""
+        />
+      ))}
     </div>
   );
 }
