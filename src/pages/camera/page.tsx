@@ -13,7 +13,7 @@ import { DynamicIcon } from "@/components/Icon";
 export default function ARCameraPage() {
   const view3DRef = useRef<View3D | null>(null);
   const [playingGtlfModel, setplayingGtlfModel] = useState<string>("");
-
+  const [playingUsdzModel, setplayingUsdzModel] = useState<string>("");
   /*
   useEffect(() => {
     const initializeView3D = async () => {
@@ -29,8 +29,9 @@ export default function ARCameraPage() {
   }, []);
   */
 
-  const handleDataFromAnimationMenu = (data: string) => {
-    setplayingGtlfModel(data);
+  const handleDataFromAnimationMenu = (data: Asset) => {
+    setplayingGtlfModel(data.assetGltf);
+    setplayingUsdzModel(data.assetUsdz);
   };
 
   return (
@@ -51,8 +52,9 @@ export default function ARCameraPage() {
           key={playingGtlfModel} // playingGtlfModel을 기반으로 한 고유한 키 추가
           className={styles.canvas}
           ref={view3DRef}
+          //src="/gltf/test/minji.glb"
           src={playingGtlfModel}
-          iosSrc="/gltf/test/test3.usdz"
+          iosSrc={playingUsdzModel}
           arPriority={["webAR", "sceneViewer", "quickLook"]}
           center={[0, 0.9, 0.25]} //위치 조정
           //defaultAnimationIndex={playingAnimation}

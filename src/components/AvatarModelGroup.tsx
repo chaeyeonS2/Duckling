@@ -20,6 +20,7 @@ export default function AvatarModelGroup({
     ...Object.values(user?.userAvatar ?? {}).map((path) => ({ gltfPath: path, identfier: "deco" } as const)),
     "/gltf/avatar/T_POSED_BODY_RIGGED_FINAL.gltf",
     "/gltf/avatar/keyring.glb",
+    "/gltf/avatar/nose.gltf",
     "/gltf/avatar/stage.glb"
   );
 
