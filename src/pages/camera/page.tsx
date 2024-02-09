@@ -31,6 +31,7 @@ export default function ARCameraPage() {
 
   const handleDataFromAnimationMenu = (data: Asset) => {
     setplayingGtlfModel(data.assetGltf);
+    console.log("android", data.assetGltf, "ios: ", data.assetUsdz);
     setplayingUsdzModel(data.assetUsdz);
   };
 
@@ -54,7 +55,8 @@ export default function ARCameraPage() {
           ref={view3DRef}
           //src="/gltf/test/minji.glb"
           src={playingGtlfModel}
-          iosSrc={playingUsdzModel}
+          iosSrc="/gltf/test/Haerin_Fin.usdz"
+          //iosSrc={playingUsdzModel}
           arPriority={["webAR", "sceneViewer", "quickLook"]}
           center={[0, 0.9, 0.25]} //위치 조정
           //defaultAnimationIndex={playingAnimation}
