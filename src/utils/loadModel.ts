@@ -40,3 +40,4 @@ export function loadModel(gltfPath: string, options: string | GLTFLoadOptions) {
   regist[gltfPath] = newPending;
   return newPending;
 }
+
