@@ -72,8 +72,8 @@ function CustomHeader() {
 }
 
 function CustomContent() {
-  const { data: posts } = useSWR(`/api/posts/writer/${localStorage.getItem("id")}`);
-
+  const { data: user } = useSWRImmutable(`/api/users/${localStorage.getItem("id")}`);
+  const { data: posts } = useSWR(`/api/posts/writer/${user?.uid}`);
   const navigate = useNavigate();
   const handlePostClick = (postID: string) => {
     navigate(`/postview/${postID}`);
