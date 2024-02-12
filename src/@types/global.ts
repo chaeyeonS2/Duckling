@@ -43,6 +43,7 @@ interface PostComment {
 interface Asset {
   assetID: string;
   assetGltf: string;
+  assetUsdz: string;
   assetImg: string;
 }
 

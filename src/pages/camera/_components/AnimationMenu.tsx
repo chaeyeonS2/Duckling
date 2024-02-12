@@ -5,7 +5,7 @@ import View3D from "@egjs/react-view3d";
 import { DynamicIcon } from "@/components/Icon";
 
 interface AnimationMenuProps {
-  animationGltf: (data: string) => void;
+  animationGltf: (gltfPath: string, assetID : string) => void;
 }
 
 const AnimationMenu = forwardRef<View3D, AnimationMenuProps>((props, ref) => {
@@ -33,8 +33,8 @@ const AnimationMenu = forwardRef<View3D, AnimationMenuProps>((props, ref) => {
     view3DRef?.current?.ar.enter();
   };
 
-  const animationClick = (gltfPath: string) => {
-    props.animationGltf(gltfPath);
+  const animationClick = (gltfPath: string, assetID : string) => {
+    props.animationGltf(gltfPath, assetID);
   };
 
   return (
@@ -57,7 +57,7 @@ const AnimationMenu = forwardRef<View3D, AnimationMenuProps>((props, ref) => {
         <div className={styles.menu}>
           {icons?.map((item, index) => {
             return (
-              <div key={index} className={styles.iconBox} onClick={() => animationClick(item.assetGltf)}>
+              <div key={index} className={styles.iconBox} onClick={() => animationClick(item.assetGltf, item.assetID)}>
                 <img className={styles.iconImg} src={item.assetImg} alt="" />
               </div>
             );

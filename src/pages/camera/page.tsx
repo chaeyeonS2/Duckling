@@ -12,8 +12,8 @@ import { DynamicIcon } from "@/components/Icon";
 
 export default function ARCameraPage() {
   const view3DRef = useRef<View3D | null>(null);
-  const [playingGtlfModel, setplayingGtlfModel] = useState<string>("");
-
+  const [playingGtlfModel, setplayingGtlfModel] = useState<{ gltfPath: string; assetID: string } | null>(null);
+  const [playingUsdzModel, setplayingUsdzModel] = useState<string>("");
   /*
   useEffect(() => {
     const initializeView3D = async () => {
@@ -29,8 +29,16 @@ export default function ARCameraPage() {
   }, []);
   */
 
-  const handleDataFromAnimationMenu = (data: string) => {
-    setplayingGtlfModel(data);
+  const usdzDataset: { [key: string]: string } = {
+    "2784869c-eb65-4e77-945a-3486e9b4f0e8": "usdz/Danniel_Fin.usdz", //danniel
+    "43bf33ce-d1ad-4232-86b6-46a67e2ee532": "usdz/Haerin_Fin.usdz", //haerin
+    "947b3e1c-40db-453f-a987-d0f29618c1b2": "usdz/Hanni_Fin.usdz", //hanni
+    "e67207f2-9a91-4041-ad86-e8bb2cf51bf1": "usdz/hyein.usdz", //hyein
+    "877605f7-8b15-4020-80b5-28639136f82f": "usdz/minji.usdz", //minji
+  };
+
+  const handleDataFromAnimationMenu = (gltfPath: string, assetID: string) => {
+    setplayingGtlfModel({ gltfPath, assetID });
   };
 
   return (
@@ -48,11 +56,13 @@ export default function ARCameraPage() {
           </Link>
         </Header>
         <View3D
-          key={playingGtlfModel} // playingGtlfModel을 기반으로 한 고유한 키 추가
+          key={playingGtlfModel?.assetID} // playingGtlfModel을 기반으로 한 고유한 키 추가
           className={styles.canvas}
           ref={view3DRef}
-          src={playingGtlfModel}
-          iosSrc="/gltf/test/test3.usdz"
+          //src="/gltf/test/minji.glb"
+          src={playingGtlfModel?.gltfPath}
+          iosSrc={playingGtlfModel ? usdzDataset[playingGtlfModel.assetID] : ""}
+          //iosSrc={playingUsdzModel}
           arPriority={["webAR", "sceneViewer", "quickLook"]}
           center={[0, 0.9, 0.25]} //위치 조정
           //defaultAnimationIndex={playingAnimation}
