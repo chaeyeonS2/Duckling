@@ -93,6 +93,7 @@ function useDynamicSVGImport(
   name: string,
   { onCompleted, onError, retryInterval = 2000, retryCount = 3 }: UseDynamicSVGImportOptions = {}
 ) {
+  const [ImportedIcon, setInportedIcon] = useState<React.FC<React.SVGProps<SVGSVGElement>>>();
   const ImportedIconRef = useRef<React.FC<React.SVGProps<SVGSVGElement>>>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
@@ -102,7 +103,7 @@ function useDynamicSVGImport(
       setLoading(true);
       for (let i = 0; i < retryCount; i++) {
         try {
-          ImportedIconRef.current = (await import(`../assets/icons/${name}.svg?react`)).default;
+          setInportedIcon((await import(`../assets/icons/${name}.svg?react`)).default);
           onCompleted?.(name, ImportedIconRef.current);
           break;
         } catch (err) {
@@ -116,5 +117,5 @@ function useDynamicSVGImport(
     importIcon();
   }, [name, onCompleted, onError]);
 
-  return { error, loading, SvgIcon: ImportedIconRef.current };
+  return { error, loading, SvgIcon: ImportedIcon };
 }
