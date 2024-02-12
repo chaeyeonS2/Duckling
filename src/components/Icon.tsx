@@ -26,19 +26,19 @@ export function StaticIcon({ id, size, ...props }: IconProps & Omit<React.ImgHTM
 
 type SVGRComponent = typeof import("*.svg?react")["default"];
 export function DynamicIcon({ id, size, ...props }: IconProps & React.ComponentProps<SVGRComponent>) {
-  const { SvgIcon } = useDynamicSVGImport(id);
   const sizeStyle = resolveSize(size);
-
-  if (!SvgIcon) return;
-  return (
-    <SvgIcon
-      style={{
+  const prop = Object.assign(
+    {
+      style: {
         width: sizeStyle,
         height: sizeStyle,
-      }}
-      {...props}
-    />
+      },
+    },
+    props
   );
+  const { svgIcon } = useDynamicSVGImport(id, prop);
+
+  return svgIcon;
 }
 
 function resolveSize(size: "small" | "medium" | "large") {
@@ -84,17 +84,17 @@ type IconIds =
   | "X-logo";
 
 interface UseDynamicSVGImportOptions {
-  onCompleted?: (name: string, SvgIcon: React.FC<React.SVGProps<SVGSVGElement>> | undefined) => void;
+  onCompleted?: (name: string, svgIcon: React.ReactNode) => void;
   onError?: (err: unknown) => void;
   retryInterval?: number;
   retryCount?: number;
 }
 function useDynamicSVGImport(
   name: string,
+  props?: React.ComponentProps<SVGRComponent>,
   { onCompleted, onError, retryInterval = 2000, retryCount = 3 }: UseDynamicSVGImportOptions = {}
 ) {
-  const [ImportedIcon, setInportedIcon] = useState<React.FC<React.SVGProps<SVGSVGElement>>>();
-  const ImportedIconRef = useRef<React.FC<React.SVGProps<SVGSVGElement>>>();
+  const [importedIcon, setImportedIcon] = useState<React.ReactNode>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
@@ -103,8 +103,15 @@ function useDynamicSVGImport(
       setLoading(true);
       for (let i = 0; i < retryCount; i++) {
         try {
-          setInportedIcon((await import(`../assets/icons/${name}.svg?react`)).default);
-          onCompleted?.(name, ImportedIconRef.current);
+          const { default: II } = await import(`../assets/icons/${name}.svg?react`);
+          const Icon = <II {...props} />;
+          if (!II) {
+            console.log(`아이콘을 찾을 수 없음: ${"../assets/icons/${name}.svg?react"}`);
+          } else {
+            setImportedIcon(Icon);
+            onCompleted?.(name, Icon);
+          }
+
           break;
         } catch (err) {
           onError?.(err);
@@ -117,5 +124,5 @@ function useDynamicSVGImport(
     importIcon();
   }, [name, onCompleted, onError]);
 
-  return { error, loading, SvgIcon: ImportedIcon };
+  return { error, loading, svgIcon: importedIcon };
 }
