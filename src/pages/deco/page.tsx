@@ -19,7 +19,7 @@ const subNav = {
   face: [
     ["eyes", "눈"],
     ["mouth", "입"],
-    ["skins", "피부"],
+    //["skins", "피부"],
   ],
   body: [
     ["top", "상의"],
