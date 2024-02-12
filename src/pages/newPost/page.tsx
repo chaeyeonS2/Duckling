@@ -88,13 +88,6 @@ export default function NewPostPage() {
     if (!userName) throw new Error("userName does not exist!");
     if (!userID) throw new Error("userID does not exist!");
 
-    overlays.open(({ overlayId }) => (
-      <BaseModal
-        overlayId={overlayId}
-        logoImgSrc={<img src="/img/upload-loading.gif" alt="" />}
-        title="게시글이 올라가고 있어요~!"
-      />
-    ));
     const { result } = await showAsyncModal(
       axios.post("/api/posts", {
         title: title,
@@ -104,8 +97,12 @@ export default function NewPostPage() {
         writerID: userID,
       }),
       {
-        progress: (
-          <BaseModal logoImgSrc={<img src="/img/upload-loading.gif" alt="" />} title="게시글이 올라가고 있어요~!" />
+        progress: ({ overlayId }) => (
+          <BaseModal
+            overlayId={overlayId}
+            logoImgSrc={<img src="/img/upload-loading.gif" alt="" />}
+            title="게시글이 올라가고 있어요~!"
+          />
         ),
         success: (
           <AlertModal
