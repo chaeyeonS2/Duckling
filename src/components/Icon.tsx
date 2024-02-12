@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export interface IconProps {
   id: IconIds;
