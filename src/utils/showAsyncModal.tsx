@@ -5,11 +5,40 @@ import { useEffect } from "react";
 import { overlays } from "./overlays";
 
 interface AsyncModalOptions<T> {
-  progress?: string | JSX.Element | null;
-  success?: string | JSX.Element | null;
-  failure?: string | JSX.Element | null;
+  progress?: string | React.FC<{ overlayId: number }> | JSX.Element | null;
+  success?: string | React.FC<{ overlayId: number }> | JSX.Element | null;
+  failure?: string | React.FC<{ overlayId: number }> | JSX.Element | null;
   onFailed?: (e: unknown) => void;
   onSucceed?: (result: T) => void;
+}
+
+function resolvesModal(
+  def: "progress" | "success" | "failure",
+  overlayId: number,
+  ComponentOrParam: string | React.FC<{ overlayId: number }> | JSX.Element | null
+) {
+  return typeof ComponentOrParam === "string" ? (
+    def == "progress" ? (
+      <BaseModal title={ComponentOrParam} />
+    ) : def == "success" ? (
+      <AlertModal
+        overlayId={overlayId}
+        logoImgSrc={<DynamicIcon id="check" size="medium" />}
+        title={ComponentOrParam}
+      />
+    ) : (
+      <AlertModal
+        overlayId={overlayId}
+        logoImgSrc={<DynamicIcon id="warning" size="medium" />}
+        title={ComponentOrParam}
+        description="잠시 후 다시 시도해주세요"
+      />
+    )
+  ) : typeof ComponentOrParam === "function" ? (
+    <ComponentOrParam overlayId={overlayId} />
+  ) : (
+    ComponentOrParam
+  );
 }
 
 /**
@@ -18,9 +47,9 @@ interface AsyncModalOptions<T> {
 export default async function showAsyncModal<T>(
   asyncCallback: Promise<T>,
   {
-    progress = "잠시만 기다려주세요",
-    success = "성공적으로 완료되었습니다",
-    failure = "실패했습니다",
+    progress: Progress = "잠시만 기다려주세요",
+    success: Success = "성공적으로 완료되었습니다",
+    failure: Failure = "실패했습니다",
     onFailed = () => {},
     onSucceed = () => {},
   }: AsyncModalOptions<T> = {
@@ -32,50 +61,27 @@ export default async function showAsyncModal<T>(
   }
 ): Promise<{ result: T | null; error: unknown | null }> {
   return new Promise(async (res) => {
-    const overlayId = overlays.open(() => (typeof progress === "string" ? <BaseModal title={progress} /> : progress));
+    const progressOverlayId = overlays.open(({ overlayId }) => resolvesModal("progress", overlayId, Progress));
 
     const result = await Promise.resolve(asyncCallback)
       .then((result) => ({ result }))
       .catch((error: unknown) => ({ error }));
 
-    overlays.close(overlayId);
+    overlays.close(progressOverlayId);
     if ("result" in result) {
       onSucceed(result.result);
-      overlays.open(({ overlayId: successOverlayId }) => {
+      overlays.open(({ overlayId }) => {
         useEffect(() => {
           setTimeout(() => {
-            overlays.close(successOverlayId);
+            overlays.close(overlayId);
           }, 3000);
         }, []);
-        return typeof success === "string" ? (
-          <AlertModal
-            logoImgSrc={<DynamicIcon id="check" size="medium" />}
-            title={success}
-            onClose={() => {
-              overlays.close(successOverlayId);
-            }}
-          />
-        ) : (
-          success
-        );
+        return resolvesModal("success", overlayId, Success);
       });
       res({ result: result.result, error: null });
     } else {
       onFailed(result.error);
-      overlays.open(({ overlayId: failOverlayId }) =>
-        typeof failure === "string" ? (
-          <AlertModal
-            logoImgSrc={<DynamicIcon id="warning" size="medium" />}
-            title={failure}
-            description="잠시 후 다시 시도해주세요"
-            onClose={() => {
-              overlays.close(failOverlayId);
-            }}
-          />
-        ) : (
-          failure
-        )
-      );
+      overlays.open(({ overlayId }) => typeof resolvesModal("failure", overlayId, Failure));
       res({ result: null, error: result.error });
     }
   });
