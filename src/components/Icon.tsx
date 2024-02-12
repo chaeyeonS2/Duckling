@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useMemo } from "react";
 
 export interface IconProps {
   id: IconIds;
-  size?: "small" | "medium" | "large";
+  size: "small" | "medium" | "large";
 }
 export function StaticIcon({ id, size, ...props }: IconProps & Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src">) {
   const iconUrl = useMemo(() => new URL(`../assets/icons/${id}.svg`, import.meta.url).href.replace(".svg", ""), [id]);
@@ -27,19 +27,15 @@ export function StaticIcon({ id, size, ...props }: IconProps & Omit<React.ImgHTM
 type SVGRComponent = typeof import("*.svg?react")["default"];
 export function DynamicIcon({ id, size, ...props }: IconProps & React.ComponentProps<SVGRComponent>) {
   const { SvgIcon } = useDynamicSVGImport(id);
-  const sizeStyle = size ? resolveSize(size) : "";
+  const sizeStyle = resolveSize(size);
 
   if (!SvgIcon) return;
   return (
     <SvgIcon
-      style={
-        size
-          ? {
-              width: sizeStyle,
-              height: sizeStyle,
-            }
-          : {}
-      }
+      style={{
+        width: sizeStyle,
+        height: sizeStyle,
+      }}
       {...props}
     />
   );
