@@ -86,25 +86,32 @@ type IconIds =
 interface UseDynamicSVGImportOptions {
   onCompleted?: (name: string, SvgIcon: React.FC<React.SVGProps<SVGSVGElement>> | undefined) => void;
   onError?: (err: unknown) => void;
+  retryInterval?: number;
+  retryCount?: number;
 }
-function useDynamicSVGImport(name: string, options: UseDynamicSVGImportOptions = {}) {
+function useDynamicSVGImport(
+  name: string,
+  { onCompleted, onError, retryInterval = 2000, retryCount = 3 }: UseDynamicSVGImportOptions = {}
+) {
   const ImportedIconRef = useRef<React.FC<React.SVGProps<SVGSVGElement>>>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
-  const { onCompleted, onError } = options;
   useEffect(() => {
-    setLoading(true);
     const importIcon = async (): Promise<void> => {
-      try {
-        ImportedIconRef.current = (await import(`../assets/icons/${name}.svg?react`)).default;
-        onCompleted?.(name, ImportedIconRef.current);
-      } catch (err) {
-        onError?.(err);
-        setError(err);
-      } finally {
-        setLoading(false);
+      setLoading(true);
+      for (let i = 0; i < retryCount; i++) {
+        try {
+          ImportedIconRef.current = (await import(`../assets/icons/${name}.svg?react`)).default;
+          onCompleted?.(name, ImportedIconRef.current);
+          break;
+        } catch (err) {
+          onError?.(err);
+          setError(err);
+          await new Promise((resolve) => setTimeout(resolve, retryInterval));
+        }
       }
+      setLoading(false);
     };
     importIcon();
   }, [name, onCompleted, onError]);

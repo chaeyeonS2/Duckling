@@ -14,8 +14,6 @@ export const footerBtn = style({
 });
 
 export const icon = style({
-  width: "30px",
-  height: "30px",
   color: "white",
   selectors: {
     [`${footerBtn}[aria-checked=true] &`]: { color: "#BDFF6B" },
