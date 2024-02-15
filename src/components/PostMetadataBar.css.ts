@@ -5,12 +5,14 @@ export const metadataContainer = style({
   gap: "15px",
 });
 
+export const input = style({});
+
 export const metadata = style({
   display: "flex",
   alignItems: "center",
   gap: "3px",
   selectors: {
-    "&[aria-selected='true']": {
+    [`${metadataContainer}:has(${input}:checked) &:nth-child(1)`]: {
       color: "#bdff6b",
     },
   },

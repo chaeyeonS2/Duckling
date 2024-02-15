@@ -27,7 +27,8 @@ export default function LookPage() {
     navigate(`/postview/${postID}`);
   };
 
-  const posts = data ? Array.from(data).flat() : [];
+  const posts = data?.[0] ?? [];
+
   const contentElemRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleScroll = () => {
@@ -57,8 +58,8 @@ export default function LookPage() {
         </div>
       </header>
       <div className={styles.content} ref={contentElemRef}>
-        {posts?.map((post, index) => (
-          <div className={styles.postBox} key={index}>
+        {posts?.map((post) => (
+          <div className={styles.postBox} key={post.postID}>
             <div className={styles.postProfile}>
               <Avatar userId={post.writerID} />
               <div className={styles.date}>{post.date}</div>
@@ -67,7 +68,14 @@ export default function LookPage() {
             <div className={styles.postImgContainer}>
               <img className={styles.postImg} src={post.postImg[0]} />
             </div>
-            <div className={styles.metadataContainer}>{post && <PostMetadataBar postData={post} />}</div>
+            <div className={styles.metadataContainer}>
+              <PostMetadataBar
+                liked={post.likes.includes(localStorage.getItem("id") || "")}
+                defLikes={post.likes.length}
+                commentCount={post.commentCount}
+                postID={post.postID}
+              />
+            </div>
 
             <p className={styles.postContent} onClick={handlePostClick(post.postID)}>
               {post.body}

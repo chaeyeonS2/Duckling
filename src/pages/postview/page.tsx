@@ -88,7 +88,16 @@ export default function PostViewPage() {
       >
         <Sheet.Container style={{ boxShadow: "none", backgroundColor: "transparent" }}>
           <Sheet.Header>
-            <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
+            <div className={styles.metadataContainer}>
+              {postData && (
+                <PostMetadataBar
+                  liked={postData.likes.includes(localStorage.getItem("id") || "")}
+                  defLikes={postData.likes.length}
+                  commentCount={postData.commentCount}
+                  postID={postData.postID}
+                />
+              )}
+            </div>
           </Sheet.Header>
           <Sheet.Content>
             <Sheet.Scroller draggableAt="both">
