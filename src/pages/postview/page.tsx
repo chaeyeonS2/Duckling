@@ -9,7 +9,7 @@ import PostMetadataBar from "@/components/PostMetadataBar";
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 
 import * as styles from "./page.css";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { DynamicIcon } from "@/components/Icon";
 import axios from "axios";
 import useSWR from "swr";
@@ -49,6 +49,10 @@ function CommentBottomSheet() {
   const { data: comments, mutate } = useSWR(`/api/comments/${postID}`, { fallbackData: [] });
 
   const ref = useRef<SheetRef>();
+  useEffect(() => {
+    if (!ref.current) return;
+    ref.current.y.set(snapPoints[1]);
+  }, []);
 
   const [comment, setComment] = useState("");
   const handleCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
