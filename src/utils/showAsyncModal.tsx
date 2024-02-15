@@ -73,7 +73,7 @@ export default async function showAsyncModal<T>(
         useEffect(() => {
           setTimeout(() => {
             overlays.close(overlayId);
-          }, 3000);
+          }, 1500);
         }, []);
         return resolvesModal("success", overlayId, Success);
       });
