@@ -9,7 +9,7 @@ import PostMetadataBar from "@/components/PostMetadataBar";
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 
 import * as styles from "./page.css";
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { DynamicIcon } from "@/components/Icon";
 import axios from "axios";
 import useSWR from "swr";
@@ -46,7 +46,11 @@ const snapPoints = [500, 46];
 function CommentBottomSheet() {
   const { postID } = useParams();
   const { data: postData } = useSWRImmutable(`/api/posts/${postID}`);
-  const { data: comments, mutate } = useSWR(`/api/comments/${postID}`, { fallbackData: [] });
+  const { data: commentsData, mutate } = useSWR(`/api/comments/${postID}`, { fallbackData: [] });
+  const comments = useMemo(() => {
+    if (!commentsData) return [];
+    return commentsData.sort((a, b) => a.time - b.time);
+  }, [commentsData]);
 
   const ref = useRef<SheetRef>();
   useEffect(() => {
@@ -88,6 +92,7 @@ function CommentBottomSheet() {
       },
     ]);
   };
+
   return (
     <Sheet
       isOpen={true}
