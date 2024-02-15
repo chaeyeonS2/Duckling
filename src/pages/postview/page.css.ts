@@ -67,7 +67,7 @@ export const commentBottomSheet = style({
 });
 
 export const commentsContainer = style({
-  padding: "15px 20px 0px 20px",
+  padding: "15px 20px",
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",
