@@ -16,6 +16,7 @@ export default function MyPostBottomSheet() {
   return (
     <Sheet
       isOpen={true}
+      ref={ref}
       onClose={() => snapTo(1)}
       snapPoints={[500, 80]}
       initialSnap={1}
