@@ -124,7 +124,7 @@ declare module "react" {
       E extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>
         ? React.ComponentProps<E>
         : React.HTMLAttributes<E>,
-      "chidlren"
+      "chidlren" | keyof P
     >;
 }
 

@@ -74,7 +74,9 @@ function PreviewModal({ overlayId, imageSrc }: { overlayId: number; imageSrc: st
           overlays.close(overlayId);
         }, 2000);
       }, []);
-      return <BaseModal title="저장되었습니다!" logoImgSrc={<DynamicIcon id="check" size="medium" />} />;
+      return (
+        <BaseModal title="저장되었습니다!" logoImgSrc={<DynamicIcon id="check" size="medium" />} disableBackdrop />
+      );
     });
   };
 

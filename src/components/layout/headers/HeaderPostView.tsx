@@ -49,8 +49,9 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
     if (!isReConfirmed) return;
     await showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
       progress: "게시글이 삭제중입니다...",
-      success: (
+      success: ({ overlayId }) => (
         <AlertModal
+          overlayId={overlayId}
           logoImgSrc={<DynamicIcon id="check" size="medium" />}
           title="게시글이 삭제되었습니다."
           onClose={() => {

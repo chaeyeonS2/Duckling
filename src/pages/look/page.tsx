@@ -27,8 +27,8 @@ export default function LookPage() {
   const posts = data?.[0] ?? [];
 
   const handleImageClick = (postImage: string) => {
-    overlays.open(() => (
-      <BaseModal>
+    overlays.open(({ overlayId }) => (
+      <BaseModal overlayId={overlayId} style={{ maxHeight: "80vh" }}>
         <img src={postImage} />
       </BaseModal>
     ));

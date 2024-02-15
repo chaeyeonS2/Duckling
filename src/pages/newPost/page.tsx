@@ -104,8 +104,9 @@ export default function NewPostPage() {
             title="게시글이 올라가고 있어요~!"
           />
         ),
-        success: (
+        success: ({ overlayId }) => (
           <AlertModal
+            overlayId={overlayId}
             onClose={() => {
               navigate(`/postView/${result!.data.postID}`);
             }}

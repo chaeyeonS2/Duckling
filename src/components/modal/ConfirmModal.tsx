@@ -2,20 +2,13 @@ import { overlays } from "@/utils/overlays";
 import BaseModal, { BaseModalProps } from "./BaseModal";
 import * as styles from "./modal.css";
 
-export interface ConfirmModalProps extends BaseModalProps {
+export type ConfirmModalProps = BaseModalProps & {
   onYes?: () => void;
   yesText?: string;
   onNo?: () => void;
   noText?: string;
-}
-export default function ConfirmModal({
-  yesText = "네",
-  noText = "아니요",
-  onYes,
-  onNo,
-  overlayId,
-  ...props
-}: ConfirmModalProps) {
+};
+export default function ConfirmModal({ yesText = "네", noText = "아니요", onYes, onNo, ...props }: ConfirmModalProps) {
   return (
     <BaseModal {...props}>
       <div className={styles.btnGroup}>
@@ -23,7 +16,7 @@ export default function ConfirmModal({
           className={styles.btnNo}
           onClick={() => {
             onNo?.();
-            if (overlayId !== undefined) overlays.close(overlayId);
+            if (props.overlayId !== undefined) overlays.close(props.overlayId);
           }}
         >
           {noText}
@@ -32,7 +25,7 @@ export default function ConfirmModal({
           className={styles.btnOk}
           onClick={() => {
             onYes?.();
-            if (overlayId !== undefined) overlays.close(overlayId);
+            if (props.overlayId !== undefined) overlays.close(props.overlayId);
           }}
         >
           {yesText}
