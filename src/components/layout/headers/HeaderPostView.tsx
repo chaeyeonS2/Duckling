@@ -29,7 +29,25 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
     );
     if (!isConfirmed) return;
 
-    showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
+    const isReConfirmed = await new Promise((res) =>
+      overlays.open(({ overlayId }) => (
+        <ConfirmModal
+          overlayId={overlayId}
+          title={
+            <>
+              해당 글은 영구적으로 삭제 됩니다.
+              <br />
+              정말 삭제 하실건가요? (˙ᴖ˙ก̀)
+            </>
+          }
+          yesText="네,삭제할게요"
+          onYes={() => res(true)}
+          onNo={() => res(false)}
+        />
+      ))
+    );
+    if (!isReConfirmed) return;
+    await showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
       progress: "게시글이 삭제중입니다...",
       success: (
         <AlertModal
@@ -42,35 +60,6 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
       ),
       failure: "게시글이 삭제되지 못했습니다.",
     });
-
-    overlays.open(({ overlayId }) => (
-      <ConfirmModal
-        overlayId={overlayId}
-        title={
-          <>
-            해당 글은 영구적으로 삭제 됩니다.
-            <br />
-            정말 삭제 하실건가요? (˙ᴖ˙ก̀)
-          </>
-        }
-        onYes={() => {
-          showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
-            progress: "게시글이 삭제중입니다...",
-            success: (
-              <AlertModal
-                logoImgSrc={<DynamicIcon id="check" size="medium" />}
-                title="게시글이 삭제되었습니다."
-                onClose={() => {
-                  navigate("/look");
-                }}
-              />
-            ),
-            failure: "게시글이 삭제되지 못했습니다.",
-          });
-        }}
-        yesText="네,삭제할게요"
-      />
-    ));
   };
 
   const shareClick = () => {
