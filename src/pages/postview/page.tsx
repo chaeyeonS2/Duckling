@@ -55,7 +55,7 @@ function CommentBottomSheet() {
   const ref = useRef<SheetRef>();
   useEffect(() => {
     if (!ref.current) return;
-    ref.current.y.set(snapPoints[1]);
+    ref.current.snapTo(1);
   }, []);
 
   const [comment, setComment] = useState("");
