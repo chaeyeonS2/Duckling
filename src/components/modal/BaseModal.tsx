@@ -11,16 +11,19 @@ export type BaseModalProps = {
       overlayId?: number;
       disableBackdrop: true;
       disableBackdropClick?: never;
+      onBackdropClick?: never;
     }
   | {
       overlayId?: number;
       disableBackdrop?: false;
       disableBackdropClick: true;
+      onBackdropClick?: () => void;
     }
   | {
       overlayId: number;
       disableBackdrop?: false;
       disableBackdropClick?: false;
+      onBackdropClick?: () => void;
     }
 );
 export default function BaseModal({
@@ -29,6 +32,7 @@ export default function BaseModal({
   description,
   disableBackdrop = false,
   disableBackdropClick,
+  onBackdropClick,
   overlayId,
   className,
   children,
@@ -36,7 +40,7 @@ export default function BaseModal({
 }: React.PropsWithElementProps<"div", BaseModalProps>) {
   const handleBackdropClick = () => {
     if (disableBackdropClick) return;
-
+    onBackdropClick?.();
     if (overlayId === undefined) {
       throw new Error("overlayId is required when disableBackdrop and disableBackdropClick are both false");
     }

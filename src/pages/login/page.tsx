@@ -7,13 +7,57 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import * as styles from "./page.css";
+import { overlays } from "@/utils/overlays";
+import BaseModal from "@/components/modal/BaseModal";
+import { useState } from "react";
 
 export default function LoginPage() {
   const navigate = useNavigate();
 
-  const handleLoginClick = () => {
+  const handleXLogin = () => {
     showAsyncModal(twitterLogin(), {
       progress: "X에 로그인 중...",
+      success: null,
+      onSucceed: () => navigate("/home"),
+      failure: "로그인 실패!",
+    });
+  };
+
+  const handleXMCLogin = async () => {
+    let un = "";
+    await new Promise<void>((res, rej) => {
+      overlays.open(({ overlayId }) => {
+        const [userName, setUserName] = useState("");
+        un = userName;
+        return (
+          <BaseModal overlayId={overlayId} onBackdropClick={rej}>
+            <div>
+              <input
+                type="text"
+                placeholder="사용자 이름"
+                required
+                autoFocus
+                onChange={(e) => setUserName(e.target.value)}
+                className={styles.xmcLoginInput}
+              />
+              <button
+                className={styles.xmcLoginSubmitButton}
+                disabled={!userName}
+                onClick={() => {
+                  res();
+                  overlays.close(overlayId);
+                }}
+              >
+                로그인
+              </button>
+            </div>
+          </BaseModal>
+        );
+      });
+    });
+
+    await showAsyncModal(xmcLogin(un), {
+      progress: "XMC로 로그인 중...",
       success: null,
       onSucceed: () => navigate("/home"),
       failure: "로그인 실패!",
@@ -23,10 +67,15 @@ export default function LoginPage() {
   return (
     <div className={styles.pageContainer}>
       <Logo className={styles.logoImage} />
-      <button className={styles.button} onClick={handleLoginClick}>
-        <DynamicIcon className={styles.buttonIcon} id="X-logo" size="small" />
-        <span>X로 시작하기</span>
-      </button>
+      <div className={styles.buttons}>
+        <button className={styles.button} onClick={handleXLogin}>
+          <DynamicIcon className={styles.buttonIcon} id="X-logo" size="small" />
+          <span>X로 시작하기</span>
+        </button>
+        <button className={styles.xmcLoginButton} onClick={handleXMCLogin}>
+          XMC 임시 로그인하기
+        </button>
+      </div>
     </div>
   );
 }
@@ -61,6 +110,24 @@ function twitterLogin() {
         userName: displayName,
         access_token: accessToken,
         access_token_secret: secret,
+      })
+      .then(res)
+      .catch(rej);
+  });
+}
+
+function xmcLogin(userName: string) {
+  return new Promise(async (res, rej) => {
+    const uid = crypto.randomUUID(); // TODO: let server give me the uid.
+    localStorage.setItem("id", uid);
+    localStorage.setItem("userName", userName);
+
+    await axios
+      .post("/api/users", {
+        uid,
+        userName: userName,
+        access_token: "None",
+        access_token_secret: "None",
       })
       .then(res)
       .catch(rej);
