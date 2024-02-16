@@ -16,22 +16,37 @@ import { button } from "../deco/page.css";
 import * as styles from "./page.css";
 import showAsyncModal from "@/utils/showAsyncModal";
 import ConfirmModal from "@/components/modal/ConfirmModal";
+import createPica from "pica";
 
+const Pica = createPica();
+const WIDTH = 286,
+  HEIGHT = 508;
 export default function SharePage() {
   const { userID } = useParams();
 
   const rootStateRef = useRef<RootState>(null);
   const onCaptureClick = async () => {
     if (!rootStateRef.current) return;
-
     rootStateRef.current.gl.render(rootStateRef.current.scene, rootStateRef.current.camera);
-    const avatarDataUrl = rootStateRef.current.gl.domElement.toDataURL("image/png");
 
-    const { result: imageSrc } = await showAsyncModal(mergeImages(["/img/share-background-green.png", avatarDataUrl]), {
-      progress: "이미지 생성중...",
-      success: null,
-      failure: "이미지 생성이 실패했습니다.",
-    });
+    const fromCanvas = rootStateRef.current.gl.domElement;
+    const toCanvas = document.createElement("canvas");
+    toCanvas.width = WIDTH;
+    toCanvas.height = HEIGHT;
+    const resizedCanvas = await Pica.resize(fromCanvas, toCanvas);
+    const avatarDataUrl = resizedCanvas.toDataURL("image/png");
+
+    const { result: imageSrc } = await showAsyncModal(
+      mergeImages(["/img/share-background-green.png", avatarDataUrl], {
+        height: HEIGHT,
+        width: WIDTH,
+      }),
+      {
+        progress: "이미지 생성중...",
+        success: null,
+        failure: "이미지 생성이 실패했습니다.",
+      }
+    );
     if (imageSrc) {
       overlays.open(({ overlayId }) => <PreviewModal overlayId={overlayId} imageSrc={imageSrc} />);
     }
