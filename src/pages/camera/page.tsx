@@ -21,11 +21,15 @@ export default function ARCameraPage() {
 
   const handleMotionChange = (motion: Asset) => async () => {
     if (!view3DRef.current) return;
-    setMotionAsset(motion);
+
     await view3DRef.current.load(motion.assetGltf, { iosSrc: motion.assetUsdz });
-    if (!view3DRef.current.initialized) {
-      view3DRef.current.init();
+
+    // if motion doesn't exist, it means this is the first select
+    if (!motionAsset) {
+      await view3DRef.current.init();
     }
+
+    setMotionAsset(motion);
   };
 
   const enterAR = async () => {
