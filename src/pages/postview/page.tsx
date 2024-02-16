@@ -6,7 +6,9 @@ import useSWRImmutable from "swr/immutable";
 import { useParams } from "react-router-dom";
 
 import Avatar from "@/components/Avatar";
-import Flicking from "@egjs/react-flicking";
+import Flicking, { ViewportSlot } from "@egjs/react-flicking";
+import { Pagination } from "@egjs/flicking-plugins";
+
 import { DynamicIcon } from "@/components/Icon";
 import Footer from "@/components/layout/Footer";
 import Sheet, { SheetRef } from "react-modal-sheet";
@@ -15,8 +17,10 @@ import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 
 import * as styles from "./page.css";
 import "@egjs/react-flicking/dist/flicking.css";
+import "@egjs/flicking-plugins/dist/pagination.css";
 
 export default function PostViewPage() {
+  const _plugins = [new Pagination({ type: "bullet" })];
   const { postID } = useParams();
   const { data: postData } = useSWRImmutable(`/api/posts/${postID}`);
 
@@ -30,10 +34,13 @@ export default function PostViewPage() {
           <p className={styles.timestemp}>{postData?.date}</p>
         </div>
         <div style={{ paddingBottom: "88px" }}>
-          <Flicking autoResize align="prev" circular={false} bound={false}>
+          <Flicking autoResize align="prev" circular={false} bound={false} plugins={_plugins}>
             {postData?.postImg.map((image, index) => (
               <img className={styles.postImgBig} src={image} alt={`Slide ${index}`} key={index} />
             ))}
+            <ViewportSlot>
+              <div className="flicking-pagination"></div>
+            </ViewportSlot>
           </Flicking>
           <p className={styles.content}>{postData?.body}</p>
           <CommentBottomSheet />
