@@ -48,6 +48,11 @@ export const postBox = style({
   marginBottom: "24px",
   width: "100%",
   height: "auto",
+  selectors: {
+    "&:last-child": {
+      marginBottom: "0",
+    },
+  },
 });
 
 export const postProfile = style({
