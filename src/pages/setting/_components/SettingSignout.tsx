@@ -58,7 +58,7 @@ export default function SettingSignout() {
     if (!isConfirmedAgain) return;
 
     const inProgressModal = overlays.open(() => (
-      <BaseModal logoImgSrc={<DynamicIcon id="warning" size="medium" />} title="탈퇴중..." />
+      <BaseModal logoImgSrc={<DynamicIcon id="warning" size="medium" />} title="탈퇴중..." disableBackdropClick />
     ));
 
     const user = getAuth().currentUser;

@@ -7,8 +7,6 @@ import "./config/axios";
 import "./config/firebase";
 import "@/css/global.css";
 import "minireset.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export default function Routes() {
   return (

@@ -44,6 +44,7 @@ interface Asset {
   assetID: string;
   assetGltf: string;
   assetUsdz: string;
+  assetPath: string;
   assetImg: string;
 }
 

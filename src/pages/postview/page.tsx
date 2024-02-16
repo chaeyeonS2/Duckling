@@ -1,26 +1,60 @@
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+
+import useSWR from "swr";
+import axios from "axios";
 import useSWRImmutable from "swr/immutable";
 import { useParams } from "react-router-dom";
 
-import Slider from "react-slick";
-import Sheet, { SheetRef } from "react-modal-sheet";
 import Avatar from "@/components/Avatar";
+import Flicking from "@egjs/react-flicking";
+import { DynamicIcon } from "@/components/Icon";
 import Footer from "@/components/layout/Footer";
+import Sheet, { SheetRef } from "react-modal-sheet";
 import PostMetadataBar from "@/components/PostMetadataBar";
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 
 import * as styles from "./page.css";
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
-import { DynamicIcon } from "@/components/Icon";
-import axios from "axios";
-import useSWR from "swr";
+import "@egjs/react-flicking/dist/flicking.css";
 
 export default function PostViewPage() {
+  const { postID } = useParams();
+  const { data: postData } = useSWRImmutable(`/api/posts/${postID}`);
+
+  return (
+    <div className={styles.layout}>
+      <HeaderPostView postData={postData} />
+      <div className={styles.container}>
+        <div className={styles.postHeader}>
+          {postData && <Avatar userId={postData.writerID} />}
+          <p className={styles.title}>{postData?.title}</p>
+          <p className={styles.timestemp}>{postData?.date}</p>
+        </div>
+        <div style={{ paddingBottom: "88px" }}>
+          <Flicking autoResize align="prev" circular={false} bound={false}>
+            {postData?.postImg.map((image, index) => (
+              <img className={styles.postImgBig} src={image} alt={`Slide ${index}`} key={index} />
+            ))}
+          </Flicking>
+          <p className={styles.content}>{postData?.body}</p>
+          <CommentBottomSheet />
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+const snapPoints = [500, 46];
+function CommentBottomSheet() {
   const { postID } = useParams();
   const { data: postData } = useSWRImmutable(`/api/posts/${postID}`);
   const { data: comments, mutate } = useSWR(`/api/comments/${postID}`, { fallbackData: [] });
 
   const ref = useRef<SheetRef>();
-  const snapTo = () => ref.current?.snapTo(1);
+  useEffect(() => {
+    if (!ref.current) return;
+    ref.current.snapTo(1);
+  }, []);
 
   const [comment, setComment] = useState("");
   const handleCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -58,72 +92,73 @@ export default function PostViewPage() {
   };
 
   return (
-    <div className={styles.layout}>
-      <HeaderPostView postData={postData} />
-      <div className={styles.container}>
-        <div className={styles.postHeader}>
-          {postData && <Avatar userId={postData.writerID} />}
-          <p className={styles.title}>{postData?.title}</p>
-          <p className={styles.timestemp}>{postData?.date}</p>
-        </div>
-        <div>
-          <Slider dots variableWidth arrows={false} infinite={false}>
-            {postData?.postImg.map((image, index) => (
-              <img className={styles.postImgBig} src={image} alt={`Slide ${index}`} key={index} />
-            ))}
-          </Slider>
-          <p className={styles.content}>{postData?.body}</p>
-        </div>
-      </div>
+    <Sheet
+      isOpen={true}
+      onClose={() => ref.current?.snapTo(1)}
+      snapPoints={snapPoints}
+      initialSnap={1}
+      ref={ref}
+      style={{
+        marginBottom: "88px",
+      }}
+    >
+      <Sheet.Container style={{ boxShadow: "none", backgroundColor: "transparent" }}>
+        <Sheet.Header>
+          <div className={styles.metadataContainer}>
+            {postData && (
+              <PostMetadataBar
+                liked={postData.likes.includes(localStorage.getItem("id") || "")}
+                defLikes={postData.likes.length}
+                commentCount={postData.commentCount}
+                postID={postData.postID}
+                onCommentClick={() => {
+                  if (!ref.current) return;
+                  let nearestIdx = 0;
+                  const y = ref.current.y.get();
+                  for (let i = 0; i < snapPoints.length; i++) {
+                    if (Math.abs(snapPoints[i] - y) < Math.abs(snapPoints[nearestIdx] - y)) {
+                      nearestIdx = i;
+                    }
+                  }
 
-      <Sheet
-        isOpen={true}
-        onClose={snapTo}
-        snapPoints={[500, 46]}
-        initialSnap={1}
-        ref={ref}
-        style={{
-          marginBottom: "88px",
-        }}
-      >
-        <Sheet.Container style={{ boxShadow: "none", backgroundColor: "transparent" }}>
-          <Sheet.Header>
-            <div className={styles.metadataContainer}>{postData && <PostMetadataBar postData={postData} />}</div>
-          </Sheet.Header>
-          <Sheet.Content>
-            <Sheet.Scroller draggableAt="both">
-              <div className={styles.commentBottomSheet}>
-                <div className={styles.commentsContainer}>
-                  {comments?.map((comment) => (
-                    <div className={styles.comment} key={comment.commentID}>
-                      <div className={styles.commentHeader}>
-                        <Avatar userId={comment.writerID} />
-                        <span className={styles.commentDate}>{new Date(comment.time).toLocaleString()}</span>
-                      </div>
-                      <p>{comment.text}</p>
+                  ref.current.snapTo(nearestIdx);
+                }}
+              />
+            )}
+          </div>
+        </Sheet.Header>
+        <Sheet.Content>
+          <Sheet.Scroller draggableAt="both">
+            <div className={styles.commentBottomSheet}>
+              <div className={styles.commentsContainer}>
+                {comments?.map((comment) => (
+                  <div className={styles.comment} key={comment.commentID}>
+                    <div className={styles.commentHeader}>
+                      <Avatar userId={comment.writerID} />
+                      <span className={styles.commentDate}>{new Date(comment.time).toLocaleString()}</span>
                     </div>
-                  ))}
-                </div>
-
-                <form onSubmit={handleSubmit} className={styles.commentInputContainer}>
-                  <textarea
-                    className={styles.commentInput}
-                    rows={3}
-                    placeholder="댓글을 입력하세요..."
-                    value={comment}
-                    onChange={handleCommentChange}
-                  />
-
-                  <button className={styles.submitButton} type="submit">
-                    <DynamicIcon id="send" size="medium" />
-                  </button>
-                </form>
+                    <p>{comment.text}</p>
+                  </div>
+                ))}
               </div>
-            </Sheet.Scroller>
-          </Sheet.Content>
-        </Sheet.Container>
-      </Sheet>
-      <Footer />
-    </div>
+
+              <form onSubmit={handleSubmit} className={styles.commentInputContainer}>
+                <textarea
+                  className={styles.commentInput}
+                  rows={3}
+                  placeholder="댓글을 입력하세요..."
+                  value={comment}
+                  onChange={handleCommentChange}
+                />
+
+                <button className={styles.submitButton} type="submit">
+                  <DynamicIcon id="send" size="medium" />
+                </button>
+              </form>
+            </div>
+          </Sheet.Scroller>
+        </Sheet.Content>
+      </Sheet.Container>
+    </Sheet>
   );
 }

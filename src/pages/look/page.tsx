@@ -9,6 +9,8 @@ import useSWRInfinite from "swr/infinite";
 import { useNavigate } from "react-router-dom";
 
 import * as styles from "./page.css";
+import { overlays } from "@/utils/overlays";
+import BaseModal from "@/components/modal/BaseModal";
 
 const PAGE_SIZE = 5;
 export default function LookPage() {
@@ -18,16 +20,24 @@ export default function LookPage() {
     setCurrentTab(tab);
     setSize(1);
   };
-  const { data, setSize } = useSWRInfinite(
+  const { data, setSize } = useSWRInfinite<Post[]>(
     (index) =>
       `/api/posts/?sortBy=${currentTab == "최신" ? "time" : "likes"}&limit=${PAGE_SIZE}&start=${index * PAGE_SIZE}`
   );
+  const posts = data?.[0] ?? [];
+
+  const handleImageClick = (postImage: string) => {
+    overlays.open(({ overlayId }) => (
+      <BaseModal overlayId={overlayId} className={styles.imageZoomIn}>
+        <img src={postImage} style={{ minHeight: "80vh", objectFit: "contain" }} />
+      </BaseModal>
+    ));
+  };
 
   const handlePostClick = (postID: string) => () => {
     navigate(`/postview/${postID}`);
   };
 
-  const posts = data ? Array.from(data).flat() : [];
   const contentElemRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleScroll = () => {
@@ -57,17 +67,24 @@ export default function LookPage() {
         </div>
       </header>
       <div className={styles.content} ref={contentElemRef}>
-        {posts?.map((post, index) => (
-          <div className={styles.postBox} key={index}>
+        {posts?.map((post) => (
+          <div className={styles.postBox} key={post.postID}>
             <div className={styles.postProfile}>
               <Avatar userId={post.writerID} />
               <div className={styles.date}>{post.date}</div>
             </div>
 
-            <div className={styles.postImgContainer}>
+            <div className={styles.postImgContainer} onClick={() => handleImageClick(post.postImg[0])}>
               <img className={styles.postImg} src={post.postImg[0]} />
             </div>
-            <div className={styles.metadataContainer}>{post && <PostMetadataBar postData={post} />}</div>
+            <div className={styles.metadataContainer}>
+              <PostMetadataBar
+                liked={post.likes.includes(localStorage.getItem("id") || "")}
+                defLikes={post.likes.length}
+                commentCount={post.commentCount}
+                postID={post.postID}
+              />
+            </div>
 
             <p className={styles.postContent} onClick={handlePostClick(post.postID)}>
               {post.body}

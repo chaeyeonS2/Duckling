@@ -90,25 +90,33 @@ export const postContent = style({
   wordWrap: "break-word",
   WebkitBoxOrient: "vertical",
   WebkitLineClamp: 2,
-  overflow: "hidden",
 });
 
 export const postImgContainer = style({
-  width: "100%",
-  height: "80vw",
-  marginTop: "11px",
-  border: "1px solid #000",
+  width: "fit-content",
+  maxHeight: "100%",
+  margin: "0 auto",
+  marginTop: "12px",
   boxShadow: "2px -4px",
 });
 
 export const postImg = style({
-  width: "100%",
-  height: "100%",
-  objectFit: "contain",
+  width: "fit-content",
+  maxWidth: "100%",
+  maxHeight: "25dvh",
+  border: "1px solid #000",
+  objectFit: "scale-down",
 });
 
 export const metadataContainer = style({
   backgroundColor: "white",
   padding: "11px 0px",
   color: "black",
+});
+
+export const imageZoomIn = style({
+  maxHeight: "80vh",
+  maxWidth: "80vw",
+  minHeight: "fit-content",
+  minWidth: "fit-content",
 });

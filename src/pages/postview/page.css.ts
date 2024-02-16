@@ -48,9 +48,25 @@ export const timestemp = style({
 export const content = style({
   padding: "16px 20px",
   fontSize: "16px",
+  maxWidth: "70ch",
+  width: "100vw",
 });
 
-export const postImgBig = style({ objectFit: "contain" });
+export const postImgBig = style({
+  borderRadius: "8px",
+  marginRight: "8px",
+  height: "100%",
+  objectFit: "contain",
+  maxWidth: "420px",
+  "@media": {
+    "screen and (max-width: 420px)": {
+      width: "max(100%, 0px)",
+    },
+    "screen and (min-width: 420px)": {
+      width: "max(50%, 420px)",
+    },
+  },
+});
 
 export const metadataContainer = style({
   padding: "11px 18px",
@@ -67,7 +83,7 @@ export const commentBottomSheet = style({
 });
 
 export const commentsContainer = style({
-  padding: "15px 20px 0px 20px",
+  padding: "15px 20px",
   overflowY: "auto",
   display: "flex",
   flexDirection: "column",

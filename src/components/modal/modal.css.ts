@@ -1,12 +1,16 @@
 import { style } from "@vanilla-extract/css";
 
-export const modalOverlay = style({
+export const backdrop = style({
+  position: "absolute",
+  inset: 0,
+  width: "100vw",
   height: "100vh",
-  background: "rgba(0,0,0,0.6)",
-  position: "relative",
+  backgroundColor: "rgba(0,0,0,0.6)",
+  zIndex: 100,
 });
 
 export const alertlayout = style({
+  zIndex: 101,
   width: "300px",
   backgroundColor: "black",
   position: "fixed",

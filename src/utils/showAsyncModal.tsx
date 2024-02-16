@@ -19,7 +19,7 @@ function resolvesModal(
 ) {
   return typeof ComponentOrParam === "string" ? (
     def == "progress" ? (
-      <BaseModal title={ComponentOrParam} />
+      <BaseModal overlayId={overlayId} title={ComponentOrParam} />
     ) : def == "success" ? (
       <AlertModal
         overlayId={overlayId}
@@ -66,7 +66,6 @@ export default async function showAsyncModal<T>(
     const result = await Promise.resolve(asyncCallback)
       .then((result) => ({ result }))
       .catch((error: unknown) => ({ error }));
-
     overlays.close(progressOverlayId);
     if ("result" in result) {
       onSucceed(result.result);
@@ -74,14 +73,15 @@ export default async function showAsyncModal<T>(
         useEffect(() => {
           setTimeout(() => {
             overlays.close(overlayId);
-          }, 3000);
+          }, 1500);
         }, []);
         return resolvesModal("success", overlayId, Success);
       });
       res({ result: result.result, error: null });
     } else {
+      console.log(result);
       onFailed(result.error);
-      overlays.open(({ overlayId }) => typeof resolvesModal("failure", overlayId, Failure));
+      overlays.open(({ overlayId }) => resolvesModal("failure", overlayId, Failure));
       res({ result: null, error: result.error });
     }
   });
