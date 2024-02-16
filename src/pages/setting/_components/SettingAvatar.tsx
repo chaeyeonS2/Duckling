@@ -32,10 +32,7 @@ export default function SettingAvatar() {
         progress: "프로필 이미지를 변경중...",
         success: "프로필 이미지가 변경되었습니다",
         failure: "프로필 이미지 변경에 실패했습니다",
-        onSucceed: () => {
-          localStorage.setItem("profileImg", dataUrl as string);
-          mutate();
-        },
+        onSucceed: () => mutate(),
       }
     );
   };

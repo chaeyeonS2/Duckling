@@ -11,7 +11,12 @@ type CreateMapItem<K extends string, M extends Methods, R = unknown, D = unknown
 >;
 type APIMaps = unknown &
   // users
-  CreateMapItem<"/api/users", "POST", User, Omit<User, "userAvatar">> &
+  CreateMapItem<
+    "/api/users",
+    "POST",
+    User,
+    Omit<User, "userAvatar" | "profileImg"> & Partial<Pick<User, "profileImg">>
+  > &
   CreateMapItem<`/api/users/${string}`, "GET", User> &
   CreateMapItem<
     `/api/users/${string}`,

@@ -19,7 +19,7 @@ function resolvesModal(
 ) {
   return typeof ComponentOrParam === "string" ? (
     def == "progress" ? (
-      <BaseModal overlayId={overlayId} title={ComponentOrParam} />
+      <BaseModal title={ComponentOrParam} disableBackdropClick />
     ) : def == "success" ? (
       <AlertModal
         overlayId={overlayId}
