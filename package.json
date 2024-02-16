@@ -12,6 +12,7 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/react-flicking": "^4.11.2",
     "@egjs/react-view3d": "^2.3.1",
     "@react-three/drei": "^9.78.1",
