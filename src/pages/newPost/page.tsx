@@ -27,10 +27,16 @@ export default function NewPostPage() {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    for (const file of event.target.files ?? []) {
-      const imageDataURL = await readFileAsDataURL(file);
-      setPreviewImages((prevImages) => [...prevImages, imageDataURL]);
-    }
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    Array.from(files).forEach(async (file: File) => {
+      try {
+        const imageDataURL = await readFileAsDataURL(file);
+        setPreviewImages((prevImages) => [...prevImages, imageDataURL]);
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
+    });
   };
 
   const readFileAsDataURL = (file: File) => {
