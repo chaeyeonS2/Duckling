@@ -1,4 +1,3 @@
-import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 import useSWR from "swr";
 import axios from "axios";
@@ -48,11 +47,7 @@ const snapPoints = [500, 46];
 function CommentBottomSheet() {
   const { postID } = useParams();
   const { data: postData } = useSWRImmutable(`/api/posts/${postID}`);
-  const { data: commentsData, mutate } = useSWR(`/api/comments/${postID}`, { fallbackData: [] });
-  const comments = useMemo(() => {
-    if (!commentsData) return [];
-    return commentsData.sort((a, b) => a.time - b.time);
-  }, [commentsData]);
+  const { data: comments, mutate } = useSWR(`/api/comments/${postID}`, { fallbackData: [] });
 
   const ref = useRef<SheetRef>();
   useEffect(() => {
