@@ -113,3 +113,10 @@ export const metadataContainer = style({
   padding: "11px 0px",
   color: "black",
 });
+
+export const imageZoomIn = style({
+  maxHeight: "80vh",
+  maxWidth: "80vw",
+  minHeight: "fit-content",
+  minWidth: "fit-content",
+});

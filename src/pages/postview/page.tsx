@@ -1,18 +1,20 @@
+import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
+
+import useSWR from "swr";
+import axios from "axios";
 import useSWRImmutable from "swr/immutable";
 import { useParams } from "react-router-dom";
 
-import Slider from "react-slick";
-import Sheet, { SheetRef } from "react-modal-sheet";
 import Avatar from "@/components/Avatar";
+import Flicking from "@egjs/react-flicking";
+import { DynamicIcon } from "@/components/Icon";
 import Footer from "@/components/layout/Footer";
+import Sheet, { SheetRef } from "react-modal-sheet";
 import PostMetadataBar from "@/components/PostMetadataBar";
 import HeaderPostView from "@/components/layout/headers/HeaderPostView";
 
 import * as styles from "./page.css";
-import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { DynamicIcon } from "@/components/Icon";
-import axios from "axios";
-import useSWR from "swr";
+import "@egjs/react-flicking/dist/flicking.css";
 
 export default function PostViewPage() {
   const { postID } = useParams();
@@ -27,16 +29,16 @@ export default function PostViewPage() {
           <p className={styles.title}>{postData?.title}</p>
           <p className={styles.timestemp}>{postData?.date}</p>
         </div>
-        <div>
-          <Slider dots variableWidth arrows={false} infinite={false}>
+        <div style={{ paddingBottom: "88px" }}>
+          <Flicking autoResize align="center" circular={false} bound={false}>
             {postData?.postImg.map((image, index) => (
               <img className={styles.postImgBig} src={image} alt={`Slide ${index}`} key={index} />
             ))}
-          </Slider>
+          </Flicking>
           <p className={styles.content}>{postData?.body}</p>
+          <CommentBottomSheet />
         </div>
       </div>
-      <CommentBottomSheet />
       <Footer />
     </div>
   );

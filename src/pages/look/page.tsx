@@ -28,8 +28,8 @@ export default function LookPage() {
 
   const handleImageClick = (postImage: string) => {
     overlays.open(({ overlayId }) => (
-      <BaseModal overlayId={overlayId} style={{ maxHeight: "80vh" }}>
-        <img src={postImage} />
+      <BaseModal overlayId={overlayId} className={styles.imageZoomIn}>
+        <img src={postImage} style={{ minHeight: "80vh", objectFit: "contain" }} />
       </BaseModal>
     ));
   };
