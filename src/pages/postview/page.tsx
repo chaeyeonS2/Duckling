@@ -98,6 +98,35 @@ function CommentBottomSheet() {
     ]);
   };
 
+  const [commentBottom, setCommentBottom] = useState(0);
+  const mobileType = navigator.userAgent.toLowerCase();
+
+  useEffect(() => {
+    if (window) {
+      let prevVisualViewport = window.visualViewport?.height;
+      const handleVisualViewportResize = () => {
+        const currentVisualViewport = Number(window.visualViewport?.height);
+        if (prevVisualViewport && prevVisualViewport - 30 > currentVisualViewport) {
+          const scrollHeight = Number(window.document.scrollingElement?.scrollHeight);
+          const scrollTop = scrollHeight - Number(window.visualViewport?.height);
+          if (mobileType.indexOf("android") > -1) {
+            setCommentBottom(scrollTop);
+          } else {
+            setCommentBottom(scrollTop - 88);
+          }
+        } else if (prevVisualViewport && currentVisualViewport > prevVisualViewport) {
+          // 키보드가 내려오는 경우 처리
+          setCommentBottom(0); // 입력창을 원래 위치로 이동시킴
+        }
+        prevVisualViewport = currentVisualViewport;
+      };
+
+      if (window.visualViewport) {
+        window.visualViewport.onresize = handleVisualViewportResize;
+      }
+    }
+  }, []);
+
   return (
     <Sheet
       isOpen={true}
@@ -149,13 +178,18 @@ function CommentBottomSheet() {
                 ))}
               </div>
 
-              <form onSubmit={handleSubmit} className={styles.commentInputContainer}>
+              <form
+                onSubmit={handleSubmit}
+                className={styles.commentInputContainer}
+                style={{ position: "relative", bottom: `${commentBottom}px` }}
+              >
                 <textarea
                   className={styles.commentInput}
                   rows={3}
                   placeholder="댓글을 입력하세요..."
                   value={comment}
                   onChange={handleCommentChange}
+                  style={{ backgroundColor: "white" }}
                 />
 
                 <button className={styles.submitButton} type="submit">
