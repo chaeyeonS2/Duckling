@@ -19,10 +19,34 @@ export default function ARCameraPage() {
 
   const { data: icons } = useSWRImmutable(`/api/assets/?kind=ar`);
 
+  const usdzDataset: { [key: string]: string } = {
+    "321d1de2-14f7-40dd-912e-72a764d32fcf": "motions/Danniel_Fin.usdz", //danniel
+    "32ad4164-449e-4bcd-9751-19e8356de4f0": "motions/Haerin_Fin.usdz", //haerin
+    "87c61cd7-7542-471a-8de8-07dd5697a6ae": "motions/Hanni_Fin.usdz", //hanni
+    "9f331eb2-e0ca-497e-aa5e-e33f5fab2e83": "motions/hyein.usdz", //hyein
+    "ff1704ff-a676-43c5-b341-adeb9723a182": "motions/minji.usdz", //minji
+  };
+
+  const gltfDataset: { [key: string]: string } = {
+    "321d1de2-14f7-40dd-912e-72a764d32fcf": "motions/Danniel_Fin.gltf", //danniel
+    "32ad4164-449e-4bcd-9751-19e8356de4f0": "motions/Haerin_Fin.gltf", //haerin
+    "87c61cd7-7542-471a-8de8-07dd5697a6ae": "motions/Hanni_Fin.gltf", //hanni
+    "9f331eb2-e0ca-497e-aa5e-e33f5fab2e83": "motions/hyein.glb", //hyein
+    "ff1704ff-a676-43c5-b341-adeb9723a182": "motions/minji.glb", //minji
+  };
+
+  const imgDataset: { [key: string]: string } = {
+    "321d1de2-14f7-40dd-912e-72a764d32fcf": "img/motions/daniel.png", //danniel
+    "32ad4164-449e-4bcd-9751-19e8356de4f0": "img/motions/haerin.png", //haerin
+    "87c61cd7-7542-471a-8de8-07dd5697a6ae": "img/motions/hani.png", //hanni
+    "9f331eb2-e0ca-497e-aa5e-e33f5fab2e83": "img/motions/hyein.png", //hyein
+    "ff1704ff-a676-43c5-b341-adeb9723a182": "img/motions/minji.png", //minji
+  };
+
   const handleMotionChange = (motion: Asset) => async () => {
     if (!view3DRef.current) return;
 
-    await view3DRef.current.load(motion.assetGltf, { iosSrc: motion.assetUsdz });
+    await view3DRef.current.load(gltfDataset[motion.assetID], { iosSrc: usdzDataset[motion.assetID] });
 
     // if motion doesn't exist, it means this is the first select
     if (!motionAsset) {
@@ -82,7 +106,7 @@ export default function ARCameraPage() {
                     style={{ position: "absolute", visibility: "hidden" }}
                   />
                   <div className={styles.iconBox}>
-                    <img src={item.assetImg} alt="" />
+                    <img src={imgDataset[item.assetID]} alt="" />
                   </div>
                 </label>
               ))}
