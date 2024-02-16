@@ -6,19 +6,18 @@ import AvatarCanvas from "@/components/AvatarCanvas";
 import Header from "@/components/layout/headers/Header";
 import AvatarModelGroup from "@/components/AvatarModelGroup";
 
+import ConfirmModal from "@/components/modal/ConfirmModal";
+import showAsyncModal from "@/utils/showAsyncModal";
 import { Link, useParams } from "react-router-dom";
 import { RootState } from "@react-three/fiber";
 import { overlays } from "@/utils/overlays";
 import mergeImages from "merge-images";
+import { Pica } from "@/lib/pica";
 import axios from "axios";
 
-import { button } from "../deco/page.css";
 import * as styles from "./page.css";
-import showAsyncModal from "@/utils/showAsyncModal";
-import ConfirmModal from "@/components/modal/ConfirmModal";
-import createPica from "pica";
+import { button } from "../deco/page.css";
 
-const Pica = createPica();
 const WIDTH = 286,
   HEIGHT = 508;
 export default function SharePage() {
