@@ -65,7 +65,11 @@ export default function ARCameraPage() {
     await view3DRef.current.ar.enter();
   };
   const isValid = !!motionAsset;
+  const [isVisible, setIsVisible] = useState(true);
 
+  const handleDivClick = () => {
+    setIsVisible(false);
+  };
   return (
     <div className={styles.pageContainer}>
       <Header closable>
@@ -79,6 +83,25 @@ export default function ARCameraPage() {
           <DynamicIcon id="settings" size="medium" />
         </Link>
       </Header>
+      {isVisible && (
+        <div
+          onClick={handleDivClick}
+          style={{
+            width: "90%",
+            backgroundColor: "black",
+            margin: "0 auto",
+            marginTop: "7px",
+            textAlign: "center",
+            color: "white",
+            padding: "20px",
+          }}
+        >
+          원하는 아바타 모션을 클릭해보세요!
+          <br />
+          좌측 하단의 카메라를 누르면 <br />
+          AR 카메라를 이용할 수 있어요.
+        </div>
+      )}
       <View3D
         className={styles.canvas}
         ref={view3DRef}
