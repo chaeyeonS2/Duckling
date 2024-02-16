@@ -29,24 +29,6 @@ export default function HeaderPostView({ postData }: { postData?: Post }) {
     );
     if (!isConfirmed) return;
 
-    const isReConfirmed = await new Promise((res) =>
-      overlays.open(({ overlayId }) => (
-        <ConfirmModal
-          overlayId={overlayId}
-          title={
-            <>
-              해당 글은 영구적으로 삭제 됩니다.
-              <br />
-              정말 삭제 하실건가요? (˙ᴖ˙ก̀)
-            </>
-          }
-          yesText="네,삭제할게요"
-          onYes={() => res(true)}
-          onNo={() => res(false)}
-        />
-      ))
-    );
-    if (!isReConfirmed) return;
     await showAsyncModal(axios.delete(`/api/posts/${postData?.postID}`), {
       progress: "게시글이 삭제중입니다...",
       success: ({ overlayId }) => (
