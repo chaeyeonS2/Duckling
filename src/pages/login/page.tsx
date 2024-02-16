@@ -51,7 +51,6 @@ function twitterLogin() {
 
     // local storage에 저장
     localStorage.setItem("id", uid);
-    localStorage.setItem("profileImg", photoURL);
     localStorage.setItem("userName", displayName);
 
     //서버에 올리기
