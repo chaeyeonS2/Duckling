@@ -57,12 +57,13 @@ export const postImgBig = style({
   marginRight: "8px",
   height: "100%",
   objectFit: "contain",
+  maxWidth: "420px",
   "@media": {
-    "screen and (min-width: 0px) and (max-width: 420px)": {
-      width: "100%",
+    "screen and (max-width: 420px)": {
+      width: "max(100%, 0px)",
     },
-    "screen and (min-width: 420px) and (max-width: 850px)": {
-      width: "50%",
+    "screen and (min-width: 420px)": {
+      width: "max(50%, 420px)",
     },
   },
 });

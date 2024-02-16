@@ -1,3 +1,4 @@
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 
 import useSWR from "swr";
 import axios from "axios";
@@ -29,7 +30,7 @@ export default function PostViewPage() {
           <p className={styles.timestemp}>{postData?.date}</p>
         </div>
         <div style={{ paddingBottom: "88px" }}>
-          <Flicking autoResize align="center" circular={false} bound={false}>
+          <Flicking autoResize align="prev" circular={false} bound={false}>
             {postData?.postImg.map((image, index) => (
               <img className={styles.postImgBig} src={image} alt={`Slide ${index}`} key={index} />
             ))}
