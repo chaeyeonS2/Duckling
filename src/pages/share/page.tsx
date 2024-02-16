@@ -39,24 +39,26 @@ export default function SharePage() {
       }
       rootStateRef.current.gl.render(rootStateRef.current.scene, rootStateRef.current.camera);
 
-      const fromCanvas = rootStateRef.current.gl.domElement;
-      const toCanvas = document.createElement("canvas");
-      toCanvas.width = WIDTH;
-      toCanvas.height = HEIGHT;
-      const resizedCanvas = await Pica.resize(fromCanvas, toCanvas);
-      const avatarDataUrl = resizedCanvas.toDataURL("image/png");
+      const avatarCanvas = rootStateRef.current.gl.domElement;
+      const backgroundCanvas = document.createElement("canvas");
+      const backgroundImage = document.createElement("img");
+      backgroundImage.width = avatarCanvas.width;
+      backgroundImage.height = avatarCanvas.height;
+      backgroundImage.src = "/img/share-background-green.png";
 
-      const { result: imageSrc } = await showAsyncModal(
-        mergeImages(["/img/share-background-green.png", avatarDataUrl], {
-          height: HEIGHT,
-          width: WIDTH,
-        }),
-        {
-          progress: "이미지 생성중...",
-          success: null,
-          failure: "이미지 생성이 실패했습니다.",
-        }
-      );
+      backgroundCanvas.width = avatarCanvas.width;
+      backgroundCanvas.height = avatarCanvas.height;
+      const ctx = backgroundCanvas.getContext("2d");
+      ctx?.drawImage(backgroundImage, 0, 0, avatarCanvas.width, avatarCanvas.height);
+
+      const avatarDataUrl = avatarCanvas.toDataURL("image/png");
+      const backgroundDataUrl = backgroundCanvas.toDataURL("image/png");
+
+      const { result: imageSrc } = await showAsyncModal(mergeImages([backgroundDataUrl, avatarDataUrl], {}), {
+        progress: "이미지 생성중...",
+        success: null,
+        failure: "이미지 생성이 실패했습니다.",
+      });
       if (imageSrc) {
         overlays.open(({ overlayId }) => <PreviewModal overlayId={overlayId} imageSrc={imageSrc} />);
       }
@@ -79,7 +81,7 @@ export default function SharePage() {
         </Link>
       </Header>
       <div className={styles.pageContainer}>
-        <div className={styles.canvasContainer}>
+        <div className={styles.canvasContainer} style={{ width: WIDTH, height: HEIGHT }}>
           <img src="/img/share-background-green.png" alt="" className={styles.backgroundImage} />
           <AvatarCanvas ref={rootStateRef}>
             <AvatarModelGroup userId={userID} position={[0, -0.05, 0]} />
